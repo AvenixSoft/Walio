@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" data-theme="light">
+<html lang="en" dir="ltr" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -181,7 +181,7 @@ input, select, textarea {
   position: relative;
   display: flex;
   flex-direction: column;
-  padding-bottom: max(100px, calc(88px + env(safe-area-inset-bottom))); /* space for floating bottom nav */
+  padding-bottom: max(84px, calc(64px + env(safe-area-inset-bottom))); /* space for bottom nav */
 }
 
 @media (min-width: 640px) {
@@ -200,7 +200,7 @@ input, select, textarea {
 
 /* ================= TOP HEADER BAR ================= */
 .app-header {
-  padding: max(env(safe-area-inset-top), 14px) clamp(16px, 4vw, 20px) 12px clamp(16px, 4vw, 20px);
+  padding: max(env(safe-area-inset-top), 12px) clamp(16px, 4vw, 20px) 10px clamp(16px, 4vw, 20px);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -208,9 +208,10 @@ input, select, textarea {
   top: 0;
   z-index: 50;
   background: var(--header-bg);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
   border-bottom: 0.5px solid var(--border-subtle);
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.03);
 }
 
 .header-left {
@@ -220,9 +221,9 @@ input, select, textarea {
 }
 
 .header-logo-wrap {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -233,8 +234,8 @@ input, select, textarea {
 }
 
 .header-logo-icon {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
 }
 
 .header-titles {
@@ -243,9 +244,11 @@ input, select, textarea {
 }
 
 .header-greeting-text {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-secondary);
-  font-weight: 500;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
 }
 
 .header-user-name {
@@ -265,9 +268,12 @@ input, select, textarea {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  padding: 2px;
   background: var(--accent-gradient);
   box-shadow: 0 2px 14px var(--accent-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
   cursor: pointer;
   transition: var(--transition-spring);
 }
@@ -276,12 +282,8 @@ input, select, textarea {
   transform: scale(0.92);
 }
 
-.header-user-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 2px solid var(--bg-main);
+.header-user-avatar svg {
+  stroke: #fff;
 }
 
 /* ================= MAIN CONTENT VIEWS ================= */
@@ -308,22 +310,28 @@ input, select, textarea {
 /* ================= GLASS BOTTOM NAVIGATION ================= */
 .bottom-nav {
   position: fixed;
-  bottom: calc(8px + env(safe-area-inset-bottom));
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: calc(100% - 24px);
-  max-width: 416px;
-  height: 62px;
+  width: 100%;
+  max-width: 100%;
+  height: max(calc(60px + env(safe-area-inset-bottom)), 64px);
+  padding-bottom: env(safe-area-inset-bottom);
   background: var(--glass-nav);
   backdrop-filter: blur(30px) saturate(180%);
   -webkit-backdrop-filter: blur(30px) saturate(180%);
-  border: 1px solid var(--border-glass);
-  border-radius: 24px;
+  border-top: 1px solid var(--border-glass);
   display: flex;
   align-items: center;
   justify-content: space-around;
   z-index: 100;
-  box-shadow: var(--nav-shadow), inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.10);
+}
+
+@media (min-width: 640px) {
+  .bottom-nav {
+    max-width: 440px;
+  }
 }
 
 .bottom-nav-item {
@@ -354,20 +362,7 @@ input, select, textarea {
 }
 
 .bottom-nav-item.active svg {
-  transform: translateY(-2px);
   stroke: var(--accent-primary);
-}
-
-.bottom-nav-item.active::after {
-  content: '';
-  position: absolute;
-  top: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 16px;
-  height: 3px;
-  background: var(--accent-primary);
-  border-radius: 4px;
 }
 
 /* ================= HERO TOTAL BALANCE CARD ================= */
@@ -1650,28 +1645,15 @@ body.rtl-mode .btn-zero {
   flex-shrink: 0;
 }
 
-.profile-avatar-wrap img {
-  width: 100%;
-  height: 100%;
+.profile-avatar-icon {
+  width: 76px;
+  height: 76px;
   border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--accent-primary);
-}
-
-.photo-upload-badge {
-  position: absolute;
-  bottom: -2px;
-  right: -2px;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--accent-primary);
-  color: #fff;
+  background: var(--accent-gradient);
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 16px var(--accent-glow);
 }
 
 .profile-identity h4 {
@@ -1682,37 +1664,6 @@ body.rtl-mode .btn-zero {
 .profile-identity span {
   font-size: 13px;
   color: var(--text-secondary);
-}
-
-.avatar-presets-wrap {
-  margin-bottom: 18px;
-}
-
-.preset-label {
-  font-size: 12px;
-  color: var(--text-secondary);
-  display: block;
-  margin-bottom: 8px;
-}
-
-.preset-avatars-row {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.preset-avatar-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: var(--transition-spring);
-}
-
-.preset-avatar-btn.active {
-  border-color: var(--color-green);
-  transform: scale(1.08);
 }
 
 .setting-item {
@@ -2210,7 +2161,7 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
 
    </style>
 </head>
-<body class="rtl-mode">
+<body>
   <div class="app-container">
     <div class="mobile-frame">
 
@@ -2226,9 +2177,9 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
           </div>
         </div>
         <div class="header-right">
-          <div class="header-user-avatar" id="header-user-avatar" title="Profile">
-            <img id="header-avatar-img" src="assets/img/default-avatar.svg" alt="User Profile">
-          </div>
+          <button class="header-user-avatar" id="header-user-avatar" title="Profile" aria-label="Profile">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </button>
         </div>
       </header>
 
@@ -2311,8 +2262,8 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
           <div class="onboarding-lang-row">
             <span data-i18n="onboarding_lang_label">زبان / Language:</span>
             <div class="lang-pill-selector">
-              <button class="lang-btn active" data-lang="fa" data-i18n="lang_name_fa" onclick="if(window.i18n) window.i18n.setLanguage('fa', true);">فارسی</button>
-              <button class="lang-btn" data-lang="en" data-i18n="lang_name_en" onclick="if(window.i18n) window.i18n.setLanguage('en', true);">English</button>
+              <button class="lang-btn" data-lang="fa" data-i18n="lang_name_fa" onclick="if(window.i18n) window.i18n.setLanguage('fa', true);">فارسی</button>
+              <button class="lang-btn active" data-lang="en" data-i18n="lang_name_en" onclick="if(window.i18n) window.i18n.setLanguage('en', true);">English</button>
             </div>
           </div>
 
@@ -2907,7 +2858,7 @@ class I18nManager {
   constructor() {
     // Auto-detect Persian browser preference or default to saved preference
     const defaultLang = (navigator.language && navigator.language.startsWith('fa')) ? 'fa' : 'en';
-    this.currentLang = localStorage.getItem('walio_lang') || 'fa'; // Default to 'fa' for Persian user
+    this.currentLang = localStorage.getItem('walio_lang') || 'en'; // Default language: English
     this.init();
   }
 
@@ -3033,7 +2984,7 @@ const STORAGE_KEYS = {
   TRANSACTIONS: 'walio_transactions',
   SETTINGS: 'walio_settings',
   ONBOARDING: 'walio_onboarding_done',
-  CURRENCY_CACHE: 'walio_currency_cache_v2'
+  CURRENCY_CACHE: 'walio_currency_cache_v3'
 };
 
 class StorageManager {
@@ -3059,7 +3010,7 @@ class StorageManager {
    * so the user can enter their actual personal finances without fake sample data.
    */
   seedFreshRealData() {
-    const isFa = (localStorage.getItem('walio_lang') || navigator.language || 'fa').startsWith('fa');
+    const isFa = (localStorage.getItem('walio_lang') || 'en').startsWith('fa');
 
     const defaultWallets = [
       {
@@ -3082,7 +3033,6 @@ class StorageManager {
     const defaultProfile = {
       name: isFa ? 'کاربر والیـو' : 'Walio User',
       username: '@my_walio',
-      photo: 'assets/img/default-avatar.svg',
       currency: 'IRT'
     };
 
@@ -3102,7 +3052,7 @@ class StorageManager {
    * Optional helper to load sample demo data if user explicitly requests it in Settings
    */
   loadSampleDemoData() {
-    const isFa = (localStorage.getItem('walio_lang') || 'fa') === 'fa';
+    const isFa = (localStorage.getItem('walio_lang') || 'en') === 'fa';
     const sampleWallets = [
       {
         id: 'w_demo_1',
@@ -3191,11 +3141,10 @@ class StorageManager {
   getProfile() {
     const data = localStorage.getItem(STORAGE_KEYS.PROFILE);
     if (!data) {
-      const isFa = (localStorage.getItem('walio_lang') || 'fa') === 'fa';
+      const isFa = (localStorage.getItem('walio_lang') || 'en') === 'fa';
       return {
         name: isFa ? 'کاربر والیـو' : 'Walio User',
         username: '@my_walio',
-        photo: 'assets/img/default-avatar.svg',
         currency: 'IRT'
       };
     }
@@ -3696,21 +3645,21 @@ window.walletManager = new WalletManager();
 
 class CurrencyManager {
   constructor() {
-    this.baseUsdToman = 186900; // Iranian open-market USD price in Toman (realistic)
+    this.baseUsdToman = 187100; // Iranian open-market USD price in Toman (today's rate)
     this.lastUpdated = null;
     this.isLive = false;
 
     // Default fallback rates in Toman (used if offline/API unreachable)
     this.rates = {
-      USD: { code: 'USD', name: 'US Dollar', rate: 186900, change: 0.42, flag: '🇺🇸' },
-      EUR: { code: 'EUR', name: 'Euro', rate: 215700, change: 0.28, flag: '🇪🇺' },
-      GBP: { code: 'GBP', name: 'British Pound', rate: 252500, change: 0.19, flag: '🇬🇧' },
-      AED: { code: 'AED', name: 'UAE Dirham', rate: 50900, change: 0.35, flag: '🇦🇪' },
-      TRY: { code: 'TRY', name: 'Turkish Lira', rate: 3890, change: -0.44, flag: '🇹🇷' },
-      CAD: { code: 'CAD', name: 'Canadian Dollar', rate: 134200, change: 0.12, flag: '🇨🇦' },
-      AUD: { code: 'AUD', name: 'Australian Dollar', rate: 131800, change: 0.21, flag: '🇦🇺' },
-      CHF: { code: 'CHF', name: 'Swiss Franc', rate: 230300, change: 0.31, flag: '🇨🇭' },
-      JPY: { code: 'JPY', name: 'Japanese Yen', rate: 1170, change: -0.18, flag: '🇯🇵' },
+      USD: { code: 'USD', name: 'US Dollar', rate: 187100, change: 0.48, flag: '🇺🇸' },
+      EUR: { code: 'EUR', name: 'Euro', rate: 215800, change: 0.34, flag: '🇪🇺' },
+      GBP: { code: 'GBP', name: 'British Pound', rate: 252600, change: 0.27, flag: '🇬🇧' },
+      AED: { code: 'AED', name: 'UAE Dirham', rate: 50950, change: 0.40, flag: '🇦🇪' },
+      TRY: { code: 'TRY', name: 'Turkish Lira', rate: 3920, change: -0.21, flag: '🇹🇷' },
+      CAD: { code: 'CAD', name: 'Canadian Dollar', rate: 134300, change: 0.16, flag: '🇨🇦' },
+      AUD: { code: 'AUD', name: 'Australian Dollar', rate: 132000, change: 0.24, flag: '🇦🇺' },
+      CHF: { code: 'CHF', name: 'Swiss Franc', rate: 230500, change: 0.36, flag: '🇨🇭' },
+      JPY: { code: 'JPY', name: 'Japanese Yen', rate: 1174, change: -0.14, flag: '🇯🇵' },
       IRT: { code: 'IRT', name: 'Iranian Toman', rate: 1, change: 0.00, flag: '🇮🇷' }
     };
 
@@ -3723,7 +3672,7 @@ class CurrencyManager {
 
   loadCachedRates() {
     try {
-      const cached = localStorage.getItem('walio_currency_cache_v2');
+      const cached = localStorage.getItem('walio_currency_cache_v3');
       if (cached) {
         const parsed = JSON.parse(cached);
         if (parsed.rates && parsed.timestamp) {
@@ -3775,7 +3724,7 @@ class CurrencyManager {
         );
         this.isLive = true;
 
-        localStorage.setItem('walio_currency_cache_v2', JSON.stringify({
+        localStorage.setItem('walio_currency_cache_v3', JSON.stringify({
           rates: this.rates,
           timestamp: this.lastUpdated
         }));
@@ -4828,11 +4777,9 @@ class WalioApp {
 
   updateHeaderProfile() {
     const profile = window.storage.getProfile();
-    const avatarImg = document.getElementById('header-avatar-img');
     const greetingName = document.getElementById('header-user-name');
     const greetingPrefix = document.getElementById('header-greeting-text');
 
-    if (avatarImg) avatarImg.src = profile.photo || 'assets/img/default-avatar.svg';
     if (greetingName) greetingName.textContent = profile.name ? profile.name.split(' ')[0] : 'User';
 
     if (greetingPrefix) {
@@ -5310,26 +5257,13 @@ class WalioApp {
       <div class="profile-card-sheet">
         <div class="profile-photo-row">
           <div class="profile-avatar-wrap">
-            <img src="${profile.photo || 'assets/img/default-avatar.svg'}" id="profile-preview-img" alt="Avatar" />
-            <label for="profile-file-input" class="photo-upload-badge">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            </label>
-            <input type="file" id="profile-file-input" accept="image/*" style="display:none;" />
+            <div class="profile-avatar-icon">
+              <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
           </div>
           <div class="profile-identity">
             <h4>${profile.name}</h4>
             <span>${profile.username}</span>
-          </div>
-        </div>
-
-        <div class="avatar-presets-wrap">
-          <span class="preset-label" data-i18n="avatar_presets">Or choose a preset avatar:</span>
-          <div class="preset-avatars-row">
-            <img src="assets/img/default-avatar.svg" class="preset-avatar-btn ${profile.photo === 'assets/img/default-avatar.svg' ? 'active' : ''}" data-src="assets/img/default-avatar.svg" />
-            <img src="assets/img/avatar-1.svg" class="preset-avatar-btn ${profile.photo === 'assets/img/avatar-1.svg' ? 'active' : ''}" data-src="assets/img/avatar-1.svg" />
-            <img src="assets/img/avatar-2.svg" class="preset-avatar-btn ${profile.photo === 'assets/img/avatar-2.svg' ? 'active' : ''}" data-src="assets/img/avatar-2.svg" />
-            <img src="assets/img/avatar-3.svg" class="preset-avatar-btn ${profile.photo === 'assets/img/avatar-3.svg' ? 'active' : ''}" data-src="assets/img/avatar-3.svg" />
-            <img src="assets/img/avatar-4.svg" class="preset-avatar-btn ${profile.photo === 'assets/img/avatar-4.svg' ? 'active' : ''}" data-src="assets/img/avatar-4.svg" />
           </div>
         </div>
 
@@ -5387,35 +5321,6 @@ class WalioApp {
 
     if (window.i18n) window.i18n.translateDOM();
 
-    let currentPhoto = profile.photo || 'assets/img/default-avatar.svg';
-    const previewImg = container.querySelector('#profile-preview-img');
-    const presetBtns = container.querySelectorAll('.preset-avatar-btn');
-
-    presetBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        presetBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentPhoto = btn.getAttribute('data-src');
-        if (previewImg) previewImg.src = currentPhoto;
-      });
-    });
-
-    const fileInput = container.querySelector('#profile-file-input');
-    if (fileInput) {
-      fileInput.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = (event) => {
-            currentPhoto = event.target.result;
-            if (previewImg) previewImg.src = currentPhoto;
-            presetBtns.forEach(b => b.classList.remove('active'));
-          };
-          reader.readAsDataURL(file);
-        }
-      });
-    }
-
     const saveBtn = container.querySelector('#btn-save-profile');
     if (saveBtn) {
       saveBtn.addEventListener('click', () => {
@@ -5425,7 +5330,6 @@ class WalioApp {
         window.storage.saveProfile({
           name,
           username,
-          photo: currentPhoto,
           currency: profile.currency || 'IRT'
         });
 
@@ -5699,5 +5603,5 @@ window.addEventListener('DOMContentLoaded', () => {
   window.walioApp.init();
 });
 
-  </script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a1fead7b1f23e3',t:'MTc4NjU2NDA3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  </script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a215dc2ea5aa31',t:'MTc4NjU2NTAyNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
