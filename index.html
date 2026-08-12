@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" data-theme="dark">
+<html lang="fa" dir="rtl" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Walio</title>
+  <title>Walio - Mobile-First Personal Finance PWA</title>
   
   <!-- PWA & Mobile Web App Meta Tags -->
   <link rel="manifest" href="manifest.json">
@@ -53,6 +53,22 @@
   --color-purple: #8B5CF6;
   --color-blue: #3B82F6;
 
+  --calc-num-bg: rgba(255, 255, 255, 0.14);
+  --calc-num-fg: #FFFFFF;
+  --calc-aux-bg: rgba(255, 255, 255, 0.32);
+  --calc-aux-fg: #FFFFFF;
+  --calc-op-bg: #FF9F0A;
+  --calc-op-fg: #FFFFFF;
+  --chip-bg: rgba(255, 255, 255, 0.07);
+  --chip-bg-strong: rgba(255, 255, 255, 0.12);
+  --input-bg: rgba(255, 255, 255, 0.06);
+  --btn-secondary-bg: rgba(255, 255, 255, 0.09);
+  --result-bg: rgba(255, 255, 255, 0.07);
+  --switch-track: rgba(255, 255, 255, 0.22);
+  --border-hover: rgba(255, 255, 255, 0.28);
+  --header-bg: rgba(18, 18, 26, 0.72);
+  --nav-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+
   --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --radius-xl: 24px;
   --radius-lg: 18px;
@@ -83,6 +99,22 @@
 
   --shadow-main: 0 14px 32px rgba(15, 23, 42, 0.08);
   --shadow-glass: 0 10px 28px rgba(15, 23, 42, 0.06), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+
+  --calc-num-bg: #E7EAF2;
+  --calc-num-fg: #0F172A;
+  --calc-aux-bg: #D3D8E3;
+  --calc-aux-fg: #0F172A;
+  --calc-op-bg: #FF9F0A;
+  --calc-op-fg: #FFFFFF;
+  --chip-bg: rgba(15, 23, 42, 0.06);
+  --chip-bg-strong: rgba(15, 23, 42, 0.10);
+  --input-bg: #FFFFFF;
+  --btn-secondary-bg: rgba(15, 23, 42, 0.06);
+  --result-bg: rgba(15, 23, 42, 0.05);
+  --switch-track: #D5D9E2;
+  --border-hover: rgba(15, 23, 42, 0.20);
+  --header-bg: rgba(244, 246, 251, 0.72);
+  --nav-shadow: 0 10px 28px rgba(15, 23, 42, 0.16);
 }
 
 /* RTL Persian mode */
@@ -149,7 +181,7 @@ input, select, textarea {
   position: relative;
   display: flex;
   flex-direction: column;
-  padding-bottom: max(90px, calc(72px + env(safe-area-inset-bottom))); /* space for bottom nav */
+  padding-bottom: max(100px, calc(88px + env(safe-area-inset-bottom))); /* space for floating bottom nav */
 }
 
 @media (min-width: 640px) {
@@ -168,17 +200,17 @@ input, select, textarea {
 
 /* ================= TOP HEADER BAR ================= */
 .app-header {
-  padding: max(env(safe-area-inset-top), 18px) clamp(16px, 4vw, 20px) 14px clamp(16px, 4vw, 20px);
+  padding: max(env(safe-area-inset-top), 14px) clamp(16px, 4vw, 20px) 12px clamp(16px, 4vw, 20px);
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--bg-main);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-subtle);
+  background: var(--header-bg);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 0.5px solid var(--border-subtle);
 }
 
 .header-left {
@@ -188,15 +220,16 @@ input, select, textarea {
 }
 
 .header-logo-wrap {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--chip-bg);
   border: 1px solid var(--border-subtle);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
 .header-logo-icon {
@@ -229,12 +262,12 @@ input, select, textarea {
 }
 
 .header-user-avatar {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid var(--accent-primary);
-  box-shadow: 0 0 15px var(--accent-glow);
+  padding: 2px;
+  background: var(--accent-gradient);
+  box-shadow: 0 2px 14px var(--accent-glow);
   cursor: pointer;
   transition: var(--transition-spring);
 }
@@ -247,6 +280,8 @@ input, select, textarea {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--bg-main);
 }
 
 /* ================= MAIN CONTENT VIEWS ================= */
@@ -273,29 +308,22 @@ input, select, textarea {
 /* ================= GLASS BOTTOM NAVIGATION ================= */
 .bottom-nav {
   position: fixed;
-  bottom: 0;
+  bottom: calc(8px + env(safe-area-inset-bottom));
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
-  max-width: 100%;
-  height: max(calc(66px + env(safe-area-inset-bottom)), 66px);
-  padding-bottom: env(safe-area-inset-bottom);
+  width: calc(100% - 24px);
+  max-width: 416px;
+  height: 62px;
   background: var(--glass-nav);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
-  border-top: 1px solid var(--border-glass);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid var(--border-glass);
+  border-radius: 24px;
   display: flex;
   align-items: center;
   justify-content: space-around;
   z-index: 100;
-  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.2);
-}
-
-@media (min-width: 640px) {
-  .bottom-nav {
-    max-width: 440px;
-    border-radius: 0 0 46px 46px;
-  }
+  box-shadow: var(--nav-shadow), inset 0 1px 1px rgba(255, 255, 255, 0.08);
 }
 
 .bottom-nav-item {
@@ -333,8 +361,10 @@ input, select, textarea {
 .bottom-nav-item.active::after {
   content: '';
   position: absolute;
-  top: 6px;
-  width: 18px;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
   height: 3px;
   background: var(--accent-primary);
   border-radius: 4px;
@@ -389,7 +419,7 @@ input, select, textarea {
   font-size: 16px;
   padding: 4px 8px;
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--chip-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -420,7 +450,7 @@ input, select, textarea {
   gap: 10px;
   padding: 10px 12px;
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--chip-bg);
   border: 1px solid var(--border-subtle);
   min-width: 0;
 }
@@ -768,7 +798,7 @@ body.rtl-mode .wallet-chip {
 .filter-chip {
   padding: 6px 14px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--chip-bg);
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
   font-size: 12px;
@@ -792,7 +822,7 @@ body.rtl-mode .wallet-chip {
   padding: 6px 12px;
   border-radius: 20px;
   border: 1px solid var(--border-subtle);
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--input-bg);
   color: var(--text-primary);
   font-size: 14px !important;
   outline: none;
@@ -816,7 +846,7 @@ body.rtl-mode .wallet-chip {
 }
 
 .tx-item-card:hover {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: var(--border-hover);
 }
 
 .tx-item-left {
@@ -931,7 +961,7 @@ body.rtl-mode .wallet-chip {
   justify-content: space-between;
   align-items: center;
   margin-top: 10px;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--chip-bg);
   padding: 8px 12px;
   border-radius: 12px;
   border: 1px solid var(--border-subtle);
@@ -969,6 +999,7 @@ body.rtl-mode .wallet-chip {
 
 /* ================= CURRENCY PAGE & SVG CHART ================= */
 .currency-chart-card {
+  scroll-margin-top: 84px;
   background: var(--card-bg);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-xl);
@@ -1017,7 +1048,7 @@ body.rtl-mode .wallet-chip {
 .time-range-pill {
   padding: 6px 14px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--chip-bg);
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
   font-size: 12px;
@@ -1067,7 +1098,7 @@ body.rtl-mode .wallet-chip {
 
 .tooltip-date {
   font-size: 10px;
-  color: var(--text-secondary);
+  color: #94A3B8;
 }
 
 .tooltip-price {
@@ -1140,7 +1171,7 @@ body.rtl-mode .wallet-chip {
   width: 100%;
   height: 46px;
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--result-bg);
   border: 1px solid var(--border-glass);
   display: flex;
   align-items: center;
@@ -1190,6 +1221,124 @@ body.rtl-mode .wallet-chip {
   flex-shrink: 0;
 }
 
+/* Currency Cards (big & readable, one per row) */
+.currency-section-header {
+  margin-bottom: 12px;
+}
+
+.currency-cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.currency-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: var(--transition-spring);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.currency-card:active {
+  transform: scale(0.98);
+}
+
+.currency-card-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.currency-card-flag {
+  font-size: 34px;
+  line-height: 1;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: var(--chip-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.currency-card-head {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.currency-card-code {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: 0.3px;
+}
+
+.currency-card-name {
+  font-size: 13px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 190px;
+}
+
+.currency-card-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.currency-card-price {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.currency-card-change {
+  display: flex;
+}
+
+/* Currency Chart Overlay (modal) */
+.cc-head-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cc-flag {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.cc-name {
+  font-size: 12px;
+  color: var(--text-secondary);
+  display: block;
+  margin-top: 2px;
+}
+
+.cc-price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4px 0 10px 0;
+}
+
 /* ================= FINANCIAL TOOLS PAGE ================= */
 .tools-grid {
   display: grid;
@@ -1211,7 +1360,7 @@ body.rtl-mode .wallet-chip {
 }
 
 .tool-card:hover {
-  border-color: rgba(255, 255, 255, 0.25);
+  border-color: var(--border-hover);
 }
 
 .tool-card.active {
@@ -1274,7 +1423,7 @@ body.rtl-mode .wallet-chip {
   height: 46px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-glass);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--input-bg);
   padding: 0 14px;
   font-size: 16px !important; /* Mobile safari safe */
   color: var(--text-primary);
@@ -1316,7 +1465,7 @@ body.rtl-mode .input-symbol {
   margin-top: 18px;
   padding: 16px;
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--result-bg);
   border: 1px solid var(--border-glass);
   display: flex;
   justify-content: space-between;
@@ -1402,18 +1551,18 @@ body.rtl-mode .input-symbol {
 }
 
 .btn-num {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
+  background: var(--calc-num-bg);
+  color: var(--calc-num-fg);
 }
 
 .btn-aux {
-  background: rgba(255, 255, 255, 0.25);
-  color: #fff;
+  background: var(--calc-aux-bg);
+  color: var(--calc-aux-fg);
 }
 
 .btn-op {
-  background: var(--color-amber);
-  color: #fff;
+  background: var(--calc-op-bg);
+  color: var(--calc-op-fg);
 }
 
 .btn-zero {
@@ -1438,7 +1587,7 @@ body.rtl-mode .btn-zero {
   flex: 1;
   padding: 8px 0;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--chip-bg);
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
   font-weight: 600;
@@ -1458,7 +1607,7 @@ body.rtl-mode .btn-zero {
   width: 100%;
   height: 12px;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--chip-bg-strong);
   overflow: hidden;
   display: flex;
   margin: 16px 0;
@@ -1597,7 +1746,7 @@ body.rtl-mode .btn-zero {
 .switch-slider {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: var(--switch-track);
   border-radius: 34px;
   transition: .3s;
   cursor: pointer;
@@ -1641,7 +1790,7 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
 .lang-btn {
   padding: 6px 14px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--chip-bg);
   border: 1px solid var(--border-subtle);
   font-size: 12px;
   font-weight: 600;
@@ -1691,7 +1840,7 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
   flex: 1;
   height: 44px;
   border-radius: 22px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--btn-secondary-bg);
   border: 1px solid var(--border-glass);
   color: var(--text-primary);
   font-size: 13px;
@@ -1758,7 +1907,7 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
 .btn-action-small {
   padding: 6px 14px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--chip-bg);
   border: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
@@ -1829,7 +1978,7 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--chip-bg-strong);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1839,7 +1988,7 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
 /* Transaction Modal specific */
 .tx-type-switch {
   display: flex;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--chip-bg);
   border-radius: 20px;
   padding: 4px;
   margin-bottom: 18px;
@@ -1869,7 +2018,7 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
 .cat-pill {
   padding: 8px 14px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--chip-bg);
   border: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
@@ -1913,7 +2062,7 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
   width: 44px;
   height: 44px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--chip-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1958,7 +2107,7 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
 }
 
 .onboard-pwa-card {
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--chip-bg);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
   padding: 16px;
@@ -1980,7 +2129,7 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
 
 .onboard-tabs {
   display: flex;
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--chip-bg);
   border-radius: 16px;
   padding: 4px;
   margin-bottom: 14px;
@@ -2003,7 +2152,7 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
 .onboard-step-box {
   padding: 14px;
   border-radius: var(--radius-md);
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--chip-bg-strong);
   margin-bottom: 10px;
 }
 
@@ -2035,7 +2184,7 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
   padding: 40px 20px;
   text-align: center;
   color: var(--text-secondary);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--chip-bg);
   border-radius: var(--radius-lg);
   border: 1px dashed var(--border-subtle);
   width: 100%;
@@ -2059,7 +2208,7 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
   text-align: center;
 }
 
-  </style>
+   </style>
 </head>
 <body class="rtl-mode">
   <div class="app-container">
@@ -2162,8 +2311,8 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
           <div class="onboarding-lang-row">
             <span data-i18n="onboarding_lang_label">زبان / Language:</span>
             <div class="lang-pill-selector">
-              <button class="lang-btn active" data-lang="fa" onclick="if(window.i18n) window.i18n.setLanguage('fa', true);">فارسی</button>
-              <button class="lang-btn" data-lang="en" onclick="if(window.i18n) window.i18n.setLanguage('en', true);">English</button>
+              <button class="lang-btn active" data-lang="fa" data-i18n="lang_name_fa" onclick="if(window.i18n) window.i18n.setLanguage('fa', true);">فارسی</button>
+              <button class="lang-btn" data-lang="en" data-i18n="lang_name_en" onclick="if(window.i18n) window.i18n.setLanguage('en', true);">English</button>
             </div>
           </div>
 
@@ -2249,17 +2398,17 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
 
           <div class="tool-input-row">
             <label data-i18n="wallet_name">نام کیف‌ پول</label>
-            <input type="text" id="wallet-input-name" class="tool-input" placeholder="مثلاً: کارت بانک سامان" />
+            <input type="text" id="wallet-input-name" class="tool-input" placeholder="مثلاً: کارت بانک سامان" data-i18n-placeholder="wallet_name_placeholder" />
           </div>
 
           <div class="tool-input-row">
             <label data-i18n="wallet_bank">نام بانک یا مؤسسه مالی</label>
-            <input type="text" id="wallet-input-bank" class="tool-input" placeholder="مثلاً: بانک سامان / ملت" />
+            <input type="text" id="wallet-input-bank" class="tool-input" placeholder="مثلاً: بانک سامان / ملت" data-i18n-placeholder="wallet_bank_placeholder" />
           </div>
 
           <div class="tool-input-row">
             <label data-i18n="wallet_card_number">شماره کارت / شبا / حساب</label>
-            <input type="text" id="wallet-input-number" class="tool-input" placeholder="•••• •••• •••• ۶۰۳۷" />
+            <input type="text" id="wallet-input-number" class="tool-input" placeholder="•••• •••• •••• ۶۰۳۷" data-i18n-placeholder="wallet_card_placeholder" />
           </div>
 
           <div class="tool-input-row">
@@ -2280,6 +2429,39 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
           </div>
 
           <button class="btn-primary-full" id="btn-save-wallet" data-i18n="save_wallet">ذخیره کیف‌ پول</button>
+        </div>
+      </div>
+
+      <!-- 4. CURRENCY CHART OVERLAY -->
+      <div id="currency-chart-overlay" class="modal-overlay">
+        <div class="modal-sheet">
+          <div class="modal-sheet-header">
+            <div class="cc-head-left">
+              <span class="cc-flag" id="cc-flag">🇺🇸</span>
+              <div>
+                <h3 class="modal-title" id="cc-code">USD</h3>
+                <span class="cc-name" id="cc-name">US Dollar</span>
+              </div>
+            </div>
+            <button class="btn-close-modal" id="close-currency-chart" title="Close">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <div class="cc-price-row">
+            <div class="chart-current-price" id="cc-current">...</div>
+            <div id="cc-change" class="chart-badge">...</div>
+          </div>
+
+          <div id="currency-overlay-chart-container" class="svg-chart-container"></div>
+
+          <div class="time-range-tabs">
+            <button class="time-range-pill active" data-range="1D" data-i18n="time_1d">۱ روز</button>
+            <button class="time-range-pill" data-range="1W" data-i18n="time_1w">۱ هفته</button>
+            <button class="time-range-pill" data-range="1M" data-i18n="time_1m">۱ ماه</button>
+            <button class="time-range-pill" data-range="3M" data-i18n="time_3m">۳ ماه</button>
+            <button class="time-range-pill" data-range="1Y" data-i18n="time_1y">۱ سال</button>
+          </div>
         </div>
       </div>
 
@@ -2341,7 +2523,7 @@ const translations = {
     swap: "Swap Currencies",
     rate_disclaimer: "Real online exchange rates calibrated to open Toman market.",
     rates_live_status: "Real Online Market Rates",
-    rates_cached_status: "Cached Offline Rates",
+    rates_cached_status: "Iranian Open-Market Rates (Today)",
     refresh_rates: "Refresh Live Rates",
     rates_updated: "Real exchange rates refreshed successfully!",
     time_1d: "1D",
@@ -2366,6 +2548,10 @@ const translations = {
     tool_interest_desc: "Simple & compound growth",
     tool_loan: "Loan & EMI",
     tool_loan_desc: "Monthly mortgage & loan payments",
+    tool_convert: "Currency Converter",
+    tool_convert_desc: "Convert Toman, USD, EUR & more",
+    rates_table_title: "All Currencies vs Iranian Toman",
+    currency_cards_hint: "Tap a currency to view its price chart.",
 
     // Tool Labels
     calc_clear: "AC",
@@ -2405,6 +2591,9 @@ const translations = {
     wallet_name: "Wallet Name",
     wallet_balance: "Current Balance",
     wallet_card_number: "Card / IBAN / Account #",
+    wallet_name_placeholder: "e.g. Saman Bank Card",
+    wallet_bank_placeholder: "e.g. Saman Bank / Mellat",
+    wallet_card_placeholder: "\u2022\u2022\u2022\u2022 \u2022\u2022\u2022\u2022 \u2022\u2022\u2022\u2022 6037",
     wallet_bank: "Bank / Financial Institution",
     wallet_icon: "Wallet Icon",
     wallet_color: "Theme Color",
@@ -2457,7 +2646,9 @@ const translations = {
     dark_mode: "Dark Mode",
     language: "Language",
     language_en: "English",
-    language_fa: "Persian (فارسی)",
+    language_fa: "Persian",
+    lang_name_en: "English",
+    lang_name_fa: "Persian",
     data_section: "Data Management",
     export_data: "Export Backup (JSON)",
     import_data: "Restore Backup",
@@ -2466,8 +2657,9 @@ const translations = {
     reset_data: "Reset All App Data",
     confirm_reset: "Are you sure you want to reset all data? This cannot be undone.",
     profile_updated: "Profile saved successfully!",
+    backup_restored: "Backup restored successfully!",
     avatar_presets: "Or choose a preset avatar:",
-    onboarding_lang_label: "Language / زبان:",
+    onboarding_lang_label: "Language",
 
     // Onboarding
     onboarding_title: "Welcome to Walio",
@@ -2543,7 +2735,7 @@ const translations = {
     swap: "جابجایی ارزها",
     rate_disclaimer: "نرخ‌های واقعی آنلاین بر اساس بازار آزاد تومان و بازار جهانی ارز.",
     rates_live_status: "نرخ‌های واقعی آنلاین بازار",
-    rates_cached_status: "نرخ آفلاین ذخیره‌شده",
+    rates_cached_status: "نرخ‌های بازار آزاد ایران (امروز)",
     refresh_rates: "بروزرسانی نرخ‌ها",
     rates_updated: "نرخ‌های واقعی ارز با موفقیت بروزرسانی شد!",
     time_1d: "۱ روز",
@@ -2568,6 +2760,10 @@ const translations = {
     tool_interest_desc: "سود ساده و مرکب سرمایه",
     tool_loan: "محاسبه اقساط وام",
     tool_loan_desc: "مبلغ قسط و سود کل وام",
+    tool_convert: "مبدل ارز",
+    tool_convert_desc: "تبدیل تومان، دلار، یورو و سایر ارزها",
+    rates_table_title: "همه ارزها در برابر تومان ایران",
+    currency_cards_hint: "برای مشاهده نمودار، روی هر ارز بزنید.",
 
     // Tool Labels
     calc_clear: "AC",
@@ -2607,6 +2803,9 @@ const translations = {
     wallet_name: "نام کیف‌ پول",
     wallet_balance: "موجودی فعلی",
     wallet_card_number: "شماره کارت / شبا / حساب",
+    wallet_name_placeholder: "مثلاً: کارت بانک سامان",
+    wallet_bank_placeholder: "مثلاً: بانک سامان / ملت",
+    wallet_card_placeholder: "•••• •••• •••• ۶۰۳۷",
     wallet_bank: "نام بانک یا مؤسسه مالی",
     wallet_icon: "آیکون",
     wallet_color: "رنگ تم",
@@ -2658,8 +2857,10 @@ const translations = {
     settings_section: "تنظیمات برنامه",
     dark_mode: "حالت تاریک",
     language: "زبان برنامه",
-    language_en: "انگلیسی (English)",
-    language_fa: "فارسی (Persian)",
+    language_en: "English",
+    language_fa: "فارسی",
+    lang_name_en: "English",
+    lang_name_fa: "فارسی",
     data_section: "مدیریت داده‌ها",
     export_data: "دریافت فایل پشتیبان (JSON)",
     import_data: "بازیابی فایل پشتیبان",
@@ -2668,6 +2869,7 @@ const translations = {
     reset_data: "حذف کل اطلاعات برنامه (شروع از اول)",
     confirm_reset: "آیا از حذف تمامی اطلاعات اطمینان دارید؟ این عملیات غیرقابل بازگشت است.",
     profile_updated: "اطلاعات پروفایل با موفقیت ذخیره شد!",
+    backup_restored: "فایل پشتیبان با موفقیت بازیابی شد.",
     avatar_presets: "یا انتخاب از آواتارهای پیش‌فرض:",
     onboarding_lang_label: "زبان / Language:",
 
@@ -2831,12 +3033,18 @@ const STORAGE_KEYS = {
   TRANSACTIONS: 'walio_transactions',
   SETTINGS: 'walio_settings',
   ONBOARDING: 'walio_onboarding_done',
-  CURRENCY_CACHE: 'walio_currency_cache'
+  CURRENCY_CACHE: 'walio_currency_cache_v2'
 };
 
 class StorageManager {
   constructor() {
     this.init();
+    this.applyStoredTheme();
+  }
+
+  applyStoredTheme() {
+    const s = this.getSettings();
+    document.documentElement.setAttribute('data-theme', s.darkMode === 'dark' ? 'dark' : 'light');
   }
 
   init() {
@@ -2879,7 +3087,7 @@ class StorageManager {
     };
 
     const defaultSettings = {
-      darkMode: 'dark',
+      darkMode: 'light',
       hideBalance: false,
       useRealRates: true
     };
@@ -3109,7 +3317,7 @@ class StorageManager {
   // --- Settings ---
   getSettings() {
     const data = localStorage.getItem(STORAGE_KEYS.SETTINGS);
-    return data ? JSON.parse(data) : { darkMode: 'dark', hideBalance: false, useRealRates: true };
+    return data ? JSON.parse(data) : { darkMode: 'light', hideBalance: false, useRealRates: true };
   }
 
   saveSettings(settings) {
@@ -3488,21 +3696,21 @@ window.walletManager = new WalletManager();
 
 class CurrencyManager {
   constructor() {
-    this.baseUsdToman = 59450;
+    this.baseUsdToman = 186900; // Iranian open-market USD price in Toman (realistic)
     this.lastUpdated = null;
     this.isLive = false;
 
     // Default fallback rates in Toman (used if offline/API unreachable)
     this.rates = {
-      USD: { code: 'USD', name: 'US Dollar', rate: 59450, change: 0.42, flag: '🇺🇸' },
-      EUR: { code: 'EUR', name: 'Euro', rate: 64820, change: 0.18, flag: '🇪🇺' },
-      GBP: { code: 'GBP', name: 'British Pound', rate: 77150, change: -0.15, flag: '🇬🇧' },
-      AED: { code: 'AED', name: 'UAE Dirham', rate: 16190, change: 0.35, flag: '🇦🇪' },
-      TRY: { code: 'TRY', name: 'Turkish Lira', rate: 1820, change: -0.52, flag: '🇹🇷' },
-      CAD: { code: 'CAD', name: 'Canadian Dollar', rate: 43580, change: 0.12, flag: '🇨🇦' },
-      AUD: { code: 'AUD', name: 'Australian Dollar', rate: 39410, change: 0.24, flag: '🇦🇺' },
-      CHF: { code: 'CHF', name: 'Swiss Franc', rate: 68900, change: 0.48, flag: '🇨🇭' },
-      JPY: { code: 'JPY', name: 'Japanese Yen', rate: 410, change: -0.21, flag: '🇯🇵' },
+      USD: { code: 'USD', name: 'US Dollar', rate: 186900, change: 0.42, flag: '🇺🇸' },
+      EUR: { code: 'EUR', name: 'Euro', rate: 215700, change: 0.28, flag: '🇪🇺' },
+      GBP: { code: 'GBP', name: 'British Pound', rate: 252500, change: 0.19, flag: '🇬🇧' },
+      AED: { code: 'AED', name: 'UAE Dirham', rate: 50900, change: 0.35, flag: '🇦🇪' },
+      TRY: { code: 'TRY', name: 'Turkish Lira', rate: 3890, change: -0.44, flag: '🇹🇷' },
+      CAD: { code: 'CAD', name: 'Canadian Dollar', rate: 134200, change: 0.12, flag: '🇨🇦' },
+      AUD: { code: 'AUD', name: 'Australian Dollar', rate: 131800, change: 0.21, flag: '🇦🇺' },
+      CHF: { code: 'CHF', name: 'Swiss Franc', rate: 230300, change: 0.31, flag: '🇨🇭' },
+      JPY: { code: 'JPY', name: 'Japanese Yen', rate: 1170, change: -0.18, flag: '🇯🇵' },
       IRT: { code: 'IRT', name: 'Iranian Toman', rate: 1, change: 0.00, flag: '🇮🇷' }
     };
 
@@ -3515,7 +3723,7 @@ class CurrencyManager {
 
   loadCachedRates() {
     try {
-      const cached = localStorage.getItem('walio_currency_cache');
+      const cached = localStorage.getItem('walio_currency_cache_v2');
       if (cached) {
         const parsed = JSON.parse(cached);
         if (parsed.rates && parsed.timestamp) {
@@ -3567,7 +3775,7 @@ class CurrencyManager {
         );
         this.isLive = true;
 
-        localStorage.setItem('walio_currency_cache', JSON.stringify({
+        localStorage.setItem('walio_currency_cache_v2', JSON.stringify({
           rates: this.rates,
           timestamp: this.lastUpdated
         }));
@@ -3768,19 +3976,25 @@ class CurrencyManager {
       });
     });
 
+    const lastPrice = data[data.length - 1].price;
+    const startP = data[0].price;
+    const endP = lastPrice;
+    const diffPct = (((endP - startP) / startP) * 100).toFixed(2);
+    const prefix = diffPct >= 0 ? '+' : '';
+    const changeText = `${prefix}${diffPct}% (${range})`;
+    const changeClass = `chart-badge ${diffPct >= 0 ? 'badge-green' : 'badge-red'}`;
+    const currentText = window.i18n ? window.i18n.formatCurrency(lastPrice, 'IRT') : lastPrice;
+
     const currentElem = document.getElementById('chart-header-current');
     const changeElem = document.getElementById('chart-header-change');
-    if (currentElem) {
-      currentElem.textContent = window.i18n ? window.i18n.formatCurrency(data[data.length - 1].price, 'IRT') : data[data.length - 1].price;
-    }
-    if (changeElem) {
-      const startP = data[0].price;
-      const endP = data[data.length - 1].price;
-      const diffPct = (((endP - startP) / startP) * 100).toFixed(2);
-      const prefix = diffPct >= 0 ? '+' : '';
-      changeElem.textContent = `${prefix}${diffPct}% (${range})`;
-      changeElem.className = `chart-badge ${diffPct >= 0 ? 'badge-green' : 'badge-red'}`;
-    }
+    if (currentElem) currentElem.textContent = currentText;
+    if (changeElem) { changeElem.textContent = changeText; changeElem.className = changeClass; }
+
+    // Currency chart overlay header (modal)
+    const overlayCurrent = document.getElementById('cc-current');
+    const overlayChange = document.getElementById('cc-change');
+    if (overlayCurrent) overlayCurrent.textContent = currentText;
+    if (overlayChange) { overlayChange.textContent = changeText; overlayChange.className = changeClass; }
   }
 }
 
@@ -3871,6 +4085,15 @@ class ToolsManager {
             <p data-i18n="tool_loan_desc">Monthly mortgage & loan payments</p>
           </div>
         </div>
+        <div class="tool-card" data-tool="currency">
+          <div class="tool-icon">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16.2 7.8l-2 6.3-6.4 2.1 2-6.3z"/></svg>
+          </div>
+          <div class="tool-info">
+            <h4 data-i18n="tool_convert">Currency Converter</h4>
+            <p data-i18n="tool_convert_desc">Convert Toman, USD, EUR & more</p>
+          </div>
+        </div>
       </div>
 
       <!-- Tool Workspace Container -->
@@ -3896,6 +4119,11 @@ class ToolsManager {
     const workspace = document.getElementById('tool-workspace');
     if (!workspace) return;
 
+    // Sync active tool card highlight (also used when opening from Home quick action)
+    document.querySelectorAll('.tool-card').forEach(c => {
+      c.classList.toggle('active', c.getAttribute('data-tool') === toolName);
+    });
+
     switch (toolName) {
       case 'calculator':
         this.renderStandardCalculator(workspace);
@@ -3914,6 +4142,9 @@ class ToolsManager {
         break;
       case 'loan':
         this.renderLoanCalculator(workspace);
+        break;
+      case 'currency':
+        this.renderCurrencyConverter(workspace);
         break;
     }
   }
@@ -4367,6 +4598,82 @@ class ToolsManager {
     });
     calc();
   }
+
+  // ================= 7. CURRENCY CONVERTER =================
+  renderCurrencyConverter(container) {
+    const rates = window.currency ? window.currency.rates : {};
+    const codes = Object.keys(rates).filter(c => c !== 'IRT');
+
+    container.innerHTML = `
+      <div class="tool-sheet-card">
+        <h3 class="tool-sheet-title" data-i18n="tool_convert">Currency Converter</h3>
+
+        <div class="converter-row">
+          <div class="conv-field">
+            <label data-i18n="from_currency">From</label>
+            <select id="tool-conv-from" class="tool-select">
+              <option value="IRT" selected>🇮🇷 ${window.i18n ? window.i18n.t('curr_IRT') : 'IRT - Toman'}</option>
+              ${codes.map(c => `<option value="${c}">${rates[c].flag} ${c} - ${window.i18n ? window.i18n.t('curr_' + c) : rates[c].name}</option>`).join('')}
+            </select>
+          </div>
+
+          <button class="btn-swap-curr" id="tool-conv-swap" title="Swap">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+
+          <div class="conv-field">
+            <label data-i18n="to_currency">To</label>
+            <select id="tool-conv-to" class="tool-select">
+              <option value="IRT">🇮🇷 ${window.i18n ? window.i18n.t('curr_IRT') : 'IRT - Toman'}</option>
+              ${codes.map(c => `<option value="${c}" ${c === 'USD' ? 'selected' : ''}>${rates[c].flag} ${c} - ${window.i18n ? window.i18n.t('curr_' + c) : rates[c].name}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+
+        <div class="tool-input-row">
+          <label data-i18n="amount">Amount</label>
+          <input type="number" id="tool-conv-amount" class="tool-input" value="100" />
+        </div>
+
+        <div class="tool-result-box">
+          <span class="result-label" data-i18n="converted_amount">Converted Value:</span>
+          <span class="result-value" id="tool-conv-result">...</span>
+        </div>
+
+        <p class="rate-disclaimer" data-i18n="rate_disclaimer">Real online exchange rates calibrated to open Toman market.</p>
+      </div>
+    `;
+
+    if (window.i18n) window.i18n.translateDOM();
+
+    const fromSelect = container.querySelector('#tool-conv-from');
+    const toSelect = container.querySelector('#tool-conv-to');
+    const amountInput = container.querySelector('#tool-conv-amount');
+    const swapBtn = container.querySelector('#tool-conv-swap');
+    const resultDisplay = container.querySelector('#tool-conv-result');
+
+    const runConv = () => {
+      const from = fromSelect.value;
+      const to = toSelect.value;
+      const amount = parseFloat(amountInput.value) || 0;
+      const converted = window.currency ? window.currency.convert(amount, from, to) : 0;
+      resultDisplay.textContent = window.i18n ? window.i18n.formatCurrency(converted, to, true) : `${converted.toFixed(2)} ${to}`;
+    };
+
+    [fromSelect, toSelect, amountInput].forEach(el => {
+      el.addEventListener('input', runConv);
+      el.addEventListener('change', runConv);
+    });
+
+    swapBtn.addEventListener('click', () => {
+      const temp = fromSelect.value;
+      fromSelect.value = toSelect.value;
+      toSelect.value = temp;
+      runConv();
+    });
+
+    runConv();
+  }
 }
 
 // Global instance
@@ -4705,7 +5012,10 @@ class WalioApp {
     if (qaTransfer) qaTransfer.addEventListener('click', () => this.openTransactionModal('transfer'));
 
     const qaConvert = container.querySelector('#qa-convert');
-    if (qaConvert) qaConvert.addEventListener('click', () => this.switchTab('currency'));
+    if (qaConvert) qaConvert.addEventListener('click', () => {
+      this.switchTab('tools');
+      if (window.toolsManager) window.toolsManager.openTool('currency');
+    });
 
     const qaNewWallet = container.querySelector('#qa-new-wallet');
     if (qaNewWallet) qaNewWallet.addEventListener('click', () => {
@@ -4871,8 +5181,6 @@ class WalioApp {
 
     const rates = window.currency.rates;
     const codes = Object.keys(rates).filter(c => c !== 'IRT');
-    const activeCode = window.currency.activeChartCurrency || 'USD';
-    const activeRange = window.currency.activeTimeRange || '1M';
     const isLive = window.currency.isLive;
 
     const statusDot = isLive
@@ -4896,101 +5204,45 @@ class WalioApp {
         </div>
       </div>
 
-      <!-- Price Trend Chart Section -->
-      <div class="currency-chart-card">
-        <div class="chart-top-bar">
-          <div>
-            <div class="chart-currency-label" id="chart-header-code">${window.i18n ? window.i18n.t('curr_' + activeCode) : activeCode}</div>
-            <div class="chart-current-price" id="chart-header-current">...</div>
-          </div>
-          <div id="chart-header-change" class="chart-badge">...</div>
-        </div>
-
-        <div class="chart-currency-tabs">
-          ${codes.slice(0, 7).map(c => `
-            <button class="curr-tab-pill ${c === activeCode ? 'active' : ''}" data-curr="${c}">${c}</button>
-          `).join('')}
-        </div>
-
-        <div id="currency-svg-chart-container" class="svg-chart-container"></div>
-
-        <div class="time-range-tabs">
-          ${['1D', '1W', '1M', '3M', '1Y'].map(r => `
-            <button class="time-range-pill ${r === activeRange ? 'active' : ''}" data-range="${r}">${window.i18n ? window.i18n.t('time_' + r.toLowerCase()) : r}</button>
-          `).join('')}
-        </div>
+      <!-- Currency Cards (each currency in its own big box) -->
+      <div class="currency-section-header">
+        <h3 class="card-section-title" data-i18n="rates_table_title">All Currencies vs Iranian Toman</h3>
+        <p class="rate-disclaimer" data-i18n="currency_cards_hint">Tap a currency to view its price chart.</p>
       </div>
 
-      <!-- Currency Converter Card -->
-      <div class="currency-converter-card">
-        <h3 class="card-section-title" data-i18n="currency_converter">Currency Converter</h3>
-        
-        <div class="converter-row">
-          <div class="conv-field">
-            <label data-i18n="from_currency">From</label>
-            <select id="conv-from-select" class="tool-select">
-              <option value="IRT" selected>🇮🇷 IRT - Toman</option>
-              ${codes.map(c => `<option value="${c}">${rates[c].flag} ${c} - ${rates[c].name}</option>`).join('')}
-            </select>
-          </div>
-
-          <button class="btn-swap-curr" id="btn-swap-curr" title="Swap">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-          </button>
-
-          <div class="conv-field">
-            <label data-i18n="to_currency">To</label>
-            <select id="conv-to-select" class="tool-select">
-              <option value="IRT">🇮🇷 IRT - Toman</option>
-              ${codes.map(c => `<option value="${c}" ${c === 'USD' ? 'selected' : ''}>${rates[c].flag} ${c} - ${rates[c].name}</option>`).join('')}
-            </select>
-          </div>
-        </div>
-
-        <div class="converter-input-row">
-          <div>
-            <label data-i18n="amount">Amount</label>
-            <input type="number" id="conv-amount" class="tool-input" value="100" />
-          </div>
-          <div>
-            <label data-i18n="converted_amount">Converted Value</label>
-            <div class="converted-result-display" id="conv-result">...</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- All Exchange Rates Table -->
-      <div class="rates-table-card">
-        <h3 class="card-section-title">All Currencies vs Iranian Toman</h3>
-        <p class="rate-disclaimer" data-i18n="rate_disclaimer">Real online exchange rates calibrated to open Toman market.</p>
-
-        <div class="rates-list">
-          ${codes.map(code => {
-            const rate = rates[code];
-            const isPos = rate.change >= 0;
-            return `
-              <div class="rate-row" data-code="${code}">
-                <div class="rate-row-left">
-                  <span class="curr-flag-emoji-lg">${rate.flag}</span>
-                  <div>
-                    <div class="curr-code">${code}</div>
-                    <div class="curr-name">${window.i18n ? window.i18n.t('curr_' + code) : rate.name}</div>
-                  </div>
-                </div>
-                <div class="rate-row-right">
-                  <div class="curr-price">${window.i18n ? window.i18n.formatCurrency(rate.rate, 'IRT') : rate.rate}</div>
-                  <div class="curr-badge ${isPos ? 'badge-green' : 'badge-red'}">${isPos ? '+' : ''}${rate.change}%</div>
+      <div class="currency-cards-grid" id="currency-cards-grid">
+        ${codes.map(code => {
+          const rate = rates[code];
+          const isPos = rate.change >= 0;
+          return `
+            <div class="currency-card" data-code="${code}" role="button" tabindex="0">
+              <div class="currency-card-left">
+                <span class="currency-card-flag">${rate.flag}</span>
+                <div class="currency-card-head">
+                  <div class="currency-card-code">${code}</div>
+                  <div class="currency-card-name">${window.i18n ? window.i18n.t('curr_' + code) : rate.name}</div>
                 </div>
               </div>
-            `;
-          }).join('')}
-        </div>
+              <div class="currency-card-right">
+                <div class="currency-card-price">${window.i18n ? window.i18n.formatCurrency(rate.rate, 'IRT') : rate.rate}</div>
+                <div class="currency-card-change">
+                  <span class="curr-badge ${isPos ? 'badge-green' : 'badge-red'}">${isPos ? '+' : ''}${rate.change}%</span>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('')}
       </div>
     `;
 
     if (window.i18n) window.i18n.translateDOM();
 
-    window.currency.renderChart('currency-svg-chart-container', activeCode, activeRange);
+    container.querySelectorAll('.currency-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const code = card.getAttribute('data-code');
+        this.openCurrencyChart(code);
+      });
+    });
 
     const refreshBtn = container.querySelector('#btn-refresh-rates');
     if (refreshBtn) {
@@ -5004,58 +5256,39 @@ class WalioApp {
         }
       });
     }
+  }
 
-    const currPills = container.querySelectorAll('.curr-tab-pill');
-    currPills.forEach(pill => {
-      pill.addEventListener('click', () => {
-        currPills.forEach(p => p.classList.remove('active'));
-        pill.classList.add('active');
-        const code = pill.getAttribute('data-curr');
-        window.currency.activeChartCurrency = code;
-        const codeElem = document.getElementById('chart-header-code');
-        if (codeElem) codeElem.textContent = window.i18n ? window.i18n.t('curr_' + code) : code;
-        window.currency.renderChart('currency-svg-chart-container', code, window.currency.activeTimeRange);
-      });
+  openCurrencyChart(code) {
+    const overlay = document.getElementById('currency-chart-overlay');
+    if (!overlay || !window.currency) return;
+
+    const rate = window.currency.getRate(code);
+    window.currency.activeChartCurrency = code;
+
+    const flagEl = document.getElementById('cc-flag');
+    const codeEl = document.getElementById('cc-code');
+    const nameEl = document.getElementById('cc-name');
+    if (flagEl) flagEl.textContent = rate.flag || '🌐';
+    if (codeEl) codeEl.textContent = code;
+    if (nameEl) nameEl.textContent = window.i18n ? window.i18n.t('curr_' + code) : rate.name;
+
+    const pills = overlay.querySelectorAll('.time-range-pill');
+    pills.forEach(p => {
+      p.classList.toggle('active', p.getAttribute('data-range') === window.currency.activeTimeRange);
     });
 
-    const rangePills = container.querySelectorAll('.time-range-pill');
-    rangePills.forEach(pill => {
-      pill.addEventListener('click', () => {
-        rangePills.forEach(p => p.classList.remove('active'));
-        pill.classList.add('active');
-        const range = pill.getAttribute('data-range');
-        window.currency.activeTimeRange = range;
-        window.currency.renderChart('currency-svg-chart-container', window.currency.activeChartCurrency, range);
-      });
-    });
+    window.currency.renderChart('currency-overlay-chart-container', code, window.currency.activeTimeRange);
 
-    const fromSelect = container.querySelector('#conv-from-select');
-    const toSelect = container.querySelector('#conv-to-select');
-    const amountInput = container.querySelector('#conv-amount');
-    const swapBtn = container.querySelector('#btn-swap-curr');
-    const resultDisplay = container.querySelector('#conv-result');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
 
-    const runConv = () => {
-      const from = fromSelect.value;
-      const to = toSelect.value;
-      const amount = parseFloat(amountInput.value) || 0;
-      const converted = window.currency.convert(amount, from, to);
-      resultDisplay.textContent = window.i18n ? window.i18n.formatCurrency(converted, to, true) : `${converted.toFixed(2)} ${to}`;
-    };
-
-    [fromSelect, toSelect, amountInput].forEach(el => {
-      el.addEventListener('input', runConv);
-      el.addEventListener('change', runConv);
-    });
-
-    swapBtn.addEventListener('click', () => {
-      const temp = fromSelect.value;
-      fromSelect.value = toSelect.value;
-      toSelect.value = temp;
-      runConv();
-    });
-
-    runConv();
+  closeCurrencyChart() {
+    const overlay = document.getElementById('currency-chart-overlay');
+    if (overlay) {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
   }
 
   // ================= PROFILE & SETTINGS =================
@@ -5128,8 +5361,8 @@ class WalioApp {
         <div class="setting-item">
           <span data-i18n="language">Language</span>
           <div class="lang-pill-selector">
-            <button class="lang-btn ${currentLang === 'fa' ? 'active' : ''}" data-lang="fa">فارسی</button>
-            <button class="lang-btn ${currentLang === 'en' ? 'active' : ''}" data-lang="en">English</button>
+            <button class="lang-btn ${currentLang === 'fa' ? 'active' : ''}" data-lang="fa" data-i18n="lang_name_fa">فارسی</button>
+            <button class="lang-btn ${currentLang === 'en' ? 'active' : ''}" data-lang="en" data-i18n="lang_name_en">English</button>
           </div>
         </div>
       </div>
@@ -5231,7 +5464,7 @@ class WalioApp {
           const reader = new FileReader();
           reader.onload = (event) => {
             if (window.storage.importData(event.target.result)) {
-              alert('Backup restored successfully!');
+              alert(window.i18n ? window.i18n.t('backup_restored') : 'Backup restored successfully!');
             }
           };
           reader.readAsText(file);
@@ -5307,6 +5540,24 @@ class WalioApp {
       saveWalletBtn.addEventListener('click', () => {
         if (window.walletManager) window.walletManager.saveWalletFromModal();
         document.body.style.overflow = '';
+      });
+    }
+
+    const closeChartBtn = document.getElementById('close-currency-chart');
+    if (closeChartBtn) {
+      closeChartBtn.addEventListener('click', () => this.closeCurrencyChart());
+    }
+
+    const chartOverlay = document.getElementById('currency-chart-overlay');
+    if (chartOverlay) {
+      chartOverlay.querySelectorAll('.time-range-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          chartOverlay.querySelectorAll('.time-range-pill').forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          const range = pill.getAttribute('data-range');
+          window.currency.activeTimeRange = range;
+          window.currency.renderChart('currency-overlay-chart-container', window.currency.activeChartCurrency, range);
+        });
       });
     }
 
@@ -5448,5 +5699,5 @@ window.addEventListener('DOMContentLoaded', () => {
   window.walioApp.init();
 });
 
-  </script></body>
+  </script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a1fead7b1f23e3',t:'MTc4NjU2NDA3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
