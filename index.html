@@ -13,8 +13,8 @@
   <meta name="theme-color" content="#4F46E5">
   
   <!-- Icons -->
-  <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
-  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="icon" type="image/png" href="1.png">
+  <link rel="apple-touch-icon" href="1.png">
 
   <!-- All CSS inlined below -->
   <style>
@@ -220,24 +220,6 @@ input, select, textarea {
   gap: 12px;
 }
 
-.header-logo-wrap {
-  width: 40px;
-  height: 40px;
-  border-radius: 13px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--chip-bg);
-  border: 1px solid var(--border-subtle);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-}
-
-.header-logo-icon {
-  width: 30px;
-  height: 30px;
-}
-
 .header-titles {
   display: flex;
   flex-direction: column;
@@ -284,6 +266,17 @@ input, select, textarea {
 
 .header-user-avatar svg {
   stroke: #fff;
+}
+
+.header-user-avatar {
+  overflow: hidden;
+}
+
+.header-user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* ================= MAIN CONTENT VIEWS ================= */
@@ -1656,6 +1649,45 @@ body.rtl-mode .btn-zero {
   box-shadow: 0 4px 16px var(--accent-glow);
 }
 
+.profile-avatar-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.profile-avatar-wrap {
+  cursor: pointer;
+}
+
+.profile-avatar-badge {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2.5px solid var(--bg-sub);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+body.rtl-mode .profile-avatar-badge {
+  right: auto;
+  left: -2px;
+}
+
+.profile-photo-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
 .profile-identity h4 {
   font-size: 18px;
   font-weight: 700;
@@ -2168,9 +2200,6 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
       <!-- TOP HEADER -->
       <header class="app-header">
         <div class="header-left">
-          <div class="header-logo-wrap" title="Walio Logo">
-            <img src="assets/icons/logo.svg" class="header-logo-icon" alt="Walio">
-          </div>
           <div class="header-titles">
             <span class="header-greeting-text" id="header-greeting-text" data-i18n="greeting_morning">صبح بخیر،</span>
             <span class="header-user-name" id="header-user-name">User</span>
@@ -2421,6 +2450,29 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
 
   <!-- All JS inlined below (single script) -->
   <script>
+/* ==================== localStorage fallback (in-memory for sandboxed previews) ==================== */
+(function () {
+  try {
+    var t = '__walio_test__';
+    localStorage.setItem(t, '1');
+    localStorage.removeItem(t);
+    return;
+  } catch (e) { /* localStorage unavailable -> use in-memory shim */ }
+
+  var mem = {};
+  var fake = {
+    getItem: function (k) { return Object.prototype.hasOwnProperty.call(mem, k) ? mem[k] : null; },
+    setItem: function (k, v) { mem[k] = String(v); },
+    removeItem: function (k) { delete mem[k]; },
+    clear: function () { mem = {}; }
+  };
+  try {
+    Object.defineProperty(window, 'localStorage', { configurable: true, value: fake });
+  } catch (e2) {
+    try { window.localStorage = fake; } catch (e3) { /* ignore */ }
+  }
+})();
+
 /* ==================== i18n.js ==================== */
 /**
  * Walio - i18n Translation & Localization Engine
@@ -2610,6 +2662,10 @@ const translations = {
     profile_updated: "Profile saved successfully!",
     backup_restored: "Backup restored successfully!",
     avatar_presets: "Or choose a preset avatar:",
+    change_photo: "Change Photo",
+    remove_photo: "Remove Photo",
+    photo_updated: "Profile photo updated successfully!",
+    photo_removed: "Profile photo removed.",
     onboarding_lang_label: "Language",
 
     // Onboarding
@@ -2822,6 +2878,10 @@ const translations = {
     profile_updated: "اطلاعات پروفایل با موفقیت ذخیره شد!",
     backup_restored: "فایل پشتیبان با موفقیت بازیابی شد.",
     avatar_presets: "یا انتخاب از آواتارهای پیش‌فرض:",
+    change_photo: "تغییر عکس",
+    remove_photo: "حذف عکس",
+    photo_updated: "عکس پروفایل با موفقیت به‌روزرسانی شد!",
+    photo_removed: "عکس پروفایل حذف شد.",
     onboarding_lang_label: "زبان / Language:",
 
     // Onboarding
@@ -4789,6 +4849,16 @@ class WalioApp {
       else if (hour >= 17) key = 'greeting_evening';
       greetingPrefix.textContent = window.i18n ? window.i18n.t(key) : 'Hello,';
     }
+
+    // Show the uploaded profile photo in the top header avatar (if any)
+    const headerAvatar = document.getElementById('header-user-avatar');
+    if (headerAvatar) {
+      if (profile.avatar) {
+        headerAvatar.innerHTML = `<img src="${profile.avatar}" alt="${profile.name || 'User'}" />`;
+      } else {
+        headerAvatar.innerHTML = `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+      }
+    }
   }
 
   // ================= HOME DASHBOARD =================
@@ -5256,15 +5326,29 @@ class WalioApp {
       <!-- Profile Edit Card -->
       <div class="profile-card-sheet">
         <div class="profile-photo-row">
-          <div class="profile-avatar-wrap">
-            <div class="profile-avatar-icon">
-              <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <div class="profile-avatar-wrap" id="profile-avatar-wrap" role="button" tabindex="0" title="${window.i18n ? window.i18n.t('change_photo') : 'Change Photo'}">
+            <div class="profile-avatar-icon" id="profile-avatar-icon">
+              ${profile.avatar
+                ? `<img src="${profile.avatar}" alt="Profile photo" />`
+                : `<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`}
+            </div>
+            <div class="profile-avatar-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
             </div>
           </div>
           <div class="profile-identity">
-            <h4>${profile.name}</h4>
-            <span>${profile.username}</span>
+            <h4 id="profile-identity-name">${profile.name}</h4>
+            <span id="profile-identity-username">${profile.username}</span>
           </div>
+        </div>
+
+        <div class="profile-photo-actions">
+          <button class="btn-secondary" id="btn-change-photo">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <span data-i18n="change_photo">Change Photo</span>
+          </button>
+          <button class="btn-secondary" id="btn-remove-photo" data-i18n="remove_photo" ${profile.avatar ? '' : 'style="display:none;"'}>Remove Photo</button>
+          <input type="file" id="profile-photo-input" accept="image/*" style="display:none;" />
         </div>
 
         <div class="tool-input-row">
@@ -5327,11 +5411,21 @@ class WalioApp {
         const name = container.querySelector('#prof-input-name').value.trim() || 'User';
         const username = container.querySelector('#prof-input-user').value.trim() || '@user';
 
-        window.storage.saveProfile({
+        const currentProfile = window.storage.getProfile();
+        const updated = {
           name,
           username,
-          currency: profile.currency || 'IRT'
-        });
+          currency: currentProfile.currency || 'IRT'
+        };
+        if (currentProfile.avatar) updated.avatar = currentProfile.avatar;
+
+        window.storage.saveProfile(updated);
+
+        const nameEl = container.querySelector('#profile-identity-name');
+        const userEl = container.querySelector('#profile-identity-username');
+        if (nameEl) nameEl.textContent = name;
+        if (userEl) userEl.textContent = username;
+        this.updateHeaderProfile();
 
         alert(window.i18n ? window.i18n.t('profile_updated') : 'Profile saved successfully!');
       });
@@ -5356,6 +5450,32 @@ class WalioApp {
         }
       });
     });
+
+    // --- Profile photo upload ---
+    const photoInput = container.querySelector('#profile-photo-input');
+    const changePhotoBtn = container.querySelector('#btn-change-photo');
+    const removePhotoBtn = container.querySelector('#btn-remove-photo');
+    const avatarWrap = container.querySelector('#profile-avatar-wrap');
+
+    if (photoInput && changePhotoBtn) {
+      changePhotoBtn.addEventListener('click', () => photoInput.click());
+    }
+    if (photoInput && avatarWrap) {
+      avatarWrap.addEventListener('click', () => photoInput.click());
+      avatarWrap.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); photoInput.click(); }
+      });
+    }
+    if (photoInput) {
+      photoInput.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) this.handleProfilePhoto(file);
+        photoInput.value = '';
+      });
+    }
+    if (removePhotoBtn) {
+      removePhotoBtn.addEventListener('click', () => this.removeProfilePhoto());
+    }
 
     const expBtn = container.querySelector('#btn-export-data');
     if (expBtn) expBtn.addEventListener('click', () => window.storage.exportData());
@@ -5395,6 +5515,83 @@ class WalioApp {
           window.storage.resetAllData();
         }
       });
+    }
+  }
+
+  // ================= PROFILE PHOTO =================
+  handleProfilePhoto(file) {
+    if (!file) return;
+    if (!file.type || file.type.indexOf('image/') !== 0) {
+      alert(window.i18n ? (window.i18n.currentLang === 'fa' ? 'لطفاً یک فایل تصویری انتخاب کنید' : 'Please choose an image file') : 'Please choose an image file');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        // Downscale & compress so it fits comfortably in localStorage
+        const maxDim = 320;
+        let w = img.naturalWidth || img.width;
+        let h = img.naturalHeight || img.height;
+        if (w > h) {
+          if (w > maxDim) { h = Math.round(h * maxDim / w); w = maxDim; }
+        } else {
+          if (h > maxDim) { w = Math.round(w * maxDim / h); h = maxDim; }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+
+        let mime = 'image/jpeg';
+        if (canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0) {
+          mime = 'image/webp';
+        } else if (file.type === 'image/png') {
+          mime = 'image/png';
+        }
+
+        const dataUrl = canvas.toDataURL(mime, 0.85);
+
+        const profile = window.storage.getProfile();
+        profile.avatar = dataUrl;
+        window.storage.saveProfile(profile);
+
+        this.updateProfilePhotoUI();
+        alert(window.i18n ? window.i18n.t('photo_updated') : 'Profile photo updated successfully!');
+      };
+      img.onerror = () => {
+        alert(window.i18n ? (window.i18n.currentLang === 'fa' ? 'خطا در بارگذاری تصویر' : 'Could not load the image') : 'Could not load the image');
+      };
+      img.src = e.target.result;
+    };
+    reader.onerror = () => {
+      alert(window.i18n ? (window.i18n.currentLang === 'fa' ? 'خطا در خواندن فایل' : 'Could not read the file') : 'Could not read the file');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  removeProfilePhoto() {
+    const profile = window.storage.getProfile();
+    delete profile.avatar;
+    window.storage.saveProfile(profile);
+    this.updateProfilePhotoUI();
+    alert(window.i18n ? window.i18n.t('photo_removed') : 'Profile photo removed.');
+  }
+
+  updateProfilePhotoUI() {
+    const profile = window.storage.getProfile();
+    const iconEl = document.getElementById('profile-avatar-icon');
+    if (iconEl) {
+      iconEl.innerHTML = profile.avatar
+        ? `<img src="${profile.avatar}" alt="Profile photo" />`
+        : `<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+    }
+    const removeBtn = document.getElementById('btn-remove-photo');
+    if (removeBtn) {
+      removeBtn.style.display = profile.avatar ? '' : 'none';
     }
   }
 
@@ -5603,5 +5800,5 @@ window.addEventListener('DOMContentLoaded', () => {
   window.walioApp.init();
 });
 
-  </script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a215dc2ea5aa31',t:'MTc4NjU2NTAyNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  </script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a215dc2ea5aa31',t:'MTc4NjU2NTAyNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a22ae3fc92f4d1',t:'MTc4NjU2NTg4OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
