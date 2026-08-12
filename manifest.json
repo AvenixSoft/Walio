@@ -1,5 +1,5 @@
 {
-  "name": "Walio - Personal Finance",
+  "name": "Walio",
   "short_name": "Walio",
   "description": "Mobile-first personal finance and currency tracker PWA inspired by iOS 26.",
   "start_url": "./index.html",
@@ -10,25 +10,25 @@
   "categories": ["finance", "utilities"],
   "icons": [
     {
-      "src": "assets/icons/icon-192.png",
+      "src": "1.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "assets/icons/icon-512.png",
+      "src": "2.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "assets/icons/icon-192.svg",
+      "src": "1.png",
       "sizes": "192x192",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "assets/icons/icon-512.svg",
+      "src": "1.png",
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any"
