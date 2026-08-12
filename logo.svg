@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Left loop cyan/blue gradient -->
+    <linearGradient id="leftRibbon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00D2FF"/>
+      <stop offset="50%" stop-color="#0080FF"/>
+      <stop offset="100%" stop-color="#3A47D5"/>
+    </linearGradient>
+
+    <!-- Center/Right wallet pocket blue to deep violet gradient -->
+    <linearGradient id="walletPocket" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2F80ED"/>
+      <stop offset="55%" stop-color="#5B247A"/>
+      <stop offset="100%" stop-color="#1B1464"/>
+    </linearGradient>
+
+    <!-- Neon Emerald Green chart bars gradient -->
+    <linearGradient id="chartBars" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="40%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#34D399"/>
+    </linearGradient>
+
+    <!-- Subtle drop shadow -->
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+    <filter id="glowGreen" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#10B981" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background rounded app icon shape (optional dark indigo/navy background for standalone icon) -->
+  <rect width="512" height="512" rx="124" fill="#0A0E1A"/>
+  <rect width="508" height="508" x="2" y="2" rx="122" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="4"/>
+
+  <!-- THREE ASCENDING GREEN FINANCIAL BAR CHART BARS -->
+  <g filter="url(#glowGreen)">
+    <!-- Bar 1 (Left, shortest) -->
+    <rect x="254" y="165" width="24" height="68" rx="12" fill="url(#chartBars)" transform="rotate(18 266 199)"/>
+    <!-- Bar 2 (Middle, medium) -->
+    <rect x="288" y="135" width="24" height="98" rx="12" fill="url(#chartBars)" transform="rotate(18 300 184)"/>
+    <!-- Bar 3 (Right, tallest) -->
+    <rect x="322" y="102" width="24" height="132" rx="12" fill="url(#chartBars)" transform="rotate(18 334 168)"/>
+  </g>
+
+  <!-- THE 'W' RIBBON & WALLET POCKET BODY -->
+  <g filter="url(#shadow)">
+    <!-- Left Loop of W -->
+    <path d="M 120 220 
+             C 105 270, 110 335, 148 365 
+             C 186 395, 235 385, 258 338 
+             L 282 288 
+             L 236 242 
+             L 212 286 
+             C 198 312, 172 316, 158 300 
+             C 144 284, 148 250, 162 220 
+             Z" 
+          fill="url(#leftRibbon)"/>
+
+    <!-- Right Loop / Wallet Pocket of W -->
+    <path d="M 236 242
+             L 282 288
+             C 305 338, 355 355, 388 322
+             C 422 288, 412 232, 382 198
+             L 272 238
+             Z"
+          fill="url(#walletPocket)"/>
+
+    <!-- Wallet Pocket upper flap overlap / card sheen -->
+    <path d="M 265 240 L 378 198 C 392 212, 400 232, 396 256 L 272 285 Z" 
+          fill="url(#leftRibbon)" opacity="0.35"/>
+  </g>
+
+  <!-- WALLET SNAP BUTTON / WHITE DOT -->
+  <circle cx="342" cy="272" r="14" fill="#FFFFFF" filter="url(#shadow)"/>
+  <circle cx="342" cy="272" r="8" fill="#E2E8F0"/>
+</svg>
