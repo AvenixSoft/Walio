@@ -3964,235 +3964,234 @@ body.rtl-mode .home-overview-hero::before {
   font-size: 8.5px;
 }
 
-/* Home quick actions */
-.home-quick-section { margin-bottom: 24px; }
-.home-quick-title {
-  margin-bottom: 10px;
-  color: var(--text-primary);
-  font-size: 13px;
-  font-weight: 750;
-}
+/* Home quick actions — bento */
+.home-quick-section { margin-bottom: 26px; }
 
-.home-quick-card {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 5px;
-  padding: 8px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-glass);
-  border-radius: 22px;
-  box-shadow: 0 9px 26px rgba(15,23,42,.06), inset 0 1px 0 rgba(255,255,255,.42);
-}
-
-.home-quick-action {
-  min-width: 0;
-  min-height: 74px;
+.home-quick-bento {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  padding: 7px 3px;
-  color: var(--text-secondary);
-  border-radius: 16px;
-  font-size: 9.5px;
-  font-weight: 700;
+  gap: 9px;
 }
 
-.home-quick-action:hover { background: var(--chip-bg); }
-.home-quick-action:active { transform: scale(.96); }
-.home-quick-action span:last-child {
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.home-quick-icon {
-  width: 38px;
-  height: 38px;
-  display: grid;
-  place-items: center;
-  color: #4F46E5;
-  background: rgba(79,70,229,.11);
-  border-radius: 13px;
-}
-
-.home-quick-action[data-tone="green"] .home-quick-icon { color: #059669; background: rgba(16,185,129,.11); }
-.home-quick-action[data-tone="blue"] .home-quick-icon { color: #0284C7; background: rgba(14,165,233,.11); }
-.home-quick-action[data-tone="amber"] .home-quick-icon { color: #D97706; background: rgba(245,158,11,.12); }
-
-/* Wallet cards shared by Home and Wallets */
-.wallet-card-2026 {
-  min-width: 0;
-  height: 178px;
-  padding: 16px 17px;
-  border-radius: 25px;
-  border: 1px solid rgba(255,255,255,.22);
-  box-shadow: 0 14px 29px rgba(15,23,42,.22), inset 0 1px 0 rgba(255,255,255,.18);
+.home-quick-primary {
+  position: relative;
   isolation: isolate;
+  overflow: hidden;
+  min-height: 88px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 15px 14px;
+  color: #fff;
+  text-align: inherit;
+  background:
+    radial-gradient(circle at 94% 8%, rgba(186, 230, 253, .28), transparent 32%),
+    radial-gradient(circle at 6% 110%, rgba(129, 140, 248, .28), transparent 38%),
+    linear-gradient(135deg, #4338CA 0%, #4F46E5 46%, #2563EB 100%);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 22px;
+  box-shadow: 0 16px 32px rgba(67, 56, 202, .24), inset 0 1px 0 rgba(255,255,255,.2);
 }
 
-.wallet-card-2026::before {
+.home-quick-primary::before {
   content: '';
   position: absolute;
   z-index: -1;
-  top: -72px;
-  right: -56px;
-  width: 178px;
-  height: 178px;
-  border: 1px solid rgba(255,255,255,.15);
+  width: 148px;
+  height: 148px;
+  right: -54px;
+  top: -70px;
+  border: 1px solid rgba(255,255,255,.14);
   border-radius: 50%;
-  box-shadow: 0 0 0 26px rgba(255,255,255,.035), 0 0 0 51px rgba(255,255,255,.02);
+  box-shadow: 0 0 0 22px rgba(255,255,255,.04), 0 0 0 44px rgba(255,255,255,.02);
 }
 
-body.rtl-mode .wallet-card-2026::before { right: auto; left: -56px; }
-
-.wallet-card-2026::after {
-  left: -80%;
-  width: 55%;
-  opacity: .7;
-  transition: transform .75s ease;
+body.rtl-mode .home-quick-primary::before {
+  right: auto;
+  left: -54px;
 }
 
-.wallet-card-2026:hover::after { transform: translateX(520%) skewX(-20deg); }
-.wallet-card-2026:hover { transform: translateY(-3px); }
+.home-quick-primary:hover { transform: translateY(-1px); }
+.home-quick-primary:active { transform: scale(.985); }
 
-.wallet-card-2026 .wallet-card-header {
-  position: relative;
-  z-index: 2;
-  align-items: flex-start;
-}
-
-.wallet-card-2026 .wallet-bank-tag { min-width: 0; gap: 9px; }
-.wallet-icon-shell {
-  width: 35px;
-  height: 35px;
+.home-quick-primary-icon {
+  width: 48px;
+  height: 48px;
   display: grid;
   place-items: center;
   flex: 0 0 auto;
-  background: rgba(255,255,255,.14);
-  border: 1px solid rgba(255,255,255,.13);
-  border-radius: 12px;
+  color: #fff;
+  background: rgba(255,255,255,.16);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 16px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
 
-.wallet-card-2026 .wallet-icon-emoji { font-size: 17px; }
-.wallet-bank-copy { min-width: 0; }
-.wallet-card-2026 .wallet-bank-name {
-  display: block;
-  max-width: 177px;
-  overflow: hidden;
-  font-size: 11.5px;
-  font-weight: 750;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.home-quick-primary-copy {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: start;
 }
 
-.wallet-card-2026 .wallet-kind {
-  display: block;
-  max-width: 175px;
-  margin-top: 1px;
-  overflow: hidden;
-  color: rgba(255,255,255,.65);
-  font-size: 8.5px;
-  font-weight: 550;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.home-quick-primary-copy strong {
+  color: #fff;
+  font-size: 15.5px;
+  font-weight: 800;
+  letter-spacing: -.3px;
 }
 
-.wallet-contactless {
-  width: 31px;
-  height: 31px;
+.home-quick-primary-copy em {
+  color: rgba(238,242,255,.74);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.home-quick-primary-cta {
+  width: 32px;
+  height: 32px;
   display: grid;
   place-items: center;
   flex: 0 0 auto;
-  color: rgba(255,255,255,.83);
-}
-
-.wallet-card-2026 .wallet-card-body {
-  position: relative;
-  z-index: 2;
-  margin-top: 17px;
-}
-
-.wallet-card-2026 .wallet-balance-label {
-  color: rgba(255,255,255,.61);
-  font-size: 8.5px;
-  font-weight: 650;
-  letter-spacing: .55px;
-}
-
-.wallet-card-2026 .wallet-balance-amount {
-  max-width: 88%;
-  margin-top: 1px;
-  overflow: hidden;
-  font-size: 20px;
-  font-weight: 850;
-  letter-spacing: -.45px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.wallet-card-2026 .wallet-card-footer {
-  position: relative;
-  z-index: 2;
-  color: rgba(255,255,255,.75);
-  font-size: 9px;
-}
-
-.wallet-card-2026 .wallet-number {
-  max-width: calc(100% - 48px);
-  overflow: hidden;
-  direction: ltr;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  letter-spacing: 1px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  unicode-bidi: isolate;
-}
-
-.wallet-card-currency {
-  min-width: 35px;
-  padding: 3px 7px;
   color: #fff;
-  background: rgba(255,255,255,.13);
-  border: 1px solid rgba(255,255,255,.10);
-  border-radius: 999px;
-  font-size: 8px;
-  font-weight: 800;
-  text-align: center;
+  background: rgba(255,255,255,.14);
+  border-radius: 11px;
 }
 
-.home-page-2026 .wallets-carousel {
+body.rtl-mode .home-quick-primary-cta svg { transform: scaleX(-1); }
+
+.home-quick-secondary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.home-quick-tile {
+  min-width: 0;
+  min-height: 108px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
   gap: 12px;
-  margin-inline: -2px;
-  padding: 2px 2px 13px;
-  scroll-padding-inline: 2px;
+  padding: 12px 11px 11px;
+  text-align: start;
+  background: var(--card-bg);
+  border: 1px solid var(--border-glass);
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(15,23,42,.05), inset 0 1px 0 rgba(255,255,255,.4);
+  transition: var(--transition-spring);
 }
 
-.home-page-2026 .wallets-carousel .wallet-card-2026 {
-  flex: 0 0 min(292px, calc(100vw - 62px));
-  scroll-snap-align: start;
+[data-theme="dark"] .home-quick-tile {
+  box-shadow: 0 10px 22px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.06);
+}
+
+.home-quick-tile:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+
+.home-quick-tile:active { transform: scale(.97); }
+
+.home-quick-tile-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+}
+
+.home-quick-tile[data-tone="green"] .home-quick-tile-icon {
+  color: #059669;
+  background: rgba(16,185,129,.13);
+}
+.home-quick-tile[data-tone="blue"] .home-quick-tile-icon {
+  color: #0284C7;
+  background: rgba(14,165,233,.13);
+}
+.home-quick-tile[data-tone="amber"] .home-quick-tile-icon {
+  color: #D97706;
+  background: rgba(245,158,11,.14);
+}
+
+.home-quick-tile-copy { min-width: 0; width: 100%; }
+
+.home-quick-tile-copy strong {
+  display: block;
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: -.2px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-quick-tile-copy em {
+  display: block;
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-size: 9.5px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 /* Home transaction panel */
-.home-transactions-panel,
-.home-market-panel {
+.home-transactions-panel {
   overflow: hidden;
   background: var(--card-bg);
   border: 1px solid var(--border-glass);
-  border-radius: 22px;
-  box-shadow: 0 9px 26px rgba(15,23,42,.055);
+  border-radius: 24px;
+  box-shadow: 0 10px 28px rgba(15,23,42,.055);
+}
+
+.home-tx-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.home-tx-count {
+  min-width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  color: var(--accent-primary);
+  background: rgba(79,70,229,.10);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.home-add-transaction {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: #fff;
+  background: var(--accent-primary);
+  border-radius: 11px;
+  box-shadow: 0 5px 13px var(--accent-glow);
 }
 
 .home-tx-controls {
   display: flex;
   flex-direction: column;
-  gap: 9px;
-  padding: 11px;
-  background: var(--result-bg);
+  gap: 8px;
+  padding: 12px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--result-bg) 88%, var(--accent-primary) 12%), var(--result-bg));
   border-bottom: 1px solid var(--border-subtle);
 }
 
@@ -4206,13 +4205,13 @@ body.rtl-mode .wallet-card-2026::before { right: auto; left: -56px; }
 }
 
 .home-tx-segments .filter-chip {
-  min-height: 31px;
-  padding: 0 5px;
+  min-height: 32px;
+  padding: 0 6px;
   color: var(--text-secondary);
   background: transparent;
   border: 0;
   border-radius: 10px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
 }
 
@@ -4231,15 +4230,14 @@ body.rtl-mode .wallet-card-2026::before { right: auto; left: -56px; }
   pointer-events: none;
   transform: translateY(-50%);
 }
-
 body.rtl-mode .home-tx-search svg { left: auto; right: 11px; }
 .home-tx-search .tx-search-input {
-  height: 37px;
+  height: 38px;
   padding: 0 12px 0 34px;
   background: var(--input-bg);
   border-color: var(--border-glass);
   border-radius: 12px;
-  font-size: 12px !important;
+  font-size: 12.5px !important;
   user-select: text;
 }
 body.rtl-mode .home-tx-search .tx-search-input { padding: 0 34px 0 12px; }
@@ -4250,105 +4248,391 @@ body.rtl-mode .home-tx-search .tx-search-input { padding: 0 34px 0 12px; }
 }
 
 .home-transactions-panel .transactions-list { gap: 0; }
-.home-transactions-panel .tx-item-card {
-  min-height: 70px;
-  padding: 11px 13px;
+
+.home-tx-day {
+  padding: 11px 16px 4px;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .45px;
+  text-transform: uppercase;
+}
+
+.home-tx-item {
+  --tx-accent: var(--accent-primary);
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 11px;
+  min-height: 76px;
+  padding: 12px 14px 12px 16px;
   background: transparent;
   border: 0;
   border-bottom: 1px solid var(--border-subtle);
   border-radius: 0;
 }
-.home-transactions-panel .tx-item-card:last-child { border-bottom: 0; }
-.home-transactions-panel .tx-item-card:hover { background: var(--chip-bg); }
-.home-transactions-panel .tx-item-left { gap: 10px; }
-.home-transactions-panel .tx-cat-icon { width: 40px; height: 40px; border-radius: 13px; }
-.home-transactions-panel .tx-cat-title { font-size: 12px; font-weight: 750; }
-.home-transactions-panel .tx-desc { max-width: 145px; font-size: 9.5px; }
-.home-transactions-panel .tx-amt { font-size: 11.5px; }
-.home-transactions-panel .tx-date { font-size: 8.5px; }
+
+.home-tx-item:last-child { border-bottom: 0; }
+.home-tx-item:hover { background: var(--chip-bg); }
+
+.home-tx-item::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  top: 18px;
+  bottom: 18px;
+  width: 3px;
+  border-radius: 999px;
+  background: var(--tx-accent);
+}
+
+.home-tx-item.is-income { --tx-accent: var(--color-green); }
+.home-tx-item.is-expense { --tx-accent: #F43F5E; }
+.home-tx-item.is-transfer { --tx-accent: #0EA5E9; }
+
+.home-tx-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 15px;
+  font-size: 20px;
+}
+
+.home-tx-main { min-width: 0; }
+
+.home-tx-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.home-tx-title {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-tx-type-chip {
+  flex: 0 0 auto;
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 750;
+}
+
+.home-tx-item.is-income .home-tx-type-chip {
+  color: var(--color-green);
+  background: var(--color-green-bg);
+}
+.home-tx-item.is-expense .home-tx-type-chip {
+  color: #E11D48;
+  background: var(--color-red-bg);
+}
+.home-tx-item.is-transfer .home-tx-type-chip {
+  color: #0284C7;
+  background: rgba(14,165,233,.12);
+}
+
+.home-tx-sub {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-size: 10.5px;
+}
+
+.home-tx-sub span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-tx-wallet-dot {
+  width: 3px;
+  height: 3px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--text-muted);
+  opacity: .55;
+}
+
+.home-tx-aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.home-tx-amount {
+  color: var(--text-primary);
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: -.2px;
+  white-space: nowrap;
+  direction: rtl;
+  unicode-bidi: isolate;
+}
+
+.home-tx-item.is-income .home-tx-amount { color: var(--color-green); }
+.home-tx-item.is-transfer .home-tx-amount { color: #0284C7; }
+
+.home-tx-aside-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.home-tx-date {
+  color: var(--text-muted);
+  font-size: 9.5px;
+  font-weight: 600;
+}
+
+.home-tx-item .tx-del-btn {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  opacity: .45;
+  border-radius: 7px;
+}
+
+.home-tx-item .tx-del-btn:hover {
+  opacity: 1;
+  color: var(--color-red);
+  background: var(--color-red-bg);
+}
+
+.home-tx-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 12px 13px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-subtle);
+  font-size: 10.5px;
+  font-weight: 650;
+}
+
 .home-transactions-panel .empty-state,
 .home-page-2026 .wallets-carousel .empty-state {
-  padding: 28px 17px;
+  padding: 30px 18px;
   background: transparent;
   border: 0;
 }
 
-.home-add-transaction {
-  width: 34px;
-  height: 34px;
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  color: #fff;
-  background: var(--accent-primary);
-  border-radius: 11px;
-  box-shadow: 0 5px 13px var(--accent-glow);
+.home-tx-empty {
+  padding: 28px 18px 26px;
+  text-align: center;
 }
 
-/* Home market cards */
-.home-market-panel {
-  display: flex;
-  gap: 9px;
-  padding: 11px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  scroll-snap-type: x mandatory;
+.home-tx-empty-icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 12px;
+  color: var(--accent-primary);
+  background: rgba(79,70,229,.10);
+  border-radius: 17px;
 }
-.home-market-panel::-webkit-scrollbar { display: none; }
-.home-market-item {
-  flex: 0 0 132px;
-  min-width: 0;
-  padding: 11px;
-  text-align: inherit;
-  background: var(--result-bg);
-  border: 1px solid var(--border-subtle);
-  border-radius: 16px;
-  scroll-snap-align: start;
+
+.home-tx-empty p {
+  max-width: 230px;
+  margin: 0 auto 14px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.65;
 }
-.home-market-item:hover { border-color: var(--border-hover); transform: translateY(-1px); }
-.home-market-item-top,
-.home-market-item-bottom {
+
+/* Home market snapshot */
+.home-market-sheet {
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--border-glass);
+  border-radius: 24px;
+  box-shadow: 0 10px 28px rgba(15,23,42,.055);
+}
+
+.home-market-status {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 7px;
+  gap: 10px;
+  padding: 11px 14px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--result-bg) 82%, #0EA5E9 18%), var(--result-bg));
+  border-bottom: 1px solid var(--border-subtle);
 }
-.home-market-identity { display: flex; align-items: center; gap: 7px; min-width: 0; }
+
+.home-market-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  color: var(--text-secondary);
+  font-size: 10.5px;
+  font-weight: 650;
+}
+
+.home-market-live > span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-market-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 0 0 rgba(16,185,129,.45);
+  animation: currency-live-pulse 2s infinite;
+}
+
+.home-market-dot.cached {
+  background: #F59E0B;
+  animation: none;
+  box-shadow: 0 0 0 4px rgba(245,158,11,.12);
+}
+
+.home-market-note {
+  flex: 0 0 auto;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.home-market-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-market-row {
+  width: 100%;
+  min-height: 74px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 62px auto;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  text-align: inherit;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background .2s ease, transform .2s ease;
+}
+
+.home-market-row:last-child { border-bottom: 0; }
+.home-market-row:hover {
+  background: var(--chip-bg);
+  transform: translateX(2px);
+}
+body.rtl-mode .home-market-row:hover { transform: translateX(-2px); }
+
+.home-market-identity {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
 .home-market-flag {
-  width: 31px;
-  height: 31px;
+  width: 42px;
+  height: 42px;
   display: grid;
   place-items: center;
   flex: 0 0 auto;
   background: var(--chip-bg);
-  border-radius: 10px;
-  font-size: 17px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  font-size: 22px;
+  line-height: 1;
 }
-.home-market-code { color: var(--text-primary); font-size: 11px; font-weight: 850; direction: ltr; }
+
+.home-market-meta { min-width: 0; }
+
+.home-market-code {
+  display: block;
+  color: var(--text-primary);
+  font-size: 13.5px;
+  font-weight: 850;
+  letter-spacing: .3px;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
 .home-market-name {
   display: block;
-  max-width: 61px;
+  max-width: 150px;
+  margin-top: 2px;
   overflow: hidden;
   color: var(--text-muted);
-  font-size: 7.5px;
+  font-size: 10px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.home-market-spark {
+  width: 62px;
+  height: 30px;
+  overflow: visible;
+}
+
+.home-market-values {
+  min-width: 0;
+  text-align: end;
+}
+
 .home-market-price {
   display: block;
-  margin: 11px 0 4px;
   overflow: hidden;
   color: var(--text-primary);
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 800;
+  letter-spacing: -.2px;
   text-overflow: ellipsis;
   white-space: nowrap;
+  direction: rtl;
+  unicode-bidi: isolate;
 }
-.home-market-change { font-size: 9px; font-weight: 750; direction: ltr; }
-.home-market-change.up { color: var(--color-green); }
-.home-market-change.down { color: var(--color-red); }
-.home-market-arrow { display: grid; place-items: center; color: var(--text-muted); }
-body.rtl-mode .home-market-arrow svg { transform: scaleX(-1); }
+
+.home-market-change {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 4px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 750;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.home-market-change.up {
+  color: var(--color-green);
+  background: var(--color-green-bg);
+}
+.home-market-change.down {
+  color: var(--color-red);
+  background: var(--color-red-bg);
+}
+
+@supports not (background: color-mix(in srgb, white 50%, black)) {
+  .home-tx-controls,
+  .home-market-status { background: var(--result-bg); }
+}
 
 /* Wallets page */
 .wallets-page-header {
@@ -4614,13 +4898,23 @@ body.rtl-mode .wallets-portfolio-hero::before { right: auto; left: -58px; }
   .home-hero-metric { padding: 8px; gap: 7px; }
   .home-metric-icon { width: 28px; height: 28px; }
   .home-metric-copy strong { font-size: 10.5px; }
-  .home-quick-card { padding: 6px; gap: 2px; }
-  .home-quick-action { min-height: 69px; font-size: 8.5px; }
-  .home-quick-icon { width: 35px; height: 35px; }
+  .home-quick-primary { min-height: 82px; padding: 13px 12px; gap: 10px; }
+  .home-quick-primary-icon { width: 42px; height: 42px; border-radius: 14px; }
+  .home-quick-primary-copy strong { font-size: 14px; }
+  .home-quick-tile { min-height: 98px; padding: 10px 9px; }
+  .home-quick-tile-copy strong { font-size: 11px; }
+  .home-quick-tile-copy em { font-size: 8.5px; }
   .home-page-2026 .wallets-carousel .wallet-card-2026 { flex-basis: calc(100vw - 47px); }
   .wallet-card-2026 .wallet-balance-amount { font-size: 18px; }
-  .home-transactions-panel .tx-desc { max-width: 105px; }
-  .home-transactions-panel .tx-amt { font-size: 10px; }
+  .home-tx-item { grid-template-columns: 40px minmax(0,1fr) auto; gap: 8px; padding-inline: 12px 10px; }
+  .home-tx-icon { width: 40px; height: 40px; border-radius: 13px; }
+  .home-tx-title { font-size: 12px; }
+  .home-tx-amount { font-size: 11px; }
+  .home-tx-type-chip { display: none; }
+  .home-market-row { grid-template-columns: minmax(0,1fr) auto; gap: 8px; padding-inline: 12px; }
+  .home-market-spark { display: none; }
+  .home-market-flag { width: 38px; height: 38px; font-size: 19px; }
+  .home-market-price { font-size: 11.5px; }
   .wallets-add-button span { display: none; }
   .wallets-add-button { width: 42px; padding: 0; }
   .wallets-summary-grid { gap: 5px; }
@@ -4964,6 +5258,15 @@ const translations = {
     quick_access: "Quick access",
     home_market_snapshot: "Market snapshot",
     market_short_note: "Open-market rates",
+    action_add_full: "New transaction",
+    quick_add_hint: "Record income or expense",
+    quick_transfer_hint: "Move between wallets",
+    quick_convert_hint: "Live FX converter",
+    quick_wallet_hint: "Add a card or cash",
+    latest_activity: "Latest activity",
+    today: "Today",
+    yesterday: "Yesterday",
+    tx_more_on_home: "Showing the latest 6",
 
     // Currency Page
     currency_title: "Live Currency & Rates",
@@ -5219,6 +5522,15 @@ const translations = {
     quick_access: "دسترسی سریع",
     home_market_snapshot: "نبض بازار",
     market_short_note: "نرخ بازار آزاد",
+    action_add_full: "تراکنش جدید",
+    quick_add_hint: "ثبت درآمد یا هزینه",
+    quick_transfer_hint: "جابه‌جایی بین کیف‌ پول‌ها",
+    quick_convert_hint: "تبدیل لحظه‌ای ارز",
+    quick_wallet_hint: "افزودن کارت یا نقد",
+    latest_activity: "آخرین فعالیت‌ها",
+    today: "امروز",
+    yesterday: "دیروز",
+    tx_more_on_home: "نمایش ۶ مورد اخیر",
 
     // Currency Page
     currency_title: "نرخ لحظه‌ای و واقعی ارز",
@@ -7618,32 +7930,54 @@ class WalioApp {
         </section>
 
         <section class="home-quick-section" aria-labelledby="quick-access-title">
-          <h2 class="home-quick-title" id="quick-access-title" data-i18n="quick_access">${t('quick_access')}</h2>
-          <div class="home-quick-card">
-            <button class="home-quick-action" id="qa-add-tx" type="button">
-              <span class="home-quick-icon">
-                <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+          <div class="home-section-heading">
+            <div>
+              <span class="home-section-kicker" data-i18n="quick_actions">${t('quick_actions')}</span>
+              <h2 class="home-section-title" id="quick-access-title" data-i18n="quick_access">${t('quick_access')}</h2>
+            </div>
+          </div>
+          <div class="home-quick-bento">
+            <button class="home-quick-primary" id="qa-add-tx" type="button">
+              <span class="home-quick-primary-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
               </span>
-              <span data-i18n="action_add_tx">${t('action_add_tx')}</span>
-            </button>
-            <button class="home-quick-action" id="qa-transfer" data-tone="green" type="button">
-              <span class="home-quick-icon">
-                <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h11l-3-3M17 17H6l3 3"/><path d="M18 7l-3 3M6 17l3-3"/></svg>
+              <span class="home-quick-primary-copy">
+                <strong data-i18n="action_add_full">${t('action_add_full')}</strong>
+                <em data-i18n="quick_add_hint">${t('quick_add_hint')}</em>
               </span>
-              <span data-i18n="action_transfer">${t('action_transfer')}</span>
-            </button>
-            <button class="home-quick-action" id="qa-convert" data-tone="blue" type="button">
-              <span class="home-quick-icon">
-                <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 9h8M8 15h8M14 7l2 2-2 2M10 13l-2 2 2 2"/></svg>
+              <span class="home-quick-primary-cta" aria-hidden="true">
+                <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4l6 6-6 6"/></svg>
               </span>
-              <span data-i18n="action_convert">${t('action_convert')}</span>
             </button>
-            <button class="home-quick-action" id="qa-new-wallet" data-tone="amber" type="button">
-              <span class="home-quick-icon">
-                <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M15 12h3"/></svg>
-              </span>
-              <span data-i18n="new_wallet">${t('new_wallet')}</span>
-            </button>
+            <div class="home-quick-secondary">
+              <button class="home-quick-tile" id="qa-transfer" data-tone="green" type="button">
+                <span class="home-quick-tile-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h11l-3-3M17 17H6l3 3"/><path d="M18 7l-3 3M6 17l3-3"/></svg>
+                </span>
+                <span class="home-quick-tile-copy">
+                  <strong data-i18n="action_transfer">${t('action_transfer')}</strong>
+                  <em data-i18n="quick_transfer_hint">${t('quick_transfer_hint')}</em>
+                </span>
+              </button>
+              <button class="home-quick-tile" id="qa-convert" data-tone="blue" type="button">
+                <span class="home-quick-tile-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 9h8M8 15h8M14 7l2 2-2 2M10 13l-2 2 2 2"/></svg>
+                </span>
+                <span class="home-quick-tile-copy">
+                  <strong data-i18n="action_convert">${t('action_convert')}</strong>
+                  <em data-i18n="quick_convert_hint">${t('quick_convert_hint')}</em>
+                </span>
+              </button>
+              <button class="home-quick-tile" id="qa-new-wallet" data-tone="amber" type="button">
+                <span class="home-quick-tile-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M15 12h3"/></svg>
+                </span>
+                <span class="home-quick-tile-copy">
+                  <strong data-i18n="new_wallet">${t('new_wallet')}</strong>
+                  <em data-i18n="quick_wallet_hint">${t('quick_wallet_hint')}</em>
+                </span>
+              </button>
+            </div>
           </div>
         </section>
 
@@ -7664,12 +7998,15 @@ class WalioApp {
         <section class="home-section" aria-labelledby="home-transactions-title">
           <div class="home-section-heading">
             <div>
-              <span class="home-section-kicker" data-i18n="home_monthly_flow">${t('home_monthly_flow')}</span>
+              <span class="home-section-kicker" data-i18n="latest_activity">${t('latest_activity')}</span>
               <h2 class="home-section-title" id="home-transactions-title" data-i18n="recent_transactions">${t('recent_transactions')}</h2>
             </div>
-            <button class="home-add-transaction" id="home-add-tx-btn" type="button" aria-label="${t('action_add_tx')}">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-            </button>
+            <div class="home-tx-heading-actions">
+              <span class="home-tx-count">${transactions.length}</span>
+              <button class="home-add-transaction" id="home-add-tx-btn" type="button" aria-label="${t('action_add_tx')}">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
           </div>
 
           <div class="home-transactions-panel">
@@ -7699,7 +8036,7 @@ class WalioApp {
               <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4l6 6-6 6"/></svg>
             </button>
           </div>
-          <div class="home-market-panel" id="home-currency-preview"></div>
+          <div class="home-market-sheet" id="home-currency-preview"></div>
         </section>
       </div>`;
 
@@ -7772,34 +8109,60 @@ class WalioApp {
     if (!container || !window.currency) return;
 
     const codes = ['USD', 'EUR', 'AED', 'GBP'];
-    container.innerHTML = codes.map(code => {
-      const rate = window.currency.getRate(code);
-      const isUp = rate.change >= 0;
-      const name = window.i18n ? window.i18n.t('curr_' + code) : rate.name;
-      const price = window.i18n ? window.i18n.formatCurrency(rate.rate, 'IRT') : `${rate.rate} IRT`;
-      return `
-        <button class="home-market-item" type="button" data-code="${code}" aria-label="${name}">
-          <span class="home-market-item-top">
-            <span class="home-market-identity">
-              <span class="home-market-flag">${rate.flag}</span>
-              <span>
-                <span class="home-market-code">${code}</span>
-                <span class="home-market-name">${name}</span>
-              </span>
-            </span>
-            <span class="home-market-arrow">
-              <svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4l6 6-6 6"/></svg>
-            </span>
-          </span>
-          <strong class="home-market-price">${price}</strong>
-          <span class="home-market-item-bottom">
-            <span class="home-market-change ${isUp ? 'up' : 'down'}">${isUp ? '↗ +' : '↘ '}${rate.change}%</span>
-            <span class="home-market-name">${window.i18n ? window.i18n.t('market_open') : 'Open market'}</span>
-          </span>
-        </button>`;
-    }).join('');
+    const isLive = window.currency.isLive;
+    const updatedText = window.currency.lastUpdated || (window.i18n && window.i18n.currentLang === 'fa' ? 'امروز' : 'Today');
+    const t = (key) => window.i18n ? window.i18n.t(key) : key;
 
-    container.querySelectorAll('.home-market-item').forEach(item => {
+    const miniSpark = (code, isUp) => {
+      const data = window.currency.getChartData(code, '1W');
+      const width = 62;
+      const height = 30;
+      const values = data.map(point => point.price);
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const diff = Math.max(1, max - min);
+      const points = data.map((point, index) => {
+        const x = 1 + (index / Math.max(1, data.length - 1)) * (width - 2);
+        const y = 4 + (1 - ((point.price - min) / diff)) * (height - 8);
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      }).join(' ');
+      const color = isUp ? '#10B981' : '#EF4444';
+      return `<svg class="home-market-spark" viewBox="0 0 ${width} ${height}" aria-hidden="true"><polyline points="${points}" fill="none" stroke="${color}" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    };
+
+    container.innerHTML = `
+      <div class="home-market-status">
+        <div class="home-market-live">
+          <span class="home-market-dot ${isLive ? '' : 'cached'}"></span>
+          <span>${t(isLive ? 'rates_live_status' : 'rates_cached_status')} · ${updatedText}</span>
+        </div>
+        <span class="home-market-note">${t('market_open')}</span>
+      </div>
+      <div class="home-market-list">
+        ${codes.map(code => {
+          const rate = window.currency.getRate(code);
+          const isUp = rate.change >= 0;
+          const name = t('curr_' + code);
+          const price = window.i18n ? window.i18n.formatCurrency(rate.rate, 'IRT') : `${rate.rate} IRT`;
+          return `
+            <button class="home-market-row" type="button" data-code="${code}" aria-label="${name}">
+              <span class="home-market-identity">
+                <span class="home-market-flag">${rate.flag}</span>
+                <span class="home-market-meta">
+                  <span class="home-market-code">${code}</span>
+                  <span class="home-market-name">${name}</span>
+                </span>
+              </span>
+              ${miniSpark(code, isUp)}
+              <span class="home-market-values">
+                <strong class="home-market-price">${price}</strong>
+                <span class="home-market-change ${isUp ? 'up' : 'down'}">${isUp ? '↗ +' : '↘ '}${rate.change}%</span>
+              </span>
+            </button>`;
+        }).join('')}
+      </div>`;
+
+    container.querySelectorAll('.home-market-row').forEach(item => {
       item.addEventListener('click', () => {
         const code = item.getAttribute('data-code');
         if (window.currency) window.currency.activeChartCurrency = code;
@@ -7812,81 +8175,109 @@ class WalioApp {
     const container = document.getElementById(containerId);
     if (!container) return;
 
+    const t = (key) => window.i18n ? window.i18n.t(key) : key;
     let list = window.storage.getTransactions();
 
     if (filter === 'income') {
-      list = list.filter(t => t.type === 'income');
+      list = list.filter(tx => tx.type === 'income');
     } else if (filter === 'expense') {
-      list = list.filter(t => t.type === 'expense');
+      list = list.filter(tx => tx.type === 'expense');
     }
 
     if (searchQuery) {
-      list = list.filter(t => 
-        (t.description && t.description.toLowerCase().includes(searchQuery)) ||
-        (t.category && window.i18n.t(t.category).toLowerCase().includes(searchQuery))
+      list = list.filter(tx =>
+        (tx.description && tx.description.toLowerCase().includes(searchQuery)) ||
+        (tx.category && t(tx.category).toLowerCase().includes(searchQuery))
       );
     }
 
     if (list.length === 0) {
       container.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-icon">
-            <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <div class="home-tx-empty">
+          <div class="home-tx-empty-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
           </div>
-          <p data-i18n="no_transactions">No transactions recorded yet. Start fresh!</p>
-          <button class="btn-primary-pill mt-3" id="btn-empty-add-tx">
-            <span data-i18n="add_first_transaction">+ Add First Transaction</span>
+          <p data-i18n="no_transactions">${t('no_transactions')}</p>
+          <button class="btn-primary-pill" id="btn-empty-add-tx" type="button">
+            <span data-i18n="add_first_transaction">${t('add_first_transaction')}</span>
           </button>
         </div>
       `;
       if (window.i18n) window.i18n.translateDOM();
-
       const btnEmptyAdd = container.querySelector('#btn-empty-add-tx');
-      if (btnEmptyAdd) {
-        btnEmptyAdd.addEventListener('click', () => this.openTransactionModal());
-      }
+      if (btnEmptyAdd) btnEmptyAdd.addEventListener('click', () => this.openTransactionModal());
       return;
     }
 
     const wallets = window.storage.getWallets();
-    const html = list.map(tx => {
-      const cat = this.categories.find(c => c.id === tx.category) || this.categories[0];
-      const wallet = wallets.find(w => w.id === tx.walletId);
-      const isIncome = tx.type === 'income';
-      const amountClass = isIncome ? 'tx-amount-income' : 'tx-amount-expense';
-      const prefix = isIncome ? '+' : '-';
-      const formattedAmt = window.i18n ? window.i18n.formatCurrency(tx.amount, 'IRT') : `${tx.amount} IRT`;
+    const locale = window.i18n && window.i18n.currentLang === 'fa' ? 'fa-IR' : 'en-US';
+    const visible = list.slice(0, 6);
+    const hasMore = list.length > visible.length;
 
-      const dateStr = new Date(tx.date).toLocaleDateString(
-        window.i18n ? (window.i18n.currentLang === 'fa' ? 'fa-IR' : 'en-US') : 'en-US',
-        { month: 'short', day: 'numeric' }
-      );
+    const dayKey = (value) => {
+      const date = new Date(value);
+      return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+    };
+
+    const dayLabel = (value) => {
+      const date = new Date(value);
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const that = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      const diff = (today - that) / 86400000;
+      if (diff === 0) return t('today');
+      if (diff === 1) return t('yesterday');
+      return date.toLocaleDateString(locale, { month: 'short', day: 'numeric' });
+    };
+
+    let lastDay = '';
+    const html = visible.map(tx => {
+      const cat = this.categories.find(c => c.id === tx.category) || this.categories[this.categories.length - 1];
+      const wallet = wallets.find(w => w.id === tx.walletId);
+      const typeClass = tx.type === 'income' ? 'is-income' : tx.type === 'transfer' ? 'is-transfer' : 'is-expense';
+      const typeLabel = tx.type === 'income' ? t('tx_income') : tx.type === 'transfer' ? t('tx_transfer') : t('tx_expense');
+      const prefix = tx.type === 'income' ? '+' : tx.type === 'transfer' ? '' : '−';
+      const formattedAmt = window.i18n ? window.i18n.formatCurrency(tx.amount, 'IRT') : `${tx.amount} IRT`;
+      const dateStr = new Date(tx.date).toLocaleDateString(locale, { month: 'short', day: 'numeric' });
+      const currentDay = dayKey(tx.date);
+      const heading = currentDay !== lastDay
+        ? `<div class="home-tx-day">${dayLabel(tx.date)}</div>`
+        : '';
+      lastDay = currentDay;
+      const desc = tx.description || (wallet ? wallet.name : '');
+      const walletName = wallet ? wallet.name : '';
+      const showWallet = walletName && desc !== walletName;
 
       return `
-        <div class="tx-item-card" data-tx-id="${tx.id}">
-          <div class="tx-item-left">
-            <div class="tx-cat-icon" style="background: ${cat.color}25; color: ${cat.color};">
-              <span class="tx-cat-emoji">${cat.icon}</span>
+        ${heading}
+        <article class="home-tx-item ${typeClass}" data-tx-id="${tx.id}">
+          <div class="home-tx-icon" style="background: ${cat.color}22; color: ${cat.color};">
+            <span class="tx-cat-emoji">${cat.icon}</span>
+          </div>
+          <div class="home-tx-main">
+            <div class="home-tx-title-row">
+              <span class="home-tx-title">${t(cat.nameKey)}</span>
+              <span class="home-tx-type-chip">${typeLabel}</span>
             </div>
-            <div class="tx-details">
-              <span class="tx-cat-title">${window.i18n ? window.i18n.t(cat.nameKey) : cat.nameKey}</span>
-              <span class="tx-desc">${tx.description || (wallet ? wallet.name : '')}</span>
+            <div class="home-tx-sub">
+              <span>${desc}</span>
+              ${showWallet ? `<span class="home-tx-wallet-dot"></span><span>${walletName}</span>` : ''}
             </div>
           </div>
-          <div class="tx-item-right">
-            <span class="tx-amt ${amountClass}">${prefix} ${formattedAmt}</span>
-            <div class="tx-date-row">
-              <span class="tx-date">${dateStr}</span>
-              <button class="tx-del-btn" data-id="${tx.id}" title="Delete Transaction">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          <div class="home-tx-aside">
+            <span class="home-tx-amount">${prefix}${formattedAmt}</span>
+            <div class="home-tx-aside-meta">
+              <span class="home-tx-date">${dateStr}</span>
+              <button class="tx-del-btn" data-id="${tx.id}" type="button" title="Delete Transaction" aria-label="Delete">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>
             </div>
           </div>
-        </div>
+        </article>
       `;
     }).join('');
 
-    container.innerHTML = html;
+    container.innerHTML = html + (hasMore ? `<div class="home-tx-more">${t('tx_more_on_home')}</div>` : '');
 
     container.querySelectorAll('.tx-del-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -8838,5 +9229,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a92b123b560e08',t:'MTc4NjYzOTI5Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
