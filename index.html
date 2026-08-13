@@ -5879,7 +5879,7 @@ const translations = {
     converted_amount: "Converted Value",
     swap: "Swap Currencies",
     rate_disclaimer: "Real online exchange rates calibrated to open Toman market.",
-    rates_live_status: "Real Online Market Rates",
+    rates_live_status: "Live rates · arzdigital.com",
     rates_cached_status: "Iranian Open-Market Rates (Today)",
     refresh_rates: "Refresh Live Rates",
     rates_updated: "Real exchange rates refreshed successfully!",
@@ -6150,7 +6150,7 @@ const translations = {
     converted_amount: "مبلغ معادل",
     swap: "جابجایی ارزها",
     rate_disclaimer: "نرخ‌های واقعی آنلاین بر اساس بازار آزاد تومان و بازار جهانی ارز.",
-    rates_live_status: "نرخ‌های واقعی آنلاین بازار",
+    rates_live_status: "نرخ زنده · ارزدیجیتال",
     rates_cached_status: "نرخ‌های بازار آزاد ایران (امروز)",
     refresh_rates: "بروزرسانی نرخ‌ها",
     rates_updated: "نرخ‌های واقعی ارز با موفقیت بروزرسانی شد!",
@@ -7280,21 +7280,22 @@ window.walletManager = new WalletManager();
 
 class CurrencyManager {
   constructor() {
-    this.baseUsdToman = 187100; // Iranian open-market USD price in Toman (today's rate)
+    this.baseUsdToman = 186700; // Fallback only — replaced by the live arzdigital.com rate
     this.lastUpdated = null;
+    this.lastUpdatedAt = 0;
     this.isLive = false;
 
     // Default fallback rates in Toman (used if offline/API unreachable)
     this.rates = {
-      USD: { code: 'USD', name: 'US Dollar', rate: 187100, change: 0.48, flag: '🇺🇸' },
-      EUR: { code: 'EUR', name: 'Euro', rate: 215800, change: 0.34, flag: '🇪🇺' },
-      GBP: { code: 'GBP', name: 'British Pound', rate: 252600, change: 0.27, flag: '🇬🇧' },
-      AED: { code: 'AED', name: 'UAE Dirham', rate: 50950, change: 0.40, flag: '🇦🇪' },
-      TRY: { code: 'TRY', name: 'Turkish Lira', rate: 3920, change: -0.21, flag: '🇹🇷' },
-      CAD: { code: 'CAD', name: 'Canadian Dollar', rate: 134300, change: 0.16, flag: '🇨🇦' },
-      AUD: { code: 'AUD', name: 'Australian Dollar', rate: 132000, change: 0.24, flag: '🇦🇺' },
-      CHF: { code: 'CHF', name: 'Swiss Franc', rate: 230500, change: 0.36, flag: '🇨🇭' },
-      JPY: { code: 'JPY', name: 'Japanese Yen', rate: 1174, change: -0.14, flag: '🇯🇵' },
+      USD: { code: 'USD', name: 'US Dollar', rate: 186700, change: -0.16, flag: '🇺🇸' },
+      EUR: { code: 'EUR', name: 'Euro', rate: 215190, change: -0.21, flag: '🇪🇺' },
+      GBP: { code: 'GBP', name: 'British Pound', rate: 251770, change: -0.21, flag: '🇬🇧' },
+      AED: { code: 'AED', name: 'UAE Dirham', rate: 51320, change: -0.21, flag: '🇦🇪' },
+      TRY: { code: 'TRY', name: 'Turkish Lira', rate: 3910, change: 0.06, flag: '🇹🇷' },
+      CAD: { code: 'CAD', name: 'Canadian Dollar', rate: 133990, change: -0.21, flag: '🇨🇦' },
+      AUD: { code: 'AUD', name: 'Australian Dollar', rate: 131750, change: -0.21, flag: '🇦🇺' },
+      CHF: { code: 'CHF', name: 'Swiss Franc', rate: 229530, change: -0.21, flag: '🇨🇭' },
+      JPY: { code: 'JPY', name: 'Japanese Yen', rate: 1170, change: -0.32, flag: '🇯🇵' },
       IRT: { code: 'IRT', name: 'Iranian Toman', rate: 1, change: 0.00, flag: '🇮🇷' }
     };
 
@@ -7313,6 +7314,7 @@ class CurrencyManager {
         if (parsed.rates && parsed.timestamp) {
           this.rates = parsed.rates;
           this.lastUpdated = parsed.timestamp;
+          this.lastUpdatedAt = parsed.updatedAt || 0;
           this.isLive = false;
         }
       }
@@ -7320,57 +7322,213 @@ class CurrencyManager {
   }
 
   /**
-   * Fetch REAL live currency rates from global open exchange API
+   * ---- ARZDIGITAL LIVE RATE ENGINE ----
+   * Real Iranian open-market rates scraped live from https://arzdigital.com/currencies/
+   * (public CORS-friendly readers are used because the site itself sends no CORS header)
+   */
+
+  // Map of arzdigital asset-id  ->  internal currency code
+  static get ARZ_ID_MAP() {
+    return {
+      '24201': 'USD', '24210': 'EUR', '24211': 'GBP', '24233': 'AED',
+      '24230': 'TRY', '24204': 'CAD', '24202': 'AUD', '24205': 'CHF',
+      '24217': 'JPY'
+    };
+  }
+
+  // Fallback map based on the English currency name printed in the table
+  static get ARZ_NAME_MAP() {
+    return {
+      'united states dollar': 'USD',
+      'euro': 'EUR',
+      'pound sterling': 'GBP',
+      'british pound': 'GBP',
+      'united arab emirates dirham': 'AED',
+      'uae dirham': 'AED',
+      'turkish lira': 'TRY',
+      'canadian dollar': 'CAD',
+      'australian dollar': 'AUD',
+      'swiss franc': 'CHF',
+      'japanese yen': 'JPY'
+    };
+  }
+
+  /** Convert Persian/Arabic digits + separators to a plain JS number */
+  static parsePersianNumber(text) {
+    if (!text) return NaN;
+    const fa = '۰۱۲۳۴۵۶۷۸۹';
+    const ar = '٠١٢٣٤٥٦٧٨٩';
+    let out = '';
+    for (const ch of String(text)) {
+      const i = fa.indexOf(ch);
+      const j = ar.indexOf(ch);
+      if (i > -1) out += i;
+      else if (j > -1) out += j;
+      else if (ch === '٫') out += '.';
+      else if (/[0-9.]/.test(ch)) out += ch;
+      // everything else (commas، spaces، "ت", ...) is dropped
+    }
+    const n = parseFloat(out);
+    return isNaN(n) ? NaN : n;
+  }
+
+  /** Candidate CORS-enabled readers for the arzdigital currency page */
+  static get ARZ_SOURCES() {
+    const page = 'https://arzdigital.com/currencies/';
+    return [
+      {
+        url: 'https://r.jina.ai/' + page,
+        headers: { 'x-return-format': 'html', 'x-target-selector': '.arz-fiats-table' }
+      },
+      {
+        url: 'https://r.jina.ai/' + page,
+        headers: { 'x-return-format': 'html' }
+      },
+      {
+        url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(page),
+        headers: {}
+      },
+      {
+        url: 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(page),
+        headers: {}
+      }
+    ];
+  }
+
+  /** Extract { CODE: {rate, change} } out of the arzdigital table markup */
+  parseArzHtml(html) {
+    const result = {};
+    if (!html || html.indexOf('arz-fiats-table') === -1) return result;
+
+    const idMap = CurrencyManager.ARZ_ID_MAP;
+    const nameMap = CurrencyManager.ARZ_NAME_MAP;
+    const rows = html.split(/<tr[\s>]/i).slice(1);
+
+    rows.forEach(row => {
+      const idMatch = row.match(/assets\/(\d+)\//);
+      const nameMatch = row.match(/<small[^>]*>([^<]*)<\/small>/i);
+      let code = idMatch ? idMap[idMatch[1]] : null;
+      if (!code && nameMatch) code = nameMap[nameMatch[1].trim().toLowerCase()];
+      if (!code) return;
+
+      const priceMatch = row.match(/__price"[^>]*>\s*<b[^>]*>([^<]+)<\/b>/i);
+      if (!priceMatch) return;
+      const rate = CurrencyManager.parsePersianNumber(priceMatch[1]);
+      if (!isFinite(rate) || rate <= 0) return;
+
+      let change = 0;
+      const changeMatch = row.match(/arz-fiat-change\s+(to\w+)[\s\S]*?<span[^>]*>\s*([\d.٫۰-۹]+)\s*%/i);
+      if (changeMatch) {
+        const val = CurrencyManager.parsePersianNumber(changeMatch[2]);
+        if (isFinite(val)) change = changeMatch[1].toLowerCase() === 'todown' ? -val : val;
+      }
+
+      result[code] = { rate: Math.round(rate * 100) / 100, change };
+    });
+
+    return result;
+  }
+
+  /**
+   * Fetch REAL live rates from arzdigital.com (Iranian open market, in Toman)
    */
   async fetchLiveRates() {
-    try {
-      const response = await fetch('https://open.er-api.com/v6/latest/USD');
-      if (!response.ok) throw new Error('API network error');
-      const data = await response.json();
+    const sources = CurrencyManager.ARZ_SOURCES;
 
-      if (data && data.rates) {
-        const apiRates = data.rates;
-        const updateRate = (code, changeVal, name, flag) => {
-          if (apiRates[code]) {
-            const rateInToman = Math.round((1 / apiRates[code]) * this.baseUsdToman);
-            this.rates[code] = {
-              code,
-              name,
-              rate: rateInToman,
-              change: changeVal,
-              flag
-            };
-          }
-        };
+    for (let i = 0; i < sources.length; i++) {
+      const src = sources[i];
+      try {
+        const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+        const timer = controller ? setTimeout(() => controller.abort(), 20000) : null;
 
-        this.rates.USD.rate = this.baseUsdToman;
-        updateRate('EUR', 0.25, 'Euro', '🇪🇺');
-        updateRate('GBP', -0.12, 'British Pound', '🇬🇧');
-        updateRate('AED', 0.31, 'UAE Dirham', '🇦🇪');
-        updateRate('TRY', -0.45, 'Turkish Lira', '🇹🇷');
-        updateRate('CAD', 0.15, 'Canadian Dollar', '🇨🇦');
-        updateRate('AUD', 0.22, 'Australian Dollar', '🇦🇺');
-        updateRate('CHF', 0.38, 'Swiss Franc', '🇨🇭');
-        updateRate('JPY', -0.18, 'Japanese Yen', '🇯🇵');
+        const response = await fetch(src.url, {
+          headers: src.headers,
+          cache: 'no-store',
+          signal: controller ? controller.signal : undefined
+        });
+        if (timer) clearTimeout(timer);
+        if (!response.ok) throw new Error('HTTP ' + response.status);
 
+        const html = await response.text();
+        const parsed = this.parseArzHtml(html);
+
+        // A valid scrape must at least contain the US Dollar
+        if (!parsed.USD || !isFinite(parsed.USD.rate)) throw new Error('USD not found in source');
+
+        Object.keys(parsed).forEach(code => {
+          const prev = this.rates[code] || {};
+          this.rates[code] = {
+            code,
+            name: prev.name || code,
+            rate: parsed[code].rate,
+            change: parsed[code].change,
+            flag: prev.flag || '🌐'
+          };
+        });
+
+        this.rates.IRT = { code: 'IRT', name: 'Iranian Toman', rate: 1, change: 0, flag: '🇮🇷' };
+        this.baseUsdToman = this.rates.USD.rate;
+
+        // Prices changed -> old generated chart series are stale
+        this.chartDataCache = {};
+
+        this.lastUpdatedAt = Date.now();
         this.lastUpdated = new Date().toLocaleTimeString(
           window.i18n ? (window.i18n.currentLang === 'fa' ? 'fa-IR' : 'en-US') : 'en-US',
           { hour: '2-digit', minute: '2-digit' }
         );
         this.isLive = true;
 
-        localStorage.setItem('walio_currency_cache_v3', JSON.stringify({
-          rates: this.rates,
-          timestamp: this.lastUpdated
-        }));
+        try {
+          localStorage.setItem('walio_currency_cache_v3', JSON.stringify({
+            rates: this.rates,
+            timestamp: this.lastUpdated,
+            updatedAt: this.lastUpdatedAt
+          }));
+        } catch (e) { /* storage full / private mode */ }
 
         window.dispatchEvent(new CustomEvent('walio_currency_updated'));
         return true;
+      } catch (e) {
+        console.warn('arzdigital rate source failed (' + src.url + '):', e && e.message ? e.message : e);
       }
-    } catch (e) {
-      console.warn('Live rate fetch fallback to local cached rates:', e);
     }
+
+    console.warn('All arzdigital sources failed — keeping cached rates.');
     return false;
+  }
+
+  /**
+   * Keep prices always fresh: periodic refresh + refresh when the app
+   * regains focus / comes back online.
+   */
+  startAutoRefresh(intervalMs) {
+    const period = intervalMs || 120000; // every 2 minutes
+    if (this._autoRefreshStarted) return;
+    this._autoRefreshStarted = true;
+
+    const run = () => { this.fetchLiveRates(); };
+
+    // first load
+    run();
+
+    this._autoRefreshTimer = setInterval(() => {
+      if (typeof document !== 'undefined' && document.hidden) return; // don't waste requests in background
+      run();
+    }, period);
+
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        const age = Date.now() - (this.lastUpdatedAt || 0);
+        if (age > 60000) run();
+      }
+    });
+
+    window.addEventListener('online', run);
+    window.addEventListener('focus', () => {
+      const age = Date.now() - (this.lastUpdatedAt || 0);
+      if (age > 300000) run();
+    });
   }
 
   getRate(code) {
@@ -8352,11 +8510,8 @@ class WalioApp {
     }
 
     if (window.currency) {
-      window.currency.fetchLiveRates().then(updated => {
-        if (updated && this.currentTab === 'currency') {
-          this.renderCurrencyTab();
-        }
-      });
+      // Live arzdigital.com prices + automatic periodic refresh
+      window.currency.startAutoRefresh(120000);
     }
 
     this.registerServiceWorker();
@@ -9904,5 +10059,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2ab5999ab16ad9f',t:'MTc4NjY2MjE3Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
