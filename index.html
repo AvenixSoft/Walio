@@ -5075,90 +5075,87 @@ body.rtl-mode .tools-group-title { padding: 0 16px 8px 4px; }
 body.rtl-mode .tools-row-chevron svg { transform: scaleX(-1); }
 [data-theme="dark"] .tools-row-chevron { color: #64748B; }
 
-/* iOS-style pushed page */
-.tool-overlay-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 88;
-  background: rgba(8, 10, 18, .18);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .28s ease;
+/* Tool detail — in-page sheet (avoids broken fixed overlay inside transformed tabs) */
+.tools-page-2026 {
+  position: relative;
+  min-height: calc(100vh - 180px);
 }
-.tool-overlay-backdrop.open {
-  opacity: 1;
-  pointer-events: auto;
+.tools-page-2026.tool-open > .tools-page-header,
+.tools-page-2026.tool-open > .tools-featured,
+.tools-page-2026.tool-open > .tools-group {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.tool-overlay-backdrop {
+  display: none;
 }
 
 .tool-overlay {
-  position: fixed;
-  left: 50%;
-  top: 0;
-  bottom: max(64px, calc(60px + env(safe-area-inset-bottom)));
-  z-index: 92;
-  width: 100%;
-  max-width: 440px;
+  position: absolute;
+  inset: -4px 0 auto 0;
+  z-index: 5;
+  min-height: calc(100% + 8px);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   background: var(--bg-main);
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  opacity: 1;
+  border-radius: 22px;
+  opacity: 0;
   pointer-events: none;
-  transform: translateX(50%);
-  transition: transform .38s cubic-bezier(.22, 1, .36, 1);
+  transform: translate3d(18px, 0, 0);
+  transition: transform .32s cubic-bezier(.22, 1, .36, 1), opacity .22s ease;
 }
-body.rtl-mode .tool-overlay { transform: translateX(-150%); }
+body.rtl-mode .tool-overlay { transform: translate3d(-18px, 0, 0); }
 .tool-overlay.open {
+  opacity: 1;
   pointer-events: auto;
-  transform: translateX(-50%);
+  transform: translate3d(0, 0, 0);
 }
-body.rtl-mode .tool-overlay.open { transform: translateX(-50%); }
 
 .tool-overlay-head {
   display: grid;
-  grid-template-columns: 92px minmax(0, 1fr) 92px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  min-height: 52px;
-  padding: max(10px, env(safe-area-inset-top)) 8px 10px;
-  background: color-mix(in srgb, var(--bg-main) 82%, transparent);
-  border-bottom: .5px solid var(--border-subtle);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  gap: 8px;
+  min-height: 48px;
+  margin-bottom: 14px;
+  padding: 4px 2px 12px;
+  border-bottom: 1px solid var(--border-subtle);
 }
 .tool-overlay-back {
-  min-height: 36px;
+  min-height: 38px;
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 2px;
-  padding: 0 8px;
+  gap: 4px;
+  padding: 0 12px 0 8px;
   color: var(--accent-primary);
-  background: transparent;
-  border: 0;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 500;
+  background: rgba(79, 70, 229, .08);
+  border: 1px solid rgba(79, 70, 229, .12);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
 }
+.tool-overlay-back:hover { background: rgba(79, 70, 229, .14); }
 .tool-overlay-back svg { flex: 0 0 auto; }
 body.rtl-mode .tool-overlay-back svg { transform: scaleX(-1); }
 .tool-overlay-title {
   overflow: hidden;
   color: var(--text-primary);
   font-size: 16px;
-  font-weight: 700;
-  letter-spacing: -.3px;
+  font-weight: 800;
+  letter-spacing: -.35px;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.tool-overlay-head > span:last-child {
+  width: 72px;
+}
 .tool-overlay-body {
   flex: 1;
-  overflow: auto;
-  padding: 16px 16px 22px;
-  -webkit-overflow-scrolling: touch;
+  padding: 0 2px 8px;
 }
 .tool-overlay .tool-sheet-title { display: none; }
 .tool-overlay .ios-calculator-container,
@@ -5166,26 +5163,67 @@ body.rtl-mode .tool-overlay-back svg { transform: scaleX(-1); }
   margin: 0;
 }
 
-@supports not (background: color-mix(in srgb, white 50%, black)) {
-  .tool-overlay-head { background: var(--bg-main); }
+.tool-sheet-card {
+  padding: 18px 16px 16px;
+}
+.tool-input-row label {
+  font-size: 12px;
+  font-weight: 650;
+}
+.tool-input,
+.tool-select {
+  height: 48px;
+  border-radius: 14px;
+  background: var(--chip-bg);
+}
+.tool-input:focus,
+.tool-select:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+.tool-result-box {
+  margin-top: 8px;
+  padding: 16px 16px 14px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--result-bg) 70%, var(--accent-primary) 8%), var(--result-bg));
+}
+.tool-result-box .result-value {
+  font-size: 22px;
+  letter-spacing: -.5px;
 }
 
-@media (min-width: 640px) {
-  .tool-overlay,
-  .tool-overlay-backdrop {
-    top: 24px;
-    bottom: 24px;
-    height: auto;
-    max-height: calc(100vh - 48px);
-    border-radius: 46px;
-    overflow: hidden;
-  }
-  .tool-overlay { max-width: 440px; }
-  .tool-overlay-backdrop {
-    left: 50%;
-    width: 440px;
-    transform: translateX(-50%);
-  }
+.ios-calculator-container {
+  padding: 14px 12px 12px;
+  border-radius: 24px;
+}
+.calc-screen {
+  height: 86px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  background: linear-gradient(180deg, #111827, #0B1220);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 18px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+}
+.calc-value {
+  color: #F8FAFC;
+  font-variant-numeric: tabular-nums;
+}
+.calc-keypad {
+  gap: 8px;
+}
+.calc-btn {
+  height: 58px;
+  border-radius: 16px;
+}
+.btn-equals {
+  background: var(--accent-primary);
+  color: #fff;
+}
+
+@supports not (background: color-mix(in srgb, white 50%, black)) {
+  .tool-overlay-head { background: var(--bg-main); }
+  .tool-result-box { background: var(--result-bg); }
 }
 
 @media (max-width: 380px) {
@@ -7713,23 +7751,27 @@ class ToolsManager {
 
     const overlay = document.getElementById('tool-overlay');
     const backdrop = document.getElementById('tool-overlay-backdrop');
+    const page = document.querySelector('.tools-page-2026');
     if (overlay) {
       overlay.classList.add('open');
       overlay.setAttribute('aria-hidden', 'false');
       workspace.scrollTop = 0;
     }
     if (backdrop) backdrop.classList.add('open');
+    if (page) page.classList.add('tool-open');
   }
 
   closeTool() {
     this.activeTool = null;
     const overlay = document.getElementById('tool-overlay');
     const backdrop = document.getElementById('tool-overlay-backdrop');
+    const page = document.querySelector('.tools-page-2026');
     if (overlay) {
       overlay.classList.remove('open');
       overlay.setAttribute('aria-hidden', 'true');
     }
     if (backdrop) backdrop.classList.remove('open');
+    if (page) page.classList.remove('tool-open');
     document.querySelectorAll('.tool-card').forEach(c => c.classList.remove('active'));
   }
 
@@ -9862,5 +9904,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
