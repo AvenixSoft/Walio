@@ -5528,6 +5528,309 @@ body.rtl-mode .wallets-portfolio-hero::before { right: auto; left: -58px; }
   .home-cashflow-track span { transition: none; }
 }
 
+/* ================= PROFILE PAGE — 2026 REDESIGN (matches Home / Wallets / Tools) ================= */
+.profile-page-2026 {
+  width: 100%;
+  padding-bottom: 8px;
+}
+
+/* Header — same language as .tools-page-header */
+.profile-page-header {
+  margin-bottom: 18px;
+}
+.profile-page-kicker {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .7px;
+  text-transform: uppercase;
+}
+.profile-page-header .page-title {
+  font-size: clamp(26px, 7vw, 32px);
+  letter-spacing: -1px;
+}
+.profile-page-header .page-subtitle {
+  max-width: 320px;
+  margin-top: 4px;
+  line-height: 1.6;
+}
+
+/* Hero — same construction as .wallets-portfolio-hero / .home-overview-hero */
+.profile-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-bottom: 24px;
+  padding: 18px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 88% 6%, rgba(196,181,253,.26), transparent 33%),
+    radial-gradient(circle at 2% 100%, rgba(56,189,248,.24), transparent 38%),
+    linear-gradient(145deg, #1E1B4B 0%, #312E81 52%, #1E3A8A 115%);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 27px;
+  box-shadow: 0 19px 40px rgba(30,27,75,.26), inset 0 1px 0 rgba(255,255,255,.16);
+}
+.profile-hero::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: -58px;
+  top: -62px;
+  width: 190px;
+  height: 190px;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 50%;
+  box-shadow: 0 0 0 30px rgba(255,255,255,.022), 0 0 0 61px rgba(255,255,255,.014);
+}
+body.rtl-mode .profile-hero::before { right: auto; left: -58px; }
+
+.profile-hero-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.profile-hero .profile-avatar-wrap {
+  width: 68px;
+  height: 68px;
+}
+.profile-hero .profile-avatar-icon {
+  width: 68px;
+  height: 68px;
+  overflow: hidden;
+  background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.2);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
+}
+.profile-hero .profile-avatar-badge {
+  width: 24px;
+  height: 24px;
+  border-color: rgba(30,27,75,.9);
+}
+
+.profile-hero-identity { min-width: 0; flex: 1; }
+.profile-hero-identity h4 {
+  overflow: hidden;
+  color: #fff;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -.4px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.profile-hero-identity span {
+  display: block;
+  margin-top: 2px;
+  overflow: hidden;
+  color: rgba(226,232,240,.66);
+  font-size: 12px;
+  font-weight: 550;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.profile-hero-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 21px;
+  margin-top: 7px;
+  white-space: nowrap;
+  padding: 0 8px;
+  color: rgba(255,255,255,.82);
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 999px;
+  font-size: 9.5px;
+  font-weight: 700;
+}
+
+/* Stat grid — mirrors .wallets-summary-grid */
+.profile-hero-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 16px;
+}
+.profile-hero-stat {
+  min-width: 0;
+  padding: 9px 8px;
+  background: rgba(255,255,255,.075);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 13px;
+}
+.profile-hero-stat span {
+  display: block;
+  overflow: hidden;
+  color: rgba(226,232,240,.57);
+  font-size: 8px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.profile-hero-stat strong {
+  display: block;
+  margin-top: 2px;
+  overflow: hidden;
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Grouped sections — mirrors .tools-group / .tools-group-list */
+.profile-group {
+  margin-bottom: 20px;
+}
+.profile-group-title {
+  padding: 0 4px 8px 16px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+body.rtl-mode .profile-group-title { padding: 0 16px 8px 4px; }
+
+.profile-group-list {
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--border-glass);
+  border-radius: 18px;
+  box-shadow: 0 8px 22px rgba(15,23,42,.045);
+}
+
+/* A row — mirrors .tools-row */
+.profile-row {
+  width: 100%;
+  min-height: 64px;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  text-align: inherit;
+  background: transparent;
+  border: 0;
+  border-bottom: .5px solid var(--border-subtle);
+}
+.profile-row:last-child { border-bottom: 0; }
+button.profile-row:active,
+label.profile-row:active { background: var(--chip-bg); }
+
+.profile-row-icon {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  color: #fff;
+}
+.profile-row[data-tone="indigo"] .profile-row-icon { background: #6366F1; }
+.profile-row[data-tone="violet"] .profile-row-icon { background: #8B5CF6; }
+.profile-row[data-tone="teal"]   .profile-row-icon { background: #0D9488; }
+.profile-row[data-tone="blue"]   .profile-row-icon { background: #3B82F6; }
+.profile-row[data-tone="amber"]  .profile-row-icon { background: #F59E0B; }
+.profile-row[data-tone="green"]  .profile-row-icon { background: #10B981; }
+.profile-row[data-tone="pink"]   .profile-row-icon { background: #EC4899; }
+.profile-row[data-tone="red"]    .profile-row-icon { background: #EF4444; }
+
+.profile-row-copy { min-width: 0; text-align: start; }
+.profile-row-copy strong {
+  display: block;
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -.2px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.profile-row-copy span {
+  display: block;
+  overflow: hidden;
+  margin-top: 1px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.profile-row-chevron {
+  display: grid;
+  place-items: center;
+  color: #C4C9D4;
+}
+body.rtl-mode .profile-row-chevron svg { transform: scaleX(-1); }
+[data-theme="dark"] .profile-row-chevron { color: #64748B; }
+
+.profile-row.danger .profile-row-copy strong { color: var(--color-red); }
+
+/* Editable fields block inside a group */
+.profile-fields {
+  padding: 16px 14px 14px;
+}
+.profile-fields .tool-input-row:last-of-type { margin-bottom: 14px; }
+.profile-fields-hint {
+  display: block;
+  margin: -6px 0 12px;
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+.profile-fields .btn-primary-full {
+  height: 46px;
+  border-radius: 15px;
+  font-size: 14px;
+}
+
+/* Photo actions strip */
+.profile-photo-strip {
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: .5px solid var(--border-subtle);
+}
+.profile-photo-strip .btn-secondary {
+  height: 40px;
+  border-radius: 13px;
+  gap: 6px;
+  font-size: 12px;
+}
+.profile-photo-strip .btn-secondary.is-danger {
+  color: var(--color-red);
+  border-color: color-mix(in srgb, var(--color-red) 35%, transparent);
+}
+
+/* Language pills inside a row */
+.profile-row .lang-pill-selector { gap: 6px; }
+.profile-row .lang-btn {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+@media (max-width: 380px) {
+  .profile-hero { padding: 15px; border-radius: 24px; }
+  .profile-hero .profile-avatar-wrap,
+  .profile-hero .profile-avatar-icon { width: 58px; height: 58px; }
+  .profile-hero-identity h4 { font-size: 17px; }
+  .profile-hero-grid { gap: 5px; }
+  .profile-hero-stat { padding-inline: 6px; }
+  .profile-hero-stat strong { font-size: 11px; }
+  .profile-row { gap: 10px; padding-inline: 12px; }
+  .profile-row .lang-btn { padding: 5px 9px; font-size: 10.5px; }
+}
+
+@supports not (background: color-mix(in srgb, white 50%, black)) {
+  .profile-photo-strip .btn-secondary.is-danger { border-color: var(--color-red); }
+}
+
    </style>
 </head>
 <body>
@@ -5879,7 +6182,7 @@ const translations = {
     converted_amount: "Converted Value",
     swap: "Swap Currencies",
     rate_disclaimer: "Real online exchange rates calibrated to open Toman market.",
-    rates_live_status: "Live rates · arzdigital.com",
+    rates_live_status: "Live rates",
     rates_cached_status: "Iranian Open-Market Rates (Today)",
     refresh_rates: "Refresh Live Rates",
     rates_updated: "Real exchange rates refreshed successfully!",
@@ -6033,6 +6336,21 @@ const translations = {
     // Profile & Settings
     profile_title: "Profile & Settings",
     profile_subtitle: "Manage your account and preferences",
+    profile_kicker: "Account",
+    profile_section_account: "Account details",
+    profile_section_account_hint: "Your name and username shown across the app",
+    profile_stat_wallets: "Wallets",
+    profile_stat_transactions: "Transactions",
+    profile_stat_since: "Member",
+    profile_photo_hint: "JPG or PNG · resized automatically",
+    profile_appearance: "Appearance",
+    profile_theme_hint: "Switch between light and dark",
+    profile_language_hint: "Interface language",
+    profile_backup_hint: "Save a copy of your data",
+    profile_restore_hint: "Load data from a backup file",
+    profile_demo_hint: "Fill the app with example data",
+    profile_reset_hint: "Erase everything and start over",
+    profile_danger_zone: "Danger zone",
     profile_photo: "Profile Picture",
     profile_name: "Full Name",
     profile_username: "Username",
@@ -6150,7 +6468,7 @@ const translations = {
     converted_amount: "مبلغ معادل",
     swap: "جابجایی ارزها",
     rate_disclaimer: "نرخ‌های واقعی آنلاین بر اساس بازار آزاد تومان و بازار جهانی ارز.",
-    rates_live_status: "نرخ زنده · ارزدیجیتال",
+    rates_live_status: "نرخ زنده",
     rates_cached_status: "نرخ‌های بازار آزاد ایران (امروز)",
     refresh_rates: "بروزرسانی نرخ‌ها",
     rates_updated: "نرخ‌های واقعی ارز با موفقیت بروزرسانی شد!",
@@ -6304,6 +6622,21 @@ const translations = {
     // Profile & Settings
     profile_title: "پروفایل و تنظیمات",
     profile_subtitle: "مدیریت حساب کاربری و ترجیحات",
+    profile_kicker: "حساب کاربری",
+    profile_section_account: "مشخصات حساب",
+    profile_section_account_hint: "نام و آیدی شما در سراسر برنامه نمایش داده می‌شود",
+    profile_stat_wallets: "کیف پول",
+    profile_stat_transactions: "تراکنش",
+    profile_stat_since: "عضویت",
+    profile_photo_hint: "فرمت JPG یا PNG · اندازه به‌صورت خودکار تنظیم می‌شود",
+    profile_appearance: "ظاهر برنامه",
+    profile_theme_hint: "جابه‌جایی بین حالت روشن و تاریک",
+    profile_language_hint: "زبان محیط برنامه",
+    profile_backup_hint: "ذخیره یک نسخه از اطلاعات شما",
+    profile_restore_hint: "بازیابی اطلاعات از فایل پشتیبان",
+    profile_demo_hint: "پر کردن برنامه با داده‌های نمونه",
+    profile_reset_hint: "حذف کامل اطلاعات و شروع دوباره",
+    profile_danger_zone: "منطقه خطر",
     profile_photo: "تصویر نمایه",
     profile_name: "نام و نام خانوادگی",
     profile_username: "نام کاربری (آیدی)",
@@ -7284,6 +7617,7 @@ class CurrencyManager {
     this.lastUpdated = null;
     this.lastUpdatedAt = 0;
     this.isLive = false;
+    this.sourceLabel = 'arzdigital.com';
 
     // Default fallback rates in Toman (used if offline/API unreachable)
     this.rates = {
@@ -7315,6 +7649,7 @@ class CurrencyManager {
           this.rates = parsed.rates;
           this.lastUpdated = parsed.timestamp;
           this.lastUpdatedAt = parsed.updatedAt || 0;
+          this.sourceLabel = parsed.source || this.sourceLabel;
           this.isLive = false;
         }
       }
@@ -7372,27 +7707,83 @@ class CurrencyManager {
     return isNaN(n) ? NaN : n;
   }
 
-  /** Candidate CORS-enabled readers for the arzdigital currency page */
-  static get ARZ_SOURCES() {
+  /**
+   * Rate sources, tried in order.
+   *
+   * IMPORTANT (Iran / no-VPN):
+   *   r.jina.ai and the other international proxies are blocked from inside Iran,
+   *   so they are tried LAST. The first sources are either arzdigital itself
+   *   (works when the browser can reach it) or tgju's Iran-hosted "call2/call3"
+   *   endpoints, which are NOT filtered and DO send Access-Control-Allow-Origin: *.
+   */
+  static get RATE_SOURCES() {
     const page = 'https://arzdigital.com/currencies/';
     return [
+      // 1) arzdigital directly — no proxy, works whenever the browser's own
+      //    network can open the site (this is the normal case inside Iran).
+      { kind: 'arz', url: page, headers: {}, label: 'arzdigital.com' },
+
+      // 2) tgju — hosted in Iran, never filtered, CORS-enabled. Same open-market
+      //    Toman rates, used as the no-VPN fallback.
+      { kind: 'tgju', url: 'https://call2.tgju.org/ajax.json', headers: {}, label: 'tgju.org' },
+      { kind: 'tgju', url: 'https://call3.tgju.org/ajax.json', headers: {}, label: 'tgju.org' },
+
+      // 3) International readers for arzdigital — only reachable with a VPN.
       {
+        kind: 'arz',
         url: 'https://r.jina.ai/' + page,
-        headers: { 'x-return-format': 'html', 'x-target-selector': '.arz-fiats-table' }
+        headers: { 'x-return-format': 'html', 'x-target-selector': '.arz-fiats-table' },
+        label: 'arzdigital.com'
       },
-      {
-        url: 'https://r.jina.ai/' + page,
-        headers: { 'x-return-format': 'html' }
-      },
-      {
-        url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(page),
-        headers: {}
-      },
-      {
-        url: 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(page),
-        headers: {}
-      }
+      { kind: 'arz', url: 'https://r.jina.ai/' + page, headers: { 'x-return-format': 'html' }, label: 'arzdigital.com' },
+      { kind: 'arz', url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(page), headers: {}, label: 'arzdigital.com' },
+      { kind: 'arz', url: 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(page), headers: {}, label: 'arzdigital.com' }
     ];
+  }
+
+  /** tgju json key -> internal currency code (all values are Rial, /10 = Toman) */
+  static get TGJU_MAP() {
+    return {
+      price_dollar_rl: 'USD',
+      price_eur: 'EUR',
+      price_gbp: 'GBP',
+      price_aed: 'AED',
+      price_try: 'TRY',
+      price_cad: 'CAD',
+      price_aud: 'AUD',
+      price_chf: 'CHF',
+      price_jpy: 'JPY'   // tgju quotes JPY per 100 yen
+    };
+  }
+
+  /** Extract { CODE: {rate, change} } from a tgju ajax.json payload */
+  parseTgjuJson(payload) {
+    const result = {};
+    const data = payload && payload.current;
+    if (!data) return result;
+
+    const map = CurrencyManager.TGJU_MAP;
+    Object.keys(map).forEach(key => {
+      const entry = data[key];
+      if (!entry || entry.p == null) return;
+
+      const rial = CurrencyManager.parsePersianNumber(entry.p);
+      if (!isFinite(rial) || rial <= 0) return;
+
+      // tgju publishes Rial; the app works in Toman.
+      let toman = rial / 10;
+      // JPY is quoted per 100 yen on tgju.
+      if (map[key] === 'JPY') toman = toman / 100;
+
+      let change = CurrencyManager.parsePersianNumber(entry.dp);
+      if (!isFinite(change)) change = 0;
+      // "dt" is 'low' when the rate went down.
+      if (String(entry.dt || '').toLowerCase() === 'low') change = -Math.abs(change);
+
+      result[map[key]] = { rate: Math.round(toman * 100) / 100, change };
+    });
+
+    return result;
   }
 
   /** Extract { CODE: {rate, change} } out of the arzdigital table markup */
@@ -7430,30 +7821,40 @@ class CurrencyManager {
   }
 
   /**
-   * Fetch REAL live rates from arzdigital.com (Iranian open market, in Toman)
+   * Fetch REAL live open-market rates (in Toman).
+   * Sources are tried in order; the first that returns a usable USD rate wins.
    */
   async fetchLiveRates() {
-    const sources = CurrencyManager.ARZ_SOURCES;
+    const sources = CurrencyManager.RATE_SOURCES;
+    const failures = [];
 
     for (let i = 0; i < sources.length; i++) {
       const src = sources[i];
       try {
         const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-        const timer = controller ? setTimeout(() => controller.abort(), 20000) : null;
+        // Short timeout so a blocked source fails fast and we move to the next one.
+        const timer = controller ? setTimeout(() => controller.abort(), 9000) : null;
 
         const response = await fetch(src.url, {
           headers: src.headers,
           cache: 'no-store',
+          referrerPolicy: 'no-referrer',
           signal: controller ? controller.signal : undefined
         });
         if (timer) clearTimeout(timer);
         if (!response.ok) throw new Error('HTTP ' + response.status);
 
-        const html = await response.text();
-        const parsed = this.parseArzHtml(html);
+        let parsed;
+        if (src.kind === 'tgju') {
+          parsed = this.parseTgjuJson(await response.json());
+        } else {
+          parsed = this.parseArzHtml(await response.text());
+        }
 
-        // A valid scrape must at least contain the US Dollar
-        if (!parsed.USD || !isFinite(parsed.USD.rate)) throw new Error('USD not found in source');
+        // A valid result must at least contain the US Dollar
+        if (!parsed.USD || !isFinite(parsed.USD.rate) || parsed.USD.rate <= 0) {
+          throw new Error('USD not found in source');
+        }
 
         Object.keys(parsed).forEach(code => {
           const prev = this.rates[code] || {};
@@ -7478,23 +7879,25 @@ class CurrencyManager {
           { hour: '2-digit', minute: '2-digit' }
         );
         this.isLive = true;
+        this.sourceLabel = src.label;
 
         try {
           localStorage.setItem('walio_currency_cache_v3', JSON.stringify({
             rates: this.rates,
             timestamp: this.lastUpdated,
-            updatedAt: this.lastUpdatedAt
+            updatedAt: this.lastUpdatedAt,
+            source: this.sourceLabel
           }));
         } catch (e) { /* storage full / private mode */ }
 
         window.dispatchEvent(new CustomEvent('walio_currency_updated'));
         return true;
       } catch (e) {
-        console.warn('arzdigital rate source failed (' + src.url + '):', e && e.message ? e.message : e);
+        failures.push(src.url + ' → ' + (e && e.message ? e.message : e));
       }
     }
 
-    console.warn('All arzdigital sources failed — keeping cached rates.');
+    console.warn('All rate sources failed — keeping cached rates.\n' + failures.join('\n'));
     return false;
   }
 
@@ -7507,14 +7910,23 @@ class CurrencyManager {
     if (this._autoRefreshStarted) return;
     this._autoRefreshStarted = true;
 
-    const run = () => { this.fetchLiveRates(); };
+    // If a refresh fails (e.g. every source momentarily unreachable) retry
+    // quickly a few times instead of waiting a whole period.
+    const run = (retriesLeft = 2) => {
+      this.fetchLiveRates().then(ok => {
+        if (!ok && retriesLeft > 0) {
+          clearTimeout(this._retryTimer);
+          this._retryTimer = setTimeout(() => run(retriesLeft - 1), 8000);
+        }
+      });
+    };
 
     // first load
     run();
 
     this._autoRefreshTimer = setInterval(() => {
       if (typeof document !== 'undefined' && document.hidden) return; // don't waste requests in background
-      run();
+      run(1);
     }, period);
 
     document.addEventListener('visibilitychange', () => {
@@ -7524,7 +7936,7 @@ class CurrencyManager {
       }
     });
 
-    window.addEventListener('online', run);
+    window.addEventListener('online', () => run());
     window.addEventListener('focus', () => {
       const age = Date.now() - (this.lastUpdatedAt || 0);
       if (age > 300000) run();
@@ -8960,7 +9372,7 @@ class WalioApp {
       <div class="home-market-status">
         <div class="home-market-live">
           <span class="home-market-dot ${isLive ? '' : 'cached'}"></span>
-          <span>${t(isLive ? 'rates_live_status' : 'rates_cached_status')} · ${updatedText}</span>
+          <span>${t(isLive ? 'rates_live_status' : 'rates_cached_status')}${isLive ? ' · ' + (window.currency.sourceLabel || '') : ''} · ${updatedText}</span>
         </div>
         <span class="home-market-note">${t('market_open')}</span>
       </div>
@@ -9235,7 +9647,7 @@ class WalioApp {
               <h1 class="currency-board-title" id="currency-board-title">${t('currency_board_title')}</h1>
               <p class="currency-board-status">
                 <span class="currency-board-status-dot ${isLive ? '' : 'cached'}"></span>
-                <span>${t(isLive ? 'rates_live_status' : 'rates_cached_status')} · ${updatedText}</span>
+                <span>${t(isLive ? 'rates_live_status' : 'rates_cached_status')}${isLive ? ' · ' + (window.currency.sourceLabel || '') : ''} · ${updatedText}</span>
               </p>
             </div>
             <button class="currency-board-refresh" id="board-refresh-rates" type="button" aria-label="${t('refresh_rates')}" title="${t('refresh_rates')}">
@@ -9309,7 +9721,7 @@ class WalioApp {
           <div class="market-hero-top">
             <div class="market-status-chip">
               <span class="market-live-dot ${isLive ? '' : 'cached'}"></span>
-              <span>${t(isLive ? 'rates_live_status' : 'rates_cached_status')} · ${updatedText}</span>
+              <span>${t(isLive ? 'rates_live_status' : 'rates_cached_status')}${isLive ? ' · ' + (window.currency.sourceLabel || '') : ''} · ${updatedText}</span>
             </div>
             <button class="currency-refresh-icon" id="btn-refresh-rates" type="button" aria-label="${t('refresh_rates')}" title="${t('refresh_rates')}">
               <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
@@ -9566,90 +9978,180 @@ class WalioApp {
     const profile = window.storage.getProfile();
     const settings = window.storage.getSettings();
     const currentLang = window.i18n ? window.i18n.currentLang : 'fa';
+    const t = (key) => window.i18n ? window.i18n.t(key) : key;
+    const num = (value) => window.i18n ? window.i18n.formatNumber(value, 0) : String(value);
+
+    const wallets = window.storage.getWallets ? window.storage.getWallets() : [];
+    const transactions = window.storage.getTransactions ? window.storage.getTransactions() : [];
+    const locale = currentLang === 'fa' ? 'fa-IR' : 'en-US';
+    const memberSince = new Intl.DateTimeFormat(locale, { month: 'short', year: 'numeric' })
+      .format(new Date());
+
+    const avatarInner = profile.avatar
+      ? `<img src="${profile.avatar}" alt="Profile photo" />`
+      : `<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+
+    const chevron = `<span class="profile-row-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M7 4l6 6-6 6"/></svg></span>`;
 
     container.innerHTML = `
-      <div class="page-header">
-        <h2 class="page-title" data-i18n="profile_title">Profile & Settings</h2>
-        <p class="page-subtitle" data-i18n="profile_subtitle">Manage your account and preferences</p>
-      </div>
+      <div class="profile-page-2026">
+        <header class="profile-page-header">
+          <span class="profile-page-kicker">${t('profile_kicker')}</span>
+          <h2 class="page-title" data-i18n="profile_title">${t('profile_title')}</h2>
+          <p class="page-subtitle" data-i18n="profile_subtitle">${t('profile_subtitle')}</p>
+        </header>
 
-      <!-- Profile Edit Card -->
-      <div class="profile-card-sheet">
-        <div class="profile-photo-row">
-          <div class="profile-avatar-wrap" id="profile-avatar-wrap" role="button" tabindex="0" title="${window.i18n ? window.i18n.t('change_photo') : 'Change Photo'}">
-            <div class="profile-avatar-icon" id="profile-avatar-icon">
-              ${profile.avatar
-                ? `<img src="${profile.avatar}" alt="Profile photo" />`
-                : `<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`}
+        <section class="profile-hero" aria-label="${t('profile_title')}">
+          <div class="profile-hero-top">
+            <div class="profile-avatar-wrap" id="profile-avatar-wrap" role="button" tabindex="0" title="${t('change_photo')}">
+              <div class="profile-avatar-icon" id="profile-avatar-icon">${avatarInner}</div>
+              <div class="profile-avatar-badge" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              </div>
             </div>
-            <div class="profile-avatar-badge" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <div class="profile-hero-identity">
+              <h4 id="profile-identity-name">${profile.name}</h4>
+              <span id="profile-identity-username">${profile.username}</span>
+              <span class="profile-hero-chip">
+                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
+                ${t('profile_stat_since')} ${memberSince}
+              </span>
             </div>
           </div>
-          <div class="profile-identity">
-            <h4 id="profile-identity-name">${profile.name}</h4>
-            <span id="profile-identity-username">${profile.username}</span>
+
+          <div class="profile-hero-grid">
+            <div class="profile-hero-stat">
+              <span>${t('profile_stat_wallets')}</span>
+              <strong>${num(wallets.length)}</strong>
+            </div>
+            <div class="profile-hero-stat">
+              <span>${t('profile_stat_transactions')}</span>
+              <strong>${num(transactions.length)}</strong>
+            </div>
+            <div class="profile-hero-stat">
+              <span>${t('language')}</span>
+              <strong>${currentLang === 'fa' ? t('lang_name_fa') : t('lang_name_en')}</strong>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div class="profile-photo-actions">
-          <button class="btn-secondary" id="btn-change-photo">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            <span data-i18n="change_photo">Change Photo</span>
-          </button>
-          <button class="btn-secondary" id="btn-remove-photo" data-i18n="remove_photo" ${profile.avatar ? '' : 'style="display:none;"'}>Remove Photo</button>
-          <input type="file" id="profile-photo-input" accept="image/*" style="display:none;" />
-        </div>
+        <section class="profile-group" aria-labelledby="profile-account-title">
+          <h3 class="profile-group-title" id="profile-account-title">${t('profile_section_account')}</h3>
+          <div class="profile-group-list">
+            <div class="profile-photo-strip">
+              <button class="btn-secondary" id="btn-change-photo" type="button">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <span data-i18n="change_photo">${t('change_photo')}</span>
+              </button>
+              <button class="btn-secondary is-danger" id="btn-remove-photo" type="button" data-i18n="remove_photo" ${profile.avatar ? '' : 'style="display:none;"'}>${t('remove_photo')}</button>
+              <input type="file" id="profile-photo-input" accept="image/*" style="display:none;" />
+            </div>
 
-        <div class="tool-input-row">
-          <label data-i18n="profile_name">Full Name</label>
-          <input type="text" id="prof-input-name" class="tool-input" value="${profile.name || ''}" />
-        </div>
+            <div class="profile-fields">
+              <div class="tool-input-row">
+                <label data-i18n="profile_name">${t('profile_name')}</label>
+                <input type="text" id="prof-input-name" class="tool-input" value="${profile.name || ''}" />
+              </div>
 
-        <div class="tool-input-row">
-          <label data-i18n="profile_username">Username</label>
-          <input type="text" id="prof-input-user" class="tool-input" value="${profile.username || ''}" />
-        </div>
+              <div class="tool-input-row">
+                <label data-i18n="profile_username">${t('profile_username')}</label>
+                <input type="text" id="prof-input-user" class="tool-input" value="${profile.username || ''}" />
+              </div>
 
-        <button class="btn-primary-full" id="btn-save-profile" data-i18n="profile_save">Save Profile</button>
-      </div>
+              <small class="profile-fields-hint">${t('profile_section_account_hint')}</small>
 
-      <!-- Settings Section -->
-      <div class="settings-card-sheet">
-        <h3 class="card-section-title" data-i18n="settings_section">Preferences</h3>
-
-        <div class="setting-item">
-          <span data-i18n="dark_mode">Dark Mode</span>
-          <label class="ios-switch">
-            <input type="checkbox" id="setting-dark-toggle" ${settings.darkMode === 'dark' ? 'checked' : ''} />
-            <span class="switch-slider"></span>
-          </label>
-        </div>
-
-        <div class="setting-item">
-          <span data-i18n="language">Language</span>
-          <div class="lang-pill-selector">
-            <button class="lang-btn ${currentLang === 'fa' ? 'active' : ''}" data-lang="fa" data-i18n="lang_name_fa">فارسی</button>
-            <button class="lang-btn ${currentLang === 'en' ? 'active' : ''}" data-lang="en" data-i18n="lang_name_en">English</button>
+              <button class="btn-primary-full" id="btn-save-profile" type="button" data-i18n="profile_save">${t('profile_save')}</button>
+            </div>
           </div>
-        </div>
-      </div>
+        </section>
 
-      <!-- Data Management Section -->
-      <div class="settings-card-sheet">
-        <h3 class="card-section-title" data-i18n="data_section">Data Management</h3>
+        <section class="profile-group" aria-labelledby="profile-prefs-title">
+          <h3 class="profile-group-title" id="profile-prefs-title">${t('settings_section')}</h3>
+          <div class="profile-group-list">
+            <div class="profile-row" data-tone="indigo">
+              <span class="profile-row-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              </span>
+              <span class="profile-row-copy">
+                <strong data-i18n="dark_mode">${t('dark_mode')}</strong>
+                <span>${t('profile_theme_hint')}</span>
+              </span>
+              <label class="ios-switch">
+                <input type="checkbox" id="setting-dark-toggle" ${settings.darkMode === 'dark' ? 'checked' : ''} />
+                <span class="switch-slider"></span>
+              </label>
+            </div>
 
-        <div class="data-actions-row mb-2">
-          <button class="btn-secondary" id="btn-export-data" data-i18n="export_data">Export Backup (JSON)</button>
-          <label for="import-file-input" class="btn-secondary" data-i18n="import_data">Restore Backup</label>
-          <input type="file" id="import-file-input" accept=".json" style="display:none;" />
-        </div>
+            <div class="profile-row" data-tone="violet">
+              <span class="profile-row-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
+              </span>
+              <span class="profile-row-copy">
+                <strong data-i18n="language">${t('language')}</strong>
+                <span>${t('profile_language_hint')}</span>
+              </span>
+              <div class="lang-pill-selector">
+                <button class="lang-btn ${currentLang === 'fa' ? 'active' : ''}" type="button" data-lang="fa" data-i18n="lang_name_fa">فارسی</button>
+                <button class="lang-btn ${currentLang === 'en' ? 'active' : ''}" type="button" data-lang="en" data-i18n="lang_name_en">English</button>
+              </div>
+            </div>
+          </div>
+        </section>
 
-        <div class="data-actions-row">
-          <button class="btn-secondary" id="btn-load-demo" data-i18n="load_demo_data">Load Sample Demo Data</button>
-        </div>
+        <section class="profile-group" aria-labelledby="profile-data-title">
+          <h3 class="profile-group-title" id="profile-data-title">${t('data_section')}</h3>
+          <div class="profile-group-list">
+            <button class="profile-row" id="btn-export-data" data-tone="teal" type="button">
+              <span class="profile-row-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </span>
+              <span class="profile-row-copy">
+                <strong data-i18n="export_data">${t('export_data')}</strong>
+                <span>${t('profile_backup_hint')}</span>
+              </span>
+              ${chevron}
+            </button>
 
-        <button class="btn-danger-outline" id="btn-reset-data" data-i18n="reset_data">Reset All App Data</button>
+            <label class="profile-row" for="import-file-input" data-tone="blue">
+              <span class="profile-row-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </span>
+              <span class="profile-row-copy">
+                <strong data-i18n="import_data">${t('import_data')}</strong>
+                <span>${t('profile_restore_hint')}</span>
+              </span>
+              ${chevron}
+            </label>
+            <input type="file" id="import-file-input" accept=".json" style="display:none;" />
+
+            <button class="profile-row" id="btn-load-demo" data-tone="amber" type="button">
+              <span class="profile-row-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.6 6.6L21 9.7l-4.8 4.5 1.3 6.8-5.5-3.2-5.5 3.2 1.3-6.8L3 9.7l6.4-1.1z"/></svg>
+              </span>
+              <span class="profile-row-copy">
+                <strong data-i18n="load_demo_data">${t('load_demo_data')}</strong>
+                <span>${t('profile_demo_hint')}</span>
+              </span>
+              ${chevron}
+            </button>
+          </div>
+        </section>
+
+        <section class="profile-group" aria-labelledby="profile-danger-title">
+          <h3 class="profile-group-title" id="profile-danger-title">${t('profile_danger_zone')}</h3>
+          <div class="profile-group-list">
+            <button class="profile-row danger" id="btn-reset-data" data-tone="red" type="button">
+              <span class="profile-row-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              </span>
+              <span class="profile-row-copy">
+                <strong data-i18n="reset_data">${t('reset_data')}</strong>
+                <span>${t('profile_reset_hint')}</span>
+              </span>
+              ${chevron}
+            </button>
+          </div>
+        </section>
       </div>
     `;
 
@@ -9837,7 +10339,7 @@ class WalioApp {
     if (iconEl) {
       iconEl.innerHTML = profile.avatar
         ? `<img src="${profile.avatar}" alt="Profile photo" />`
-        : `<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+        : `<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
     }
     const removeBtn = document.getElementById('btn-remove-photo');
     if (removeBtn) {
@@ -10059,5 +10561,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2ab5999ab16ad9f',t:'MTc4NjY2MjE3Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2ab93d17fd99723',t:'MTc4NjY2NDU1OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
