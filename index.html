@@ -1624,29 +1624,58 @@ body.rtl-mode .btn-zero {
   box-shadow: var(--shadow-glass);
 }
 
-.profile-photo-row {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-bottom: 18px;
+/* --- Profile hero card --- */
+.profile-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  text-align: center;
+  padding: 26px 16px 20px;
+  margin-bottom: 20px;
+  border-radius: 26px;
+  border: 1px solid var(--border-glass);
+  background:
+    radial-gradient(130% 85% at 50% -12%, rgba(79, 70, 229, 0.18), transparent 58%),
+    var(--card-bg);
+  box-shadow: var(--shadow-glass);
 }
 
-.profile-avatar-wrap {
+.profile-hero::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  width: 210px;
+  height: 210px;
+  top: -116px;
+  inset-inline-end: -72px;
+  border: 1px solid rgba(79, 70, 229, 0.12);
+  border-radius: 50%;
+  box-shadow: 0 0 0 30px rgba(79, 70, 229, 0.04), 0 0 0 62px rgba(79, 70, 229, 0.025);
+}
+
+.profile-hero-avatar {
   position: relative;
-  width: 76px;
-  height: 76px;
-  flex-shrink: 0;
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 12px;
+  cursor: pointer;
 }
 
 .profile-avatar-icon {
-  width: 76px;
-  height: 76px;
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
   background: var(--accent-gradient);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 16px var(--accent-glow);
+  border: 3px solid var(--bg-main);
+  box-shadow: 0 10px 26px var(--accent-glow);
+  transition: var(--transition-spring);
+}
+
+.profile-hero-avatar:active .profile-avatar-icon {
+  transform: scale(0.95);
 }
 
 .profile-avatar-icon img {
@@ -1654,62 +1683,200 @@ body.rtl-mode .btn-zero {
   height: 100%;
   object-fit: cover;
   display: block;
-}
-
-.profile-avatar-wrap {
-  cursor: pointer;
+  border-radius: 50%;
 }
 
 .profile-avatar-badge {
   position: absolute;
-  bottom: -2px;
-  right: -2px;
-  width: 26px;
-  height: 26px;
+  bottom: 0;
+  inset-inline-end: 0;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: var(--accent-primary);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2.5px solid var(--bg-sub);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  border: 3px solid var(--bg-main);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
 
-body.rtl-mode .profile-avatar-badge {
-  right: auto;
-  left: -2px;
+.profile-hero-name {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+}
+
+.profile-hero-username {
+  display: inline-block;
+  margin-top: 3px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  direction: ltr;
+}
+
+.profile-hero-stats {
+  display: flex;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.profile-stat {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 0 6px;
+}
+
+.profile-stat + .profile-stat {
+  border-inline-start: 1px solid var(--border-subtle);
+}
+
+.profile-stat-value {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: clamp(15px, 4vw, 18px);
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.profile-stat-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* --- Account form --- */
+.profile-form-sheet .card-section-title {
+  margin-bottom: 16px;
+}
+
+.profile-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.profile-field-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  color: var(--accent-primary);
+  background: rgba(79, 70, 229, 0.11);
+  border-radius: 13px;
+}
+
+.profile-field-control {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-field-control label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.profile-field-control .tool-input {
+  height: 44px;
 }
 
 .profile-photo-actions {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  margin: 4px 0 16px;
 }
 
-.profile-identity h4 {
-  font-size: 18px;
-  font-weight: 700;
+.profile-photo-actions .btn-secondary {
+  flex: 1;
+  min-width: 0;
 }
 
-.profile-identity span {
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
+/* --- Settings rows --- */
 .setting-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 14px 0;
+  gap: 12px;
+  padding: 13px 0;
   border-bottom: 1px solid var(--border-subtle);
-  flex-wrap: wrap;
-  gap: 10px;
 }
 
 .setting-item:last-child {
   border-bottom: none;
+}
+
+.setting-icon {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  color: var(--text-secondary);
+  background: var(--chip-bg);
+  border-radius: 11px;
+}
+
+.setting-icon.tint-indigo { color: var(--accent-primary); background: rgba(79, 70, 229, 0.12); }
+.setting-icon.tint-green  { color: var(--color-green);   background: var(--color-green-bg); }
+.setting-icon.tint-blue   { color: var(--color-blue);    background: rgba(59, 130, 246, 0.14); }
+.setting-icon.tint-amber  { color: var(--color-amber);   background: rgba(245, 158, 11, 0.14); }
+.setting-icon.tint-red    { color: var(--color-red);     background: var(--color-red-bg); }
+
+.setting-label {
+  flex: 1;
+  min-width: 0;
+  text-align: start;
+}
+
+.setting-label > span {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.setting-label small {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.setting-chevron {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+}
+
+body.rtl-mode .setting-chevron svg {
+  transform: scaleX(-1);
+}
+
+.data-row {
+  width: 100%;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.data-row.danger .setting-label > span {
+  color: var(--color-red);
 }
 
 /* iOS Switch */
@@ -1767,21 +1934,26 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
 
 .lang-pill-selector {
   display: flex;
-  gap: 8px;
+  gap: 3px;
+  padding: 4px;
+  flex-shrink: 0;
+  background: var(--chip-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 13px;
 }
 
 .lang-btn {
-  padding: 6px 14px;
-  border-radius: 20px;
-  background: var(--chip-bg);
-  border: 1px solid var(--border-subtle);
+  padding: 7px 14px;
+  border-radius: 10px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--text-secondary);
 }
 
 .lang-btn.active {
   background: var(--accent-primary);
   color: #fff;
+  box-shadow: 0 3px 10px var(--accent-glow);
 }
 
 /* Buttons */
@@ -4153,6 +4325,14 @@ const translations = {
     profile_name: "Full Name",
     profile_username: "Username",
     profile_save: "Save Profile",
+    profile_account_section: "Account Info",
+    profile_stats_wallets: "Wallets",
+    profile_stats_transactions: "Transactions",
+    profile_stats_balance: "Total Balance",
+    export_data_desc: "Download all data as a JSON file",
+    import_data_desc: "Restore from a backup file",
+    load_demo_data_desc: "Add sample data to explore the app",
+    reset_data_desc: "Erase everything and start over",
     settings_section: "Preferences",
     dark_mode: "Dark Mode",
     language: "Language",
@@ -4393,6 +4573,14 @@ const translations = {
     profile_name: "نام و نام خانوادگی",
     profile_username: "نام کاربری (آیدی)",
     profile_save: "ذخیره تغییرات",
+    profile_account_section: "اطلاعات حساب",
+    profile_stats_wallets: "کیف پول",
+    profile_stats_transactions: "تراکنش",
+    profile_stats_balance: "مجموع دارایی",
+    export_data_desc: "دانلود همه داده‌ها به‌صورت فایل JSON",
+    import_data_desc: "بازیابی از فایل پشتیبان",
+    load_demo_data_desc: "افزودن داده نمونه برای آشنایی",
+    reset_data_desc: "پاک کردن کامل و شروع دوباره",
     settings_section: "تنظیمات برنامه",
     dark_mode: "حالت تاریک",
     language: "زبان برنامه",
@@ -7186,60 +7374,93 @@ class WalioApp {
     const profile = window.storage.getProfile();
     const settings = window.storage.getSettings();
     const currentLang = window.i18n ? window.i18n.currentLang : 'fa';
+    const t = (key) => window.i18n ? window.i18n.t(key) : key;
+
+    const wallets = window.storage.getWallets();
+    const transactions = window.storage.getTransactions();
+    const totalBalance = wallets.reduce((sum, w) => sum + (parseFloat(w.balance) || 0), 0);
+    const statsBalance = settings.hideBalance ? '••••' : (window.i18n ? window.i18n.formatCurrency(totalBalance, 'IRT') : String(totalBalance));
 
     container.innerHTML = `
-      <div class="page-header">
-        <h2 class="page-title" data-i18n="profile_title">Profile & Settings</h2>
-        <p class="page-subtitle" data-i18n="profile_subtitle">Manage your account and preferences</p>
+      <!-- Profile Hero -->
+      <div class="profile-hero">
+        <div class="profile-hero-avatar" id="profile-avatar-wrap" role="button" tabindex="0" title="${t('change_photo')}">
+          <div class="profile-avatar-icon" id="profile-avatar-icon">
+            ${profile.avatar
+              ? `<img src="${profile.avatar}" alt="Profile photo" />`
+              : `<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`}
+          </div>
+          <div class="profile-avatar-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </div>
+        </div>
+
+        <h3 class="profile-hero-name" id="profile-identity-name">${profile.name}</h3>
+        <span class="profile-hero-username" id="profile-identity-username">${profile.username}</span>
+
+        <div class="profile-hero-stats">
+          <div class="profile-stat">
+            <strong class="profile-stat-value">${window.i18n ? window.i18n.formatNumber(wallets.length) : wallets.length}</strong>
+            <span class="profile-stat-label" data-i18n="profile_stats_wallets">${t('profile_stats_wallets')}</span>
+          </div>
+          <div class="profile-stat">
+            <strong class="profile-stat-value">${window.i18n ? window.i18n.formatNumber(transactions.length) : transactions.length}</strong>
+            <span class="profile-stat-label" data-i18n="profile_stats_transactions">${t('profile_stats_transactions')}</span>
+          </div>
+          <div class="profile-stat">
+            <strong class="profile-stat-value">${statsBalance}</strong>
+            <span class="profile-stat-label" data-i18n="profile_stats_balance">${t('profile_stats_balance')}</span>
+          </div>
+        </div>
       </div>
 
-      <!-- Profile Edit Card -->
-      <div class="profile-card-sheet">
-        <div class="profile-photo-row">
-          <div class="profile-avatar-wrap" id="profile-avatar-wrap" role="button" tabindex="0" title="${window.i18n ? window.i18n.t('change_photo') : 'Change Photo'}">
-            <div class="profile-avatar-icon" id="profile-avatar-icon">
-              ${profile.avatar
-                ? `<img src="${profile.avatar}" alt="Profile photo" />`
-                : `<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`}
-            </div>
-            <div class="profile-avatar-badge" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            </div>
+      <!-- Account Info -->
+      <div class="settings-card-sheet profile-form-sheet">
+        <h3 class="card-section-title" data-i18n="profile_account_section">${t('profile_account_section')}</h3>
+
+        <div class="profile-field">
+          <span class="profile-field-icon">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          <div class="profile-field-control">
+            <label for="prof-input-name" data-i18n="profile_name">${t('profile_name')}</label>
+            <input type="text" id="prof-input-name" class="tool-input" value="${profile.name || ''}" />
           </div>
-          <div class="profile-identity">
-            <h4 id="profile-identity-name">${profile.name}</h4>
-            <span id="profile-identity-username">${profile.username}</span>
+        </div>
+
+        <div class="profile-field">
+          <span class="profile-field-icon">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8l-3.5 6 2 3.5"/></svg>
+          </span>
+          <div class="profile-field-control">
+            <label for="prof-input-user" data-i18n="profile_username">${t('profile_username')}</label>
+            <input type="text" id="prof-input-user" class="tool-input" value="${profile.username || ''}" dir="ltr" />
           </div>
         </div>
 
         <div class="profile-photo-actions">
           <button class="btn-secondary" id="btn-change-photo">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            <span data-i18n="change_photo">Change Photo</span>
+            <span data-i18n="change_photo">${t('change_photo')}</span>
           </button>
-          <button class="btn-secondary" id="btn-remove-photo" data-i18n="remove_photo" ${profile.avatar ? '' : 'style="display:none;"'}>Remove Photo</button>
+          <button class="btn-secondary" id="btn-remove-photo" data-i18n="remove_photo" ${profile.avatar ? '' : 'style="display:none;"'}>${t('remove_photo')}</button>
           <input type="file" id="profile-photo-input" accept="image/*" style="display:none;" />
         </div>
 
-        <div class="tool-input-row">
-          <label data-i18n="profile_name">Full Name</label>
-          <input type="text" id="prof-input-name" class="tool-input" value="${profile.name || ''}" />
-        </div>
-
-        <div class="tool-input-row">
-          <label data-i18n="profile_username">Username</label>
-          <input type="text" id="prof-input-user" class="tool-input" value="${profile.username || ''}" />
-        </div>
-
-        <button class="btn-primary-full" id="btn-save-profile" data-i18n="profile_save">Save Profile</button>
+        <button class="btn-primary-full" id="btn-save-profile" data-i18n="profile_save">${t('profile_save')}</button>
       </div>
 
-      <!-- Settings Section -->
+      <!-- Preferences -->
       <div class="settings-card-sheet">
-        <h3 class="card-section-title" data-i18n="settings_section">Preferences</h3>
+        <h3 class="card-section-title" data-i18n="settings_section">${t('settings_section')}</h3>
 
         <div class="setting-item">
-          <span data-i18n="dark_mode">Dark Mode</span>
+          <span class="setting-icon tint-indigo">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </span>
+          <span class="setting-label">
+            <span data-i18n="dark_mode">${t('dark_mode')}</span>
+          </span>
           <label class="ios-switch">
             <input type="checkbox" id="setting-dark-toggle" ${settings.darkMode === 'dark' ? 'checked' : ''} />
             <span class="switch-slider"></span>
@@ -7247,7 +7468,12 @@ class WalioApp {
         </div>
 
         <div class="setting-item">
-          <span data-i18n="language">Language</span>
+          <span class="setting-icon tint-green">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </span>
+          <span class="setting-label">
+            <span data-i18n="language">${t('language')}</span>
+          </span>
           <div class="lang-pill-selector">
             <button class="lang-btn ${currentLang === 'fa' ? 'active' : ''}" data-lang="fa" data-i18n="lang_name_fa">فارسی</button>
             <button class="lang-btn ${currentLang === 'en' ? 'active' : ''}" data-lang="en" data-i18n="lang_name_en">English</button>
@@ -7255,21 +7481,59 @@ class WalioApp {
         </div>
       </div>
 
-      <!-- Data Management Section -->
+      <!-- Data Management -->
       <div class="settings-card-sheet">
-        <h3 class="card-section-title" data-i18n="data_section">Data Management</h3>
+        <h3 class="card-section-title" data-i18n="data_section">${t('data_section')}</h3>
 
-        <div class="data-actions-row mb-2">
-          <button class="btn-secondary" id="btn-export-data" data-i18n="export_data">Export Backup (JSON)</button>
-          <label for="import-file-input" class="btn-secondary" data-i18n="import_data">Restore Backup</label>
-          <input type="file" id="import-file-input" accept=".json" style="display:none;" />
-        </div>
+        <button class="setting-item data-row" id="btn-export-data">
+          <span class="setting-icon tint-blue">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </span>
+          <span class="setting-label">
+            <span data-i18n="export_data">${t('export_data')}</span>
+            <small data-i18n="export_data_desc">${t('export_data_desc')}</small>
+          </span>
+          <span class="setting-chevron">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4l6 6-6 6"/></svg>
+          </span>
+        </button>
 
-        <div class="data-actions-row">
-          <button class="btn-secondary" id="btn-load-demo" data-i18n="load_demo_data">Load Sample Demo Data</button>
-        </div>
+        <label class="setting-item data-row" for="import-file-input">
+          <span class="setting-icon tint-green">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </span>
+          <span class="setting-label">
+            <span data-i18n="import_data">${t('import_data')}</span>
+            <small data-i18n="import_data_desc">${t('import_data_desc')}</small>
+          </span>
+          <span class="setting-chevron">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4l6 6-6 6"/></svg>
+          </span>
+        </label>
+        <input type="file" id="import-file-input" accept=".json" style="display:none;" />
 
-        <button class="btn-danger-outline" id="btn-reset-data" data-i18n="reset_data">Reset All App Data</button>
+        <button class="setting-item data-row" id="btn-load-demo">
+          <span class="setting-icon tint-amber">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18v-6"/><path d="M9 15l3-3 3 3"/></svg>
+          </span>
+          <span class="setting-label">
+            <span data-i18n="load_demo_data">${t('load_demo_data')}</span>
+            <small data-i18n="load_demo_data_desc">${t('load_demo_data_desc')}</small>
+          </span>
+          <span class="setting-chevron">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4l6 6-6 6"/></svg>
+          </span>
+        </button>
+
+        <button class="setting-item data-row danger" id="btn-reset-data">
+          <span class="setting-icon tint-red">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </span>
+          <span class="setting-label">
+            <span data-i18n="reset_data">${t('reset_data')}</span>
+            <small data-i18n="reset_data_desc">${t('reset_data_desc')}</small>
+          </span>
+        </button>
       </div>
     `;
 
@@ -7674,5 +7938,5 @@ window.addEventListener('DOMContentLoaded', () => {
   window.walioApp.init();
 });
 
-  </script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a8a92cdb91f5cf',t:'MTc4NjYzMzk3NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a8c1759dc9b933',t:'MTc4NjYzNDk3MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  </script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a8a92cdb91f5cf',t:'MTc4NjYzMzk3NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a8e1697d61fffb',t:'MTc4NjYzNjI3OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
