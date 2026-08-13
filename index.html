@@ -3246,33 +3246,48 @@ body.currency-board-mode .currency-fullscreen-board {
   z-index: 40;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  min-height: 82px;
+  gap: 14px;
+  min-height: 76px;
   padding: max(14px, env(safe-area-inset-top)) clamp(16px, 4vw, 34px) 14px;
-  background: color-mix(in srgb, var(--bg-main) 82%, transparent);
+  background: color-mix(in srgb, var(--bg-main) 84%, transparent);
   border-bottom: 1px solid var(--border-subtle);
   backdrop-filter: blur(24px) saturate(170%);
   -webkit-backdrop-filter: blur(24px) saturate(170%);
 }
 
-.currency-board-brand {
-  min-width: 0;
-  display: flex;
+.currency-board-exit {
+  flex: 0 0 auto;
+  height: 42px;
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  padding: 0 16px;
+  color: var(--text-primary);
+  background: var(--card-bg);
+  border: 1px solid var(--border-glass);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 5px 16px rgba(15,23,42,0.06);
 }
 
-.currency-board-logo {
-  width: 45px;
-  height: 45px;
-  display: grid;
-  place-items: center;
+.currency-board-exit:hover {
+  border-color: var(--border-hover);
+  background: var(--chip-bg-strong);
+}
+
+.currency-board-exit svg {
   flex: 0 0 auto;
-  color: #fff;
-  background: var(--accent-gradient);
-  border-radius: 14px;
-  box-shadow: 0 8px 20px var(--accent-glow);
+}
+
+body.rtl-mode .currency-board-exit svg {
+  transform: scaleX(-1);
+}
+
+.currency-board-titles {
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .currency-board-title {
@@ -3280,19 +3295,30 @@ body.currency-board-mode .currency-fullscreen-board {
   text-overflow: ellipsis;
   white-space: nowrap;
   color: var(--text-primary);
-  font-size: clamp(18px, 3vw, 25px);
-  font-weight: 850;
-  letter-spacing: -0.5px;
+  font-size: clamp(17px, 2.6vw, 21px);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.4px;
 }
 
-.currency-board-subtitle {
+.currency-board-status {
   display: flex;
   align-items: center;
   gap: 7px;
-  margin-top: 2px;
+  min-width: 0;
+  margin-top: 3px;
   color: var(--text-secondary);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 550;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.currency-board-status > span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .currency-board-status-dot {
@@ -3309,54 +3335,26 @@ body.currency-board-mode .currency-fullscreen-board {
   box-shadow: 0 0 0 4px rgba(245,158,11,0.13);
 }
 
-.currency-board-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.currency-board-refresh {
   flex: 0 0 auto;
-}
-
-.currency-board-control {
+  width: 42px;
   height: 42px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  padding: 0 13px;
+  display: grid;
+  place-items: center;
   color: var(--text-primary);
   background: var(--card-bg);
   border: 1px solid var(--border-glass);
   border-radius: 13px;
-  font-size: 11px;
-  font-weight: 700;
   box-shadow: 0 5px 16px rgba(15,23,42,0.06);
 }
 
-.currency-board-control:hover {
+.currency-board-refresh:hover {
   border-color: var(--border-hover);
   background: var(--chip-bg-strong);
 }
 
-.currency-board-control.icon-only {
-  width: 42px;
-  padding: 0;
-}
-
-.currency-board-control.is-loading svg {
+.currency-board-refresh.is-loading svg {
   animation: currency-spin .8s linear infinite;
-}
-
-.currency-board-exit {
-  color: #fff;
-  background: var(--accent-primary);
-  border-color: var(--accent-primary);
-  box-shadow: 0 6px 18px var(--accent-glow);
-}
-
-.currency-board-exit:hover {
-  color: #fff;
-  background: #4338CA;
-  border-color: #4338CA;
 }
 
 .currency-board-content {
@@ -3623,17 +3621,15 @@ body.rtl-mode .currency-board-arrow svg { transform: scaleX(-1); }
   .open-currency-board-btn { padding-inline: 10px; font-size: 10px; }
 
   .currency-board-topbar {
-    min-height: 72px;
+    min-height: 68px;
     gap: 10px;
     padding-inline: 13px;
   }
 
-  .currency-board-logo { width: 40px; height: 40px; border-radius: 13px; }
   .currency-board-title { font-size: 16px; }
-  .currency-board-subtitle { max-width: 150px; font-size: 9px; }
-  .currency-board-control .control-text { display: none; }
-  .currency-board-control { width: 40px; height: 40px; padding: 0; }
-  .currency-board-actions { gap: 6px; }
+  .currency-board-status { font-size: 10px; }
+  .currency-board-exit { height: 38px; padding: 0 12px; }
+  .currency-board-refresh { width: 38px; height: 38px; }
   .currency-board-content { padding: 14px 12px 26px; }
   .currency-board-summary { margin-bottom: 12px; }
   .currency-board-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
@@ -4044,6 +4040,7 @@ const translations = {
     currency_board_title: "Currency Rate Board",
     currency_board_subtitle: "A clear, distraction-free view of live prices",
     currency_board_exit: "Exit rate board",
+    currency_board_back: "Back",
     currency_board_value_label: "Open-market price",
     currency_board_hint: "Select any card to open its detailed chart",
 
@@ -4283,6 +4280,7 @@ const translations = {
     currency_board_title: "تابلوی قیمت ارزها",
     currency_board_subtitle: "نمایش خوانا و بدون حواس‌پرتی قیمت‌های بازار",
     currency_board_exit: "خروج از تابلوی نرخ‌ها",
+    currency_board_back: "بازگشت",
     currency_board_value_label: "قیمت بازار آزاد",
     currency_board_hint: "برای دیدن نمودار کامل، هر باکس را انتخاب کنید",
 
@@ -6253,6 +6251,9 @@ class WalioApp {
     this.activeTxFilter = 'all';
     this.searchQuery = '';
     this.currencyBoardMode = false;
+    try {
+      this.currencyBoardMode = localStorage.getItem('walio_currency_board_mode') === 'true';
+    } catch (e) { /* ignore */ }
   }
 
   init() {
@@ -6285,7 +6286,11 @@ class WalioApp {
       }
     });
 
-    this.switchTab('home');
+    if (this.currencyBoardMode) {
+      this.switchTab('currency');
+    } else {
+      this.switchTab('home');
+    }
     this.updateHeaderProfile();
   }
 
@@ -6836,40 +6841,26 @@ class WalioApp {
         </svg>`;
     };
 
-    const allCodes = ['IRT', ...codes];
-    const optionHTML = (selectedCode) => allCodes.map(code => {
-      const item = rates[code];
-      const selected = code === selectedCode ? 'selected' : '';
-      return `<option value="${code}" ${selected}>${item.flag || '🌐'} ${code}</option>`;
-    }).join('');
-
     container.innerHTML = `
       <div class="currency-page-redesign">
         <div class="currency-inline-toast" id="currency-inline-toast" role="status" aria-live="polite"></div>
 
         <section class="currency-fullscreen-board" id="currency-fullscreen-board" aria-labelledby="currency-board-title">
           <header class="currency-board-topbar">
-            <div class="currency-board-brand">
-              <span class="currency-board-logo" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 8h8M8 12h6M8 16h8"/></svg>
-              </span>
-              <div>
-                <h1 class="currency-board-title" id="currency-board-title">${t('currency_board_title')}</h1>
-                <p class="currency-board-subtitle">
-                  <span class="currency-board-status-dot ${isLive ? '' : 'cached'}"></span>
-                  <span>${t(isLive ? 'rates_live_status' : 'rates_cached_status')} · ${updatedText}</span>
-                </p>
-              </div>
+            <button class="currency-board-exit" id="close-currency-board" type="button" aria-label="${t('currency_board_exit')}" title="${t('currency_board_exit')}">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+              <span>${t('currency_board_back')}</span>
+            </button>
+            <div class="currency-board-titles">
+              <h1 class="currency-board-title" id="currency-board-title">${t('currency_board_title')}</h1>
+              <p class="currency-board-status">
+                <span class="currency-board-status-dot ${isLive ? '' : 'cached'}"></span>
+                <span>${t(isLive ? 'rates_live_status' : 'rates_cached_status')} · ${updatedText}</span>
+              </p>
             </div>
-            <div class="currency-board-actions">
-              <button class="currency-board-control icon-only" id="board-refresh-rates" type="button" aria-label="${t('refresh_rates')}" title="${t('refresh_rates')}">
-                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-              </button>
-              <button class="currency-board-control currency-board-exit" id="close-currency-board" type="button" aria-label="${t('currency_board_exit')}" title="${t('currency_board_exit')}">
-                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
-                <span class="control-text">${t('currency_board_exit')}</span>
-              </button>
-            </div>
+            <button class="currency-board-refresh" id="board-refresh-rates" type="button" aria-label="${t('refresh_rates')}" title="${t('refresh_rates')}">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            </button>
           </header>
 
           <div class="currency-board-content">
@@ -6978,58 +6969,6 @@ class WalioApp {
           </button>
         </section>
 
-        <section class="currency-quick-converter" aria-labelledby="quick-converter-title">
-          <div class="quick-converter-head">
-            <div class="quick-converter-title-wrap">
-              <span class="quick-converter-icon">
-                <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h11l-3-3"/><path d="M17 17H6l3 3"/><path d="M18 7l-3 3"/><path d="M6 17l3-3"/></svg>
-              </span>
-              <div>
-                <h3 class="quick-converter-title" id="quick-converter-title" data-i18n="currency_converter">${t('currency_converter')}</h3>
-                <span class="quick-converter-caption" data-i18n="quick_convert_caption">${t('quick_convert_caption')}</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="quick-converter-pair">
-            <div class="quick-currency-field">
-              <label for="currency-quick-from" data-i18n="from_currency">${t('from_currency')}</label>
-              <div class="currency-select-shell">
-                <select id="currency-quick-from" class="quick-currency-select">${optionHTML(focusCode)}</select>
-              </div>
-            </div>
-
-            <button class="quick-swap-button" id="currency-quick-swap" type="button" aria-label="${t('swap')}" title="${t('swap')}">
-              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h11l-3-3"/><path d="M17 17H6l3 3"/><path d="M18 7l-3 3"/><path d="M6 17l3-3"/></svg>
-            </button>
-
-            <div class="quick-currency-field">
-              <label for="currency-quick-to" data-i18n="to_currency">${t('to_currency')}</label>
-              <div class="currency-select-shell">
-                <select id="currency-quick-to" class="quick-currency-select">${optionHTML('IRT')}</select>
-              </div>
-            </div>
-          </div>
-
-          <div class="currency-value-grid">
-            <div class="currency-amount-box">
-              <label class="currency-amount-label" for="currency-quick-amount" data-i18n="amount">${t('amount')}</label>
-              <input class="currency-quick-amount" id="currency-quick-amount" type="number" inputmode="decimal" value="100" min="0" step="any" />
-            </div>
-            <div class="currency-result-box">
-              <span class="currency-result-label" data-i18n="converted_amount">${t('converted_amount')}</span>
-              <output class="currency-quick-result" id="currency-quick-result">—</output>
-            </div>
-          </div>
-          <div class="currency-rate-equation">
-            <span id="currency-rate-equation">—</span>
-            <span class="currency-rate-source">
-              <svg viewBox="0 0 16 16" width="10" height="10" fill="currentColor"><circle cx="8" cy="8" r="5"/></svg>
-              ${t(isLive ? 'rate_source_live' : 'rate_source_cached')}
-            </span>
-          </div>
-        </section>
-
         <section class="currency-market-list-card" aria-labelledby="market-list-title">
           <div class="market-list-heading">
             <div>
@@ -7130,37 +7069,6 @@ class WalioApp {
       });
     });
 
-    const fromSelect = container.querySelector('#currency-quick-from');
-    const toSelect = container.querySelector('#currency-quick-to');
-    const amountInput = container.querySelector('#currency-quick-amount');
-    const resultOutput = container.querySelector('#currency-quick-result');
-    const equation = container.querySelector('#currency-rate-equation');
-    const swapButton = container.querySelector('#currency-quick-swap');
-
-    const updateQuickConversion = () => {
-      const from = fromSelect.value;
-      const to = toSelect.value;
-      const amount = Math.max(0, parseFloat(amountInput.value) || 0);
-      const converted = window.currency.convert(amount, from, to);
-      const unitRate = window.currency.convert(1, from, to);
-      resultOutput.textContent = window.i18n.formatCurrency(converted, to, true);
-      resultOutput.style.direction = isFa ? 'rtl' : 'ltr';
-      equation.textContent = `1 ${from} = ${window.i18n.formatCurrency(unitRate, to, true)}`;
-    };
-
-    [fromSelect, toSelect, amountInput].forEach(element => {
-      element.addEventListener('input', updateQuickConversion);
-      element.addEventListener('change', updateQuickConversion);
-    });
-
-    swapButton.addEventListener('click', () => {
-      const currentFrom = fromSelect.value;
-      fromSelect.value = toSelect.value;
-      toSelect.value = currentFrom;
-      updateQuickConversion();
-    });
-    updateQuickConversion();
-
     const searchInput = container.querySelector('#currency-market-search');
     const filterTabs = container.querySelectorAll('.currency-filter-tab');
     const rows = Array.from(container.querySelectorAll('.market-rate-row'));
@@ -7222,6 +7130,9 @@ class WalioApp {
 
   setCurrencyBoardMode(enabled) {
     this.currencyBoardMode = Boolean(enabled);
+    try {
+      localStorage.setItem('walio_currency_board_mode', this.currencyBoardMode ? 'true' : 'false');
+    } catch (e) { /* ignore */ }
     document.body.classList.toggle('currency-board-mode', this.currencyBoardMode);
 
     // The board is a distraction-free app view; returning restores the regular app shell.
@@ -7763,5 +7674,5 @@ window.addEventListener('DOMContentLoaded', () => {
   window.walioApp.init();
 });
 
-  </script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a8a92cdb91f5cf',t:'MTc4NjYzMzk3NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  </script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a8a92cdb91f5cf',t:'MTc4NjYzMzk3NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a8c1759dc9b933',t:'MTc4NjYzNDk3MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
