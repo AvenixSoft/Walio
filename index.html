@@ -3675,6 +3675,965 @@ body.rtl-mode .currency-board-arrow svg { transform: scaleX(-1); }
   .currency-board-card { background: var(--card-bg); }
 }
 
+/* ================= HOME + WALLETS — CALM FINANCE REDESIGN ================= */
+.home-page-2026,
+.wallets-page-2026 {
+  width: 100%;
+  padding-bottom: 4px;
+}
+
+/* Shared section language */
+.home-section {
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.home-section-heading,
+.wallets-list-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.home-section-heading > div,
+.wallets-list-heading > div { min-width: 0; }
+
+.home-section-kicker,
+.wallets-list-kicker {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .7px;
+  text-transform: uppercase;
+}
+
+.home-section-title,
+.wallets-list-title {
+  color: var(--text-primary);
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -.35px;
+}
+
+.home-section-link {
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex: 0 0 auto;
+  padding: 0 10px;
+  color: var(--accent-primary);
+  background: rgba(79, 70, 229, .09);
+  border: 1px solid rgba(79, 70, 229, .10);
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 750;
+}
+
+.home-section-link:hover { background: rgba(79, 70, 229, .15); }
+body.rtl-mode .home-section-link svg { transform: scaleX(-1); }
+
+/* Home overview hero */
+.home-overview-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 288px;
+  margin-bottom: 22px;
+  padding: 18px;
+  overflow: hidden;
+  color: #fff;
+  background:
+    radial-gradient(circle at 92% 5%, rgba(125, 211, 252, .30), transparent 31%),
+    radial-gradient(circle at 3% 95%, rgba(129, 140, 248, .32), transparent 36%),
+    linear-gradient(145deg, #101B3F 0%, #1E2C68 48%, #312E81 100%);
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 28px;
+  box-shadow: 0 20px 42px rgba(30, 41, 89, .25), inset 0 1px 0 rgba(255,255,255,.16);
+}
+
+.home-overview-hero::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -58px;
+  right: -48px;
+  width: 178px;
+  height: 178px;
+  border: 1px solid rgba(255,255,255,.11);
+  border-radius: 50%;
+  box-shadow: 0 0 0 28px rgba(255,255,255,.025), 0 0 0 58px rgba(255,255,255,.015);
+}
+
+body.rtl-mode .home-overview-hero::before {
+  right: auto;
+  left: -48px;
+}
+
+.home-overview-hero::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  opacity: .18;
+  background-image: radial-gradient(rgba(255,255,255,.45) .7px, transparent .7px);
+  background-size: 19px 19px;
+  mask-image: linear-gradient(to bottom, #000, transparent 65%);
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 65%);
+}
+
+.home-hero-top,
+.home-balance-label-row,
+.home-cashflow-head,
+.home-cashflow-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.home-hero-top { margin-bottom: 17px; }
+
+.home-hero-eyebrow,
+.home-period-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: rgba(255,255,255,.80);
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+.home-hero-eyebrow-icon {
+  width: 29px;
+  height: 29px;
+  display: grid;
+  place-items: center;
+  color: #C7D2FE;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 10px;
+}
+
+.home-period-pill {
+  min-height: 28px;
+  padding: 0 10px;
+  color: rgba(255,255,255,.86);
+  background: rgba(255,255,255,.09);
+  border: 1px solid rgba(255,255,255,.11);
+  border-radius: 999px;
+}
+
+.home-balance-label {
+  color: rgba(226,232,240,.68);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.home-privacy-btn,
+.wallets-privacy-btn {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: rgba(255,255,255,.90);
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 11px;
+}
+
+.home-privacy-btn:hover,
+.wallets-privacy-btn:hover { background: rgba(255,255,255,.18); }
+
+.home-balance-value {
+  display: block;
+  margin: 4px 0 16px;
+  overflow-wrap: anywhere;
+  color: #fff;
+  font-size: clamp(29px, 8.6vw, 37px);
+  font-weight: 850;
+  line-height: 1.2;
+  letter-spacing: -1px;
+  text-shadow: 0 3px 16px rgba(15,23,42,.18);
+}
+
+.home-hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 11px;
+}
+
+.home-hero-metric {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 15px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.home-metric-icon {
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 10px;
+}
+
+.home-hero-metric.income .home-metric-icon {
+  color: #6EE7B7;
+  background: rgba(16,185,129,.15);
+}
+
+.home-hero-metric.expense .home-metric-icon {
+  color: #FDA4AF;
+  background: rgba(244,63,94,.15);
+}
+
+.home-metric-copy { min-width: 0; }
+.home-metric-copy span {
+  display: block;
+  color: rgba(226,232,240,.63);
+  font-size: 9.5px;
+  font-weight: 600;
+}
+
+.home-metric-copy strong {
+  display: block;
+  margin-top: 1px;
+  overflow: hidden;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-cashflow-strip {
+  padding: 10px 11px 9px;
+  background: rgba(3,7,18,.15);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 15px;
+}
+
+.home-cashflow-head { margin-bottom: 7px; }
+.home-cashflow-head span {
+  color: rgba(226,232,240,.65);
+  font-size: 9.5px;
+  font-weight: 600;
+}
+
+.home-cashflow-head strong {
+  color: #6EE7B7;
+  font-size: 11.5px;
+  font-weight: 800;
+}
+
+.home-cashflow-head strong.negative { color: #FDA4AF; }
+.home-cashflow-track {
+  width: 100%;
+  height: 5px;
+  overflow: hidden;
+  background: rgba(255,255,255,.10);
+  border-radius: 999px;
+}
+
+.home-cashflow-track span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #34D399, #38BDF8);
+  border-radius: inherit;
+  transition: width .5s cubic-bezier(.16,1,.3,1);
+}
+
+.home-cashflow-track span.over { background: linear-gradient(90deg, #FB7185, #F59E0B); }
+.home-cashflow-foot {
+  margin-top: 6px;
+  color: rgba(226,232,240,.54);
+  font-size: 8.5px;
+}
+
+/* Home quick actions */
+.home-quick-section { margin-bottom: 24px; }
+.home-quick-title {
+  margin-bottom: 10px;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.home-quick-card {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+  padding: 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-glass);
+  border-radius: 22px;
+  box-shadow: 0 9px 26px rgba(15,23,42,.06), inset 0 1px 0 rgba(255,255,255,.42);
+}
+
+.home-quick-action {
+  min-width: 0;
+  min-height: 74px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 7px 3px;
+  color: var(--text-secondary);
+  border-radius: 16px;
+  font-size: 9.5px;
+  font-weight: 700;
+}
+
+.home-quick-action:hover { background: var(--chip-bg); }
+.home-quick-action:active { transform: scale(.96); }
+.home-quick-action span:last-child {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-quick-icon {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  color: #4F46E5;
+  background: rgba(79,70,229,.11);
+  border-radius: 13px;
+}
+
+.home-quick-action[data-tone="green"] .home-quick-icon { color: #059669; background: rgba(16,185,129,.11); }
+.home-quick-action[data-tone="blue"] .home-quick-icon { color: #0284C7; background: rgba(14,165,233,.11); }
+.home-quick-action[data-tone="amber"] .home-quick-icon { color: #D97706; background: rgba(245,158,11,.12); }
+
+/* Wallet cards shared by Home and Wallets */
+.wallet-card-2026 {
+  min-width: 0;
+  height: 178px;
+  padding: 16px 17px;
+  border-radius: 25px;
+  border: 1px solid rgba(255,255,255,.22);
+  box-shadow: 0 14px 29px rgba(15,23,42,.22), inset 0 1px 0 rgba(255,255,255,.18);
+  isolation: isolate;
+}
+
+.wallet-card-2026::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -72px;
+  right: -56px;
+  width: 178px;
+  height: 178px;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 50%;
+  box-shadow: 0 0 0 26px rgba(255,255,255,.035), 0 0 0 51px rgba(255,255,255,.02);
+}
+
+body.rtl-mode .wallet-card-2026::before { right: auto; left: -56px; }
+
+.wallet-card-2026::after {
+  left: -80%;
+  width: 55%;
+  opacity: .7;
+  transition: transform .75s ease;
+}
+
+.wallet-card-2026:hover::after { transform: translateX(520%) skewX(-20deg); }
+.wallet-card-2026:hover { transform: translateY(-3px); }
+
+.wallet-card-2026 .wallet-card-header {
+  position: relative;
+  z-index: 2;
+  align-items: flex-start;
+}
+
+.wallet-card-2026 .wallet-bank-tag { min-width: 0; gap: 9px; }
+.wallet-icon-shell {
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.wallet-card-2026 .wallet-icon-emoji { font-size: 17px; }
+.wallet-bank-copy { min-width: 0; }
+.wallet-card-2026 .wallet-bank-name {
+  display: block;
+  max-width: 177px;
+  overflow: hidden;
+  font-size: 11.5px;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wallet-card-2026 .wallet-kind {
+  display: block;
+  max-width: 175px;
+  margin-top: 1px;
+  overflow: hidden;
+  color: rgba(255,255,255,.65);
+  font-size: 8.5px;
+  font-weight: 550;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wallet-contactless {
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: rgba(255,255,255,.83);
+}
+
+.wallet-card-2026 .wallet-card-body {
+  position: relative;
+  z-index: 2;
+  margin-top: 17px;
+}
+
+.wallet-card-2026 .wallet-balance-label {
+  color: rgba(255,255,255,.61);
+  font-size: 8.5px;
+  font-weight: 650;
+  letter-spacing: .55px;
+}
+
+.wallet-card-2026 .wallet-balance-amount {
+  max-width: 88%;
+  margin-top: 1px;
+  overflow: hidden;
+  font-size: 20px;
+  font-weight: 850;
+  letter-spacing: -.45px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wallet-card-2026 .wallet-card-footer {
+  position: relative;
+  z-index: 2;
+  color: rgba(255,255,255,.75);
+  font-size: 9px;
+}
+
+.wallet-card-2026 .wallet-number {
+  max-width: calc(100% - 48px);
+  overflow: hidden;
+  direction: ltr;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: 1px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  unicode-bidi: isolate;
+}
+
+.wallet-card-currency {
+  min-width: 35px;
+  padding: 3px 7px;
+  color: #fff;
+  background: rgba(255,255,255,.13);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 999px;
+  font-size: 8px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.home-page-2026 .wallets-carousel {
+  gap: 12px;
+  margin-inline: -2px;
+  padding: 2px 2px 13px;
+  scroll-padding-inline: 2px;
+}
+
+.home-page-2026 .wallets-carousel .wallet-card-2026 {
+  flex: 0 0 min(292px, calc(100vw - 62px));
+  scroll-snap-align: start;
+}
+
+/* Home transaction panel */
+.home-transactions-panel,
+.home-market-panel {
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--border-glass);
+  border-radius: 22px;
+  box-shadow: 0 9px 26px rgba(15,23,42,.055);
+}
+
+.home-tx-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 11px;
+  background: var(--result-bg);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.home-tx-segments {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  padding: 3px;
+  background: var(--chip-bg);
+  border-radius: 13px;
+}
+
+.home-tx-segments .filter-chip {
+  min-height: 31px;
+  padding: 0 5px;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 0;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.home-tx-segments .filter-chip.active {
+  color: var(--text-primary);
+  background: var(--input-bg);
+  box-shadow: 0 3px 9px rgba(15,23,42,.08);
+}
+
+.home-tx-search { position: relative; display: block; }
+.home-tx-search svg {
+  position: absolute;
+  top: 50%;
+  left: 11px;
+  color: var(--text-muted);
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+body.rtl-mode .home-tx-search svg { left: auto; right: 11px; }
+.home-tx-search .tx-search-input {
+  height: 37px;
+  padding: 0 12px 0 34px;
+  background: var(--input-bg);
+  border-color: var(--border-glass);
+  border-radius: 12px;
+  font-size: 12px !important;
+  user-select: text;
+}
+body.rtl-mode .home-tx-search .tx-search-input { padding: 0 34px 0 12px; }
+.home-tx-search .tx-search-input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+  outline: none;
+}
+
+.home-transactions-panel .transactions-list { gap: 0; }
+.home-transactions-panel .tx-item-card {
+  min-height: 70px;
+  padding: 11px 13px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: 0;
+}
+.home-transactions-panel .tx-item-card:last-child { border-bottom: 0; }
+.home-transactions-panel .tx-item-card:hover { background: var(--chip-bg); }
+.home-transactions-panel .tx-item-left { gap: 10px; }
+.home-transactions-panel .tx-cat-icon { width: 40px; height: 40px; border-radius: 13px; }
+.home-transactions-panel .tx-cat-title { font-size: 12px; font-weight: 750; }
+.home-transactions-panel .tx-desc { max-width: 145px; font-size: 9.5px; }
+.home-transactions-panel .tx-amt { font-size: 11.5px; }
+.home-transactions-panel .tx-date { font-size: 8.5px; }
+.home-transactions-panel .empty-state,
+.home-page-2026 .wallets-carousel .empty-state {
+  padding: 28px 17px;
+  background: transparent;
+  border: 0;
+}
+
+.home-add-transaction {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: #fff;
+  background: var(--accent-primary);
+  border-radius: 11px;
+  box-shadow: 0 5px 13px var(--accent-glow);
+}
+
+/* Home market cards */
+.home-market-panel {
+  display: flex;
+  gap: 9px;
+  padding: 11px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+}
+.home-market-panel::-webkit-scrollbar { display: none; }
+.home-market-item {
+  flex: 0 0 132px;
+  min-width: 0;
+  padding: 11px;
+  text-align: inherit;
+  background: var(--result-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  scroll-snap-align: start;
+}
+.home-market-item:hover { border-color: var(--border-hover); transform: translateY(-1px); }
+.home-market-item-top,
+.home-market-item-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px;
+}
+.home-market-identity { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.home-market-flag {
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  background: var(--chip-bg);
+  border-radius: 10px;
+  font-size: 17px;
+}
+.home-market-code { color: var(--text-primary); font-size: 11px; font-weight: 850; direction: ltr; }
+.home-market-name {
+  display: block;
+  max-width: 61px;
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 7.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.home-market-price {
+  display: block;
+  margin: 11px 0 4px;
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.home-market-change { font-size: 9px; font-weight: 750; direction: ltr; }
+.home-market-change.up { color: var(--color-green); }
+.home-market-change.down { color: var(--color-red); }
+.home-market-arrow { display: grid; place-items: center; color: var(--text-muted); }
+body.rtl-mode .home-market-arrow svg { transform: scaleX(-1); }
+
+/* Wallets page */
+.wallets-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+.wallets-page-header-copy { min-width: 0; }
+.wallets-page-header .page-title { font-size: 23px; letter-spacing: -.7px; }
+.wallets-page-header .page-subtitle { line-height: 1.65; }
+
+.wallets-add-button {
+  min-width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  padding: 0 12px;
+  color: #fff;
+  background: var(--accent-gradient);
+  border-radius: 14px;
+  box-shadow: 0 8px 18px var(--accent-glow);
+  font-size: 10px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+.wallets-add-button:hover { transform: translateY(-2px); }
+
+.wallets-portfolio-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 222px;
+  margin-bottom: 24px;
+  padding: 18px;
+  overflow: hidden;
+  color: #fff;
+  background:
+    radial-gradient(circle at 84% 5%, rgba(45,212,191,.25), transparent 32%),
+    radial-gradient(circle at 2% 100%, rgba(59,130,246,.27), transparent 37%),
+    linear-gradient(145deg, #0F172A 0%, #172554 55%, #164E63 115%);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 27px;
+  box-shadow: 0 19px 40px rgba(15,23,42,.24), inset 0 1px 0 rgba(255,255,255,.14);
+}
+
+.wallets-portfolio-hero::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: -58px;
+  top: -60px;
+  width: 190px;
+  height: 190px;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 50%;
+  box-shadow: 0 0 0 30px rgba(255,255,255,.022), 0 0 0 61px rgba(255,255,255,.014);
+}
+body.rtl-mode .wallets-portfolio-hero::before { right: auto; left: -58px; }
+
+.wallets-summary-top,
+.wallets-summary-label,
+.wallets-summary-flow-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.wallets-summary-label {
+  justify-content: flex-start;
+  color: rgba(226,232,240,.72);
+  font-size: 10.5px;
+  font-weight: 700;
+}
+.wallets-summary-label-icon {
+  width: 29px;
+  height: 29px;
+  display: grid;
+  place-items: center;
+  color: #99F6E4;
+  background: rgba(45,212,191,.12);
+  border-radius: 10px;
+}
+
+.wallets-summary-value {
+  display: block;
+  margin: 10px 0 16px;
+  overflow-wrap: anywhere;
+  color: #fff;
+  font-size: clamp(27px, 8vw, 35px);
+  font-weight: 850;
+  line-height: 1.2;
+  letter-spacing: -.9px;
+}
+
+.wallets-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+}
+.wallets-summary-stat {
+  min-width: 0;
+  padding: 9px 8px;
+  background: rgba(255,255,255,.075);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 13px;
+}
+.wallets-summary-stat span {
+  display: block;
+  overflow: hidden;
+  color: rgba(226,232,240,.57);
+  font-size: 8px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.wallets-summary-stat strong {
+  display: block;
+  margin-top: 2px;
+  overflow: hidden;
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.wallets-summary-stat.income strong { color: #6EE7B7; }
+.wallets-summary-stat.expense strong { color: #FDA4AF; }
+
+.wallets-list-count {
+  min-width: 27px;
+  height: 27px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  color: var(--accent-primary);
+  background: rgba(79,70,229,.10);
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.wallets-page-2026 .wallets-grid { gap: 16px; }
+.wallets-page-2026 .wallet-item-wrap {
+  gap: 0;
+  padding: 8px;
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--border-glass);
+  border-radius: 30px;
+  box-shadow: 0 11px 29px rgba(15,23,42,.07), inset 0 1px 0 rgba(255,255,255,.42);
+}
+.wallets-page-2026 .wallet-item-wrap .wallet-card-2026 {
+  width: 100%;
+  height: 188px;
+  border-radius: 23px;
+  box-shadow: 0 12px 25px rgba(15,23,42,.20), inset 0 1px 0 rgba(255,255,255,.16);
+}
+
+.wallet-account-insights {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  padding: 11px 4px 8px;
+}
+.wallet-flow-stat {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: var(--result-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 13px;
+}
+.wallet-flow-icon {
+  width: 29px;
+  height: 29px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 10px;
+}
+.wallet-flow-stat.income .wallet-flow-icon { color: var(--color-green); background: var(--color-green-bg); }
+.wallet-flow-stat.expense .wallet-flow-icon { color: var(--color-red); background: var(--color-red-bg); }
+.wallet-flow-copy { min-width: 0; }
+.wallet-flow-copy span {
+  display: block;
+  color: var(--text-muted);
+  font-size: 8px;
+  font-weight: 600;
+}
+.wallet-flow-copy strong {
+  display: block;
+  margin-top: 1px;
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 9.5px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wallet-item-actions {
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+  padding: 9px 4px 2px;
+  border-top: 1px solid var(--border-subtle);
+}
+.wallet-item-actions::before {
+  content: attr(data-label);
+  min-width: 0;
+  margin-inline-end: auto;
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 8.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.wallets-page-2026 .btn-action-small {
+  min-height: 32px;
+  padding: 0 10px;
+  background: var(--chip-bg);
+  border-color: transparent;
+  border-radius: 11px;
+  font-size: 9px;
+  font-weight: 700;
+}
+.wallets-page-2026 .edit-wallet-btn { color: var(--accent-primary); }
+.wallets-page-2026 .delete-wallet-btn { color: var(--color-red); background: var(--color-red-bg); }
+
+.wallets-empty-state {
+  padding: 36px 20px;
+  text-align: center;
+  background: var(--card-bg);
+  border: 1px dashed var(--border-glass);
+  border-radius: 24px;
+}
+.wallets-empty-icon {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 13px;
+  color: var(--accent-primary);
+  background: rgba(79,70,229,.10);
+  border-radius: 18px;
+}
+.wallets-empty-state h3 { color: var(--text-primary); font-size: 15px; font-weight: 800; }
+.wallets-empty-state p { max-width: 260px; margin: 5px auto 15px; color: var(--text-muted); font-size: 10.5px; line-height: 1.7; }
+.wallets-empty-state .wallets-add-button { margin: 0 auto; }
+
+@media (max-width: 380px) {
+  .home-overview-hero,
+  .wallets-portfolio-hero { padding: 15px; border-radius: 24px; }
+  .home-balance-value { font-size: 28px; }
+  .home-hero-metric { padding: 8px; gap: 7px; }
+  .home-metric-icon { width: 28px; height: 28px; }
+  .home-metric-copy strong { font-size: 10.5px; }
+  .home-quick-card { padding: 6px; gap: 2px; }
+  .home-quick-action { min-height: 69px; font-size: 8.5px; }
+  .home-quick-icon { width: 35px; height: 35px; }
+  .home-page-2026 .wallets-carousel .wallet-card-2026 { flex-basis: calc(100vw - 47px); }
+  .wallet-card-2026 .wallet-balance-amount { font-size: 18px; }
+  .home-transactions-panel .tx-desc { max-width: 105px; }
+  .home-transactions-panel .tx-amt { font-size: 10px; }
+  .wallets-add-button span { display: none; }
+  .wallets-add-button { width: 42px; padding: 0; }
+  .wallets-summary-grid { gap: 5px; }
+  .wallets-summary-stat { padding-inline: 6px; }
+  .wallets-summary-stat strong { font-size: 9px; }
+  .wallet-item-actions::before { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wallet-card-2026::after,
+  .home-cashflow-track span { transition: none; }
+}
+
    </style>
 </head>
 <body>
@@ -3997,6 +4956,14 @@ const translations = {
     action_transfer: "Transfer",
     action_convert: "Convert",
     action_stats: "Analytics",
+    home_overview: "Portfolio overview",
+    home_monthly_flow: "Monthly cash flow",
+    net_cash_flow: "Net cash flow",
+    income_spent: "of income spent",
+    no_income_yet: "Add income to start your monthly insight",
+    quick_access: "Quick access",
+    home_market_snapshot: "Market snapshot",
+    market_short_note: "Open-market rates",
 
     // Currency Page
     currency_title: "Live Currency & Rates",
@@ -4113,6 +5080,13 @@ const translations = {
     confirm_delete_wallet: "Are you sure you want to delete this wallet? Associated transactions will remain unlinked.",
     save_wallet: "Save Wallet",
     add_new_wallet: "Create New Wallet",
+    portfolio_balance: "Portfolio balance",
+    active_accounts: "Active accounts",
+    all_wallets: "All wallets",
+    account_overview: "Account overview",
+    wallet_activity: "Account activity",
+    wallets_empty_title: "Your first wallet starts here",
+    wallets_empty_desc: "Add a bank account, card, cash wallet, or savings account to see your finances in one place.",
 
     // Transactions Modal & Filter
     tx_title: "New Transaction",
@@ -4237,6 +5211,14 @@ const translations = {
     action_transfer: "انتقال",
     action_convert: "مبدل",
     action_stats: "تحلیل",
+    home_overview: "نمای کلی دارایی",
+    home_monthly_flow: "جریان مالی ماه",
+    net_cash_flow: "خالص جریان مالی",
+    income_spent: "از درآمد این ماه خرج شده",
+    no_income_yet: "برای شروع تحلیل ماهانه، یک درآمد ثبت کنید",
+    quick_access: "دسترسی سریع",
+    home_market_snapshot: "نبض بازار",
+    market_short_note: "نرخ بازار آزاد",
 
     // Currency Page
     currency_title: "نرخ لحظه‌ای و واقعی ارز",
@@ -4353,6 +5335,13 @@ const translations = {
     confirm_delete_wallet: "آیا از حذف این کیف‌ پول اطمینان دارید؟",
     save_wallet: "ذخیره کیف‌ پول",
     add_new_wallet: "ایجاد کیف‌ پول جدید",
+    portfolio_balance: "موجودی کل کیف‌ پول‌ها",
+    active_accounts: "حساب فعال",
+    all_wallets: "همه کیف‌ پول‌ها",
+    account_overview: "نمای کلی حساب‌ها",
+    wallet_activity: "گردش حساب",
+    wallets_empty_title: "اولین کیف‌ پولت را بساز",
+    wallets_empty_desc: "حساب بانکی، کارت، کیف پول نقدی یا پس‌انداز را اضافه کن تا همه دارایی‌ها یک‌جا باشند.",
 
     // Transactions Modal & Filter
     tx_title: "تراکنش جدید",
@@ -4973,30 +5962,36 @@ class WalletManager {
    */
   renderCardHTML(wallet, interactive = true) {
     const theme = this.getTheme(wallet.color);
-    const formattedBalance = window.i18n ? window.i18n.formatCurrency(wallet.balance, wallet.currency || 'IRT') : `${wallet.balance} IRT`;
+    const currency = wallet.currency || 'IRT';
+    const formattedBalance = window.i18n
+      ? window.i18n.formatCurrency(wallet.balance, currency)
+      : `${wallet.balance} ${currency}`;
     const hideBalance = window.storage ? window.storage.getSettings().hideBalance : false;
     const displayBalance = hideBalance ? '••••••••' : formattedBalance;
+    const fallbackBank = window.i18n && window.i18n.currentLang === 'fa' ? 'کیف پول شخصی' : 'Personal wallet';
+    const fallbackNumber = '•••• •••• •••• ••••';
 
     return `
-      <div class="ios-wallet-card theme-${wallet.color}" 
-           style="background: ${theme.gradient};" 
+      <div class="ios-wallet-card wallet-card-2026 theme-${wallet.color}"
+           style="background: ${theme.gradient};"
            data-wallet-id="${wallet.id}"
+           aria-label="${wallet.name || fallbackBank}"
            ${interactive ? 'role="button" tabindex="0"' : ''}>
         <div class="wallet-card-header">
           <div class="wallet-bank-tag">
-            <span class="wallet-icon-emoji">${this.getIconEmoji(wallet.icon)}</span>
-            <span class="wallet-bank-name">${wallet.bank || 'Personal Wallet'}</span>
+            <span class="wallet-icon-shell" aria-hidden="true">
+              <span class="wallet-icon-emoji">${this.getIconEmoji(wallet.icon)}</span>
+            </span>
+            <span class="wallet-bank-copy">
+              <span class="wallet-bank-name">${wallet.bank || fallbackBank}</span>
+              <span class="wallet-kind">${wallet.name || fallbackBank}</span>
+            </span>
           </div>
-          <div class="wallet-contactless">
-            <!-- System contactless symbol -> SVG Icon -->
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 2a10 10 0 0 1 10 10M12 6a6 6 0 0 1 6 6M12 10a2 2 0 0 1 2 2"/>
+          <span class="wallet-contactless" aria-hidden="true">
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <path d="M12 3a9 9 0 0 1 9 9"/><path d="M12 7a5 5 0 0 1 5 5"/><path d="M12 11a1 1 0 0 1 1 1"/>
             </svg>
-          </div>
-        </div>
-        
-        <div class="wallet-chip">
-          <div class="chip-metal"></div>
+          </span>
         </div>
 
         <div class="wallet-card-body">
@@ -5005,8 +6000,8 @@ class WalletManager {
         </div>
 
         <div class="wallet-card-footer">
-          <div class="wallet-name">${wallet.name}</div>
-          <div class="wallet-number">${wallet.card_number || '•••• ••••'}</div>
+          <span class="wallet-number">${wallet.card_number || fallbackNumber}</span>
+          <span class="wallet-card-currency">${currency}</span>
         </div>
       </div>
     `;
@@ -5056,61 +6051,168 @@ class WalletManager {
     if (!container) return;
 
     const wallets = window.storage ? window.storage.getWallets() : [];
-    const html = `
-      <div class="wallets-header-bar">
-        <div>
-          <h2 class="page-title" data-i18n="wallets_title">${window.i18n ? window.i18n.t('wallets_title') : 'My Wallets'}</h2>
-          <p class="page-subtitle" data-i18n="wallets_subtitle">${window.i18n ? window.i18n.t('wallets_subtitle') : 'Manage your accounts & cards'}</p>
-        </div>
-        <button class="btn-primary-pill" id="btn-create-wallet">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          <span data-i18n="new_wallet">${window.i18n ? window.i18n.t('new_wallet') : 'New Wallet'}</span>
-        </button>
-      </div>
+    const transactions = window.storage ? window.storage.getTransactions() : [];
+    const hideBalance = window.storage ? window.storage.getSettings().hideBalance : false;
+    const t = (key) => window.i18n ? window.i18n.t(key) : key;
 
-      <div class="wallets-grid">
-        ${wallets.map(w => `
-          <div class="wallet-item-wrap">
-            ${this.renderCardHTML(w, true)}
-            <div class="wallet-item-actions">
-              <button class="btn-action-small edit-wallet-btn" data-id="${w.id}">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                <span data-i18n="edit_wallet">${window.i18n ? window.i18n.t('edit_wallet') : 'Edit'}</span>
-              </button>
-              <button class="btn-action-small delete-wallet-btn" data-id="${w.id}">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                <span data-i18n="delete_wallet">${window.i18n ? window.i18n.t('delete_wallet') : 'Delete'}</span>
-              </button>
+    const totalBalance = wallets.reduce((sum, wallet) => sum + (parseFloat(wallet.balance) || 0), 0);
+    const now = new Date();
+    const monthTransactions = transactions.filter(tx => {
+      const date = new Date(tx.date);
+      return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+    });
+    const monthlyIncome = monthTransactions
+      .filter(tx => tx.type === 'income')
+      .reduce((sum, tx) => sum + (parseFloat(tx.amount) || 0), 0);
+    const monthlyExpense = monthTransactions
+      .filter(tx => tx.type === 'expense')
+      .reduce((sum, tx) => sum + (parseFloat(tx.amount) || 0), 0);
+
+    const formatMoney = (amount, compactMask = false) => {
+      if (hideBalance) return compactMask ? '••••' : '••••••••';
+      return window.i18n ? window.i18n.formatCurrency(amount, 'IRT') : `${amount} IRT`;
+    };
+
+    const eyeSVG = hideBalance
+      ? `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`
+      : `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+
+    const walletListHTML = wallets.length ? wallets.map(wallet => `
+      <article class="wallet-item-wrap">
+        ${this.renderCardHTML(wallet, true)}
+        <div class="wallet-account-insights">
+          <div class="wallet-flow-stat income">
+            <span class="wallet-flow-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 4v16M6 14l6 6 6-6"/></svg>
+            </span>
+            <span class="wallet-flow-copy">
+              <span>${t('income')}</span>
+              <strong>+${formatMoney(wallet.income || 0, true)}</strong>
+            </span>
+          </div>
+          <div class="wallet-flow-stat expense">
+            <span class="wallet-flow-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 20V4M6 10l6-6 6 6"/></svg>
+            </span>
+            <span class="wallet-flow-copy">
+              <span>${t('expenses')}</span>
+              <strong>-${formatMoney(wallet.expense || 0, true)}</strong>
+            </span>
+          </div>
+        </div>
+        <div class="wallet-item-actions" data-label="${t('wallet_activity')}">
+          <button class="btn-action-small edit-wallet-btn" type="button" data-id="${wallet.id}">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4z"/></svg>
+            <span data-i18n="edit_wallet">${t('edit_wallet')}</span>
+          </button>
+          <button class="btn-action-small delete-wallet-btn" type="button" data-id="${wallet.id}">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            <span data-i18n="delete_wallet">${t('delete_wallet')}</span>
+          </button>
+        </div>
+      </article>
+    `).join('') : `
+      <div class="wallets-empty-state">
+        <div class="wallets-empty-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="29" height="29" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M16 12h3"/><path d="M12 9v6M9 12h6"/></svg>
+        </div>
+        <h3>${t('wallets_empty_title')}</h3>
+        <p>${t('wallets_empty_desc')}</p>
+        <button class="wallets-add-button empty-create-wallet" type="button">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+          <span>${t('new_wallet')}</span>
+        </button>
+      </div>`;
+
+    container.innerHTML = `
+      <div class="wallets-page-2026">
+        <header class="wallets-page-header">
+          <div class="wallets-page-header-copy">
+            <h2 class="page-title" data-i18n="wallets_title">${t('wallets_title')}</h2>
+            <p class="page-subtitle" data-i18n="wallets_subtitle">${t('wallets_subtitle')}</p>
+          </div>
+          <button class="wallets-add-button" id="btn-create-wallet" type="button">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            <span data-i18n="new_wallet">${t('new_wallet')}</span>
+          </button>
+        </header>
+
+        <section class="wallets-portfolio-hero" aria-label="${t('account_overview')}">
+          <div class="wallets-summary-top">
+            <div class="wallets-summary-label">
+              <span class="wallets-summary-label-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M16 14h2"/></svg>
+              </span>
+              <span data-i18n="portfolio_balance">${t('portfolio_balance')}</span>
+            </div>
+            <button class="wallets-privacy-btn" id="wallets-toggle-privacy" type="button" aria-label="Toggle balance visibility">${eyeSVG}</button>
+          </div>
+          <strong class="wallets-summary-value">${formatMoney(totalBalance)}</strong>
+          <div class="wallets-summary-grid">
+            <div class="wallets-summary-stat">
+              <span data-i18n="active_accounts">${t('active_accounts')}</span>
+              <strong>${wallets.length}</strong>
+            </div>
+            <div class="wallets-summary-stat income">
+              <span data-i18n="income">${t('income')}</span>
+              <strong>+${formatMoney(monthlyIncome, true)}</strong>
+            </div>
+            <div class="wallets-summary-stat expense">
+              <span data-i18n="expenses">${t('expenses')}</span>
+              <strong>-${formatMoney(monthlyExpense, true)}</strong>
             </div>
           </div>
-        `).join('')}
-      </div>
-    `;
+        </section>
 
-    container.innerHTML = html;
+        <div class="wallets-list-heading">
+          <div>
+            <span class="wallets-list-kicker" data-i18n="account_overview">${t('account_overview')}</span>
+            <h3 class="wallets-list-title" data-i18n="all_wallets">${t('all_wallets')}</h3>
+          </div>
+          <span class="wallets-list-count">${wallets.length}</span>
+        </div>
+
+        <div class="wallets-grid">${walletListHTML}</div>
+      </div>`;
+
     if (window.i18n) window.i18n.translateDOM();
 
-    const createBtn = container.querySelector('#btn-create-wallet');
-    if (createBtn) {
-      createBtn.addEventListener('click', () => this.openEditWalletModal(null));
+    const createButtons = [
+      container.querySelector('#btn-create-wallet'),
+      container.querySelector('.empty-create-wallet')
+    ].filter(Boolean);
+    createButtons.forEach(button => button.addEventListener('click', () => this.openEditWalletModal(null)));
+
+    const privacyButton = container.querySelector('#wallets-toggle-privacy');
+    if (privacyButton) {
+      privacyButton.addEventListener('click', () => {
+        const settings = window.storage.getSettings();
+        settings.hideBalance = !settings.hideBalance;
+        window.storage.saveSettings(settings);
+        this.renderWalletsPage(containerId);
+      });
     }
 
-    container.querySelectorAll('.edit-wallet-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.getAttribute('data-id');
-        this.openEditWalletModal(id);
+    container.querySelectorAll('.wallet-card-2026').forEach(card => {
+      const openWallet = () => this.openEditWalletModal(card.getAttribute('data-wallet-id'));
+      card.addEventListener('click', openWallet);
+      card.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openWallet();
+        }
       });
     });
 
-    container.querySelectorAll('.delete-wallet-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.getAttribute('data-id');
-        const confirmMsg = window.i18n ? window.i18n.t('confirm_delete_wallet') : 'Are you sure you want to delete this wallet?';
-        if (confirm(confirmMsg)) {
-          window.storage.deleteWallet(id);
-          this.renderWalletsPage(containerId);
-          this.renderHomeCarousel('home-wallets-carousel');
-        }
+    container.querySelectorAll('.edit-wallet-btn').forEach(button => {
+      button.addEventListener('click', () => this.openEditWalletModal(button.getAttribute('data-id')));
+    });
+
+    container.querySelectorAll('.delete-wallet-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        const id = button.getAttribute('data-id');
+        const confirmMsg = t('confirm_delete_wallet');
+        if (confirm(confirmMsg)) window.storage.deleteWallet(id);
       });
     });
   }
@@ -6411,190 +7513,245 @@ class WalioApp {
 
     const wallets = window.storage.getWallets();
     const transactions = window.storage.getTransactions();
+    const settings = window.storage.getSettings();
+    const hideBalance = settings.hideBalance;
+    const t = (key) => window.i18n ? window.i18n.t(key) : key;
 
     let totalNetWorth = 0;
     let totalMonthlyIncome = 0;
     let totalMonthlyExpense = 0;
-
     const now = new Date();
     const currentMonth = now.getMonth();
     const currentYear = now.getFullYear();
 
-    wallets.forEach(w => {
-      totalNetWorth += parseFloat(w.balance) || 0;
+    wallets.forEach(wallet => {
+      totalNetWorth += parseFloat(wallet.balance) || 0;
     });
 
-    transactions.forEach(t => {
-      const txDate = new Date(t.date);
+    transactions.forEach(tx => {
+      const txDate = new Date(tx.date);
       if (txDate.getMonth() === currentMonth && txDate.getFullYear() === currentYear) {
-        if (t.type === 'income') totalMonthlyIncome += parseFloat(t.amount) || 0;
-        else if (t.type === 'expense') totalMonthlyExpense += parseFloat(t.amount) || 0;
+        if (tx.type === 'income') totalMonthlyIncome += parseFloat(tx.amount) || 0;
+        if (tx.type === 'expense') totalMonthlyExpense += parseFloat(tx.amount) || 0;
       }
     });
 
-    const hideBalance = window.storage.getSettings().hideBalance;
-    const formattedNet = hideBalance ? '••••••••' : (window.i18n ? window.i18n.formatCurrency(totalNetWorth, 'IRT') : `${totalNetWorth} IRT`);
-    const formattedInc = hideBalance ? '••••' : (window.i18n ? window.i18n.formatCurrency(totalMonthlyIncome, 'IRT') : `${totalMonthlyIncome}`);
-    const formattedExp = hideBalance ? '••••' : (window.i18n ? window.i18n.formatCurrency(totalMonthlyExpense, 'IRT') : `${totalMonthlyExpense}`);
+    const monthlyNet = totalMonthlyIncome - totalMonthlyExpense;
+    const spentPercent = totalMonthlyIncome > 0
+      ? Math.round((totalMonthlyExpense / totalMonthlyIncome) * 100)
+      : 0;
+    const progressWidth = Math.min(100, Math.max(0, spentPercent));
+    const isOverspent = totalMonthlyExpense > totalMonthlyIncome && totalMonthlyExpense > 0;
+    const locale = window.i18n && window.i18n.currentLang === 'fa' ? 'fa-IR' : 'en-US';
+    const monthLabel = new Intl.DateTimeFormat(locale, { month: 'long' }).format(now);
 
-    const eyeSVG = hideBalance 
-      ? `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`
-      : `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+    const formatMoney = (amount, compactMask = false) => {
+      if (hideBalance) return compactMask ? '••••' : '••••••••';
+      return window.i18n ? window.i18n.formatCurrency(amount, 'IRT') : `${amount} IRT`;
+    };
+
+    const netPrefix = monthlyNet > 0 ? '+' : monthlyNet < 0 ? '−' : '';
+    const formattedMonthlyNet = hideBalance
+      ? '••••'
+      : `${netPrefix}${window.i18n ? window.i18n.formatCurrency(Math.abs(monthlyNet), 'IRT') : Math.abs(monthlyNet)}`;
+    const insightText = totalMonthlyIncome > 0
+      ? `${window.i18n ? window.i18n.formatNumber(spentPercent, 0) : spentPercent}% ${t('income_spent')}`
+      : t('no_income_yet');
+
+    const eyeSVG = hideBalance
+      ? `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`
+      : `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
 
     container.innerHTML = `
-      <!-- Total Balance Hero Card -->
-      <div class="hero-balance-card">
-        <div class="hero-top-row">
-          <span class="hero-label" data-i18n="total_net_worth">Total Balance</span>
-          <button class="btn-eye-toggle" id="btn-toggle-privacy" title="Toggle Balance Privacy">
-            ${eyeSVG}
-          </button>
-        </div>
-        <div class="hero-balance-value">${formattedNet}</div>
-
-        <!-- Monthly Summary Badges -->
-        <div class="hero-monthly-row">
-          <div class="monthly-badge badge-income">
-            <div class="badge-icon">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+      <div class="home-page-2026">
+        <section class="home-overview-hero" aria-label="${t('home_overview')}">
+          <div class="home-hero-top">
+            <div class="home-hero-eyebrow">
+              <span class="home-hero-eyebrow-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V9M10 19V5M16 19v-7M22 19V3"/></svg>
+              </span>
+              <span data-i18n="home_overview">${t('home_overview')}</span>
             </div>
-            <div class="badge-texts">
-              <span class="badge-label" data-i18n="income">Income</span>
-              <span class="badge-amount">+${formattedInc}</span>
+            <span class="home-period-pill">${monthLabel}</span>
+          </div>
+
+          <div class="home-balance-label-row">
+            <span class="home-balance-label" data-i18n="total_net_worth">${t('total_net_worth')}</span>
+            <button class="home-privacy-btn" id="btn-toggle-privacy" type="button" aria-label="Toggle balance visibility">${eyeSVG}</button>
+          </div>
+          <strong class="home-balance-value">${formatMoney(totalNetWorth)}</strong>
+
+          <div class="home-hero-metrics">
+            <div class="home-hero-metric income">
+              <span class="home-metric-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 4v16M6 14l6 6 6-6"/></svg>
+              </span>
+              <span class="home-metric-copy">
+                <span data-i18n="income">${t('income')}</span>
+                <strong>+${formatMoney(totalMonthlyIncome, true)}</strong>
+              </span>
+            </div>
+            <div class="home-hero-metric expense">
+              <span class="home-metric-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 20V4M6 10l6-6 6 6"/></svg>
+              </span>
+              <span class="home-metric-copy">
+                <span data-i18n="expenses">${t('expenses')}</span>
+                <strong>-${formatMoney(totalMonthlyExpense, true)}</strong>
+              </span>
             </div>
           </div>
-          <div class="monthly-badge badge-expense">
-            <div class="badge-icon">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+
+          <div class="home-cashflow-strip">
+            <div class="home-cashflow-head">
+              <span data-i18n="net_cash_flow">${t('net_cash_flow')}</span>
+              <strong class="${monthlyNet < 0 ? 'negative' : ''}">${formattedMonthlyNet}</strong>
             </div>
-            <div class="badge-texts">
-              <span class="badge-label" data-i18n="expenses">Expenses</span>
-              <span class="badge-amount">-${formattedExp}</span>
+            <div class="home-cashflow-track" aria-hidden="true">
+              <span class="${isOverspent ? 'over' : ''}" style="width:${progressWidth}%"></span>
+            </div>
+            <div class="home-cashflow-foot">
+              <span>${insightText}</span>
+              <span data-i18n="home_monthly_flow">${t('home_monthly_flow')}</span>
             </div>
           </div>
-        </div>
-      </div>
+        </section>
 
-      <!-- Quick Actions Bar -->
-      <div class="quick-actions-bar">
-        <button class="action-item" id="qa-add-tx">
-          <div class="action-icon-wrap">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <section class="home-quick-section" aria-labelledby="quick-access-title">
+          <h2 class="home-quick-title" id="quick-access-title" data-i18n="quick_access">${t('quick_access')}</h2>
+          <div class="home-quick-card">
+            <button class="home-quick-action" id="qa-add-tx" type="button">
+              <span class="home-quick-icon">
+                <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+              <span data-i18n="action_add_tx">${t('action_add_tx')}</span>
+            </button>
+            <button class="home-quick-action" id="qa-transfer" data-tone="green" type="button">
+              <span class="home-quick-icon">
+                <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h11l-3-3M17 17H6l3 3"/><path d="M18 7l-3 3M6 17l3-3"/></svg>
+              </span>
+              <span data-i18n="action_transfer">${t('action_transfer')}</span>
+            </button>
+            <button class="home-quick-action" id="qa-convert" data-tone="blue" type="button">
+              <span class="home-quick-icon">
+                <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 9h8M8 15h8M14 7l2 2-2 2M10 13l-2 2 2 2"/></svg>
+              </span>
+              <span data-i18n="action_convert">${t('action_convert')}</span>
+            </button>
+            <button class="home-quick-action" id="qa-new-wallet" data-tone="amber" type="button">
+              <span class="home-quick-icon">
+                <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M15 12h3"/></svg>
+              </span>
+              <span data-i18n="new_wallet">${t('new_wallet')}</span>
+            </button>
           </div>
-          <span data-i18n="action_add_tx">Add TX</span>
-        </button>
-        <button class="action-item" id="qa-transfer">
-          <div class="action-icon-wrap">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        </section>
+
+        <section class="home-section" aria-labelledby="home-wallets-title">
+          <div class="home-section-heading">
+            <div>
+              <span class="home-section-kicker" data-i18n="account_overview">${t('account_overview')}</span>
+              <h2 class="home-section-title" id="home-wallets-title" data-i18n="my_wallets">${t('my_wallets')}</h2>
+            </div>
+            <button class="home-section-link" id="home-link-wallets" type="button">
+              <span data-i18n="see_all">${t('see_all')}</span>
+              <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4l6 6-6 6"/></svg>
+            </button>
           </div>
-          <span data-i18n="action_transfer">Transfer</span>
-        </button>
-        <button class="action-item" id="qa-convert">
-          <div class="action-icon-wrap">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <div class="wallets-carousel" id="home-wallets-carousel"></div>
+        </section>
+
+        <section class="home-section" aria-labelledby="home-transactions-title">
+          <div class="home-section-heading">
+            <div>
+              <span class="home-section-kicker" data-i18n="home_monthly_flow">${t('home_monthly_flow')}</span>
+              <h2 class="home-section-title" id="home-transactions-title" data-i18n="recent_transactions">${t('recent_transactions')}</h2>
+            </div>
+            <button class="home-add-transaction" id="home-add-tx-btn" type="button" aria-label="${t('action_add_tx')}">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
           </div>
-          <span data-i18n="action_convert">Convert</span>
-        </button>
-        <button class="action-item" id="qa-new-wallet">
-          <div class="action-icon-wrap">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+
+          <div class="home-transactions-panel">
+            <div class="home-tx-controls tx-filter-bar">
+              <div class="home-tx-segments">
+                <button class="filter-chip ${this.activeTxFilter === 'all' ? 'active' : ''}" data-filter="all" data-i18n="tx_filter_all">${t('tx_filter_all')}</button>
+                <button class="filter-chip ${this.activeTxFilter === 'income' ? 'active' : ''}" data-filter="income" data-i18n="tx_filter_income">${t('tx_filter_income')}</button>
+                <button class="filter-chip ${this.activeTxFilter === 'expense' ? 'active' : ''}" data-filter="expense" data-i18n="tx_filter_expense">${t('tx_filter_expense')}</button>
+              </div>
+              <label class="home-tx-search">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                <input type="search" class="tx-search-input" id="tx-search" value="${this.searchQuery}" placeholder="${t('tx_search_placeholder')}" autocomplete="off" />
+              </label>
+            </div>
+            <div class="transactions-list" id="home-tx-list"></div>
           </div>
-          <span data-i18n="new_wallet">New Wallet</span>
-        </button>
-      </div>
+        </section>
 
-      <!-- My Wallets Carousel -->
-      <div class="section-block">
-        <div class="section-header">
-          <h3 class="section-title" data-i18n="my_wallets">My Wallets</h3>
-          <span class="section-link" id="home-link-wallets" data-i18n="see_all">See All</span>
-        </div>
-        <div class="wallets-carousel" id="home-wallets-carousel"></div>
-      </div>
-
-      <!-- Currency Overview Mini Card -->
-      <div class="section-block">
-        <div class="section-header">
-          <h3 class="section-title" data-i18n="currency_title">Live Currency & Rates</h3>
-          <span class="section-link" id="home-link-currency" data-i18n="see_all">See All</span>
-        </div>
-        <div class="currency-overview-card" id="home-currency-preview"></div>
-      </div>
-
-      <!-- Recent Transactions List -->
-      <div class="section-block">
-        <div class="section-header">
-          <h3 class="section-title" data-i18n="recent_transactions">Recent Transactions</h3>
-          <button class="btn-sm-primary" id="home-add-tx-btn">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            <span data-i18n="action_add_tx">Add TX</span>
-          </button>
-        </div>
-
-        <div class="tx-filter-bar">
-          <button class="filter-chip active" data-filter="all" data-i18n="tx_filter_all">All</button>
-          <button class="filter-chip" data-filter="income" data-i18n="tx_filter_income">Income</button>
-          <button class="filter-chip" data-filter="expense" data-i18n="tx_filter_expense">Expense</button>
-          <div class="tx-search-wrap">
-            <input type="text" class="tx-search-input" id="tx-search" placeholder="Search..." data-i18n-placeholder="tx_search_placeholder" />
+        <section class="home-section" aria-labelledby="home-market-title">
+          <div class="home-section-heading">
+            <div>
+              <span class="home-section-kicker" data-i18n="market_short_note">${t('market_short_note')}</span>
+              <h2 class="home-section-title" id="home-market-title" data-i18n="home_market_snapshot">${t('home_market_snapshot')}</h2>
+            </div>
+            <button class="home-section-link" id="home-link-currency" type="button">
+              <span data-i18n="see_all">${t('see_all')}</span>
+              <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4l6 6-6 6"/></svg>
+            </button>
           </div>
-        </div>
-
-        <div class="transactions-list" id="home-tx-list"></div>
-      </div>
-    `;
+          <div class="home-market-panel" id="home-currency-preview"></div>
+        </section>
+      </div>`;
 
     if (window.i18n) window.i18n.translateDOM();
-
-    if (window.walletManager) {
-      window.walletManager.renderHomeCarousel('home-wallets-carousel');
-    }
-
-    this.renderHomeCurrencyPreview('home-currency-preview');
+    if (window.walletManager) window.walletManager.renderHomeCarousel('home-wallets-carousel');
     this.renderTransactionList('home-tx-list', this.activeTxFilter, this.searchQuery);
+    this.renderHomeCurrencyPreview('home-currency-preview');
 
-    const togglePrivacy = container.querySelector('#btn-toggle-privacy');
-    if (togglePrivacy) {
-      togglePrivacy.addEventListener('click', () => {
-        const settings = window.storage.getSettings();
-        settings.hideBalance = !settings.hideBalance;
-        window.storage.saveSettings(settings);
+    const privacyButton = container.querySelector('#btn-toggle-privacy');
+    if (privacyButton) {
+      privacyButton.addEventListener('click', () => {
+        const nextSettings = window.storage.getSettings();
+        nextSettings.hideBalance = !nextSettings.hideBalance;
+        window.storage.saveSettings(nextSettings);
+        this.renderHomeTab();
       });
     }
 
-    const qaAddTx = container.querySelector('#qa-add-tx');
-    const homeAddTxBtn = container.querySelector('#home-add-tx-btn');
-    [qaAddTx, homeAddTxBtn].forEach(btn => {
-      if (btn) btn.addEventListener('click', () => this.openTransactionModal());
-    });
+    [container.querySelector('#qa-add-tx'), container.querySelector('#home-add-tx-btn')]
+      .filter(Boolean)
+      .forEach(button => button.addEventListener('click', () => this.openTransactionModal()));
 
-    const qaTransfer = container.querySelector('#qa-transfer');
-    if (qaTransfer) qaTransfer.addEventListener('click', () => this.openTransactionModal('transfer'));
+    const transferButton = container.querySelector('#qa-transfer');
+    if (transferButton) transferButton.addEventListener('click', () => this.openTransactionModal('transfer'));
 
-    const qaConvert = container.querySelector('#qa-convert');
-    if (qaConvert) qaConvert.addEventListener('click', () => {
-      this.switchTab('tools');
-      if (window.toolsManager) window.toolsManager.openTool('currency');
-    });
+    const convertButton = container.querySelector('#qa-convert');
+    if (convertButton) {
+      convertButton.addEventListener('click', () => {
+        this.switchTab('tools');
+        if (window.toolsManager) window.toolsManager.openTool('currency');
+      });
+    }
 
-    const qaNewWallet = container.querySelector('#qa-new-wallet');
-    if (qaNewWallet) qaNewWallet.addEventListener('click', () => {
-      this.switchTab('wallets');
-      setTimeout(() => {
-        if (window.walletManager) window.walletManager.openEditWalletModal(null);
-      }, 100);
-    });
+    const newWalletButton = container.querySelector('#qa-new-wallet');
+    if (newWalletButton) {
+      newWalletButton.addEventListener('click', () => {
+        this.switchTab('wallets');
+        window.setTimeout(() => {
+          if (window.walletManager) window.walletManager.openEditWalletModal(null);
+        }, 100);
+      });
+    }
 
-    const linkWallets = container.querySelector('#home-link-wallets');
-    if (linkWallets) linkWallets.addEventListener('click', () => this.switchTab('wallets'));
-
-    const linkCurrency = container.querySelector('#home-link-currency');
-    if (linkCurrency) linkCurrency.addEventListener('click', () => this.switchTab('currency'));
+    const walletsLink = container.querySelector('#home-link-wallets');
+    if (walletsLink) walletsLink.addEventListener('click', () => this.switchTab('wallets'));
+    const currencyLink = container.querySelector('#home-link-currency');
+    if (currencyLink) currencyLink.addEventListener('click', () => this.switchTab('currency'));
 
     const filterChips = container.querySelectorAll('.tx-filter-bar .filter-chip');
     filterChips.forEach(chip => {
       chip.addEventListener('click', () => {
-        filterChips.forEach(c => c.classList.remove('active'));
+        filterChips.forEach(item => item.classList.remove('active'));
         chip.classList.add('active');
         this.activeTxFilter = chip.getAttribute('data-filter');
         this.renderTransactionList('home-tx-list', this.activeTxFilter, this.searchQuery);
@@ -6603,8 +7760,8 @@ class WalioApp {
 
     const searchInput = container.querySelector('#tx-search');
     if (searchInput) {
-      searchInput.addEventListener('input', (e) => {
-        this.searchQuery = e.target.value.toLowerCase().trim();
+      searchInput.addEventListener('input', event => {
+        this.searchQuery = event.target.value.toLocaleLowerCase().trim();
         this.renderTransactionList('home-tx-list', this.activeTxFilter, this.searchQuery);
       });
     }
@@ -6614,32 +7771,38 @@ class WalioApp {
     const container = document.getElementById(containerId);
     if (!container || !window.currency) return;
 
-    const codes = ['USD', 'EUR', 'GBP', 'AED'];
-    const html = codes.map(code => {
+    const codes = ['USD', 'EUR', 'AED', 'GBP'];
+    container.innerHTML = codes.map(code => {
       const rate = window.currency.getRate(code);
-      const isPos = rate.change >= 0;
+      const isUp = rate.change >= 0;
+      const name = window.i18n ? window.i18n.t('curr_' + code) : rate.name;
+      const price = window.i18n ? window.i18n.formatCurrency(rate.rate, 'IRT') : `${rate.rate} IRT`;
       return `
-        <div class="mini-curr-item" data-code="${code}">
-          <div class="mini-curr-left">
-            <span class="curr-flag-emoji">${rate.flag}</span>
-            <div class="curr-code-names">
-              <span class="curr-code">${code}</span>
-              <span class="curr-name">${window.i18n ? window.i18n.t('curr_' + code) : rate.name}</span>
-            </div>
-          </div>
-          <div class="mini-curr-right">
-            <span class="curr-price">${window.i18n ? window.i18n.formatCurrency(rate.rate, 'IRT') : rate.rate}</span>
-            <span class="curr-badge ${isPos ? 'badge-green' : 'badge-red'}">${isPos ? '+' : ''}${rate.change}%</span>
-          </div>
-        </div>
-      `;
+        <button class="home-market-item" type="button" data-code="${code}" aria-label="${name}">
+          <span class="home-market-item-top">
+            <span class="home-market-identity">
+              <span class="home-market-flag">${rate.flag}</span>
+              <span>
+                <span class="home-market-code">${code}</span>
+                <span class="home-market-name">${name}</span>
+              </span>
+            </span>
+            <span class="home-market-arrow">
+              <svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4l6 6-6 6"/></svg>
+            </span>
+          </span>
+          <strong class="home-market-price">${price}</strong>
+          <span class="home-market-item-bottom">
+            <span class="home-market-change ${isUp ? 'up' : 'down'}">${isUp ? '↗ +' : '↘ '}${rate.change}%</span>
+            <span class="home-market-name">${window.i18n ? window.i18n.t('market_open') : 'Open market'}</span>
+          </span>
+        </button>`;
     }).join('');
 
-    container.innerHTML = html;
-    container.querySelectorAll('.mini-curr-item').forEach(item => {
+    container.querySelectorAll('.home-market-item').forEach(item => {
       item.addEventListener('click', () => {
-        const c = item.getAttribute('data-code');
-        if (window.currency) window.currency.activeChartCurrency = c;
+        const code = item.getAttribute('data-code');
+        if (window.currency) window.currency.activeChartCurrency = code;
         this.switchTab('currency');
       });
     });
@@ -7674,5 +8837,6 @@ window.addEventListener('DOMContentLoaded', () => {
   window.walioApp.init();
 });
 
-  </script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a8a92cdb91f5cf',t:'MTc4NjYzMzk3NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a8c1759dc9b933',t:'MTc4NjYzNDk3MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
