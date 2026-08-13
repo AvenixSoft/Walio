@@ -6182,7 +6182,7 @@ const translations = {
     converted_amount: "Converted Value",
     swap: "Swap Currencies",
     rate_disclaimer: "Real online exchange rates calibrated to open Toman market.",
-    rates_live_status: "Live rates",
+    rates_live_status: "Live rates · arzdigital.com",
     rates_cached_status: "Iranian Open-Market Rates (Today)",
     refresh_rates: "Refresh Live Rates",
     rates_updated: "Real exchange rates refreshed successfully!",
@@ -6468,7 +6468,7 @@ const translations = {
     converted_amount: "مبلغ معادل",
     swap: "جابجایی ارزها",
     rate_disclaimer: "نرخ‌های واقعی آنلاین بر اساس بازار آزاد تومان و بازار جهانی ارز.",
-    rates_live_status: "نرخ زنده",
+    rates_live_status: "نرخ زنده · ارزدیجیتال",
     rates_cached_status: "نرخ‌های بازار آزاد ایران (امروز)",
     refresh_rates: "بروزرسانی نرخ‌ها",
     rates_updated: "نرخ‌های واقعی ارز با موفقیت بروزرسانی شد!",
@@ -7617,7 +7617,6 @@ class CurrencyManager {
     this.lastUpdated = null;
     this.lastUpdatedAt = 0;
     this.isLive = false;
-    this.sourceLabel = 'arzdigital.com';
 
     // Default fallback rates in Toman (used if offline/API unreachable)
     this.rates = {
@@ -7649,7 +7648,6 @@ class CurrencyManager {
           this.rates = parsed.rates;
           this.lastUpdated = parsed.timestamp;
           this.lastUpdatedAt = parsed.updatedAt || 0;
-          this.sourceLabel = parsed.source || this.sourceLabel;
           this.isLive = false;
         }
       }
@@ -7707,83 +7705,27 @@ class CurrencyManager {
     return isNaN(n) ? NaN : n;
   }
 
-  /**
-   * Rate sources, tried in order.
-   *
-   * IMPORTANT (Iran / no-VPN):
-   *   r.jina.ai and the other international proxies are blocked from inside Iran,
-   *   so they are tried LAST. The first sources are either arzdigital itself
-   *   (works when the browser can reach it) or tgju's Iran-hosted "call2/call3"
-   *   endpoints, which are NOT filtered and DO send Access-Control-Allow-Origin: *.
-   */
-  static get RATE_SOURCES() {
+  /** Candidate CORS-enabled readers for the arzdigital currency page */
+  static get ARZ_SOURCES() {
     const page = 'https://arzdigital.com/currencies/';
     return [
-      // 1) arzdigital directly — no proxy, works whenever the browser's own
-      //    network can open the site (this is the normal case inside Iran).
-      { kind: 'arz', url: page, headers: {}, label: 'arzdigital.com' },
-
-      // 2) tgju — hosted in Iran, never filtered, CORS-enabled. Same open-market
-      //    Toman rates, used as the no-VPN fallback.
-      { kind: 'tgju', url: 'https://call2.tgju.org/ajax.json', headers: {}, label: 'tgju.org' },
-      { kind: 'tgju', url: 'https://call3.tgju.org/ajax.json', headers: {}, label: 'tgju.org' },
-
-      // 3) International readers for arzdigital — only reachable with a VPN.
       {
-        kind: 'arz',
         url: 'https://r.jina.ai/' + page,
-        headers: { 'x-return-format': 'html', 'x-target-selector': '.arz-fiats-table' },
-        label: 'arzdigital.com'
+        headers: { 'x-return-format': 'html', 'x-target-selector': '.arz-fiats-table' }
       },
-      { kind: 'arz', url: 'https://r.jina.ai/' + page, headers: { 'x-return-format': 'html' }, label: 'arzdigital.com' },
-      { kind: 'arz', url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(page), headers: {}, label: 'arzdigital.com' },
-      { kind: 'arz', url: 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(page), headers: {}, label: 'arzdigital.com' }
+      {
+        url: 'https://r.jina.ai/' + page,
+        headers: { 'x-return-format': 'html' }
+      },
+      {
+        url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(page),
+        headers: {}
+      },
+      {
+        url: 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(page),
+        headers: {}
+      }
     ];
-  }
-
-  /** tgju json key -> internal currency code (all values are Rial, /10 = Toman) */
-  static get TGJU_MAP() {
-    return {
-      price_dollar_rl: 'USD',
-      price_eur: 'EUR',
-      price_gbp: 'GBP',
-      price_aed: 'AED',
-      price_try: 'TRY',
-      price_cad: 'CAD',
-      price_aud: 'AUD',
-      price_chf: 'CHF',
-      price_jpy: 'JPY'   // tgju quotes JPY per 100 yen
-    };
-  }
-
-  /** Extract { CODE: {rate, change} } from a tgju ajax.json payload */
-  parseTgjuJson(payload) {
-    const result = {};
-    const data = payload && payload.current;
-    if (!data) return result;
-
-    const map = CurrencyManager.TGJU_MAP;
-    Object.keys(map).forEach(key => {
-      const entry = data[key];
-      if (!entry || entry.p == null) return;
-
-      const rial = CurrencyManager.parsePersianNumber(entry.p);
-      if (!isFinite(rial) || rial <= 0) return;
-
-      // tgju publishes Rial; the app works in Toman.
-      let toman = rial / 10;
-      // JPY is quoted per 100 yen on tgju.
-      if (map[key] === 'JPY') toman = toman / 100;
-
-      let change = CurrencyManager.parsePersianNumber(entry.dp);
-      if (!isFinite(change)) change = 0;
-      // "dt" is 'low' when the rate went down.
-      if (String(entry.dt || '').toLowerCase() === 'low') change = -Math.abs(change);
-
-      result[map[key]] = { rate: Math.round(toman * 100) / 100, change };
-    });
-
-    return result;
   }
 
   /** Extract { CODE: {rate, change} } out of the arzdigital table markup */
@@ -7821,40 +7763,30 @@ class CurrencyManager {
   }
 
   /**
-   * Fetch REAL live open-market rates (in Toman).
-   * Sources are tried in order; the first that returns a usable USD rate wins.
+   * Fetch REAL live rates from arzdigital.com (Iranian open market, in Toman)
    */
   async fetchLiveRates() {
-    const sources = CurrencyManager.RATE_SOURCES;
-    const failures = [];
+    const sources = CurrencyManager.ARZ_SOURCES;
 
     for (let i = 0; i < sources.length; i++) {
       const src = sources[i];
       try {
         const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-        // Short timeout so a blocked source fails fast and we move to the next one.
-        const timer = controller ? setTimeout(() => controller.abort(), 9000) : null;
+        const timer = controller ? setTimeout(() => controller.abort(), 20000) : null;
 
         const response = await fetch(src.url, {
           headers: src.headers,
           cache: 'no-store',
-          referrerPolicy: 'no-referrer',
           signal: controller ? controller.signal : undefined
         });
         if (timer) clearTimeout(timer);
         if (!response.ok) throw new Error('HTTP ' + response.status);
 
-        let parsed;
-        if (src.kind === 'tgju') {
-          parsed = this.parseTgjuJson(await response.json());
-        } else {
-          parsed = this.parseArzHtml(await response.text());
-        }
+        const html = await response.text();
+        const parsed = this.parseArzHtml(html);
 
-        // A valid result must at least contain the US Dollar
-        if (!parsed.USD || !isFinite(parsed.USD.rate) || parsed.USD.rate <= 0) {
-          throw new Error('USD not found in source');
-        }
+        // A valid scrape must at least contain the US Dollar
+        if (!parsed.USD || !isFinite(parsed.USD.rate)) throw new Error('USD not found in source');
 
         Object.keys(parsed).forEach(code => {
           const prev = this.rates[code] || {};
@@ -7879,25 +7811,23 @@ class CurrencyManager {
           { hour: '2-digit', minute: '2-digit' }
         );
         this.isLive = true;
-        this.sourceLabel = src.label;
 
         try {
           localStorage.setItem('walio_currency_cache_v3', JSON.stringify({
             rates: this.rates,
             timestamp: this.lastUpdated,
-            updatedAt: this.lastUpdatedAt,
-            source: this.sourceLabel
+            updatedAt: this.lastUpdatedAt
           }));
         } catch (e) { /* storage full / private mode */ }
 
         window.dispatchEvent(new CustomEvent('walio_currency_updated'));
         return true;
       } catch (e) {
-        failures.push(src.url + ' → ' + (e && e.message ? e.message : e));
+        console.warn('arzdigital rate source failed (' + src.url + '):', e && e.message ? e.message : e);
       }
     }
 
-    console.warn('All rate sources failed — keeping cached rates.\n' + failures.join('\n'));
+    console.warn('All arzdigital sources failed — keeping cached rates.');
     return false;
   }
 
@@ -7910,23 +7840,14 @@ class CurrencyManager {
     if (this._autoRefreshStarted) return;
     this._autoRefreshStarted = true;
 
-    // If a refresh fails (e.g. every source momentarily unreachable) retry
-    // quickly a few times instead of waiting a whole period.
-    const run = (retriesLeft = 2) => {
-      this.fetchLiveRates().then(ok => {
-        if (!ok && retriesLeft > 0) {
-          clearTimeout(this._retryTimer);
-          this._retryTimer = setTimeout(() => run(retriesLeft - 1), 8000);
-        }
-      });
-    };
+    const run = () => { this.fetchLiveRates(); };
 
     // first load
     run();
 
     this._autoRefreshTimer = setInterval(() => {
       if (typeof document !== 'undefined' && document.hidden) return; // don't waste requests in background
-      run(1);
+      run();
     }, period);
 
     document.addEventListener('visibilitychange', () => {
@@ -7936,7 +7857,7 @@ class CurrencyManager {
       }
     });
 
-    window.addEventListener('online', () => run());
+    window.addEventListener('online', run);
     window.addEventListener('focus', () => {
       const age = Date.now() - (this.lastUpdatedAt || 0);
       if (age > 300000) run();
@@ -9372,7 +9293,7 @@ class WalioApp {
       <div class="home-market-status">
         <div class="home-market-live">
           <span class="home-market-dot ${isLive ? '' : 'cached'}"></span>
-          <span>${t(isLive ? 'rates_live_status' : 'rates_cached_status')}${isLive ? ' · ' + (window.currency.sourceLabel || '') : ''} · ${updatedText}</span>
+          <span>${t(isLive ? 'rates_live_status' : 'rates_cached_status')} · ${updatedText}</span>
         </div>
         <span class="home-market-note">${t('market_open')}</span>
       </div>
@@ -9647,7 +9568,7 @@ class WalioApp {
               <h1 class="currency-board-title" id="currency-board-title">${t('currency_board_title')}</h1>
               <p class="currency-board-status">
                 <span class="currency-board-status-dot ${isLive ? '' : 'cached'}"></span>
-                <span>${t(isLive ? 'rates_live_status' : 'rates_cached_status')}${isLive ? ' · ' + (window.currency.sourceLabel || '') : ''} · ${updatedText}</span>
+                <span>${t(isLive ? 'rates_live_status' : 'rates_cached_status')} · ${updatedText}</span>
               </p>
             </div>
             <button class="currency-board-refresh" id="board-refresh-rates" type="button" aria-label="${t('refresh_rates')}" title="${t('refresh_rates')}">
@@ -9721,7 +9642,7 @@ class WalioApp {
           <div class="market-hero-top">
             <div class="market-status-chip">
               <span class="market-live-dot ${isLive ? '' : 'cached'}"></span>
-              <span>${t(isLive ? 'rates_live_status' : 'rates_cached_status')}${isLive ? ' · ' + (window.currency.sourceLabel || '') : ''} · ${updatedText}</span>
+              <span>${t(isLive ? 'rates_live_status' : 'rates_cached_status')} · ${updatedText}</span>
             </div>
             <button class="currency-refresh-icon" id="btn-refresh-rates" type="button" aria-label="${t('refresh_rates')}" title="${t('refresh_rates')}">
               <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
@@ -10561,5 +10482,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2ab93d17fd99723',t:'MTc4NjY2NDU1OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2ab86db4b70f4cb',t:'MTc4NjY2NDAyNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
