@@ -1328,54 +1328,12 @@ body.rtl-mode .wallet-chip {
 }
 
 /* ================= FINANCIAL TOOLS PAGE ================= */
-.tools-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
-  margin-bottom: 22px;
-}
-
 .tool-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-lg);
-  padding: 14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
   cursor: pointer;
   transition: var(--transition-spring);
 }
-
-.tool-card:hover {
-  border-color: var(--border-hover);
-}
-
 .tool-card.active {
-  background: var(--accent-primary);
-  border-color: var(--accent-primary);
-  color: #fff;
-}
-
-.tool-card.active .tool-info p {
-  color: rgba(255, 255, 255, 0.85);
-}
-
-.tool-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.tool-info h4 {
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 2px;
-}
-
-.tool-info p {
-  font-size: 11px;
-  color: var(--text-secondary);
+  color: inherit;
 }
 
 .tool-sheet-card {
@@ -4634,6 +4592,609 @@ body.rtl-mode .home-market-row:hover { transform: translateX(-2px); }
   .home-market-status { background: var(--result-bg); }
 }
 
+
+/* ================= PREMIUM WALLET CARDS ================= */
+.wallet-card-2026 {
+  --wallet-face: linear-gradient(135deg, #4F46E5 0%, #312E81 100%);
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  height: 198px;
+  padding: 16px 17px 14px;
+  overflow: hidden;
+  color: #fff;
+  background: var(--wallet-face);
+  border: 1px solid rgba(255, 255, 255, .24);
+  border-radius: 24px;
+  box-shadow:
+    0 16px 34px rgba(15, 23, 42, .24),
+    inset 0 1px 0 rgba(255,255,255,.28),
+    inset 0 -18px 30px rgba(0,0,0,.12);
+}
+
+.wallet-card-2026::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: -78px;
+  right: -52px;
+  width: 188px;
+  height: 188px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 50%;
+  box-shadow: 0 0 0 26px rgba(255,255,255,.035), 0 0 0 54px rgba(255,255,255,.018);
+  pointer-events: none;
+}
+body.rtl-mode .wallet-card-2026::before { right: auto; left: -52px; }
+
+.wallet-card-2026::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: -80%;
+  width: 52%;
+  height: 58%;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.16) 48%, transparent 100%);
+  transform: skewX(-20deg);
+  pointer-events: none;
+  transition: transform .8s ease;
+}
+.wallet-card-2026:hover::after { transform: translateX(540%) skewX(-20deg); }
+.wallet-card-2026:hover { transform: translateY(-4px); }
+
+.wallet-card-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .18;
+  background-image: radial-gradient(rgba(255,255,255,.5) .65px, transparent .65px);
+  background-size: 13px 13px;
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 58%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 58%);
+}
+
+.wallet-card-2026 .wallet-card-header,
+.wallet-card-2026 .wallet-card-mid,
+.wallet-card-2026 .wallet-card-body,
+.wallet-card-2026 .wallet-card-footer {
+  position: relative;
+  z-index: 2;
+}
+
+.wallet-card-2026 .wallet-card-header {
+  align-items: flex-start;
+}
+
+.wallet-card-2026 .wallet-bank-tag { min-width: 0; gap: 10px; }
+
+.wallet-icon-shell {
+  width: auto;
+  height: auto;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.wallet-card-2026 .wallet-icon-emoji { font-size: 22px; line-height: 1; }
+
+.wallet-bank-copy { min-width: 0; }
+.wallet-card-2026 .wallet-bank-name {
+  display: block;
+  max-width: 190px;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: -.15px;
+  text-shadow: 0 1px 2px rgba(0,0,0,.25);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.wallet-card-2026 .wallet-kind {
+  display: block;
+  max-width: 190px;
+  margin-top: 2px;
+  overflow: hidden;
+  color: rgba(255,255,255,.68);
+  font-size: 10px;
+  font-weight: 550;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wallet-brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+.wallet-contactless {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  color: rgba(255,255,255,.88);
+}
+.wallet-network {
+  width: 38px;
+  height: 24px;
+  position: relative;
+}
+.wallet-network i {
+  position: absolute;
+  top: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+.wallet-network i:first-child {
+  left: 0;
+  background: rgba(248,113,113,.88);
+}
+.wallet-network i:last-child {
+  right: 0;
+  background: rgba(251,191,36,.82);
+  mix-blend-mode: screen;
+}
+
+.wallet-card-mid {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 14px 0 8px;
+}
+.wallet-emv-chip {
+  position: relative;
+  width: 34px;
+  height: 26px;
+  flex: 0 0 auto;
+  overflow: hidden;
+  background:
+    linear-gradient(160deg, #FDE68A 0%, #F59E0B 42%, #B45309 100%);
+  border: 1px solid rgba(255,255,255,.38);
+  border-radius: 6px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 3px 8px rgba(0,0,0,.18);
+}
+.wallet-emv-chip::before,
+.wallet-emv-chip::after {
+  content: '';
+  position: absolute;
+}
+.wallet-emv-chip::before {
+  inset: 5px 3px;
+  border: 1px solid rgba(120, 53, 15, .38);
+  border-radius: 3px;
+}
+.wallet-emv-chip::after {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(120, 53, 15, .32);
+}
+
+.wallet-card-2026 .wallet-number {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: rgba(255,255,255,.92);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 1.4px;
+  text-shadow: 0 1px 2px rgba(0,0,0,.25);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.wallet-card-2026 .wallet-card-body {
+  margin-top: auto;
+}
+.wallet-card-2026 .wallet-balance-label {
+  color: rgba(255,255,255,.62);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .7px;
+  text-transform: uppercase;
+}
+.wallet-card-2026 .wallet-balance-amount {
+  max-width: 100%;
+  margin-top: 2px;
+  overflow: hidden;
+  font-size: 22px;
+  font-weight: 850;
+  letter-spacing: -.55px;
+  text-shadow: 0 2px 10px rgba(0,0,0,.22);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wallet-card-2026 .wallet-card-footer {
+  margin-top: 8px;
+  color: rgba(255,255,255,.78);
+  font-size: 10px;
+}
+.wallet-cardholder {
+  max-width: calc(100% - 52px);
+  overflow: hidden;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.wallet-card-2026 .wallet-card-footer {
+  z-index: 3;
+}
+.wallet-card-currency {
+  position: relative;
+  z-index: 3;
+  min-width: 38px;
+  padding: 3px 8px;
+  color: rgba(255,255,255,.92);
+  background: rgba(0,0,0,.18);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 800;
+  text-align: center;
+  box-shadow: none;
+  filter: none;
+}
+
+.home-page-2026 .wallets-carousel {
+  gap: 13px;
+  margin-inline: -2px;
+  padding: 4px 2px 16px;
+  scroll-padding-inline: 2px;
+}
+.home-page-2026 .wallets-carousel .wallet-card-2026 {
+  flex: 0 0 min(312px, calc(100vw - 56px));
+  scroll-snap-align: start;
+}
+
+.wallets-page-2026 .wallet-item-wrap .wallet-card-2026 {
+  width: 100%;
+  height: 206px;
+  border-radius: 22px;
+}
+
+/* ================= TOOLS — iOS APP SHELL ================= */
+.tools-page-2026 {
+  width: 100%;
+  padding-bottom: 8px;
+}
+
+.tools-page-header {
+  margin-bottom: 18px;
+}
+.tools-page-kicker {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: .7px;
+  text-transform: uppercase;
+}
+.tools-page-header .page-title {
+  font-size: clamp(26px, 7vw, 32px);
+  letter-spacing: -1px;
+}
+.tools-page-header .page-subtitle {
+  max-width: 320px;
+  margin-top: 4px;
+  line-height: 1.6;
+}
+
+.tools-featured {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  min-height: 148px;
+  display: flex;
+  align-items: flex-end;
+  padding: 18px;
+  margin-bottom: 22px;
+  color: #fff;
+  text-align: inherit;
+  background:
+    radial-gradient(circle at 92% 8%, rgba(186,230,253,.28), transparent 34%),
+    radial-gradient(circle at 4% 100%, rgba(129,140,248,.30), transparent 40%),
+    linear-gradient(145deg, #1E1B4B 0%, #312E81 46%, #4338CA 100%);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 26px;
+  box-shadow: 0 18px 36px rgba(49,46,129,.24), inset 0 1px 0 rgba(255,255,255,.18);
+}
+.tools-featured::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  width: 160px;
+  height: 160px;
+  top: -70px;
+  right: -48px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 50%;
+  box-shadow: 0 0 0 24px rgba(255,255,255,.035);
+}
+body.rtl-mode .tools-featured::before { right: auto; left: -48px; }
+.tools-featured:active { transform: scale(.985); }
+
+.tools-featured-copy {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  text-align: start;
+}
+.tools-featured-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 22px;
+  padding: 0 8px;
+  color: rgba(255,255,255,.82);
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+}
+.tools-featured-copy strong {
+  display: block;
+  font-size: 22px;
+  font-weight: 850;
+  letter-spacing: -.5px;
+}
+.tools-featured-copy em {
+  display: block;
+  max-width: 230px;
+  color: rgba(238,242,255,.72);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.45;
+}
+.tools-featured-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 12px;
+  color: #1E1B4B;
+  background: #fff;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+body.rtl-mode .tools-featured-cta svg { transform: scaleX(-1); }
+
+.tools-featured-visual {
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: #fff;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 22px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18);
+}
+
+.tools-group {
+  margin-bottom: 20px;
+}
+.tools-group-title {
+  padding: 0 4px 8px 16px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+body.rtl-mode .tools-group-title { padding: 0 16px 8px 4px; }
+
+.tools-group-list {
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--border-glass);
+  border-radius: 18px;
+  box-shadow: 0 8px 22px rgba(15,23,42,.045);
+}
+
+.tools-row {
+  width: 100%;
+  min-height: 64px;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 16px;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  text-align: inherit;
+  background: transparent;
+  border: 0;
+  border-bottom: .5px solid var(--border-subtle);
+}
+.tools-row:last-child { border-bottom: 0; }
+.tools-row:active { background: var(--chip-bg); }
+
+.tools-row-icon {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  color: #fff;
+}
+.tools-row[data-tool="percentage"] .tools-row-icon { background: #8B5CF6; }
+.tools-row[data-tool="discount"] .tools-row-icon { background: #EC4899; }
+.tools-row[data-tool="tip"] .tools-row-icon { background: #10B981; }
+.tools-row[data-tool="interest"] .tools-row-icon { background: #F59E0B; }
+.tools-row[data-tool="loan"] .tools-row-icon { background: #3B82F6; }
+.tools-row[data-tool="currency"] .tools-row-icon { background: #0D9488; }
+
+.tools-row-copy { min-width: 0; text-align: start; }
+.tools-row-copy strong {
+  display: block;
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -.2px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tools-row-copy span {
+  display: block;
+  overflow: hidden;
+  margin-top: 1px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tools-row-chevron {
+  display: grid;
+  place-items: center;
+  color: #C4C9D4;
+}
+body.rtl-mode .tools-row-chevron svg { transform: scaleX(-1); }
+[data-theme="dark"] .tools-row-chevron { color: #64748B; }
+
+/* iOS-style pushed page */
+.tool-overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 88;
+  background: rgba(8, 10, 18, .18);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .28s ease;
+}
+.tool-overlay-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.tool-overlay {
+  position: fixed;
+  left: 50%;
+  top: 0;
+  bottom: max(64px, calc(60px + env(safe-area-inset-bottom)));
+  z-index: 92;
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-main);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  opacity: 1;
+  pointer-events: none;
+  transform: translateX(50%);
+  transition: transform .38s cubic-bezier(.22, 1, .36, 1);
+}
+body.rtl-mode .tool-overlay { transform: translateX(-150%); }
+.tool-overlay.open {
+  pointer-events: auto;
+  transform: translateX(-50%);
+}
+body.rtl-mode .tool-overlay.open { transform: translateX(-50%); }
+
+.tool-overlay-head {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr) 92px;
+  align-items: center;
+  min-height: 52px;
+  padding: max(10px, env(safe-area-inset-top)) 8px 10px;
+  background: color-mix(in srgb, var(--bg-main) 82%, transparent);
+  border-bottom: .5px solid var(--border-subtle);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+.tool-overlay-back {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2px;
+  padding: 0 8px;
+  color: var(--accent-primary);
+  background: transparent;
+  border: 0;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.tool-overlay-back svg { flex: 0 0 auto; }
+body.rtl-mode .tool-overlay-back svg { transform: scaleX(-1); }
+.tool-overlay-title {
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -.3px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tool-overlay-body {
+  flex: 1;
+  overflow: auto;
+  padding: 16px 16px 22px;
+  -webkit-overflow-scrolling: touch;
+}
+.tool-overlay .tool-sheet-title { display: none; }
+.tool-overlay .ios-calculator-container,
+.tool-overlay .tool-sheet-card {
+  margin: 0;
+}
+
+@supports not (background: color-mix(in srgb, white 50%, black)) {
+  .tool-overlay-head { background: var(--bg-main); }
+}
+
+@media (min-width: 640px) {
+  .tool-overlay,
+  .tool-overlay-backdrop {
+    top: 24px;
+    bottom: 24px;
+    height: auto;
+    max-height: calc(100vh - 48px);
+    border-radius: 46px;
+    overflow: hidden;
+  }
+  .tool-overlay { max-width: 440px; }
+  .tool-overlay-backdrop {
+    left: 50%;
+    width: 440px;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 380px) {
+  .tools-featured { min-height: 136px; padding: 15px; }
+  .tools-featured-copy strong { font-size: 19px; }
+  .tools-featured-visual { width: 60px; height: 60px; border-radius: 18px; }
+  .tools-row { gap: 10px; padding-inline: 12px; }
+}
+
 /* Wallets page */
 .wallets-page-header {
   display: flex;
@@ -4904,8 +5465,9 @@ body.rtl-mode .wallets-portfolio-hero::before { right: auto; left: -58px; }
   .home-quick-tile { min-height: 98px; padding: 10px 9px; }
   .home-quick-tile-copy strong { font-size: 11px; }
   .home-quick-tile-copy em { font-size: 8.5px; }
-  .home-page-2026 .wallets-carousel .wallet-card-2026 { flex-basis: calc(100vw - 47px); }
-  .wallet-card-2026 .wallet-balance-amount { font-size: 18px; }
+  .home-page-2026 .wallets-carousel .wallet-card-2026 { flex-basis: calc(100vw - 47px); height: 186px; }
+  .wallet-card-2026 .wallet-balance-amount { font-size: 19px; }
+  .wallet-card-2026 .wallet-number { font-size: 11.5px; letter-spacing: 1px; }
   .home-tx-item { grid-template-columns: 40px minmax(0,1fr) auto; gap: 8px; padding-inline: 12px 10px; }
   .home-tx-icon { width: 40px; height: 40px; border-radius: 13px; }
   .home-tx-title { font-size: 12px; }
@@ -5315,8 +5877,15 @@ const translations = {
     currency_board_hint: "Select any card to open its detailed chart",
 
     // Financial Tools
-    tools_title: "Financial Tools",
-    tools_subtitle: "Smart calculators for everyday finance",
+    tools_title: "Tools",
+    tools_subtitle: "Calculators and converters, ready when you need them",
+    tool_back: "Tools",
+    tool_overlay_kicker: "Tool",
+    tools_kicker: "Utilities",
+    tools_featured: "Featured",
+    tools_everyday: "Everyday",
+    tools_planning: "Planning",
+    tools_open: "Open",
     tool_calc: "Calculator",
     tool_calc_desc: "Standard arithmetic calculator",
     tool_perc: "Percentage",
@@ -5579,8 +6148,15 @@ const translations = {
     currency_board_hint: "برای دیدن نمودار کامل، هر باکس را انتخاب کنید",
 
     // Financial Tools
-    tools_title: "ابزارهای مالی",
-    tools_subtitle: "ماشین‌حساب‌های هوشمند کاربردی",
+    tools_title: "ابزارها",
+    tools_subtitle: "ماشین‌حساب‌ها و مبدل‌ها، همیشه در دسترس",
+    tool_back: "ابزارها",
+    tool_overlay_kicker: "ابزار",
+    tools_kicker: "کاربردی",
+    tools_featured: "منتخب",
+    tools_everyday: "روزمره",
+    tools_planning: "برنامه‌ریزی",
+    tools_open: "باز کردن",
     tool_calc: "ماشین‌حساب",
     tool_calc_desc: "محاسبات ساده ریاضی",
     tool_perc: "محاسبه درصد",
@@ -6282,13 +6858,20 @@ class WalletManager {
     const displayBalance = hideBalance ? '••••••••' : formattedBalance;
     const fallbackBank = window.i18n && window.i18n.currentLang === 'fa' ? 'کیف پول شخصی' : 'Personal wallet';
     const fallbackNumber = '•••• •••• •••• ••••';
+    const rawNumber = (wallet.card_number || '').trim();
+    const digitsOnly = rawNumber.replace(/\D/g, '');
+    const displayNumber = digitsOnly.length >= 12
+      ? digitsOnly.replace(/(\d{4})(?=\d)/g, '$1 ').trim()
+      : (rawNumber || fallbackNumber);
+    const holder = (wallet.name || fallbackBank).toString();
 
     return `
       <div class="ios-wallet-card wallet-card-2026 theme-${wallet.color}"
-           style="background: ${theme.gradient};"
+           style="--wallet-face: ${theme.gradient}; background: ${theme.gradient};"
            data-wallet-id="${wallet.id}"
-           aria-label="${wallet.name || fallbackBank}"
+           aria-label="${holder}"
            ${interactive ? 'role="button" tabindex="0"' : ''}>
+        <span class="wallet-card-grain" aria-hidden="true"></span>
         <div class="wallet-card-header">
           <div class="wallet-bank-tag">
             <span class="wallet-icon-shell" aria-hidden="true">
@@ -6296,14 +6879,22 @@ class WalletManager {
             </span>
             <span class="wallet-bank-copy">
               <span class="wallet-bank-name">${wallet.bank || fallbackBank}</span>
-              <span class="wallet-kind">${wallet.name || fallbackBank}</span>
+              <span class="wallet-kind">${holder}</span>
             </span>
           </div>
-          <span class="wallet-contactless" aria-hidden="true">
-            <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-              <path d="M12 3a9 9 0 0 1 9 9"/><path d="M12 7a5 5 0 0 1 5 5"/><path d="M12 11a1 1 0 0 1 1 1"/>
-            </svg>
+          <span class="wallet-brand-mark" aria-hidden="true">
+            <span class="wallet-contactless">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <path d="M12 3a9 9 0 0 1 9 9"/><path d="M12 7a5 5 0 0 1 5 5"/><path d="M12 11a1 1 0 0 1 1 1"/>
+              </svg>
+            </span>
+            <span class="wallet-network"><i></i><i></i></span>
           </span>
+        </div>
+
+        <div class="wallet-card-mid">
+          <span class="wallet-emv-chip" aria-hidden="true"></span>
+          <span class="wallet-number">${displayNumber}</span>
         </div>
 
         <div class="wallet-card-body">
@@ -6312,7 +6903,7 @@ class WalletManager {
         </div>
 
         <div class="wallet-card-footer">
-          <span class="wallet-number">${wallet.card_number || fallbackNumber}</span>
+          <span class="wallet-cardholder">${holder}</span>
           <span class="wallet-card-currency">${currency}</span>
         </div>
       </div>
@@ -6969,6 +7560,8 @@ class ToolsManager {
     this.calcOperand1 = null;
     this.calcOperator = null;
     this.calcWaitingForOperand2 = false;
+    this.pendingTool = null;
+    this.activeTool = null;
   }
 
   /**
@@ -6978,81 +7571,72 @@ class ToolsManager {
     const container = document.getElementById(containerId);
     if (!container) return;
 
+    const t = (key) => window.i18n ? window.i18n.t(key) : key;
+    const chevron = `<span class="tools-row-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M7 4l6 6-6 6"/></svg></span>`;
+    const row = (id, titleKey, descKey, icon) => `
+      <button class="tools-row tool-card" data-tool="${id}" type="button">
+        <span class="tools-row-icon" aria-hidden="true">${icon}</span>
+        <span class="tools-row-copy">
+          <strong>${t(titleKey)}</strong>
+          <span>${t(descKey)}</span>
+        </span>
+        ${chevron}
+      </button>`;
+
     container.innerHTML = `
-      <div class="page-header">
-        <h2 class="page-title" data-i18n="tools_title">Financial Tools</h2>
-        <p class="page-subtitle" data-i18n="tools_subtitle">Smart calculators for everyday finance</p>
-      </div>
+      <div class="tools-page-2026">
+        <header class="tools-page-header">
+          <span class="tools-page-kicker">${t('tools_kicker')}</span>
+          <h2 class="page-title">${t('tools_title')}</h2>
+          <p class="page-subtitle">${t('tools_subtitle')}</p>
+        </header>
 
-      <!-- Tools Selection Tabs / Grid -->
-      <div class="tools-grid">
-        <div class="tool-card active" data-tool="calculator">
-          <div class="tool-icon">
-            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
-          </div>
-          <div class="tool-info">
-            <h4 data-i18n="tool_calc">Calculator</h4>
-            <p data-i18n="tool_calc_desc">Standard arithmetic</p>
-          </div>
-        </div>
-        <div class="tool-card" data-tool="percentage">
-          <div class="tool-icon">
-            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="2.5"/><circle cx="16" cy="16" r="2.5"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
-          </div>
-          <div class="tool-info">
-            <h4 data-i18n="tool_perc">Percentage</h4>
-            <p data-i18n="tool_perc_desc">Calculate percentages & changes</p>
-          </div>
-        </div>
-        <div class="tool-card" data-tool="discount">
-          <div class="tool-icon">
-            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-          </div>
-          <div class="tool-info">
-            <h4 data-i18n="tool_disc">Discount</h4>
-            <p data-i18n="tool_disc_desc">Price after discount & tax</p>
-          </div>
-        </div>
-        <div class="tool-card" data-tool="tip">
-          <div class="tool-icon">
-            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8c0-3.3-2.7-6-6-6M6 8c0-3.3 2.7-6 6-6"/><path d="M2 12h20"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/></svg>
-          </div>
-          <div class="tool-info">
-            <h4 data-i18n="tool_tip">Tip Calculator</h4>
-            <p data-i18n="tool_tip_desc">Bill splitting & tips</p>
-          </div>
-        </div>
-        <div class="tool-card" data-tool="interest">
-          <div class="tool-icon">
-            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-          </div>
-          <div class="tool-info">
-            <h4 data-i18n="tool_interest">Interest</h4>
-            <p data-i18n="tool_interest_desc">Simple & compound growth</p>
-          </div>
-        </div>
-        <div class="tool-card" data-tool="loan">
-          <div class="tool-icon">
-            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          </div>
-          <div class="tool-info">
-            <h4 data-i18n="tool_loan">Loan & EMI</h4>
-            <p data-i18n="tool_loan_desc">Monthly mortgage & loan payments</p>
-          </div>
-        </div>
-        <div class="tool-card" data-tool="currency">
-          <div class="tool-icon">
-            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16.2 7.8l-2 6.3-6.4 2.1 2-6.3z"/></svg>
-          </div>
-          <div class="tool-info">
-            <h4 data-i18n="tool_convert">Currency Converter</h4>
-            <p data-i18n="tool_convert_desc">Convert Toman, USD, EUR & more</p>
-          </div>
-        </div>
-      </div>
+        <button class="tools-featured tool-card" data-tool="calculator" type="button">
+          <span class="tools-featured-copy">
+            <span class="tools-featured-badge">${t('tools_featured')}</span>
+            <strong>${t('tool_calc')}</strong>
+            <em>${t('tool_calc_desc')}</em>
+            <span class="tools-featured-cta">
+              ${t('tools_open')}
+              <svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 4l6 6-6 6"/></svg>
+            </span>
+          </span>
+          <span class="tools-featured-visual" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="2" width="16" height="20" rx="2.5"/><line x1="8" y1="6.5" x2="16" y2="6.5"/><path d="M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 19h.01M12 19h.01"/></svg>
+          </span>
+        </button>
 
-      <!-- Tool Workspace Container -->
-      <div id="tool-workspace" class="tool-workspace"></div>
+        <section class="tools-group" aria-labelledby="tools-everyday-title">
+          <h3 class="tools-group-title" id="tools-everyday-title">${t('tools_everyday')}</h3>
+          <div class="tools-group-list">
+            ${row('percentage', 'tool_perc', 'tool_perc_desc', '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="8" cy="8" r="2.4"/><circle cx="16" cy="16" r="2.4"/><line x1="18.5" y1="5.5" x2="5.5" y2="18.5"/></svg>')}
+            ${row('discount', 'tool_disc', 'tool_disc_desc', '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>')}
+            ${row('tip', 'tool_tip', 'tool_tip_desc', '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8c0-3.3-2.7-6-6-6M6 8c0-3.3 2.7-6 6-6"/><path d="M2 12h20"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/></svg>')}
+          </div>
+        </section>
+
+        <section class="tools-group" aria-labelledby="tools-planning-title">
+          <h3 class="tools-group-title" id="tools-planning-title">${t('tools_planning')}</h3>
+          <div class="tools-group-list">
+            ${row('interest', 'tool_interest', 'tool_interest_desc', '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>')}
+            ${row('loan', 'tool_loan', 'tool_loan_desc', '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>')}
+            ${row('currency', 'tool_convert', 'tool_convert_desc', '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16.2 7.8l-2 6.3-6.4 2.1 2-6.3z"/></svg>')}
+          </div>
+        </section>
+
+        <div class="tool-overlay-backdrop" id="tool-overlay-backdrop"></div>
+        <section class="tool-overlay" id="tool-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="tool-overlay-title">
+          <header class="tool-overlay-head">
+            <button class="tool-overlay-back" id="tool-overlay-back" type="button">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+              <span>${t('tool_back')}</span>
+            </button>
+            <h3 class="tool-overlay-title" id="tool-overlay-title">${t('tool_calc')}</h3>
+            <span></span>
+          </header>
+          <div class="tool-overlay-body" id="tool-workspace"></div>
+        </section>
+      </div>
     `;
 
     if (window.i18n) window.i18n.translateDOM();
@@ -7060,24 +7644,48 @@ class ToolsManager {
     const toolCards = container.querySelectorAll('.tool-card');
     toolCards.forEach(card => {
       card.addEventListener('click', () => {
-        toolCards.forEach(c => c.classList.remove('active'));
-        card.classList.add('active');
         const toolName = card.getAttribute('data-tool');
         this.openTool(toolName);
       });
     });
 
-    this.openTool('calculator');
+    const closeOverlay = () => this.closeTool();
+    const backBtn = container.querySelector('#tool-overlay-back');
+    const backdrop = container.querySelector('#tool-overlay-backdrop');
+    if (backBtn) backBtn.addEventListener('click', closeOverlay);
+    if (backdrop) backdrop.addEventListener('click', closeOverlay);
+
+    if (this.pendingTool) {
+      const next = this.pendingTool;
+      this.pendingTool = null;
+      this.openTool(next);
+    }
   }
 
   openTool(toolName) {
     const workspace = document.getElementById('tool-workspace');
-    if (!workspace) return;
+    if (!workspace) {
+      this.pendingTool = toolName;
+      return;
+    }
 
-    // Sync active tool card highlight (also used when opening from Home quick action)
+    this.activeTool = toolName;
+    const titles = {
+      calculator: 'tool_calc',
+      percentage: 'tool_perc',
+      discount: 'tool_disc',
+      tip: 'tool_tip',
+      interest: 'tool_interest',
+      loan: 'tool_loan',
+      currency: 'tool_convert'
+    };
+
     document.querySelectorAll('.tool-card').forEach(c => {
       c.classList.toggle('active', c.getAttribute('data-tool') === toolName);
     });
+
+    const titleEl = document.getElementById('tool-overlay-title');
+    if (titleEl) titleEl.textContent = window.i18n ? window.i18n.t(titles[toolName] || toolName) : toolName;
 
     switch (toolName) {
       case 'calculator':
@@ -7102,6 +7710,27 @@ class ToolsManager {
         this.renderCurrencyConverter(workspace);
         break;
     }
+
+    const overlay = document.getElementById('tool-overlay');
+    const backdrop = document.getElementById('tool-overlay-backdrop');
+    if (overlay) {
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+      workspace.scrollTop = 0;
+    }
+    if (backdrop) backdrop.classList.add('open');
+  }
+
+  closeTool() {
+    this.activeTool = null;
+    const overlay = document.getElementById('tool-overlay');
+    const backdrop = document.getElementById('tool-overlay-backdrop');
+    if (overlay) {
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+    if (backdrop) backdrop.classList.remove('open');
+    document.querySelectorAll('.tool-card').forEach(c => c.classList.remove('active'));
   }
 
   // ================= 1. STANDARD CALCULATOR =================
@@ -8065,8 +8694,8 @@ class WalioApp {
     const convertButton = container.querySelector('#qa-convert');
     if (convertButton) {
       convertButton.addEventListener('click', () => {
+        if (window.toolsManager) window.toolsManager.pendingTool = 'currency';
         this.switchTab('tools');
-        if (window.toolsManager) window.toolsManager.openTool('currency');
       });
     }
 
@@ -9037,6 +9666,10 @@ class WalioApp {
           m.classList.remove('open');
           document.body.style.overflow = '';
         });
+        if (openModals.length === 0 && window.toolsManager && window.toolsManager.activeTool) {
+          window.toolsManager.closeTool();
+          return;
+        }
         if (openModals.length === 0 && this.currencyBoardMode) {
           this.setCurrencyBoardMode(false);
         }
@@ -9229,5 +9862,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a92b123b560e08',t:'MTc4NjYzOTI5Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
