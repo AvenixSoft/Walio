@@ -358,467 +358,199 @@ input, select, textarea {
   stroke: var(--accent-primary);
 }
 
-/* ================= HOME — iOS STYLE ================= */
-.home-heading {
-  margin-bottom: 14px;
-}
-
-.home-large-title {
-  font-size: clamp(24px, 7vw, 30px);
-  font-weight: 800;
-  letter-spacing: -0.6px;
-  line-height: 1.25;
-  color: var(--text-primary);
-}
-
-.home-date-subtitle {
-  margin-top: 3px;
-  font-size: 12.5px;
-  color: var(--text-secondary);
-}
-
-/* --- Balance card (Apple-style) --- */
-.home-balance-card {
+/* ================= HERO TOTAL BALANCE CARD ================= */
+.hero-balance-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: clamp(16px, 5vw, 22px);
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-glass);
   position: relative;
-  isolation: isolate;
   overflow: hidden;
-  margin-bottom: 20px;
-  padding: 20px;
-  border-radius: 24px;
-  color: #fff;
-  background:
-    radial-gradient(circle at 88% 6%, rgba(56, 189, 248, 0.30), transparent 40%),
-    radial-gradient(circle at 8% 96%, rgba(99, 102, 241, 0.32), transparent 42%),
-    linear-gradient(150deg, #0F172A 0%, #172554 52%, #1E1B4B 100%);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 18px 40px rgba(30, 41, 89, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  width: 100%;
 }
 
-.home-balance-card::after {
+.hero-balance-card::before {
   content: '';
   position: absolute;
-  z-index: -1;
-  inset: 0;
-  opacity: 0.22;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.34) 0.7px, transparent 0.7px);
-  background-size: 17px 17px;
-  mask-image: linear-gradient(to bottom, black, transparent 74%);
-  -webkit-mask-image: linear-gradient(to bottom, black, transparent 74%);
+  top: -60px;
+  right: -60px;
+  width: 180px;
+  height: 180px;
+  background: var(--accent-gradient);
+  opacity: 0.18;
+  filter: blur(40px);
+  border-radius: 50%;
+  z-index: 0;
 }
 
-.home-balance-top {
+.hero-top-row {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
-.home-balance-label {
-  font-size: 11.5px;
-  font-weight: 650;
+.hero-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: rgba(226, 232, 240, 0.78);
 }
 
-.home-eye-btn {
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.13);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+.btn-eye-toggle {
+  font-size: 16px;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--chip-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.home-eye-btn:active {
-  background: rgba(255, 255, 255, 0.22);
-}
-
-.home-balance-value {
-  margin-top: 12px;
-  font-size: clamp(30px, 9vw, 40px);
+.hero-balance-value {
+  font-size: clamp(26px, 7vw, 32px);
   font-weight: 800;
-  letter-spacing: -1px;
-  line-height: 1.2;
+  color: var(--text-primary);
+  margin: 10px 0 20px 0;
+  letter-spacing: -0.5px;
+  position: relative;
+  z-index: 1;
   word-break: break-word;
 }
 
-.home-metrics {
+.hero-monthly-row {
   display: flex;
-  gap: 10px;
-  margin-top: 18px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  gap: 12px;
+  position: relative;
+  z-index: 1;
 }
 
-.home-metric {
+.monthly-badge {
   flex: 1;
-  min-width: 0;
   display: flex;
   align-items: center;
   gap: 10px;
-}
-
-.home-metric-icon {
-  width: 34px;
-  height: 34px;
-  flex-shrink: 0;
-  border-radius: 11px;
-  display: grid;
-  place-items: center;
-}
-
-.home-metric.income .home-metric-icon {
-  background: rgba(52, 211, 153, 0.18);
-  color: #34D399;
-}
-
-.home-metric.expense .home-metric-icon {
-  background: rgba(251, 113, 133, 0.18);
-  color: #FB7185;
-}
-
-.home-metric-body {
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: var(--chip-bg);
+  border: 1px solid var(--border-subtle);
   min-width: 0;
+}
+
+.badge-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-income .badge-icon {
+  background: var(--color-green-bg);
+  color: var(--color-green);
+}
+
+.badge-expense .badge-icon {
+  background: var(--color-red-bg);
+  color: var(--color-red);
+}
+
+.badge-texts {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
-.home-metric-label {
-  font-size: 10.5px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  color: rgba(226, 232, 240, 0.72);
-}
-
-.home-metric-value {
-  font-size: 14px;
-  font-weight: 800;
-  color: #fff;
+.badge-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* --- Quick actions (iOS squircles) --- */
-.home-quick-actions {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 4px;
-  margin-bottom: 22px;
+.badge-amount {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.home-qa-item {
+/* ================= QUICK ACTIONS BAR ================= */
+.quick-actions-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.action-item {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 4px 0;
+  gap: 6px;
   font-size: 11px;
   font-weight: 500;
   color: var(--text-primary);
+  text-align: center;
 }
 
-.home-qa-icon {
-  width: clamp(52px, 14.5vw, 60px);
-  height: clamp(52px, 14.5vw, 60px);
-  border-radius: 17px;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+.action-icon-wrap {
+  width: clamp(44px, 12vw, 50px);
+  height: clamp(44px, 12vw, 50px);
+  border-radius: 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-glass);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: var(--transition-spring);
 }
 
-.home-qa-item:active .home-qa-icon {
-  transform: scale(0.9);
-}
-
-.qa-blue   { background: linear-gradient(160deg, #0A84FF, #0A5CF5); }
-.qa-green  { background: linear-gradient(160deg, #30D158, #1CA34A); }
-.qa-orange { background: linear-gradient(160deg, #FF9F0A, #F07E00); }
-.qa-purple { background: linear-gradient(160deg, #BF5AF2, #9A3FD1); }
-
-/* --- iOS section headers --- */
-.home-section {
-  margin-bottom: 22px;
-}
-
-.ios-section-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  padding: 0 4px 8px;
-}
-
-.ios-section-title {
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-secondary);
-}
-
-.ios-section-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--accent-primary);
-}
-
-.ios-section-link svg {
-  width: 13px;
-  height: 13px;
-}
-
-body.rtl-mode .ios-section-link svg {
-  transform: scaleX(-1);
-}
-
-.home-add-circle {
-  width: 30px;
-  height: 30px;
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  color: #fff;
+.action-item:active .action-icon-wrap {
+  transform: scale(0.92);
   background: var(--accent-primary);
-  border-radius: 50%;
-  box-shadow: 0 4px 12px var(--accent-glow);
+  color: #fff;
 }
 
-/* --- iOS grouped list --- */
-.ios-group {
-  background: var(--card-bg);
-  border: 1px solid var(--border-glass);
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
-}
-
-.ios-row {
+/* ================= SECTION BLOCKS ================= */
+.section-block {
+  margin-bottom: 26px;
   width: 100%;
+}
+
+.section-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  padding: 12px 13px;
-  min-height: 64px;
-  text-align: inherit;
-  border-bottom: 1px solid var(--border-subtle);
-  transition: background 0.15s ease;
-}
-
-.ios-row:last-child {
-  border-bottom: none;
-}
-
-.ios-row:active {
-  background: var(--chip-bg);
-}
-
-button.ios-row {
-  cursor: pointer;
-}
-
-.ios-row-icon {
-  width: 42px;
-  height: 42px;
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  font-size: 20px;
-  line-height: 1;
-  border-radius: 12px;
-}
-
-.ios-row-flag {
-  background: var(--chip-bg);
-  font-size: 22px;
-}
-
-.ios-row-main {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  text-align: start;
-}
-
-.ios-row-title {
-  font-size: 14.5px;
-  font-weight: 600;
-  color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.ios-row-code {
-  font-size: 14.5px;
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: 0.4px;
-  direction: ltr;
-  unicode-bidi: isolate;
-}
-
-.ios-row-sub {
-  font-size: 12px;
-  color: var(--text-secondary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.ios-row-trailing {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 3px;
-}
-
-.ios-row-price {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text-primary);
-  white-space: nowrap;
-}
-
-.ios-row-amount {
-  font-size: 14.5px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.ios-row-amount.up { color: var(--color-green); }
-.ios-row-amount.down { color: var(--text-primary); }
-
-.ios-row-date {
-  font-size: 11px;
-  color: var(--text-muted);
-}
-
-.ios-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  padding: 2px 7px;
-  border-radius: 999px;
-  font-size: 10.5px;
-  font-weight: 700;
-  direction: ltr;
-  unicode-bidi: isolate;
-}
-
-.ios-chip.up   { color: var(--color-green); background: var(--color-green-bg); }
-.ios-chip.down { color: var(--color-red);   background: var(--color-red-bg); }
-
-.ios-chevron {
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  color: var(--text-muted);
-}
-
-body.rtl-mode .ios-chevron svg {
-  transform: scaleX(-1);
-}
-
-.ios-row-delete {
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  color: var(--text-muted);
-  opacity: 0.55;
-}
-
-.ios-row-delete:hover {
-  opacity: 1;
-  color: var(--color-red);
-  background: var(--color-red-bg);
-}
-
-/* --- Transactions toolbar (segmented + search) --- */
-.home-tx-toolbar {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
   margin-bottom: 12px;
 }
 
-.ios-segmented {
-  display: flex;
-  padding: 3px;
-  background: var(--chip-bg);
-  border: 1px solid var(--border-subtle);
-  border-radius: 11px;
+.section-title {
+  font-size: clamp(16px, 4.5vw, 18px);
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
-.ios-seg-btn {
-  flex: 1;
-  height: 30px;
-  border-radius: 8px;
-  font-size: 12px;
+.section-link {
+  font-size: 13px;
   font-weight: 600;
-  color: var(--text-secondary);
-}
-
-.ios-seg-btn.active {
-  background: var(--card-bg);
-  color: var(--text-primary);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.14), inset 0 0 0 0.5px rgba(0, 0, 0, 0.05);
-}
-
-.ios-search {
-  position: relative;
-}
-
-.ios-search svg {
-  position: absolute;
-  top: 50%;
-  left: 12px;
-  transform: translateY(-50%);
-  color: var(--text-muted);
-  pointer-events: none;
-}
-
-body.rtl-mode .ios-search svg {
-  left: auto;
-  right: 12px;
-}
-
-.ios-search input {
-  width: 100%;
-  height: 38px;
-  padding: 0 12px 0 36px;
-  color: var(--text-primary);
-  background: var(--chip-bg);
-  border: 1px solid transparent;
-  border-radius: 11px;
-  outline: none;
-  font-size: 13.5px !important;
-  user-select: text;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-body.rtl-mode .ios-search input {
-  padding: 0 36px 0 12px;
-}
-
-.ios-search input:focus {
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px var(--accent-glow);
+  color: var(--accent-primary);
+  cursor: pointer;
 }
 
 /* ================= APPLE WALLET CARDS CAROUSEL ================= */
@@ -911,7 +643,7 @@ body.rtl-mode .ios-search input {
   font-size: 13px;
   font-weight: 600;
   opacity: 0.95;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 .wallet-chip {
@@ -948,7 +680,7 @@ body.rtl-mode .wallet-chip {
   font-size: 21px;
   font-weight: 800;
   letter-spacing: -0.3px;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
 }
 
 .wallet-card-footer {
@@ -964,7 +696,66 @@ body.rtl-mode .wallet-chip {
   letter-spacing: 1px;
 }
 
-/* --- Shared change badges --- */
+/* ================= MINI CURRENCY OVERVIEW ================= */
+.currency-overview-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mini-curr-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: var(--transition-spring);
+}
+
+.mini-curr-item:last-child {
+  border-bottom: none;
+}
+
+.mini-curr-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.curr-code-names {
+  display: flex;
+  flex-direction: column;
+}
+
+.curr-code {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.curr-name {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.mini-curr-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.curr-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
 .chart-badge,
 .curr-badge {
   font-size: 11px;
@@ -983,6 +774,156 @@ body.rtl-mode .wallet-chip {
   color: var(--color-red);
 }
 
+/* ================= TRANSACTIONS LIST & FILTERS ================= */
+.tx-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: var(--chip-bg);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  transition: var(--transition-spring);
+}
+
+.filter-chip.active {
+  background: var(--accent-primary);
+  color: #fff;
+  border-color: var(--accent-primary);
+}
+
+.tx-search-wrap {
+  flex: 1;
+  min-width: 140px;
+}
+
+.tx-search-input {
+  width: 100%;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border-subtle);
+  background: var(--input-bg);
+  color: var(--text-primary);
+  font-size: 14px !important;
+  outline: none;
+}
+
+.transactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tx-item-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: var(--transition-spring);
+}
+
+.tx-item-card:hover {
+  border-color: var(--border-hover);
+}
+
+.tx-item-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.tx-cat-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tx-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.tx-cat-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tx-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tx-item-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.tx-amt {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.tx-amount-income {
+  color: var(--color-green);
+}
+
+.tx-amount-expense {
+  color: var(--text-primary);
+}
+
+.tx-date-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tx-date {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.tx-del-btn {
+  font-size: 12px;
+  color: var(--text-muted);
+  opacity: 0.6;
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tx-del-btn:hover {
+  opacity: 1;
+  color: var(--color-red);
+}
 
 /* ================= PAGE HEADERS ================= */
 .page-header {
@@ -1683,58 +1624,29 @@ body.rtl-mode .btn-zero {
   box-shadow: var(--shadow-glass);
 }
 
-/* --- Profile hero card --- */
-.profile-hero {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  text-align: center;
-  padding: 26px 16px 20px;
-  margin-bottom: 20px;
-  border-radius: 26px;
-  border: 1px solid var(--border-glass);
-  background:
-    radial-gradient(130% 85% at 50% -12%, rgba(79, 70, 229, 0.18), transparent 58%),
-    var(--card-bg);
-  box-shadow: var(--shadow-glass);
+.profile-photo-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 18px;
 }
 
-.profile-hero::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  width: 210px;
-  height: 210px;
-  top: -116px;
-  inset-inline-end: -72px;
-  border: 1px solid rgba(79, 70, 229, 0.12);
-  border-radius: 50%;
-  box-shadow: 0 0 0 30px rgba(79, 70, 229, 0.04), 0 0 0 62px rgba(79, 70, 229, 0.025);
-}
-
-.profile-hero-avatar {
+.profile-avatar-wrap {
   position: relative;
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 12px;
-  cursor: pointer;
+  width: 76px;
+  height: 76px;
+  flex-shrink: 0;
 }
 
 .profile-avatar-icon {
-  width: 96px;
-  height: 96px;
+  width: 76px;
+  height: 76px;
   border-radius: 50%;
   background: var(--accent-gradient);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid var(--bg-main);
-  box-shadow: 0 10px 26px var(--accent-glow);
-  transition: var(--transition-spring);
-}
-
-.profile-hero-avatar:active .profile-avatar-icon {
-  transform: scale(0.95);
+  box-shadow: 0 4px 16px var(--accent-glow);
 }
 
 .profile-avatar-icon img {
@@ -1742,200 +1654,62 @@ body.rtl-mode .btn-zero {
   height: 100%;
   object-fit: cover;
   display: block;
-  border-radius: 50%;
+}
+
+.profile-avatar-wrap {
+  cursor: pointer;
 }
 
 .profile-avatar-badge {
   position: absolute;
-  bottom: 0;
-  inset-inline-end: 0;
-  width: 28px;
-  height: 28px;
+  bottom: -2px;
+  right: -2px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   background: var(--accent-primary);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid var(--bg-main);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  border: 2.5px solid var(--bg-sub);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
-.profile-hero-name {
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--text-primary);
-  letter-spacing: -0.3px;
-}
-
-.profile-hero-username {
-  display: inline-block;
-  margin-top: 3px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  direction: ltr;
-}
-
-.profile-hero-stats {
-  display: flex;
-  margin-top: 18px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border-subtle);
-}
-
-.profile-stat {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 0 6px;
-}
-
-.profile-stat + .profile-stat {
-  border-inline-start: 1px solid var(--border-subtle);
-}
-
-.profile-stat-value {
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: clamp(15px, 4vw, 18px);
-  font-weight: 800;
-  color: var(--text-primary);
-}
-
-.profile-stat-label {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--text-secondary);
-}
-
-/* --- Account form --- */
-.profile-form-sheet .card-section-title {
-  margin-bottom: 16px;
-}
-
-.profile-field {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.profile-field-icon {
-  width: 42px;
-  height: 42px;
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  color: var(--accent-primary);
-  background: rgba(79, 70, 229, 0.11);
-  border-radius: 13px;
-}
-
-.profile-field-control {
-  flex: 1;
-  min-width: 0;
-}
-
-.profile-field-control label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-secondary);
-}
-
-.profile-field-control .tool-input {
-  height: 44px;
+body.rtl-mode .profile-avatar-badge {
+  right: auto;
+  left: -2px;
 }
 
 .profile-photo-actions {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  margin: 4px 0 16px;
+  margin-bottom: 16px;
 }
 
-.profile-photo-actions .btn-secondary {
-  flex: 1;
-  min-width: 0;
+.profile-identity h4 {
+  font-size: 18px;
+  font-weight: 700;
 }
 
-/* --- Settings rows --- */
+.profile-identity span {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
 .setting-item {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  padding: 13px 0;
+  padding: 14px 0;
   border-bottom: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .setting-item:last-child {
   border-bottom: none;
-}
-
-.setting-icon {
-  width: 38px;
-  height: 38px;
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  color: var(--text-secondary);
-  background: var(--chip-bg);
-  border-radius: 11px;
-}
-
-.setting-icon.tint-indigo { color: var(--accent-primary); background: rgba(79, 70, 229, 0.12); }
-.setting-icon.tint-green  { color: var(--color-green);   background: var(--color-green-bg); }
-.setting-icon.tint-blue   { color: var(--color-blue);    background: rgba(59, 130, 246, 0.14); }
-.setting-icon.tint-amber  { color: var(--color-amber);   background: rgba(245, 158, 11, 0.14); }
-.setting-icon.tint-red    { color: var(--color-red);     background: var(--color-red-bg); }
-
-.setting-label {
-  flex: 1;
-  min-width: 0;
-  text-align: start;
-}
-
-.setting-label > span {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.setting-label small {
-  display: block;
-  margin-top: 2px;
-  font-size: 11px;
-  font-weight: 400;
-  color: var(--text-muted);
-}
-
-.setting-chevron {
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  color: var(--text-muted);
-}
-
-body.rtl-mode .setting-chevron svg {
-  transform: scaleX(-1);
-}
-
-.data-row {
-  width: 100%;
-  text-align: inherit;
-  cursor: pointer;
-}
-
-.data-row.danger .setting-label > span {
-  color: var(--color-red);
 }
 
 /* iOS Switch */
@@ -1993,26 +1767,21 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
 
 .lang-pill-selector {
   display: flex;
-  gap: 3px;
-  padding: 4px;
-  flex-shrink: 0;
-  background: var(--chip-bg);
-  border: 1px solid var(--border-subtle);
-  border-radius: 13px;
+  gap: 8px;
 }
 
 .lang-btn {
-  padding: 7px 14px;
-  border-radius: 10px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: var(--chip-bg);
+  border: 1px solid var(--border-subtle);
   font-size: 12px;
-  font-weight: 700;
-  color: var(--text-secondary);
+  font-weight: 600;
 }
 
 .lang-btn.active {
   background: var(--accent-primary);
   color: #fff;
-  box-shadow: 0 3px 10px var(--accent-glow);
 }
 
 /* Buttons */
@@ -4384,14 +4153,6 @@ const translations = {
     profile_name: "Full Name",
     profile_username: "Username",
     profile_save: "Save Profile",
-    profile_account_section: "Account Info",
-    profile_stats_wallets: "Wallets",
-    profile_stats_transactions: "Transactions",
-    profile_stats_balance: "Total Balance",
-    export_data_desc: "Download all data as a JSON file",
-    import_data_desc: "Restore from a backup file",
-    load_demo_data_desc: "Add sample data to explore the app",
-    reset_data_desc: "Erase everything and start over",
     settings_section: "Preferences",
     dark_mode: "Dark Mode",
     language: "Language",
@@ -4632,14 +4393,6 @@ const translations = {
     profile_name: "نام و نام خانوادگی",
     profile_username: "نام کاربری (آیدی)",
     profile_save: "ذخیره تغییرات",
-    profile_account_section: "اطلاعات حساب",
-    profile_stats_wallets: "کیف پول",
-    profile_stats_transactions: "تراکنش",
-    profile_stats_balance: "مجموع دارایی",
-    export_data_desc: "دانلود همه داده‌ها به‌صورت فایل JSON",
-    import_data_desc: "بازیابی از فایل پشتیبان",
-    load_demo_data_desc: "افزودن داده نمونه برای آشنایی",
-    reset_data_desc: "پاک کردن کامل و شروع دوباره",
     settings_section: "تنظیمات برنامه",
     dark_mode: "حالت تاریک",
     language: "زبان برنامه",
@@ -6656,10 +6409,8 @@ class WalioApp {
     const container = document.getElementById('tab-home');
     if (!container) return;
 
-    const profile = window.storage.getProfile();
     const wallets = window.storage.getWallets();
     const transactions = window.storage.getTransactions();
-    const settings = window.storage.getSettings();
 
     let totalNetWorth = 0;
     let totalMonthlyIncome = 0;
@@ -6681,137 +6432,116 @@ class WalioApp {
       }
     });
 
-    const isFa = window.i18n && window.i18n.currentLang === 'fa';
-    const t = (key) => window.i18n ? window.i18n.t(key) : key;
-
-    const hideBalance = settings.hideBalance;
+    const hideBalance = window.storage.getSettings().hideBalance;
     const formattedNet = hideBalance ? '••••••••' : (window.i18n ? window.i18n.formatCurrency(totalNetWorth, 'IRT') : `${totalNetWorth} IRT`);
     const formattedInc = hideBalance ? '••••' : (window.i18n ? window.i18n.formatCurrency(totalMonthlyIncome, 'IRT') : `${totalMonthlyIncome}`);
     const formattedExp = hideBalance ? '••••' : (window.i18n ? window.i18n.formatCurrency(totalMonthlyExpense, 'IRT') : `${totalMonthlyExpense}`);
 
-    const hour = now.getHours();
-    let greetKey = 'greeting_morning';
-    if (hour >= 12 && hour < 17) greetKey = 'greeting_afternoon';
-    else if (hour >= 17) greetKey = 'greeting_evening';
-    const firstName = (profile.name || 'User').split(' ')[0];
-    const dateStr = now.toLocaleDateString(isFa ? 'fa-IR' : 'en-US', isFa
-      ? { weekday: 'long', day: 'numeric', month: 'long' }
-      : { weekday: 'long', month: 'long', day: 'numeric' });
-
-    const eyeSVG = hideBalance
-      ? `<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`
-      : `<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+    const eyeSVG = hideBalance 
+      ? `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`
+      : `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
 
     container.innerHTML = `
-      <div class="home-heading">
-        <h1 class="home-large-title">${t(greetKey)} ${firstName}</h1>
-        <p class="home-date-subtitle">${dateStr}</p>
-      </div>
-
-      <!-- Balance card -->
-      <div class="home-balance-card">
-        <div class="home-balance-top">
-          <span class="home-balance-label" data-i18n="total_net_worth">${t('total_net_worth')}</span>
-          <button class="home-eye-btn" id="btn-toggle-privacy" type="button" aria-label="${t('total_net_worth')}">
+      <!-- Total Balance Hero Card -->
+      <div class="hero-balance-card">
+        <div class="hero-top-row">
+          <span class="hero-label" data-i18n="total_net_worth">Total Balance</span>
+          <button class="btn-eye-toggle" id="btn-toggle-privacy" title="Toggle Balance Privacy">
             ${eyeSVG}
           </button>
         </div>
-        <div class="home-balance-value">${formattedNet}</div>
-        <div class="home-metrics">
-          <div class="home-metric income">
-            <span class="home-metric-icon">
-              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
-            </span>
-            <span class="home-metric-body">
-              <span class="home-metric-label" data-i18n="income">${t('income')}</span>
-              <span class="home-metric-value">+${formattedInc}</span>
-            </span>
+        <div class="hero-balance-value">${formattedNet}</div>
+
+        <!-- Monthly Summary Badges -->
+        <div class="hero-monthly-row">
+          <div class="monthly-badge badge-income">
+            <div class="badge-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+            </div>
+            <div class="badge-texts">
+              <span class="badge-label" data-i18n="income">Income</span>
+              <span class="badge-amount">+${formattedInc}</span>
+            </div>
           </div>
-          <div class="home-metric expense">
-            <span class="home-metric-icon">
-              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
-            </span>
-            <span class="home-metric-body">
-              <span class="home-metric-label" data-i18n="expenses">${t('expenses')}</span>
-              <span class="home-metric-value">-${formattedExp}</span>
-            </span>
+          <div class="monthly-badge badge-expense">
+            <div class="badge-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+            </div>
+            <div class="badge-texts">
+              <span class="badge-label" data-i18n="expenses">Expenses</span>
+              <span class="badge-amount">-${formattedExp}</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Quick actions -->
-      <div class="home-quick-actions">
-        <button class="home-qa-item" id="qa-add-tx">
-          <span class="home-qa-icon qa-blue">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-          <span data-i18n="action_add_tx">${t('action_add_tx')}</span>
+      <!-- Quick Actions Bar -->
+      <div class="quick-actions-bar">
+        <button class="action-item" id="qa-add-tx">
+          <div class="action-icon-wrap">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <span data-i18n="action_add_tx">Add TX</span>
         </button>
-        <button class="home-qa-item" id="qa-transfer">
-          <span class="home-qa-icon qa-green">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-          </span>
-          <span data-i18n="action_transfer">${t('action_transfer')}</span>
+        <button class="action-item" id="qa-transfer">
+          <div class="action-icon-wrap">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </div>
+          <span data-i18n="action_transfer">Transfer</span>
         </button>
-        <button class="home-qa-item" id="qa-convert">
-          <span class="home-qa-icon qa-orange">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          </span>
-          <span data-i18n="action_convert">${t('action_convert')}</span>
+        <button class="action-item" id="qa-convert">
+          <div class="action-icon-wrap">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <span data-i18n="action_convert">Convert</span>
         </button>
-        <button class="home-qa-item" id="qa-new-wallet">
-          <span class="home-qa-icon qa-purple">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-          </span>
-          <span data-i18n="new_wallet">${t('new_wallet')}</span>
+        <button class="action-item" id="qa-new-wallet">
+          <div class="action-icon-wrap">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          </div>
+          <span data-i18n="new_wallet">New Wallet</span>
         </button>
       </div>
 
-      <!-- Wallets -->
-      <section class="home-section">
-        <div class="ios-section-head">
-          <span class="ios-section-title" data-i18n="my_wallets">${t('my_wallets')}</span>
-          <button class="ios-section-link" id="home-link-wallets" type="button">
-            <span data-i18n="see_all">${t('see_all')}</span>
-            <svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4l6 6-6 6"/></svg>
-          </button>
+      <!-- My Wallets Carousel -->
+      <div class="section-block">
+        <div class="section-header">
+          <h3 class="section-title" data-i18n="my_wallets">My Wallets</h3>
+          <span class="section-link" id="home-link-wallets" data-i18n="see_all">See All</span>
         </div>
         <div class="wallets-carousel" id="home-wallets-carousel"></div>
-      </section>
+      </div>
 
-      <!-- Currency preview -->
-      <section class="home-section">
-        <div class="ios-section-head">
-          <span class="ios-section-title" data-i18n="currency_title">${t('currency_title')}</span>
-          <button class="ios-section-link" id="home-link-currency" type="button">
-            <span data-i18n="see_all">${t('see_all')}</span>
-            <svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4l6 6-6 6"/></svg>
+      <!-- Currency Overview Mini Card -->
+      <div class="section-block">
+        <div class="section-header">
+          <h3 class="section-title" data-i18n="currency_title">Live Currency & Rates</h3>
+          <span class="section-link" id="home-link-currency" data-i18n="see_all">See All</span>
+        </div>
+        <div class="currency-overview-card" id="home-currency-preview"></div>
+      </div>
+
+      <!-- Recent Transactions List -->
+      <div class="section-block">
+        <div class="section-header">
+          <h3 class="section-title" data-i18n="recent_transactions">Recent Transactions</h3>
+          <button class="btn-sm-primary" id="home-add-tx-btn">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span data-i18n="action_add_tx">Add TX</span>
           </button>
         </div>
-        <div id="home-currency-preview"></div>
-      </section>
 
-      <!-- Transactions -->
-      <section class="home-section">
-        <div class="ios-section-head">
-          <span class="ios-section-title" data-i18n="recent_transactions">${t('recent_transactions')}</span>
-          <button class="home-add-circle" id="home-add-tx-btn" type="button" aria-label="${t('action_add_tx')}">
-            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </button>
-        </div>
-        <div class="home-tx-toolbar">
-          <div class="ios-segmented" role="tablist">
-            <button class="ios-seg-btn ${this.activeTxFilter === 'all' ? 'active' : ''}" type="button" data-filter="all" data-i18n="tx_filter_all">${t('tx_filter_all')}</button>
-            <button class="ios-seg-btn ${this.activeTxFilter === 'income' ? 'active' : ''}" type="button" data-filter="income" data-i18n="tx_filter_income">${t('tx_filter_income')}</button>
-            <button class="ios-seg-btn ${this.activeTxFilter === 'expense' ? 'active' : ''}" type="button" data-filter="expense" data-i18n="tx_filter_expense">${t('tx_filter_expense')}</button>
-          </div>
-          <div class="ios-search">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-            <input type="text" id="tx-search" placeholder="${t('tx_search_placeholder')}" autocomplete="off" />
+        <div class="tx-filter-bar">
+          <button class="filter-chip active" data-filter="all" data-i18n="tx_filter_all">All</button>
+          <button class="filter-chip" data-filter="income" data-i18n="tx_filter_income">Income</button>
+          <button class="filter-chip" data-filter="expense" data-i18n="tx_filter_expense">Expense</button>
+          <div class="tx-search-wrap">
+            <input type="text" class="tx-search-input" id="tx-search" placeholder="Search..." data-i18n-placeholder="tx_search_placeholder" />
           </div>
         </div>
-        <div id="home-tx-list"></div>
-      </section>
+
+        <div class="transactions-list" id="home-tx-list"></div>
+      </div>
     `;
 
     if (window.i18n) window.i18n.translateDOM();
@@ -6826,9 +6556,9 @@ class WalioApp {
     const togglePrivacy = container.querySelector('#btn-toggle-privacy');
     if (togglePrivacy) {
       togglePrivacy.addEventListener('click', () => {
-        const s = window.storage.getSettings();
-        s.hideBalance = !s.hideBalance;
-        window.storage.saveSettings(s);
+        const settings = window.storage.getSettings();
+        settings.hideBalance = !settings.hideBalance;
+        window.storage.saveSettings(settings);
       });
     }
 
@@ -6861,12 +6591,12 @@ class WalioApp {
     const linkCurrency = container.querySelector('#home-link-currency');
     if (linkCurrency) linkCurrency.addEventListener('click', () => this.switchTab('currency'));
 
-    const segBtns = container.querySelectorAll('.ios-seg-btn');
-    segBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        segBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        this.activeTxFilter = btn.getAttribute('data-filter');
+    const filterChips = container.querySelectorAll('.tx-filter-bar .filter-chip');
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        filterChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        this.activeTxFilter = chip.getAttribute('data-filter');
         this.renderTransactionList('home-tx-list', this.activeTxFilter, this.searchQuery);
       });
     });
@@ -6880,36 +6610,33 @@ class WalioApp {
     }
   }
 
-
   renderHomeCurrencyPreview(containerId) {
     const container = document.getElementById(containerId);
     if (!container || !window.currency) return;
 
     const codes = ['USD', 'EUR', 'GBP', 'AED'];
-    const rows = codes.map(code => {
+    const html = codes.map(code => {
       const rate = window.currency.getRate(code);
       const isPos = rate.change >= 0;
-      const fullName = window.i18n ? window.i18n.t('curr_' + code) : rate.name;
-      const name = fullName.replace(/\s*\([^)]*\)\s*$/, '').trim();
       return `
-        <button class="ios-row" type="button" data-code="${code}">
-          <span class="ios-row-icon ios-row-flag">${rate.flag}</span>
-          <span class="ios-row-main">
-            <span class="ios-row-code">${code}</span>
-            <span class="ios-row-sub">${name}</span>
-          </span>
-          <span class="ios-row-trailing">
-            <span class="ios-row-price">${window.i18n ? window.i18n.formatCurrency(rate.rate, 'IRT') : rate.rate}</span>
-            <span class="ios-chip ${isPos ? 'up' : 'down'}">${isPos ? '+' : ''}${rate.change}%</span>
-          </span>
-          <span class="ios-chevron">
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4l6 6-6 6"/></svg>
-          </span>
-        </button>`;
+        <div class="mini-curr-item" data-code="${code}">
+          <div class="mini-curr-left">
+            <span class="curr-flag-emoji">${rate.flag}</span>
+            <div class="curr-code-names">
+              <span class="curr-code">${code}</span>
+              <span class="curr-name">${window.i18n ? window.i18n.t('curr_' + code) : rate.name}</span>
+            </div>
+          </div>
+          <div class="mini-curr-right">
+            <span class="curr-price">${window.i18n ? window.i18n.formatCurrency(rate.rate, 'IRT') : rate.rate}</span>
+            <span class="curr-badge ${isPos ? 'badge-green' : 'badge-red'}">${isPos ? '+' : ''}${rate.change}%</span>
+          </div>
+        </div>
+      `;
     }).join('');
 
-    container.innerHTML = `<div class="ios-group">${rows}</div>`;
-    container.querySelectorAll('.ios-row').forEach(item => {
+    container.innerHTML = html;
+    container.querySelectorAll('.mini-curr-item').forEach(item => {
       item.addEventListener('click', () => {
         const c = item.getAttribute('data-code');
         if (window.currency) window.currency.activeChartCurrency = c;
@@ -6917,7 +6644,6 @@ class WalioApp {
       });
     });
   }
-
 
   renderTransactionList(containerId, filter = 'all', searchQuery = '') {
     const container = document.getElementById(containerId);
@@ -6932,7 +6658,7 @@ class WalioApp {
     }
 
     if (searchQuery) {
-      list = list.filter(t =>
+      list = list.filter(t => 
         (t.description && t.description.toLowerCase().includes(searchQuery)) ||
         (t.category && window.i18n.t(t.category).toLowerCase().includes(searchQuery))
       );
@@ -6960,36 +6686,46 @@ class WalioApp {
     }
 
     const wallets = window.storage.getWallets();
-    const isFa = window.i18n && window.i18n.currentLang === 'fa';
-    const rows = list.map(tx => {
+    const html = list.map(tx => {
       const cat = this.categories.find(c => c.id === tx.category) || this.categories[0];
       const wallet = wallets.find(w => w.id === tx.walletId);
       const isIncome = tx.type === 'income';
+      const amountClass = isIncome ? 'tx-amount-income' : 'tx-amount-expense';
       const prefix = isIncome ? '+' : '-';
       const formattedAmt = window.i18n ? window.i18n.formatCurrency(tx.amount, 'IRT') : `${tx.amount} IRT`;
 
-      const dateStr = new Date(tx.date).toLocaleDateString(isFa ? 'fa-IR' : 'en-US', { month: 'short', day: 'numeric' });
+      const dateStr = new Date(tx.date).toLocaleDateString(
+        window.i18n ? (window.i18n.currentLang === 'fa' ? 'fa-IR' : 'en-US') : 'en-US',
+        { month: 'short', day: 'numeric' }
+      );
 
       return `
-        <div class="ios-row" data-tx-id="${tx.id}">
-          <span class="ios-row-icon" style="background: ${cat.color}1F; color: ${cat.color};">${cat.icon}</span>
-          <span class="ios-row-main">
-            <span class="ios-row-title">${window.i18n ? window.i18n.t(cat.nameKey) : cat.nameKey}</span>
-            <span class="ios-row-sub">${tx.description || (wallet ? wallet.name : '')}</span>
-          </span>
-          <span class="ios-row-trailing">
-            <span class="ios-row-amount ${isIncome ? 'up' : 'down'}">${prefix} ${formattedAmt}</span>
-            <span class="ios-row-date">${dateStr}</span>
-          </span>
-          <button class="ios-row-delete" data-id="${tx.id}" title="Delete Transaction">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          </button>
-        </div>`;
+        <div class="tx-item-card" data-tx-id="${tx.id}">
+          <div class="tx-item-left">
+            <div class="tx-cat-icon" style="background: ${cat.color}25; color: ${cat.color};">
+              <span class="tx-cat-emoji">${cat.icon}</span>
+            </div>
+            <div class="tx-details">
+              <span class="tx-cat-title">${window.i18n ? window.i18n.t(cat.nameKey) : cat.nameKey}</span>
+              <span class="tx-desc">${tx.description || (wallet ? wallet.name : '')}</span>
+            </div>
+          </div>
+          <div class="tx-item-right">
+            <span class="tx-amt ${amountClass}">${prefix} ${formattedAmt}</span>
+            <div class="tx-date-row">
+              <span class="tx-date">${dateStr}</span>
+              <button class="tx-del-btn" data-id="${tx.id}" title="Delete Transaction">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
     }).join('');
 
-    container.innerHTML = `<div class="ios-group">${rows}</div>`;
+    container.innerHTML = html;
 
-    container.querySelectorAll('.ios-row-delete').forEach(btn => {
+    container.querySelectorAll('.tx-del-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
         const id = btn.getAttribute('data-id');
@@ -6997,7 +6733,6 @@ class WalioApp {
       });
     });
   }
-
 
   // ================= CURRENCY PAGE =================
   renderCurrencyTab() {
@@ -7451,93 +7186,60 @@ class WalioApp {
     const profile = window.storage.getProfile();
     const settings = window.storage.getSettings();
     const currentLang = window.i18n ? window.i18n.currentLang : 'fa';
-    const t = (key) => window.i18n ? window.i18n.t(key) : key;
-
-    const wallets = window.storage.getWallets();
-    const transactions = window.storage.getTransactions();
-    const totalBalance = wallets.reduce((sum, w) => sum + (parseFloat(w.balance) || 0), 0);
-    const statsBalance = settings.hideBalance ? '••••' : (window.i18n ? window.i18n.formatCurrency(totalBalance, 'IRT') : String(totalBalance));
 
     container.innerHTML = `
-      <!-- Profile Hero -->
-      <div class="profile-hero">
-        <div class="profile-hero-avatar" id="profile-avatar-wrap" role="button" tabindex="0" title="${t('change_photo')}">
-          <div class="profile-avatar-icon" id="profile-avatar-icon">
-            ${profile.avatar
-              ? `<img src="${profile.avatar}" alt="Profile photo" />`
-              : `<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`}
-          </div>
-          <div class="profile-avatar-badge" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-          </div>
-        </div>
-
-        <h3 class="profile-hero-name" id="profile-identity-name">${profile.name}</h3>
-        <span class="profile-hero-username" id="profile-identity-username">${profile.username}</span>
-
-        <div class="profile-hero-stats">
-          <div class="profile-stat">
-            <strong class="profile-stat-value">${window.i18n ? window.i18n.formatNumber(wallets.length) : wallets.length}</strong>
-            <span class="profile-stat-label" data-i18n="profile_stats_wallets">${t('profile_stats_wallets')}</span>
-          </div>
-          <div class="profile-stat">
-            <strong class="profile-stat-value">${window.i18n ? window.i18n.formatNumber(transactions.length) : transactions.length}</strong>
-            <span class="profile-stat-label" data-i18n="profile_stats_transactions">${t('profile_stats_transactions')}</span>
-          </div>
-          <div class="profile-stat">
-            <strong class="profile-stat-value">${statsBalance}</strong>
-            <span class="profile-stat-label" data-i18n="profile_stats_balance">${t('profile_stats_balance')}</span>
-          </div>
-        </div>
+      <div class="page-header">
+        <h2 class="page-title" data-i18n="profile_title">Profile & Settings</h2>
+        <p class="page-subtitle" data-i18n="profile_subtitle">Manage your account and preferences</p>
       </div>
 
-      <!-- Account Info -->
-      <div class="settings-card-sheet profile-form-sheet">
-        <h3 class="card-section-title" data-i18n="profile_account_section">${t('profile_account_section')}</h3>
-
-        <div class="profile-field">
-          <span class="profile-field-icon">
-            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </span>
-          <div class="profile-field-control">
-            <label for="prof-input-name" data-i18n="profile_name">${t('profile_name')}</label>
-            <input type="text" id="prof-input-name" class="tool-input" value="${profile.name || ''}" />
+      <!-- Profile Edit Card -->
+      <div class="profile-card-sheet">
+        <div class="profile-photo-row">
+          <div class="profile-avatar-wrap" id="profile-avatar-wrap" role="button" tabindex="0" title="${window.i18n ? window.i18n.t('change_photo') : 'Change Photo'}">
+            <div class="profile-avatar-icon" id="profile-avatar-icon">
+              ${profile.avatar
+                ? `<img src="${profile.avatar}" alt="Profile photo" />`
+                : `<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`}
+            </div>
+            <div class="profile-avatar-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            </div>
           </div>
-        </div>
-
-        <div class="profile-field">
-          <span class="profile-field-icon">
-            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8l-3.5 6 2 3.5"/></svg>
-          </span>
-          <div class="profile-field-control">
-            <label for="prof-input-user" data-i18n="profile_username">${t('profile_username')}</label>
-            <input type="text" id="prof-input-user" class="tool-input" value="${profile.username || ''}" dir="ltr" />
+          <div class="profile-identity">
+            <h4 id="profile-identity-name">${profile.name}</h4>
+            <span id="profile-identity-username">${profile.username}</span>
           </div>
         </div>
 
         <div class="profile-photo-actions">
           <button class="btn-secondary" id="btn-change-photo">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            <span data-i18n="change_photo">${t('change_photo')}</span>
+            <span data-i18n="change_photo">Change Photo</span>
           </button>
-          <button class="btn-secondary" id="btn-remove-photo" data-i18n="remove_photo" ${profile.avatar ? '' : 'style="display:none;"'}>${t('remove_photo')}</button>
+          <button class="btn-secondary" id="btn-remove-photo" data-i18n="remove_photo" ${profile.avatar ? '' : 'style="display:none;"'}>Remove Photo</button>
           <input type="file" id="profile-photo-input" accept="image/*" style="display:none;" />
         </div>
 
-        <button class="btn-primary-full" id="btn-save-profile" data-i18n="profile_save">${t('profile_save')}</button>
+        <div class="tool-input-row">
+          <label data-i18n="profile_name">Full Name</label>
+          <input type="text" id="prof-input-name" class="tool-input" value="${profile.name || ''}" />
+        </div>
+
+        <div class="tool-input-row">
+          <label data-i18n="profile_username">Username</label>
+          <input type="text" id="prof-input-user" class="tool-input" value="${profile.username || ''}" />
+        </div>
+
+        <button class="btn-primary-full" id="btn-save-profile" data-i18n="profile_save">Save Profile</button>
       </div>
 
-      <!-- Preferences -->
+      <!-- Settings Section -->
       <div class="settings-card-sheet">
-        <h3 class="card-section-title" data-i18n="settings_section">${t('settings_section')}</h3>
+        <h3 class="card-section-title" data-i18n="settings_section">Preferences</h3>
 
         <div class="setting-item">
-          <span class="setting-icon tint-indigo">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          </span>
-          <span class="setting-label">
-            <span data-i18n="dark_mode">${t('dark_mode')}</span>
-          </span>
+          <span data-i18n="dark_mode">Dark Mode</span>
           <label class="ios-switch">
             <input type="checkbox" id="setting-dark-toggle" ${settings.darkMode === 'dark' ? 'checked' : ''} />
             <span class="switch-slider"></span>
@@ -7545,12 +7247,7 @@ class WalioApp {
         </div>
 
         <div class="setting-item">
-          <span class="setting-icon tint-green">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          </span>
-          <span class="setting-label">
-            <span data-i18n="language">${t('language')}</span>
-          </span>
+          <span data-i18n="language">Language</span>
           <div class="lang-pill-selector">
             <button class="lang-btn ${currentLang === 'fa' ? 'active' : ''}" data-lang="fa" data-i18n="lang_name_fa">فارسی</button>
             <button class="lang-btn ${currentLang === 'en' ? 'active' : ''}" data-lang="en" data-i18n="lang_name_en">English</button>
@@ -7558,59 +7255,21 @@ class WalioApp {
         </div>
       </div>
 
-      <!-- Data Management -->
+      <!-- Data Management Section -->
       <div class="settings-card-sheet">
-        <h3 class="card-section-title" data-i18n="data_section">${t('data_section')}</h3>
+        <h3 class="card-section-title" data-i18n="data_section">Data Management</h3>
 
-        <button class="setting-item data-row" id="btn-export-data">
-          <span class="setting-icon tint-blue">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          </span>
-          <span class="setting-label">
-            <span data-i18n="export_data">${t('export_data')}</span>
-            <small data-i18n="export_data_desc">${t('export_data_desc')}</small>
-          </span>
-          <span class="setting-chevron">
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4l6 6-6 6"/></svg>
-          </span>
-        </button>
+        <div class="data-actions-row mb-2">
+          <button class="btn-secondary" id="btn-export-data" data-i18n="export_data">Export Backup (JSON)</button>
+          <label for="import-file-input" class="btn-secondary" data-i18n="import_data">Restore Backup</label>
+          <input type="file" id="import-file-input" accept=".json" style="display:none;" />
+        </div>
 
-        <label class="setting-item data-row" for="import-file-input">
-          <span class="setting-icon tint-green">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          </span>
-          <span class="setting-label">
-            <span data-i18n="import_data">${t('import_data')}</span>
-            <small data-i18n="import_data_desc">${t('import_data_desc')}</small>
-          </span>
-          <span class="setting-chevron">
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4l6 6-6 6"/></svg>
-          </span>
-        </label>
-        <input type="file" id="import-file-input" accept=".json" style="display:none;" />
+        <div class="data-actions-row">
+          <button class="btn-secondary" id="btn-load-demo" data-i18n="load_demo_data">Load Sample Demo Data</button>
+        </div>
 
-        <button class="setting-item data-row" id="btn-load-demo">
-          <span class="setting-icon tint-amber">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18v-6"/><path d="M9 15l3-3 3 3"/></svg>
-          </span>
-          <span class="setting-label">
-            <span data-i18n="load_demo_data">${t('load_demo_data')}</span>
-            <small data-i18n="load_demo_data_desc">${t('load_demo_data_desc')}</small>
-          </span>
-          <span class="setting-chevron">
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4l6 6-6 6"/></svg>
-          </span>
-        </button>
-
-        <button class="setting-item data-row danger" id="btn-reset-data">
-          <span class="setting-icon tint-red">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-          </span>
-          <span class="setting-label">
-            <span data-i18n="reset_data">${t('reset_data')}</span>
-            <small data-i18n="reset_data_desc">${t('reset_data_desc')}</small>
-          </span>
-        </button>
+        <button class="btn-danger-outline" id="btn-reset-data" data-i18n="reset_data">Reset All App Data</button>
       </div>
     `;
 
@@ -8015,5 +7674,5 @@ window.addEventListener('DOMContentLoaded', () => {
   window.walioApp.init();
 });
 
-  </script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a8a92cdb91f5cf',t:'MTc4NjYzMzk3NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a8f8977cdf3c73',t:'MTc4NjYzNzIyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  </script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a8a92cdb91f5cf',t:'MTc4NjYzMzk3NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a8c1759dc9b933',t:'MTc4NjYzNDk3MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
