@@ -134,16 +134,13 @@ body.rtl-mode {
 
 html, body {
   width: 100%;
-  height: 100%;
-  max-height: 100%;
+  min-height: 100%;
   font-family: var(--font-main);
   background: var(--bg-main);
   color: var(--text-primary);
   font-size: clamp(14px, 3.5vw, 15px);
   line-height: 1.5;
-  overflow: hidden;
-  overscroll-behavior: none;
-  touch-action: manipulation;
+  overflow-x: hidden;
   user-select: none;
 }
 
@@ -153,10 +150,11 @@ button {
   background: none;
   font-family: inherit;
   color: inherit;
+  transition: var(--transition-spring);
 }
 
 button:active {
-  opacity: 0.88;
+  transform: scale(0.96);
 }
 
 input, select, textarea {
@@ -168,34 +166,31 @@ input, select, textarea {
 /* ================= DESKTOP MOBILE FRAME vs FULLSCREEN MOBILE ================= */
 .app-container {
   width: 100%;
-  height: 100dvh;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: stretch;
+  align-items: flex-start;
   background: var(--bg-main);
-  overflow: hidden;
 }
 
 .mobile-frame {
   width: 100%;
   max-width: 100%;
-  height: 100%;
+  min-height: 100vh;
   background: var(--bg-main);
   position: relative;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  padding-bottom: max(84px, calc(64px + env(safe-area-inset-bottom))); /* space for bottom nav */
 }
 
 @media (min-width: 640px) {
   .app-container {
     padding: 24px 0;
-    align-items: center;
   }
   .mobile-frame {
     max-width: 440px;
-    height: min(844px, calc(100dvh - 48px));
+    min-height: 844px;
     border-radius: 46px;
     border: 1px solid var(--border-glass);
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.45);
@@ -209,8 +204,8 @@ input, select, textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
-  flex: 0 0 auto;
+  position: sticky;
+  top: 0;
   z-index: 50;
   background: var(--header-bg);
   backdrop-filter: blur(28px) saturate(180%);
@@ -286,31 +281,31 @@ input, select, textarea {
 
 /* ================= MAIN CONTENT VIEWS ================= */
 .main-content {
-  flex: 1 1 auto;
-  min-height: 0;
-  padding: 16px clamp(14px, 4vw, 20px) 12px;
+  flex: 1;
+  padding: 16px clamp(14px, 4vw, 20px);
   width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
 }
-
-.main-content::-webkit-scrollbar { width: 0; height: 0; }
 
 .tab-view {
   display: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
   width: 100%;
 }
 
 .tab-view.active {
   display: block;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ================= GLASS BOTTOM NAVIGATION ================= */
 .bottom-nav {
-  position: relative;
-  flex: 0 0 auto;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
   max-width: 100%;
   height: max(calc(60px + env(safe-area-inset-bottom)), 64px);
@@ -563,7 +558,6 @@ input, select, textarea {
   display: flex;
   gap: 16px;
   overflow-x: auto;
-  overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   padding-bottom: 6px;
   scrollbar-width: none;
@@ -760,10 +754,6 @@ body.rtl-mode .wallet-chip {
   font-size: 14px;
   font-weight: 700;
   color: var(--text-primary);
-}
-
-.chart-badge,
-.curr-badgemary);
 }
 
 .chart-badge,
@@ -1873,7 +1863,7 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
 
 /* ================= MODAL SHEETS (IOS BOTTOM SHEET) ================= */
 .modal-overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -1897,10 +1887,9 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
 
 .modal-sheet {
   width: 100%;
-  max-width: 100%;
-  max-height: 88%;
+  max-width: 440px;
+  max-height: 90vh;
   overflow-y: auto;
-  overscroll-behavior: contain;
   background: var(--bg-sub);
   border-radius: 30px 30px 0 0;
   border-top: 1px solid var(--border-glass);
@@ -3152,22 +3141,22 @@ body.rtl-mode .market-rate-row:hover { transform: translateX(-2px); }
 }
 
 body.currency-board-mode {
-  overflow: hidden;
+  overflow-x: hidden;
   background: var(--bg-main);
 }
 
 body.currency-board-mode .app-container {
-  display: flex;
-  height: 100dvh;
+  display: block;
+  min-height: 100vh;
   padding: 0 !important;
 }
 
 body.currency-board-mode .mobile-frame {
   width: 100%;
   max-width: none !important;
-  height: 100%;
+  min-height: 100vh;
   padding-bottom: 0;
-  overflow: hidden;
+  overflow: visible;
   border: 0 !important;
   border-radius: 0 !important;
   box-shadow: none !important;
@@ -3182,8 +3171,6 @@ body.currency-board-mode .main-content {
   width: 100%;
   max-width: none;
   padding: 0;
-  overflow: auto;
-  overscroll-behavior: contain;
 }
 
 body.currency-board-mode .main-content > .tab-view:not(#tab-currency),
@@ -5111,7 +5098,7 @@ body.rtl-mode .tools-row-chevron svg { transform: scaleX(-1); }
   min-height: calc(100% + 8px);
   display: flex;
   flex-direction: column;
-  overflow: visible;
+  overflow: hidden;
   background: var(--bg-main);
   border-radius: 22px;
   opacity: 0;
@@ -8468,8 +8455,7 @@ class WalioApp {
     }
 
     if (window.i18n) window.i18n.translateDOM();
-    const scroller = document.querySelector('.main-content');
-    if (scroller) scroller.scrollTop = 0;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   refreshCurrentTab() {
@@ -9375,8 +9361,7 @@ class WalioApp {
     document.body.classList.toggle('currency-board-mode', this.currencyBoardMode);
 
     // The board is a distraction-free app view; returning restores the regular app shell.
-    const scroller = document.querySelector('.main-content');
-    if (scroller) scroller.scrollTop = 0;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     if (!this.currencyBoardMode) {
       window.requestAnimationFrame(() => {
         const openButton = document.getElementById('open-currency-board');
@@ -9919,5 +9904,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9874668a08645',t:'MTc4NjY0MzA3Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
