@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Walio — Personal Finance, Beautifully Simple</title>
+<meta name="description" content="Walio is a mobile-first personal finance PWA: multi-wallet tracking, live Toman exchange rates and smart financial calculators. Works offline. English & Persian.">
+<meta name="theme-color" content="#4F46E5">
+
+<meta property="og:title" content="Walio — Personal Finance, Beautifully Simple">
+<meta property="og:description" content="Track wallets, follow live Toman rates and run quick financial math. No account, works offline.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="logo.png">
+
+<!-- ===== FAVICON / آیکون سایت ===== -->
+<link rel="icon" type="image/png" href="2.png">
+<link rel="apple-touch-icon" href="2.png">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
+
+/* =========================================================
+   DESIGN TOKENS — copied 1:1 from the Walio app stylesheet
+   ========================================================= */
+:root, [data-theme="light"]{
+  --bg-main:#F4F6FB;
+  --bg-sub:#E8EDF5;
+  --card-bg:rgba(255,255,255,.82);
+  --glass-bg:rgba(255,255,255,.88);
+  --glass-nav:rgba(255,255,255,.90);
+  --border-glass:rgba(0,0,0,.08);
+  --border-subtle:rgba(0,0,0,.05);
+  --text-primary:#0F172A;
+  --text-secondary:#475569;
+  --text-muted:#94A3B8;
+  --accent-primary:#4F46E5;
+  --accent-gradient:linear-gradient(135deg,#4F46E5 0%,#2563EB 50%,#059669 100%);
+  --accent-glow:rgba(79,70,229,.18);
+  --color-green:#059669;
+  --color-green-bg:rgba(5,150,105,.12);
+  --color-red:#DC2626;
+  --chip-bg:rgba(15,23,42,.06);
+  --chip-bg-strong:rgba(15,23,42,.10);
+  --btn-secondary-bg:rgba(15,23,42,.06);
+  --header-bg:rgba(244,246,251,.72);
+  --shadow-main:0 14px 32px rgba(15,23,42,.08);
+  --shadow-glass:0 10px 28px rgba(15,23,42,.06), inset 0 1px 1px rgba(255,255,255,.8);
+  --shadow-lift:0 26px 60px rgba(15,23,42,.14);
+  --nav-shadow:0 10px 28px rgba(15,23,42,.16);
+  --blob-a:rgba(79,70,229,.26);
+  --blob-b:rgba(5,150,105,.20);
+  --blob-c:rgba(37,99,235,.20);
+}
+[data-theme="dark"]{
+  --bg-main:#0A0A0E;
+  --bg-sub:#121218;
+  --card-bg:rgba(26,26,36,.65);
+  --glass-bg:rgba(22,22,32,.75);
+  --glass-nav:rgba(18,18,26,.85);
+  --border-glass:rgba(255,255,255,.12);
+  --border-subtle:rgba(255,255,255,.08);
+  --text-primary:#F8FAFC;
+  --text-secondary:#94A3B8;
+  --text-muted:#64748B;
+  --accent-primary:#4F46E5;
+  --accent-gradient:linear-gradient(135deg,#4F46E5 0%,#3B82F6 50%,#10B981 100%);
+  --accent-glow:rgba(79,70,229,.35);
+  --color-green:#10B981;
+  --color-green-bg:rgba(16,185,129,.15);
+  --color-red:#EF4444;
+  --chip-bg:rgba(255,255,255,.07);
+  --chip-bg-strong:rgba(255,255,255,.12);
+  --btn-secondary-bg:rgba(255,255,255,.09);
+  --header-bg:rgba(18,18,26,.72);
+  --shadow-main:0 16px 36px rgba(0,0,0,.35);
+  --shadow-glass:0 10px 30px rgba(0,0,0,.45), inset 0 1px 1px rgba(255,255,255,.12);
+  --shadow-lift:0 30px 70px rgba(0,0,0,.55);
+  --nav-shadow:0 14px 34px rgba(0,0,0,.45);
+  --blob-a:rgba(79,70,229,.36);
+  --blob-b:rgba(16,185,129,.22);
+  --blob-c:rgba(59,130,246,.26);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  background:var(--bg-main);color:var(--text-primary);line-height:1.6;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  transition:background .4s ease,color .4s ease;
+}
+body.rtl-mode{font-family:'Vazirmatn','Shabnam','Tahoma','IRANSans',sans-serif;direction:rtl;}
+img{max-width:100%;display:block;}
+a{text-decoration:none;color:inherit;}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+:focus-visible{outline:2px solid var(--accent-primary);outline-offset:3px;border-radius:8px;}
+
+/* ================= AMBIENT BACKGROUND ================= */
+.bg-canvas{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none;}
+.blob{position:absolute;border-radius:50%;filter:blur(100px);animation:float 20s ease-in-out infinite;}
+.blob-1{width:540px;height:540px;background:var(--blob-a);top:-180px;inset-inline-start:-140px;}
+.blob-2{width:460px;height:460px;background:var(--blob-b);top:44%;inset-inline-end:-150px;animation-delay:-7s;}
+.blob-3{width:420px;height:420px;background:var(--blob-c);bottom:-160px;inset-inline-start:32%;animation-delay:-13s;}
+@keyframes float{0%,100%{transform:translate3d(0,0,0) scale(1);}50%{transform:translate3d(0,-32px,0) scale(1.07);}}
+
+.wrap{width:min(1160px,100% - 40px);margin-inline:auto;}
+
+/* =========================================================
+   BUTTONS — identical geometry to the app (.btn-primary-full,
+   .btn-primary-pill, .btn-secondary, .lang-btn)
+   ========================================================= */
+.btn-primary-pill{
+  height:48px;padding:0 26px;border-radius:24px;
+  background:var(--accent-primary);color:#fff;
+  font-size:15px;font-weight:700;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  box-shadow:0 6px 18px var(--accent-glow);
+  transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s,filter .3s;
+}
+.btn-primary-pill:hover{transform:translateY(-2px);box-shadow:0 12px 28px var(--accent-glow);filter:brightness(1.06);}
+.btn-primary-pill:active{transform:translateY(0) scale(.98);}
+
+.btn-secondary-pill{
+  height:48px;padding:0 24px;border-radius:24px;
+  background:var(--btn-secondary-bg);border:1px solid var(--border-glass);
+  color:var(--text-primary);font-size:15px;font-weight:600;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s,border-color .3s;
+}
+.btn-secondary-pill:hover{transform:translateY(-2px);box-shadow:var(--shadow-main);border-color:var(--accent-primary);}
+.btn-secondary-pill:active{transform:translateY(0) scale(.98);}
+
+.btn-sm-primary{
+  height:40px;padding:0 20px;border-radius:24px;
+  background:var(--accent-primary);color:#fff;font-size:14px;font-weight:700;
+  display:inline-flex;align-items:center;gap:7px;
+  box-shadow:0 6px 18px var(--accent-glow);
+  transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s,filter .3s;
+}
+.btn-sm-primary:hover{transform:translateY(-2px);filter:brightness(1.06);}
+
+.btn-white-pill{
+  height:48px;padding:0 28px;border-radius:24px;background:#fff;color:#4F46E5;
+  font-size:15px;font-weight:700;display:inline-flex;align-items:center;gap:8px;
+  box-shadow:0 10px 26px rgba(0,0,0,.18);
+  transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s;
+}
+.btn-white-pill:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(0,0,0,.24);}
+
+.btn-icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* language pill — same as the app's .lang-btn */
+.lang-pill-selector{display:flex;gap:8px;}
+.lang-btn{
+  padding:7px 15px;border-radius:20px;
+  background:var(--chip-bg);border:1px solid var(--border-subtle);
+  font-size:12.5px;font-weight:600;color:var(--text-secondary);
+  transition:background .28s,color .28s,transform .28s;
+}
+.lang-btn:hover{transform:translateY(-1px);background:var(--chip-bg-strong);}
+.lang-btn.active{background:var(--accent-primary);color:#fff;border-color:transparent;box-shadow:0 6px 16px var(--accent-glow);}
+
+/* ================= HEADER ================= */
+.site-header{
+  position:sticky;top:0;z-index:80;
+  background:var(--header-bg);
+  backdrop-filter:blur(22px) saturate(180%);
+  -webkit-backdrop-filter:blur(22px) saturate(180%);
+  border-bottom:1px solid var(--border-subtle);
+  transition:box-shadow .3s;
+}
+.site-header.stuck{box-shadow:var(--nav-shadow);}
+.header-inner{display:flex;align-items:center;gap:18px;padding:13px 0;}
+
+/* ---------- LOGO SLOT / جای لوگو ---------- */
+.brand{display:flex;align-items:center;gap:11px;min-width:0;}
+.logo-slot{
+  width:44px;height:44px;flex:none;border-radius:14px;overflow:hidden;
+  display:grid;place-items:center;background:var(--chip-bg);
+  border:1px dashed var(--border-glass);
+}
+.logo-slot img{width:100%;height:100%;object-fit:contain;}
+.logo-fallback{font-size:8.5px;font-weight:800;letter-spacing:.08em;color:var(--accent-primary);text-align:center;line-height:1.2;}
+.brand-text{display:flex;flex-direction:column;line-height:1.15;min-width:0;}
+.brand-name{font-size:18px;font-weight:800;letter-spacing:-.02em;}
+.brand-tag{font-size:11px;color:var(--text-muted);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+.main-nav{display:flex;gap:4px;margin-inline-start:14px;}
+.main-nav a{
+  padding:8px 14px;border-radius:20px;font-size:14px;font-weight:600;color:var(--text-secondary);
+  transition:background .25s,color .25s;
+}
+.main-nav a:hover{background:var(--chip-bg);color:var(--text-primary);}
+
+.header-actions{margin-inline-start:auto;display:flex;align-items:center;gap:10px;}
+.icon-btn{
+  width:40px;height:40px;border-radius:20px;display:grid;place-items:center;flex:none;
+  background:var(--chip-bg);border:1px solid var(--border-subtle);
+  transition:transform .28s cubic-bezier(.16,1,.3,1),background .28s;
+}
+.icon-btn:hover{transform:translateY(-2px);background:var(--chip-bg-strong);}
+.icon-btn svg{width:18px;height:18px;stroke:var(--text-secondary);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* ================= HERO ================= */
+.hero{padding:72px 0 46px;}
+.hero-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:54px;align-items:center;}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;padding:7px 15px;border-radius:20px;
+  background:var(--chip-bg);border:1px solid var(--border-subtle);
+  font-size:12.5px;font-weight:600;color:var(--text-secondary);margin-bottom:22px;
+}
+.dot-live{width:8px;height:8px;border-radius:50%;background:var(--color-green);animation:pulse 2.2s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,.55);}70%{box-shadow:0 0 0 9px rgba(16,185,129,0);}100%{box-shadow:0 0 0 0 rgba(16,185,129,0);}}
+
+.hero h1{font-size:clamp(37px,5.2vw,60px);line-height:1.08;font-weight:800;letter-spacing:-.035em;margin-bottom:20px;}
+.grad-text{background:var(--accent-gradient);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.hero-sub{font-size:clamp(16px,1.65vw,18.5px);color:var(--text-secondary);max-width:552px;margin-bottom:30px;}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:22px;}
+.assure-row{display:flex;flex-wrap:wrap;gap:18px;}
+.assure{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--text-muted);font-weight:500;}
+.assure svg{width:15px;height:15px;stroke:var(--color-green);fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;flex:none;}
+
+.stats-row{display:flex;flex-wrap:wrap;gap:34px;margin-top:32px;padding-top:26px;border-top:1px solid var(--border-subtle);}
+.stat-num{font-size:26px;font-weight:800;letter-spacing:-.02em;}
+.stat-label{font-size:12.5px;color:var(--text-muted);font-weight:500;}
+
+/* ================= PHONE MOCKUP ================= */
+.phone-stage{display:flex;justify-content:center;position:relative;}
+.phone{
+  width:298px;padding:11px;border-radius:46px;position:relative;
+  background:linear-gradient(160deg,rgba(148,163,184,.5),rgba(100,116,139,.2));
+  box-shadow:var(--shadow-lift);animation:hover-phone 8s ease-in-out infinite;
+}
+@keyframes hover-phone{0%,100%{transform:translateY(0) rotate(-1deg);}50%{transform:translateY(-15px) rotate(1deg);}}
+.phone-screen{
+  border-radius:36px;overflow:hidden;background:var(--bg-sub);
+  border:1px solid var(--border-glass);padding:16px 14px 14px;min-height:562px;
+  display:flex;flex-direction:column;gap:12px;
+}
+.notch{width:102px;height:22px;border-radius:0 0 14px 14px;background:rgba(0,0,0,.82);position:absolute;top:11px;left:50%;transform:translateX(-50%);z-index:3;}
+.mock-top{display:flex;align-items:center;gap:9px;margin-top:14px;}
+.mock-avatar{width:34px;height:34px;border-radius:11px;background:var(--accent-gradient);display:grid;place-items:center;color:#fff;font-weight:800;font-size:13px;}
+.mock-hi{font-size:10.5px;color:var(--text-muted);}
+.mock-user{font-size:13px;font-weight:700;}
+.mock-balance{border-radius:22px;padding:18px;color:#fff;background:var(--accent-gradient);box-shadow:0 14px 30px var(--accent-glow);}
+.mock-balance .lbl{font-size:11px;opacity:.86;font-weight:500;}
+.mock-balance .val{font-size:25px;font-weight:800;letter-spacing:-.02em;margin:4px 0 10px;}
+.mock-chips{display:flex;gap:8px;}
+.mock-chip{background:rgba(255,255,255,.22);border-radius:20px;padding:5px 11px;font-size:10px;font-weight:600;}
+.mock-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.mock-mini{background:var(--card-bg);border:1px solid var(--border-glass);border-radius:16px;padding:11px 12px;backdrop-filter:blur(12px);}
+.mock-mini .k{font-size:10px;color:var(--text-muted);font-weight:500;}
+.mock-mini .v{font-size:13.5px;font-weight:800;margin-top:2px;}
+.v-up{color:var(--color-green);}
+.v-down{color:var(--color-red);}
+.mock-bars{display:flex;align-items:flex-end;gap:6px;height:54px;margin-top:8px;}
+.mock-bars span{flex:1;border-radius:6px 6px 3px 3px;background:var(--accent-gradient);opacity:.85;transform-origin:bottom;animation:grow 2.6s ease-in-out infinite alternate;}
+@keyframes grow{from{transform:scaleY(.55);}to{transform:scaleY(1);}}
+.mock-list{display:flex;flex-direction:column;gap:8px;}
+.mock-row{display:flex;align-items:center;gap:9px;background:var(--card-bg);border:1px solid var(--border-subtle);border-radius:14px;padding:9px 11px;}
+.mock-ico{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;font-size:14px;background:var(--chip-bg);}
+.mock-row .t{font-size:11.5px;font-weight:600;}
+.mock-row .s{font-size:9.5px;color:var(--text-muted);}
+.mock-row .amt{margin-inline-start:auto;font-size:11.5px;font-weight:700;}
+.mock-nav{margin-top:auto;display:flex;justify-content:space-between;background:var(--glass-bg);border:1px solid var(--border-glass);border-radius:22px;padding:9px 14px;}
+.mock-nav i{width:20px;height:20px;border-radius:7px;background:var(--chip-bg-strong);display:block;}
+.mock-nav i.on{background:var(--accent-primary);}
+
+.float-card{
+  position:absolute;background:var(--glass-bg);border:1px solid var(--border-glass);
+  border-radius:18px;padding:10px 14px;box-shadow:var(--shadow-main);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  font-size:12px;font-weight:600;display:flex;align-items:center;gap:9px;
+  z-index:5;max-width:46%;animation:float 10s ease-in-out infinite;
+}
+.float-1{top:58px;inset-inline-start:0;}
+.float-2{bottom:88px;inset-inline-end:0;animation-delay:-5s;}
+.float-emoji{font-size:17px;}
+.float-sub{display:block;font-size:10px;color:var(--text-muted);font-weight:500;}
+
+/* ================= SECTION SHELL ================= */
+section{scroll-margin-top:88px;}
+.sec{padding:74px 0;}
+.sec-head{text-align:center;max-width:660px;margin:0 auto 46px;}
+.sec-kicker{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-primary);margin-bottom:12px;}
+.sec-title{font-size:clamp(27px,3.3vw,39px);font-weight:800;letter-spacing:-.03em;margin-bottom:12px;}
+.sec-sub{color:var(--text-secondary);font-size:16px;}
+
+/* ================= TRUST STRIP ================= */
+.trust-strip{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
+  padding:20px 0 6px;
+}
+.trust-item{
+  display:flex;align-items:center;gap:8px;padding:9px 17px;border-radius:22px;
+  background:var(--card-bg);border:1px solid var(--border-subtle);
+  font-size:13px;font-weight:600;color:var(--text-secondary);
+  box-shadow:var(--shadow-glass);
+}
+.trust-item svg{width:15px;height:15px;stroke:var(--accent-primary);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* ================= FEATURES ================= */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;}
+.feature-card{
+  background:var(--card-bg);border:1px solid var(--border-glass);border-radius:24px;padding:26px;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:var(--shadow-glass);position:relative;overflow:hidden;
+  transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s,border-color .35s;
+}
+.feature-card::after{content:"";position:absolute;inset-inline-end:-46px;top:-46px;width:128px;height:128px;border-radius:50%;background:var(--accent-glow);opacity:0;transition:opacity .35s;}
+.feature-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lift);border-color:var(--accent-primary);}
+.feature-card:hover::after{opacity:.5;}
+.f-icon{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;margin-bottom:16px;background:var(--chip-bg);position:relative;z-index:1;}
+.f-icon svg{width:23px;height:23px;stroke:var(--accent-primary);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.f-title{font-size:17.5px;font-weight:750;margin-bottom:8px;position:relative;z-index:1;}
+.f-desc{font-size:14.5px;color:var(--text-secondary);position:relative;z-index:1;}
+
+/* ================= HOW IT WORKS ================= */
+.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;counter-reset:step;}
+.how-card{
+  background:var(--card-bg);border:1px solid var(--border-glass);border-radius:24px;padding:26px;
+  box-shadow:var(--shadow-glass);position:relative;
+}
+.how-num{
+  width:38px;height:38px;border-radius:19px;background:var(--accent-primary);color:#fff;
+  display:grid;place-items:center;font-size:15px;font-weight:800;margin-bottom:15px;
+  box-shadow:0 6px 18px var(--accent-glow);
+}
+.how-card h3{font-size:17px;font-weight:750;margin-bottom:7px;}
+.how-card p{font-size:14.5px;color:var(--text-secondary);}
+
+/* ================= SPLIT / CURRENCY ================= */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;}
+.split-body h2{font-size:clamp(25px,3vw,35px);font-weight:800;letter-spacing:-.03em;margin-bottom:14px;}
+.split-body p.lead{font-size:16px;color:var(--text-secondary);margin-bottom:22px;}
+.tick-list{display:flex;flex-direction:column;gap:13px;margin-bottom:26px;}
+.tick{display:flex;gap:11px;align-items:flex-start;font-size:14.8px;color:var(--text-secondary);}
+.tick-mark{
+  width:22px;height:22px;border-radius:11px;flex:none;margin-top:2px;
+  background:var(--color-green-bg);display:grid;place-items:center;
+}
+.tick-mark svg{width:12px;height:12px;stroke:var(--color-green);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;}
+
+.rate-panel{
+  background:var(--card-bg);border:1px solid var(--border-glass);border-radius:26px;padding:22px;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:var(--shadow-lift);
+}
+.rate-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.rate-head h4{font-size:15.5px;font-weight:750;}
+.rate-live{display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;color:var(--color-green);background:var(--color-green-bg);padding:5px 12px;border-radius:20px;}
+.rate-row{display:flex;align-items:center;gap:12px;padding:13px 4px;border-bottom:1px solid var(--border-subtle);}
+.rate-row:last-child{border-bottom:none;}
+.rate-flag{font-size:22px;}
+.rate-name{font-size:14px;font-weight:650;}
+.rate-code{font-size:11px;color:var(--text-muted);}
+.rate-val{margin-inline-start:auto;text-align:end;}
+.rate-price{font-size:14px;font-weight:750;}
+.rate-delta{font-size:11px;font-weight:650;}
+
+/* ================= TOOLS ================= */
+.tools-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(172px,1fr));gap:14px;}
+.tool-chip{
+  background:var(--card-bg);border:1px solid var(--border-glass);border-radius:22px;padding:18px 17px;
+  display:flex;align-items:center;gap:12px;box-shadow:var(--shadow-glass);
+  transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s,border-color .3s;
+}
+.tool-chip:hover{transform:translateY(-4px);box-shadow:var(--shadow-main);border-color:var(--accent-primary);}
+.tool-emoji{font-size:21px;}
+.tool-name{font-size:14.5px;font-weight:650;}
+
+/* ================= PRIVACY BANNER ================= */
+.privacy-band{
+  background:var(--card-bg);border:1px solid var(--border-glass);border-radius:28px;
+  padding:38px 34px;text-align:center;box-shadow:var(--shadow-glass);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+}
+.privacy-band .shield{
+  width:58px;height:58px;border-radius:29px;background:var(--chip-bg);
+  display:grid;place-items:center;margin:0 auto 16px;
+}
+.privacy-band .shield svg{width:26px;height:26px;stroke:var(--accent-primary);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.privacy-band h2{font-size:clamp(23px,2.7vw,31px);font-weight:800;letter-spacing:-.03em;margin-bottom:12px;}
+.privacy-band p{color:var(--text-secondary);max-width:600px;margin:0 auto;font-size:15.5px;}
+
+/* ================= INSTALL ================= */
+.install-wrap{
+  background:var(--glass-bg);border:1px solid var(--border-glass);border-radius:28px;padding:30px;
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:var(--shadow-main);
+  max-width:740px;margin-inline:auto;
+}
+.tabs{display:flex;gap:8px;margin-bottom:22px;}
+.tab-btn{
+  flex:1;height:44px;border-radius:22px;font-size:14px;font-weight:600;
+  background:var(--chip-bg);border:1px solid var(--border-subtle);color:var(--text-secondary);
+  transition:background .28s,color .28s;
+}
+.tab-btn.active{background:var(--accent-primary);color:#fff;border-color:transparent;box-shadow:0 6px 18px var(--accent-glow);}
+.steps{display:flex;flex-direction:column;gap:14px;}
+.step{display:flex;gap:13px;align-items:flex-start;}
+.step-n{width:28px;height:28px;flex:none;border-radius:14px;background:var(--chip-bg-strong);color:var(--accent-primary);display:grid;place-items:center;font-size:13px;font-weight:800;}
+.step p{font-size:14.5px;color:var(--text-secondary);padding-top:2px;}
+
+/* ================= FAQ ================= */
+.faq-list{max-width:760px;margin-inline:auto;display:flex;flex-direction:column;gap:12px;}
+.faq-item{background:var(--card-bg);border:1px solid var(--border-glass);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-glass);transition:border-color .3s;}
+.faq-item.open{border-color:var(--accent-primary);}
+.faq-q{width:100%;display:flex;align-items:center;gap:14px;padding:18px 22px;text-align:start;font-size:15.5px;font-weight:650;}
+.faq-q .chev{margin-inline-start:auto;width:18px;height:18px;flex:none;stroke:var(--text-muted);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s;}
+.faq-item.open .chev{transform:rotate(180deg);stroke:var(--accent-primary);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.16,1,.3,1);}
+.faq-a p{padding:0 22px 19px;font-size:14.6px;color:var(--text-secondary);}
+
+/* ================= CTA ================= */
+.cta-box{
+  border-radius:30px;padding:56px 34px;text-align:center;color:#fff;
+  background:var(--accent-gradient);box-shadow:0 26px 60px var(--accent-glow);
+  position:relative;overflow:hidden;
+}
+.cta-box::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 22% 18%,rgba(255,255,255,.26),transparent 55%);}
+.cta-box>*{position:relative;z-index:1;}
+.cta-box h2{font-size:clamp(26px,3.3vw,37px);font-weight:800;letter-spacing:-.03em;margin-bottom:12px;}
+.cta-box p{opacity:.93;max-width:520px;margin:0 auto 26px;font-size:16px;}
+.cta-fine{margin-top:16px;font-size:12.5px;opacity:.82;}
+
+/* ================= FOOTER ================= */
+.site-footer{border-top:1px solid var(--border-subtle);margin-top:66px;padding:46px 0 40px;}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:34px;margin-bottom:34px;}
+.footer-about p{font-size:13.8px;color:var(--text-secondary);margin-top:14px;max-width:290px;}
+.footer-col h5{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px;}
+.footer-col a{display:block;font-size:14px;color:var(--text-secondary);padding:5px 0;transition:color .25s;}
+.footer-col a:hover{color:var(--accent-primary);}
+.footer-bottom{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid var(--border-subtle);}
+.copy{font-size:13px;color:var(--text-muted);}
+.made-badge{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-muted);}
+
+/* ================= REVEAL ================= */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.16,1,.3,1);}
+.reveal.in{opacity:1;transform:none;}
+
+/* ================= STICKY MOBILE CTA BAR ================= */
+.mobile-bar{
+  display:none;
+  position:fixed;left:0;right:0;bottom:0;z-index:90;
+  padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+  background:var(--glass-nav);
+  backdrop-filter:blur(22px) saturate(180%);
+  -webkit-backdrop-filter:blur(22px) saturate(180%);
+  border-top:1px solid var(--border-subtle);
+  box-shadow:var(--nav-shadow);
+  transform:translateY(120%);
+  transition:transform .38s cubic-bezier(.16,1,.3,1);
+}
+.mobile-bar.show{transform:translateY(0);}
+.mobile-bar .btn-primary-pill{width:100%;}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width:1080px){.main-nav{display:none;}}
+@media (max-width:1180px) and (min-width:981px){.float-card{display:none;}}
+
+@media (max-width:980px){
+  .hero-grid{grid-template-columns:1fr;gap:40px;}
+  .hero{padding:48px 0 22px;text-align:center;}
+  .hero-sub{margin-inline:auto;}
+  .hero-cta,.stats-row,.assure-row{justify-content:center;}
+  .split{grid-template-columns:1fr;gap:34px;}
+  .split-body{text-align:center;}
+  .split-body .btn-primary-pill{margin-inline:auto;}
+  .tick{text-align:start;}
+  .tick-list{max-width:440px;margin-inline:auto;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:28px;}
+}
+
+/* ---------- PHONES ---------- */
+@media (max-width:720px){
+  .wrap{width:min(1160px,100% - 32px);}
+  .brand-tag{display:none;}
+  .header-cta{display:none;}          /* replaced by the sticky bottom bar */
+  .mobile-bar{display:block;}
+  body{padding-bottom:78px;}          /* room for the sticky bar */
+
+  .header-inner{padding:10px 0;gap:10px;}
+  .logo-slot{width:40px;height:40px;border-radius:13px;}
+  .brand-name{font-size:17px;}
+  /* comfortable 40px tap targets */
+  .lang-btn{min-height:40px;padding:0 14px;font-size:12.5px;display:inline-flex;align-items:center;}
+  .icon-btn{width:40px;height:40px;}
+  .footer-col a{padding:10px 0;font-size:14.5px;}
+
+  .hero{padding:34px 0 12px;}
+  .hero-grid{gap:32px;}
+  .eyebrow{margin-bottom:16px;font-size:12px;padding:6px 13px;}
+  .hero h1{font-size:clamp(30px,8.4vw,40px);letter-spacing:-.03em;margin-bottom:15px;}
+  .hero-sub{font-size:15.5px;margin-bottom:24px;}
+  .hero-cta{flex-direction:column;gap:10px;margin-bottom:20px;}
+  .btn-primary-pill,.btn-secondary-pill,.btn-white-pill{width:100%;}
+
+  /* assurances: stacked, left-aligned inside a centred block so the
+     ticks line up instead of looking ragged */
+  .assure-row{
+    flex-direction:column;align-items:flex-start;gap:9px;
+    width:max-content;max-width:100%;margin-inline:auto;
+  }
+  .assure{font-size:12.8px;}
+
+  .stats-row{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+    margin-top:26px;padding-top:22px;text-align:center;
+  }
+  .stat-num{font-size:21px;}
+  .stat-label{font-size:11px;line-height:1.35;}
+
+  /* smaller phone mockup so the hero is not endless */
+  .phone{width:252px;padding:9px;border-radius:40px;}
+  .phone-screen{border-radius:32px;min-height:472px;padding:13px 11px 11px;gap:10px;}
+  .notch{width:88px;height:19px;}
+  .mock-balance .val{font-size:22px;}
+  .mock-bars{height:46px;}
+
+  /* trust strip becomes a neat 2x2 */
+  .trust-strip{
+    display:grid;grid-template-columns:1fr 1fr;gap:9px;
+    padding:18px 0 0;
+  }
+  .trust-item{
+    font-size:12px;padding:11px 13px;border-radius:18px;
+    justify-content:flex-start;line-height:1.3;
+  }
+  .trust-item svg{width:14px;height:14px;flex:none;}
+
+  .sec{padding:46px 0;}
+  .sec-head{margin-bottom:30px;}
+  .sec-title{font-size:clamp(24px,6.6vw,31px);}
+  .sec-sub{font-size:15px;}
+  .sec-kicker{font-size:11.5px;margin-bottom:10px;}
+
+  .cards-grid{grid-template-columns:1fr;gap:14px;}
+  .feature-card{padding:22px 20px;border-radius:22px;}
+  .f-icon{width:44px;height:44px;border-radius:14px;margin-bottom:13px;}
+  .f-icon svg{width:21px;height:21px;}
+  .f-title{font-size:16.5px;}
+  .f-desc{font-size:14px;}
+
+  .how-grid{grid-template-columns:1fr;gap:14px;}
+  .how-card{padding:22px 20px;border-radius:22px;}
+  .how-num{width:34px;height:34px;border-radius:17px;font-size:14px;margin-bottom:12px;}
+  .how-card h3{font-size:16.5px;}
+  .how-card p{font-size:14px;}
+
+  .rate-panel{padding:18px 16px;border-radius:22px;}
+  .rate-row{gap:10px;padding:12px 2px;}
+  .rate-flag{font-size:20px;}
+  .rate-name{font-size:13.2px;}
+  .rate-price{font-size:13.2px;}
+  .rate-code,.rate-delta{font-size:10.5px;}
+
+  .tools-strip{grid-template-columns:1fr 1fr;gap:10px;}
+  .tool-chip{padding:15px 13px;border-radius:18px;gap:10px;}
+  .tool-name{font-size:13.4px;}
+  .tool-emoji{font-size:19px;}
+
+  .privacy-band{padding:30px 20px;border-radius:24px;}
+  .privacy-band .shield{width:52px;height:52px;border-radius:26px;}
+  .privacy-band p{font-size:14.6px;}
+
+  .install-wrap{padding:20px 16px;border-radius:24px;}
+  .tabs{gap:7px;margin-bottom:18px;}
+  .tab-btn{height:42px;font-size:13.2px;}
+  .step p{font-size:14px;}
+
+  .faq-q{padding:16px 18px;font-size:14.6px;gap:10px;}
+  .faq-a p{padding:0 18px 17px;font-size:14px;}
+
+  .cta-box{padding:40px 22px;border-radius:26px;}
+  .cta-box p{font-size:15.2px;}
+
+  .site-footer{margin-top:48px;padding:38px 0 32px;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:26px;margin-bottom:26px;}
+  .footer-about{grid-column:1 / -1;}
+  .footer-about p{max-width:none;font-size:13.4px;}
+  .footer-bottom{justify-content:center;text-align:center;gap:10px;}
+
+  .float-card{display:none;}
+}
+
+/* ---------- VERY SMALL PHONES ---------- */
+@media (max-width:380px){
+  .wrap{width:min(1160px,100% - 26px);}
+  .hero h1{font-size:29px;}
+  .hero-sub{font-size:15px;}
+  .phone{width:230px;}
+  .phone-screen{min-height:440px;}
+  .trust-strip{grid-template-columns:1fr;}
+  .tools-strip{grid-template-columns:1fr;}
+  .stats-row{gap:8px;}
+  .stat-num{font-size:19px;}
+  .stat-label{font-size:10.2px;}
+  .brand-name{font-size:16px;}
+  .lang-btn{padding:6px 11px;font-size:11.5px;}
+  .icon-btn{width:36px;height:36px;}
+  .footer-grid{grid-template-columns:1fr;}
+}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important;}}
+</style>
+</head>
+
+<body>
+<div class="bg-canvas"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header" id="site-header">
+  <div class="wrap header-inner">
+    <div class="brand">
+      <!-- =========================================================
+           LOGO SLOT  |  جای لوگو
+           Replace "logo.png" with your own file (same name = no edits).
+           فایل logo.png را با لوگوی خودتان جایگزین کنید.
+      ========================================================== -->
+      <div class="logo-slot">
+        <img src="2.png" alt="Walio logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+        <span class="logo-fallback" style="display:none;">YOUR<br>LOGO</span>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name" data-i18n="brand">Walio</span>
+        <span class="brand-tag" data-i18n="brand_tag">Personal finance, beautifully simple</span>
+      </div>
+    </div>
+
+    <nav class="main-nav">
+      <a href="#features" data-i18n="nav_features">Features</a>
+      <a href="#rates" data-i18n="nav_rates">Live rates</a>
+      <a href="#tools" data-i18n="nav_tools">Tools</a>
+      <a href="#install" data-i18n="nav_install">Install</a>
+      <a href="#faq" data-i18n="nav_faq">FAQ</a>
+    </nav>
+
+    <div class="header-actions">
+      <div class="lang-pill-selector">
+        <button class="lang-btn active" data-lang="en" onclick="setLang('en')">English</button>
+        <button class="lang-btn" data-lang="fa" onclick="setLang('fa')">فارسی</button>
+      </div>
+      <button class="icon-btn" id="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+        <svg id="theme-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a class="btn-sm-primary btn-icon header-cta app-link" href="index.html">
+        <span data-i18n="open_app">Open app</span>
+        <svg viewBox="0 0 24 24" class="arrow"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot-live"></span><span data-i18n="badge">Live Toman rates · Works offline</span></span>
+      <h1><span data-i18n="hero_1">Every wallet, every rate,</span> <span class="grad-text" data-i18n="hero_2">one calm dashboard.</span></h1>
+      <p class="hero-sub" data-i18n="hero_sub">Walio is a mobile-first finance app for tracking wallets and cards, following live open-market currency rates in Toman, and running quick financial math — all stored privately on your own device.</p>
+
+      <div class="hero-cta">
+        <a class="btn-primary-pill btn-icon app-link" href="index.html">
+          <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><line x1="10" y1="18.5" x2="14" y2="18.5"/></svg>
+          <span data-i18n="cta_launch">Launch the web app</span>
+        </a>
+        <a class="btn-secondary-pill btn-icon" href="#install">
+          <svg viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5M5 21h14"/></svg>
+          <span data-i18n="cta_install">Install on your phone</span>
+        </a>
+      </div>
+
+      <div class="assure-row">
+        <span class="assure"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span data-i18n="as1">No signup required</span></span>
+        <span class="assure"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span data-i18n="as2">Free to use</span></span>
+        <span class="assure"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><span data-i18n="as3">Data stays on your device</span></span>
+      </div>
+
+      <div class="stats-row">
+        <div><div class="stat-num grad-text" data-i18n="stat1_n">6</div><div class="stat-label" data-i18n="stat1_l">Financial calculators</div></div>
+        <div><div class="stat-num grad-text" data-i18n="stat2_n">2</div><div class="stat-label" data-i18n="stat2_l">Languages · EN & FA</div></div>
+        <div><div class="stat-num grad-text" data-i18n="stat3_n">100%</div><div class="stat-label" data-i18n="stat3_l">Offline capable PWA</div></div>
+      </div>
+    </div>
+
+    <div class="phone-stage">
+      <div class="float-card float-1">
+        <span class="float-emoji">💵</span>
+        <span><span data-i18n="float1_t">USD / Toman</span><span class="float-sub" data-i18n="float1_s">updated live</span></span>
+      </div>
+      <div class="float-card float-2">
+        <span class="float-emoji">📈</span>
+        <span><span data-i18n="float2_t">Monthly flow</span><span class="float-sub" data-i18n="float2_s">income vs expense</span></span>
+      </div>
+
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="phone-screen">
+          <div class="mock-top">
+            <div class="mock-avatar">W</div>
+            <div>
+              <div class="mock-hi" data-i18n="mock_hi">Good morning,</div>
+              <div class="mock-user" data-i18n="mock_user">Walio User</div>
+            </div>
+          </div>
+
+          <div class="mock-balance">
+            <div class="lbl" data-i18n="mock_total">Total balance</div>
+            <div class="val" data-i18n="mock_amount">124,800,000 T</div>
+            <div class="mock-chips">
+              <span class="mock-chip" data-i18n="mock_chip1">4 wallets</span>
+              <span class="mock-chip" data-i18n="mock_chip2">+8.4% this month</span>
+            </div>
+          </div>
+
+          <div class="mock-cards">
+            <div class="mock-mini"><div class="k" data-i18n="mock_income">Income</div><div class="v v-up" data-i18n="mock_income_v">+32,400,000</div></div>
+            <div class="mock-mini"><div class="k" data-i18n="mock_expense">Expenses</div><div class="v v-down" data-i18n="mock_expense_v">−18,950,000</div></div>
+          </div>
+
+          <div class="mock-mini">
+            <div class="k" data-i18n="mock_flow">Monthly cash flow</div>
+            <div class="mock-bars">
+              <span style="height:44%;animation-delay:0s"></span><span style="height:70%;animation-delay:.2s"></span>
+              <span style="height:38%;animation-delay:.4s"></span><span style="height:88%;animation-delay:.6s"></span>
+              <span style="height:60%;animation-delay:.8s"></span><span style="height:76%;animation-delay:1s"></span>
+              <span style="height:50%;animation-delay:1.2s"></span>
+            </div>
+          </div>
+
+          <div class="mock-list">
+            <div class="mock-row">
+              <span class="mock-ico">🛒</span>
+              <span><span class="t" data-i18n="mock_tx1">Groceries</span><br><span class="s" data-i18n="mock_today">Today</span></span>
+              <span class="amt v-down" data-i18n="mock_tx1_v">−1,240,000</span>
+            </div>
+            <div class="mock-row">
+              <span class="mock-ico">💼</span>
+              <span><span class="t" data-i18n="mock_tx2">Salary</span><br><span class="s" data-i18n="mock_yesterday">Yesterday</span></span>
+              <span class="amt v-up" data-i18n="mock_tx2_v">+28,000,000</span>
+            </div>
+          </div>
+
+          <div class="mock-nav"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="trust-strip reveal">
+      <span class="trust-item"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span data-i18n="tr1">No account, no server</span></span>
+      <span class="trust-item"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span data-i18n="tr2">Works fully offline</span></span>
+      <span class="trust-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg><span data-i18n="tr3">English & Persian (RTL)</span></span>
+      <span class="trust-item"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><line x1="10" y1="18.5" x2="14" y2="18.5"/></svg><span data-i18n="tr4">Installs like a native app</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section class="sec" id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-kicker" data-i18n="feat_kicker">What's inside</div>
+      <h2 class="sec-title" data-i18n="feat_title">Everything you need, nothing you don't</h2>
+      <p class="sec-sub" data-i18n="feat_sub">Five focused tabs — Home, Wallets, Currency, Tools and Profile — designed for one-thumb use.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="feature-card reveal">
+        <div class="f-icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="13" rx="3"/><path d="M2 10h20M16 15h3"/></svg></div>
+        <h3 class="f-title" data-i18n="f1_t">Multi-wallet tracking</h3>
+        <p class="f-desc" data-i18n="f1_d">Cards, bank accounts and cash side by side, each with its own colour, icon and running balance.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="f-icon"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 7-7"/><path d="M14 8h6v6"/></svg></div>
+        <h3 class="f-title" data-i18n="f2_t">Live currency & charts</h3>
+        <p class="f-desc" data-i18n="f2_d">Open-market rates in Iranian Toman with an instant converter and 1D–1Y price history charts.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="f-icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 13h4"/></svg></div>
+        <h3 class="f-title" data-i18n="f3_t">Six smart calculators</h3>
+        <p class="f-desc" data-i18n="f3_d">Percentage, discount, tip split, simple & compound interest, loan EMI and currency conversion.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="f-icon"><svg viewBox="0 0 24 24"><path d="M12 20V10M6 20v-6M18 20V4"/></svg></div>
+        <h3 class="f-title" data-i18n="f4_t">Clear monthly insight</h3>
+        <p class="f-desc" data-i18n="f4_d">Income, expenses and net cash flow summarised at a glance, with your latest activity underneath.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="f-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg></div>
+        <h3 class="f-title" data-i18n="f5_t">English & Persian</h3>
+        <p class="f-desc" data-i18n="f5_d">Switch language any time — the whole interface flips to full right-to-left Persian instantly.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="f-icon"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5M5 21h14"/></svg></div>
+        <h3 class="f-title" data-i18n="f6_t">Installable PWA</h3>
+        <p class="f-desc" data-i18n="f6_d">Add it to your home screen for a full-screen, app-like experience that keeps working offline.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LIVE RATES SPLIT ================= -->
+<section class="sec" id="rates">
+  <div class="wrap split">
+    <div class="split-body reveal">
+      <div class="sec-kicker" data-i18n="rates_kicker">Live market</div>
+      <h2 data-i18n="rates_title">Open-market rates, refreshed automatically</h2>
+      <p class="lead" data-i18n="rates_lead">Follow the currencies that matter to you in Iranian Toman, then convert any amount without leaving the screen.</p>
+      <div class="tick-list">
+        <div class="tick"><span class="tick-mark"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span data-i18n="r1">Rates refresh in the background every couple of minutes</span></div>
+        <div class="tick"><span class="tick-mark"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span data-i18n="r2">Interactive price history from one day up to a full year</span></div>
+        <div class="tick"><span class="tick-mark"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span data-i18n="r3">Built-in converter with instant two-way calculation</span></div>
+        <div class="tick"><span class="tick-mark"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span data-i18n="r4">Last known rates stay available when you go offline</span></div>
+      </div>
+      <a class="btn-primary-pill btn-icon app-link" href="index.html">
+        <span data-i18n="r_cta">See live rates</span>
+        <svg viewBox="0 0 24 24" class="arrow"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="rate-panel reveal">
+      <div class="rate-head">
+        <h4 data-i18n="rate_panel_title">Market snapshot</h4>
+        <span class="rate-live"><span class="dot-live"></span><span data-i18n="rate_live">Live</span></span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-flag">🇺🇸</span>
+        <span><span class="rate-name" data-i18n="cur_usd">US Dollar</span><br><span class="rate-code">USD</span></span>
+        <span class="rate-val"><span class="rate-price" data-i18n="usd_p">86,400</span><br><span class="rate-delta v-up" data-i18n="usd_d">+0.8%</span></span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-flag">🇪🇺</span>
+        <span><span class="rate-name" data-i18n="cur_eur">Euro</span><br><span class="rate-code">EUR</span></span>
+        <span class="rate-val"><span class="rate-price" data-i18n="eur_p">94,150</span><br><span class="rate-delta v-up" data-i18n="eur_d">+0.5%</span></span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-flag">🇬🇧</span>
+        <span><span class="rate-name" data-i18n="cur_gbp">British Pound</span><br><span class="rate-code">GBP</span></span>
+        <span class="rate-val"><span class="rate-price" data-i18n="gbp_p">110,300</span><br><span class="rate-delta v-down" data-i18n="gbp_d">−0.3%</span></span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-flag">🪙</span>
+        <span><span class="rate-name" data-i18n="cur_gold">Gold Coin</span><br><span class="rate-code" data-i18n="cur_gold_c">Emami</span></span>
+        <span class="rate-val"><span class="rate-price" data-i18n="gold_p">72,900,000</span><br><span class="rate-delta v-up" data-i18n="gold_d">+1.2%</span></span>
+      </div>
+      <p style="font-size:11.5px;color:var(--text-muted);margin-top:14px;text-align:center;" data-i18n="rate_note">Sample figures shown for illustration.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-kicker" data-i18n="how_kicker">Getting started</div>
+      <h2 class="sec-title" data-i18n="how_title">Up and running in under a minute</h2>
+      <p class="sec-sub" data-i18n="how_sub">No downloads, no forms, no waiting for approval.</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-card reveal">
+        <div class="how-num">1</div>
+        <h3 data-i18n="h1_t">Open the app</h3>
+        <p data-i18n="h1_d">Tap the button and Walio loads straight in your browser — pick English or Persian on the welcome screen.</p>
+      </div>
+      <div class="how-card reveal">
+        <div class="how-num">2</div>
+        <h3 data-i18n="h2_t">Add your wallets</h3>
+        <p data-i18n="h2_d">Create cards, bank accounts or cash wallets, or load the demo data first to explore how it all works.</p>
+      </div>
+      <div class="how-card reveal">
+        <div class="how-num">3</div>
+        <h3 data-i18n="h3_t">Track and install</h3>
+        <p data-i18n="h3_d">Record income and expenses, then add Walio to your home screen so it opens full screen like a native app.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TOOLS ================= -->
+<section class="sec" id="tools">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-kicker" data-i18n="tools_kicker">Toolbox</div>
+      <h2 class="sec-title" data-i18n="tools_title">Money math in two taps</h2>
+      <p class="sec-sub" data-i18n="tools_sub">Fast calculators built for everyday decisions.</p>
+    </div>
+    <div class="tools-strip">
+      <div class="tool-chip reveal"><span class="tool-emoji">％</span><span class="tool-name" data-i18n="t1">Percentage</span></div>
+      <div class="tool-chip reveal"><span class="tool-emoji">🏷️</span><span class="tool-name" data-i18n="t2">Discount</span></div>
+      <div class="tool-chip reveal"><span class="tool-emoji">🍽️</span><span class="tool-name" data-i18n="t3">Tip split</span></div>
+      <div class="tool-chip reveal"><span class="tool-emoji">📊</span><span class="tool-name" data-i18n="t4">Interest</span></div>
+      <div class="tool-chip reveal"><span class="tool-emoji">🏦</span><span class="tool-name" data-i18n="t5">Loan & EMI</span></div>
+      <div class="tool-chip reveal"><span class="tool-emoji">💱</span><span class="tool-name" data-i18n="t6">Converter</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRIVACY ================= -->
+<section class="sec" id="privacy">
+  <div class="wrap">
+    <div class="privacy-band reveal">
+      <div class="shield"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.4-2.9 8.3-7 9.5C7.9 20.3 5 16.4 5 12V6l7-3z"/><path d="M9.2 12.2l2 2 3.8-4"/></svg></div>
+      <h2 data-i18n="pv_title">Your numbers never leave your phone</h2>
+      <p data-i18n="pv_body">Walio has no accounts, no analytics and no backend. Every wallet, transaction and setting is written to your browser's local storage on your own device — and you can export or wipe all of it whenever you like.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INSTALL ================= -->
+<section class="sec" id="install">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-kicker" data-i18n="inst_kicker">Install</div>
+      <h2 class="sec-title" data-i18n="inst_title">Add Walio to your home screen</h2>
+      <p class="sec-sub" data-i18n="inst_sub">It takes about ten seconds and no app store is involved.</p>
+    </div>
+
+    <div class="install-wrap reveal">
+      <div class="tabs">
+        <button class="tab-btn active" id="tab-ios" onclick="showTab('ios')" data-i18n="tab_ios">iPhone & iPad</button>
+        <button class="tab-btn" id="tab-android" onclick="showTab('android')" data-i18n="tab_android">Android</button>
+      </div>
+
+      <div class="steps" id="steps-ios">
+        <div class="step"><span class="step-n">1</span><p data-i18n="ios1">Open this page in Safari and tap the Share button.</p></div>
+        <div class="step"><span class="step-n">2</span><p data-i18n="ios2">Scroll down and choose "Add to Home Screen".</p></div>
+        <div class="step"><span class="step-n">3</span><p data-i18n="ios3">Tap "Add" — Walio now opens full screen like a native app.</p></div>
+      </div>
+
+      <div class="steps" id="steps-android" style="display:none;">
+        <div class="step"><span class="step-n">1</span><p data-i18n="and1">Open this page in Chrome and tap the three-dot menu.</p></div>
+        <div class="step"><span class="step-n">2</span><p data-i18n="and2">Choose "Add to Home screen" or "Install app".</p></div>
+        <div class="step"><span class="step-n">3</span><p data-i18n="and3">Confirm with "Install" and find Walio in your launcher.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="sec" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-kicker" data-i18n="faq_kicker">FAQ</div>
+      <h2 class="sec-title" data-i18n="faq_title">Frequently asked questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="q1">Is Walio free?</span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><p data-i18n="a1">Yes. Walio is completely free to use, with no accounts, subscriptions or paid tiers.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="q2">Where is my data stored?</span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><p data-i18n="a2">Everything is saved locally in your own browser. Nothing is uploaded to a server, so clearing your browser data will also remove it — use the export option in Profile to keep a backup.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="q3">Does it work without internet?</span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><p data-i18n="a3">Yes. Once installed, all wallets, transactions and calculators work offline. Only the live exchange rates need a connection to refresh — the last known values stay visible meanwhile.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="q4">Can I use it in Persian?</span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><p data-i18n="a4">Absolutely. Use the language switch at the top of this page or in the app's Profile tab. The entire interface, including layout direction and number formatting, adapts to Persian.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="q5">Do I need to install it from an app store?</span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><p data-i18n="a5">No. Walio is a Progressive Web App, so you add it straight from your browser with the steps in the Install section above.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINAL CTA ================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="cta-box reveal">
+      <h2 data-i18n="cta_title">Ready when you are</h2>
+      <p data-i18n="cta_sub">Open Walio in your browser and start with a demo dataset or a clean slate.</p>
+      <a class="btn-white-pill btn-icon app-link" href="index.html">
+        <span data-i18n="cta_btn">Enter the web app</span>
+        <svg viewBox="0 0 24 24" class="arrow"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <div class="cta-fine" data-i18n="cta_fine">Free · No account · Works offline</div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ STICKY MOBILE CTA (phones only) ============ -->
+<div class="mobile-bar" id="mobile-bar">
+  <a class="btn-primary-pill btn-icon app-link" href="index.html">
+    <span data-i18n="cta_launch">Launch the web app</span>
+    <svg viewBox="0 0 24 24" class="arrow"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </a>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <div class="brand">
+          <div class="logo-slot" style="width:40px;height:40px;border-radius:13px;">
+            <img src="2.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <span class="logo-fallback" style="display:none;">LOGO</span>
+          </div>
+          <span class="brand-name" data-i18n="brand">Walio</span>
+        </div>
+        <p data-i18n="foot_about">A mobile-first personal finance app for wallets, live Toman rates and everyday money math — private by design.</p>
+      </div>
+
+      <div class="footer-col">
+        <h5 data-i18n="foot_product">Product</h5>
+        <a href="#features" data-i18n="nav_features">Features</a>
+        <a href="#rates" data-i18n="nav_rates">Live rates</a>
+        <a href="#tools" data-i18n="nav_tools">Tools</a>
+      </div>
+
+      <div class="footer-col">
+        <h5 data-i18n="foot_start">Get started</h5>
+        <a href="index.html" class="app-link" data-i18n="open_app">Open app</a>
+        <a href="#install" data-i18n="nav_install">Install</a>
+        <a href="#how" data-i18n="foot_how">How it works</a>
+      </div>
+
+      <div class="footer-col">
+        <h5 data-i18n="foot_more">More</h5>
+        <a href="#faq" data-i18n="nav_faq">FAQ</a>
+        <a href="#privacy" data-i18n="foot_privacy">Privacy</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="copy" data-i18n="copy">© 2026 Walio. All data stays on your device.</span>
+      <span class="made-badge"><span class="dot-live"></span><span data-i18n="foot_badge">Progressive Web App · EN / FA</span></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   1) WHERE THE "OPEN APP" BUTTONS GO  |  آدرس ورود به وب‌اپ
+========================================================= */
+const APP_URL = "index.html";
+
+/* ================= 2) TRANSLATIONS ================= */
+const T = {
+  en: {
+    brand:"Walio", brand_tag:"Personal finance, beautifully simple",
+    open_app:"Open app",
+    nav_features:"Features", nav_rates:"Live rates", nav_tools:"Tools", nav_install:"Install", nav_faq:"FAQ",
+
+    badge:"Live Toman rates · Works offline",
+    hero_1:"Every wallet, every rate,", hero_2:"one calm dashboard.",
+    hero_sub:"Walio is a mobile-first finance app for tracking wallets and cards, following live open-market currency rates in Toman, and running quick financial math — all stored privately on your own device.",
+    cta_launch:"Launch the web app", cta_install:"Install on your phone",
+    as1:"No signup required", as2:"Free to use", as3:"Data stays on your device",
+    stat1_n:"6", stat1_l:"Financial calculators",
+    stat2_n:"2", stat2_l:"Languages · EN & FA",
+    stat3_n:"100%", stat3_l:"Offline capable PWA",
+
+    float1_t:"USD / Toman", float1_s:"updated live",
+    float2_t:"Monthly flow", float2_s:"income vs expense",
+    mock_hi:"Good morning,", mock_user:"Walio User", mock_total:"Total balance",
+    mock_amount:"124,800,000 T", mock_chip1:"4 wallets", mock_chip2:"+8.4% this month",
+    mock_income:"Income", mock_expense:"Expenses", mock_flow:"Monthly cash flow",
+    mock_income_v:"+32,400,000", mock_expense_v:"\u221218,950,000",
+    mock_tx1_v:"\u22121,240,000", mock_tx2_v:"+28,000,000",
+    mock_tx1:"Groceries", mock_tx2:"Salary", mock_today:"Today", mock_yesterday:"Yesterday",
+
+    tr1:"No account, no server", tr2:"Works fully offline",
+    tr3:"English & Persian (RTL)", tr4:"Installs like a native app",
+
+    feat_kicker:"What's inside", feat_title:"Everything you need, nothing you don't",
+    feat_sub:"Five focused tabs — Home, Wallets, Currency, Tools and Profile — designed for one-thumb use.",
+    f1_t:"Multi-wallet tracking", f1_d:"Cards, bank accounts and cash side by side, each with its own colour, icon and running balance.",
+    f2_t:"Live currency & charts", f2_d:"Open-market rates in Iranian Toman with an instant converter and 1D–1Y price history charts.",
+    f3_t:"Six smart calculators", f3_d:"Percentage, discount, tip split, simple & compound interest, loan EMI and currency conversion.",
+    f4_t:"Clear monthly insight", f4_d:"Income, expenses and net cash flow summarised at a glance, with your latest activity underneath.",
+    f5_t:"English & Persian", f5_d:"Switch language any time — the whole interface flips to full right-to-left Persian instantly.",
+    f6_t:"Installable PWA", f6_d:"Add it to your home screen for a full-screen, app-like experience that keeps working offline.",
+
+    rates_kicker:"Live market", rates_title:"Open-market rates, refreshed automatically",
+    rates_lead:"Follow the currencies that matter to you in Iranian Toman, then convert any amount without leaving the screen.",
+    r1:"Rates refresh in the background every couple of minutes",
+    r2:"Interactive price history from one day up to a full year",
+    r3:"Built-in converter with instant two-way calculation",
+    r4:"Last known rates stay available when you go offline",
+    r_cta:"See live rates",
+    rate_panel_title:"Market snapshot", rate_live:"Live",
+    cur_usd:"US Dollar", cur_eur:"Euro", cur_gbp:"British Pound", cur_gold:"Gold Coin", cur_gold_c:"Emami",
+    usd_p:"86,400", usd_d:"+0.8%", eur_p:"94,150", eur_d:"+0.5%",
+    gbp_p:"110,300", gbp_d:"\u22120.3%", gold_p:"72,900,000", gold_d:"+1.2%",
+    rate_note:"Sample figures shown for illustration.",
+
+    how_kicker:"Getting started", how_title:"Up and running in under a minute",
+    how_sub:"No downloads, no forms, no waiting for approval.",
+    h1_t:"Open the app", h1_d:"Tap the button and Walio loads straight in your browser — pick English or Persian on the welcome screen.",
+    h2_t:"Add your wallets", h2_d:"Create cards, bank accounts or cash wallets, or load the demo data first to explore how it all works.",
+    h3_t:"Track and install", h3_d:"Record income and expenses, then add Walio to your home screen so it opens full screen like a native app.",
+
+    tools_kicker:"Toolbox", tools_title:"Money math in two taps", tools_sub:"Fast calculators built for everyday decisions.",
+    t1:"Percentage", t2:"Discount", t3:"Tip split", t4:"Interest", t5:"Loan & EMI", t6:"Converter",
+
+    pv_title:"Your numbers never leave your phone",
+    pv_body:"Walio has no accounts, no analytics and no backend. Every wallet, transaction and setting is written to your browser's local storage on your own device — and you can export or wipe all of it whenever you like.",
+
+    inst_kicker:"Install", inst_title:"Add Walio to your home screen",
+    inst_sub:"It takes about ten seconds and no app store is involved.",
+    tab_ios:"iPhone & iPad", tab_android:"Android",
+    ios1:"Open this page in Safari and tap the Share button.",
+    ios2:"Scroll down and choose \u201CAdd to Home Screen\u201D.",
+    ios3:"Tap \u201CAdd\u201D — Walio now opens full screen like a native app.",
+    and1:"Open this page in Chrome and tap the three-dot menu.",
+    and2:"Choose \u201CAdd to Home screen\u201D or \u201CInstall app\u201D.",
+    and3:"Confirm with \u201CInstall\u201D and find Walio in your launcher.",
+
+    faq_kicker:"FAQ", faq_title:"Frequently asked questions",
+    q1:"Is Walio free?", a1:"Yes. Walio is completely free to use, with no accounts, subscriptions or paid tiers.",
+    q2:"Where is my data stored?", a2:"Everything is saved locally in your own browser. Nothing is uploaded to a server, so clearing your browser data will also remove it — use the export option in Profile to keep a backup.",
+    q3:"Does it work without internet?", a3:"Yes. Once installed, all wallets, transactions and calculators work offline. Only the live exchange rates need a connection to refresh — the last known values stay visible meanwhile.",
+    q4:"Can I use it in Persian?", a4:"Absolutely. Use the language switch at the top of this page or in the app's Profile tab. The entire interface, including layout direction and number formatting, adapts to Persian.",
+    q5:"Do I need to install it from an app store?", a5:"No. Walio is a Progressive Web App, so you add it straight from your browser with the steps in the Install section above.",
+
+    cta_title:"Ready when you are", cta_sub:"Open Walio in your browser and start with a demo dataset or a clean slate.",
+    cta_btn:"Enter the web app", cta_fine:"Free · No account · Works offline",
+
+    foot_about:"A mobile-first personal finance app for wallets, live Toman rates and everyday money math — private by design.",
+    foot_product:"Product", foot_start:"Get started", foot_more:"More",
+    foot_how:"How it works", foot_privacy:"Privacy",
+    foot_badge:"Progressive Web App · EN / FA",
+    copy:"© 2026 Walio. All data stays on your device."
+  },
+
+  fa: {
+    brand:"والیـو", brand_tag:"مدیریت مالی شخصی، ساده و زیبا",
+    open_app:"ورود به برنامه",
+    nav_features:"امکانات", nav_rates:"نرخ لحظه‌ای", nav_tools:"ابزارها", nav_install:"نصب", nav_faq:"سوالات",
+
+    badge:"نرخ لحظه‌ای تومان · کار بدون اینترنت",
+    hero_1:"همه کیف‌پول‌ها و نرخ‌ها،", hero_2:"در یک داشبورد آرام.",
+    hero_sub:"والیـو یک اپلیکیشن مالی موبایل‌محور است برای مدیریت کیف‌پول‌ها و کارت‌ها، دنبال‌کردن نرخ لحظه‌ای ارز در بازار آزاد به تومان و انجام سریع محاسبات مالی — همه‌چیز فقط روی دستگاه خودتان ذخیره می‌شود.",
+    cta_launch:"ورود به وب‌اپلیکیشن", cta_install:"نصب روی گوشی",
+    as1:"بدون نیاز به ثبت‌نام", as2:"استفاده رایگان", as3:"داده‌ها روی دستگاه شما می‌ماند",
+    stat1_n:"۶", stat1_l:"ابزار محاسبه مالی",
+    stat2_n:"۲", stat2_l:"زبان · فارسی و انگلیسی",
+    stat3_n:"۱۰۰٪", stat3_l:"اجرا به‌صورت آفلاین",
+
+    float1_t:"دلار / تومان", float1_s:"به‌روزرسانی لحظه‌ای",
+    float2_t:"جریان ماهانه", float2_s:"درآمد در برابر هزینه",
+    mock_hi:"صبح بخیر،", mock_user:"کاربر والیـو", mock_total:"موجودی کل",
+    mock_amount:"۱۲۴,۸۰۰,۰۰۰ تومان", mock_chip1:"۴ کیف‌پول", mock_chip2:"۸.۴٪+ این ماه",
+    mock_income:"درآمد", mock_expense:"هزینه", mock_flow:"جریان نقدی ماهانه",
+    mock_income_v:"+۳۲,۴۰۰,۰۰۰", mock_expense_v:"\u2212۱۸,۹۵۰,۰۰۰",
+    mock_tx1_v:"\u2212۱,۲۴۰,۰۰۰", mock_tx2_v:"+۲۸,۰۰۰,۰۰۰",
+    mock_tx1:"خرید روزانه", mock_tx2:"حقوق", mock_today:"امروز", mock_yesterday:"دیروز",
+
+    tr1:"بدون حساب کاربری و بدون سرور", tr2:"کاملاً آفلاین کار می‌کند",
+    tr3:"فارسی و انگلیسی (راست‌به‌چپ)", tr4:"نصب مثل اپ نیتیو",
+
+    feat_kicker:"امکانات", feat_title:"هرچه لازم دارید، بدون شلوغی اضافه",
+    feat_sub:"پنج بخش ساده — خانه، کیف‌پول‌ها، ارز، ابزارها و پروفایل — طراحی‌شده برای کار با یک دست.",
+    f1_t:"مدیریت چند کیف‌پول", f1_d:"کارت‌ها، حساب‌های بانکی و پول نقد در کنار هم؛ هرکدام با رنگ، آیکون و موجودی جداگانه.",
+    f2_t:"نرخ ارز و نمودار زنده", f2_d:"نرخ بازار آزاد به تومان، همراه با مبدل فوری و نمودار تاریخچه قیمت از یک روز تا یک سال.",
+    f3_t:"شش ماشین‌حساب هوشمند", f3_d:"درصد، تخفیف، تقسیم انعام، سود ساده و مرکب، اقساط وام و تبدیل ارز.",
+    f4_t:"گزارش ماهانه شفاف", f4_d:"درآمد، هزینه و جریان نقدی خالص در یک نگاه، همراه با آخرین فعالیت‌های شما.",
+    f5_t:"فارسی و انگلیسی", f5_d:"هر زمان زبان را عوض کنید؛ کل رابط کاربری فوراً به فارسی راست‌به‌چپ تغییر می‌کند.",
+    f6_t:"قابل نصب مثل اپ", f6_d:"آن را به صفحه اصلی گوشی اضافه کنید تا تمام‌صفحه اجرا شود و آفلاین هم کار کند.",
+
+    rates_kicker:"بازار زنده", rates_title:"نرخ بازار آزاد، با به‌روزرسانی خودکار",
+    rates_lead:"ارزهایی که برایتان مهم است را به تومان دنبال کنید و هر مبلغی را بدون خروج از صفحه تبدیل کنید.",
+    r1:"نرخ‌ها هر چند دقیقه یک‌بار در پس‌زمینه به‌روز می‌شوند",
+    r2:"نمودار تعاملی قیمت از یک روز تا یک سال",
+    r3:"مبدل داخلی با محاسبه فوری دوطرفه",
+    r4:"آخرین نرخ‌ها در حالت آفلاین هم در دسترس می‌ماند",
+    r_cta:"مشاهده نرخ‌های زنده",
+    rate_panel_title:"نمای بازار", rate_live:"زنده",
+    cur_usd:"دلار آمریکا", cur_eur:"یورو", cur_gbp:"پوند انگلیس", cur_gold:"سکه طلا", cur_gold_c:"امامی",
+    usd_p:"۸۶,۴۰۰", usd_d:"۰.۸٪+", eur_p:"۹۴,۱۵۰", eur_d:"۰.۵٪+",
+    gbp_p:"۱۱۰,۳۰۰", gbp_d:"\u2212۰.۳٪", gold_p:"۷۲,۹۰۰,۰۰۰", gold_d:"۱.۲٪+",
+    rate_note:"ارقام نمونه و صرفاً جهت نمایش هستند.",
+
+    how_kicker:"شروع کار", how_title:"کمتر از یک دقیقه تا شروع",
+    how_sub:"بدون دانلود، بدون فرم، بدون انتظار برای تأیید.",
+    h1_t:"برنامه را باز کنید", h1_d:"دکمه را بزنید تا والیـو در مرورگرتان باز شود — در صفحه خوش‌آمدگویی فارسی یا انگلیسی را انتخاب کنید.",
+    h2_t:"کیف‌پول‌ها را بسازید", h2_d:"کارت، حساب بانکی یا کیف نقدی اضافه کنید، یا اول داده‌های نمونه را بارگذاری کنید تا با برنامه آشنا شوید.",
+    h3_t:"ثبت کنید و نصب کنید", h3_d:"درآمد و هزینه‌ها را ثبت کنید و بعد والیـو را به صفحه اصلی اضافه کنید تا تمام‌صفحه اجرا شود.",
+
+    tools_kicker:"جعبه‌ابزار", tools_title:"محاسبات مالی با دو لمس", tools_sub:"ماشین‌حساب‌های سریع برای تصمیم‌های هر روز.",
+    t1:"درصد", t2:"تخفیف", t3:"تقسیم انعام", t4:"سود", t5:"وام و قسط", t6:"مبدل ارز",
+
+    pv_title:"اعداد شما هرگز از گوشی‌تان خارج نمی‌شود",
+    pv_body:"والیـو نه حساب کاربری دارد، نه ابزار ردیابی و نه سرور. تمام کیف‌پول‌ها، تراکنش‌ها و تنظیمات در حافظه محلی مرورگر روی دستگاه خودتان ذخیره می‌شود — و هر وقت بخواهید می‌توانید از آن خروجی بگیرید یا پاکش کنید.",
+
+    inst_kicker:"نصب", inst_title:"والیـو را به صفحه اصلی اضافه کنید",
+    inst_sub:"حدود ده ثانیه وقت می‌برد و نیازی به فروشگاه اپلیکیشن نیست.",
+    tab_ios:"آیفون و آیپد", tab_android:"اندروید",
+    ios1:"۱. این صفحه را در سافاری باز کنید و دکمه Share را بزنید.",
+    ios2:"۲. کمی پایین بروید و گزینه «Add to Home Screen» را انتخاب کنید.",
+    ios3:"۳. روی «Add» بزنید — حالا والیـو مثل یک اپ تمام‌صفحه باز می‌شود.",
+    and1:"۱. این صفحه را در کروم باز کنید و منوی سه‌نقطه را بزنید.",
+    and2:"۲. گزینه «Add to Home screen» یا «Install app» را انتخاب کنید.",
+    and3:"۳. روی «Install» بزنید تا آیکون برنامه به گوشی اضافه شود.",
+
+    faq_kicker:"سوالات متداول", faq_title:"سوال‌هایی که زیاد پرسیده می‌شود",
+    q1:"آیا والیـو رایگان است؟", a1:"بله. استفاده از والیـو کاملاً رایگان است؛ بدون حساب کاربری، بدون اشتراک و بدون نسخه پولی.",
+    q2:"اطلاعات من کجا ذخیره می‌شود؟", a2:"همه‌چیز به‌صورت محلی در مرورگر خودتان ذخیره می‌شود. هیچ داده‌ای روی سرور آپلود نمی‌شود، پس اگر حافظه مرورگر را پاک کنید اطلاعات هم پاک می‌شود — برای تهیه نسخه پشتیبان از گزینه خروجی در بخش پروفایل استفاده کنید.",
+    q3:"بدون اینترنت هم کار می‌کند؟", a3:"بله. بعد از نصب، کیف‌پول‌ها، تراکنش‌ها و ماشین‌حساب‌ها آفلاین کار می‌کنند. فقط به‌روزرسانی نرخ ارز به اینترنت نیاز دارد و در این مدت آخرین نرخ‌های ذخیره‌شده نمایش داده می‌شود.",
+    q4:"می‌توانم فارسی استفاده کنم؟", a4:"حتماً. از کلید تغییر زبان در بالای همین صفحه یا از بخش پروفایل داخل برنامه استفاده کنید. کل رابط کاربری، جهت چیدمان و قالب اعداد با فارسی هماهنگ می‌شود.",
+    q5:"باید از فروشگاه اپلیکیشن نصبش کنم؟", a5:"خیر. والیـو یک وب‌اپلیکیشن پیشرفته (PWA) است و مستقیم از مرورگر و با مراحل بخش «نصب» به گوشی اضافه می‌شود.",
+
+    cta_title:"هر وقت آماده بودید", cta_sub:"والیـو را در مرورگر باز کنید و با داده‌های نمونه یا از صفر شروع کنید.",
+    cta_btn:"ورود به وب‌اپلیکیشن", cta_fine:"رایگان · بدون حساب کاربری · کار آفلاین",
+
+    foot_about:"یک اپلیکیشن مالی موبایل‌محور برای کیف‌پول‌ها، نرخ لحظه‌ای تومان و محاسبات روزمره — با احترام کامل به حریم خصوصی.",
+    foot_product:"محصول", foot_start:"شروع کنید", foot_more:"بیشتر",
+    foot_how:"چطور کار می‌کند", foot_privacy:"حریم خصوصی",
+    foot_badge:"وب‌اپلیکیشن پیشرفته · فارسی / انگلیسی",
+    copy:"© ۲۰۲۶ والیـو. همه داده‌ها روی دستگاه شما می‌ماند."
+  }
+};
+
+/* ================= 3) SAFE STORAGE ================= */
+const store = (() => {
+  try { localStorage.setItem('__t','1'); localStorage.removeItem('__t'); return localStorage; }
+  catch(e){ const m={}; return { getItem:k=>k in m?m[k]:null, setItem:(k,v)=>{m[k]=String(v);}, removeItem:k=>{delete m[k];} }; }
+})();
+
+/* ================= 4) LANGUAGE ================= */
+/* Uses the SAME key as the app ("walio_lang"), so the app opens
+   in the language chosen here. Default language = English. */
+function setLang(lang, save = true){
+  if(!T[lang]) lang = 'en';
+  const rtl = lang === 'fa';
+  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('dir', rtl ? 'rtl' : 'ltr');
+  document.body.classList.toggle('rtl-mode', rtl);
+
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k = el.getAttribute('data-i18n');
+    if(T[lang][k] !== undefined) el.textContent = T[lang][k];
+  });
+  document.querySelectorAll('.lang-btn').forEach(b=>
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang));
+  document.querySelectorAll('.arrow path').forEach(p=>
+    p.setAttribute('d', rtl ? 'M19 12H5M11 6l-6 6 6 6' : 'M5 12h14M13 6l6 6-6 6'));
+
+  document.title = rtl ? 'والیـو — مدیریت مالی شخصی، ساده و زیبا'
+                       : 'Walio — Personal Finance, Beautifully Simple';
+  if(save) store.setItem('walio_lang', lang);
+  syncAppLinks(lang);
+  // re-measure any open FAQ answer after text length changes
+  document.querySelectorAll('.faq-item.open .faq-a').forEach(a=>{ a.style.maxHeight = a.scrollHeight + 'px'; });
+}
+function syncAppLinks(lang){
+  document.querySelectorAll('.app-link').forEach(a=>{
+    a.setAttribute('href', APP_URL + '?lang=' + lang);
+  });
+}
+
+/* ================= 5) THEME ================= */
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('theme-icon').innerHTML = t === 'dark'
+    ? '<circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/>'
+    : '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  store.setItem('walio_theme', t);
+}
+function toggleTheme(){
+  applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+}
+
+/* ================= 6) INSTALL TABS ================= */
+function showTab(which){
+  const ios = which === 'ios';
+  document.getElementById('steps-ios').style.display = ios ? 'flex' : 'none';
+  document.getElementById('steps-android').style.display = ios ? 'none' : 'flex';
+  document.getElementById('tab-ios').classList.toggle('active', ios);
+  document.getElementById('tab-android').classList.toggle('active', !ios);
+}
+
+/* ================= 7) FAQ ================= */
+function toggleFaq(btn){
+  const item = btn.parentElement;
+  const ans = item.querySelector('.faq-a');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>{
+    i.classList.remove('open');
+    i.querySelector('.faq-a').style.maxHeight = null;
+  });
+  if(!isOpen){
+    item.classList.add('open');
+    ans.style.maxHeight = ans.scrollHeight + 'px';
+  }
+}
+
+/* ================= 8) INIT ================= */
+(function init(){
+  const urlLang = new URLSearchParams(location.search).get('lang');
+  setLang(urlLang || store.getItem('walio_lang') || 'en', true);
+
+  applyTheme(store.getItem('walio_theme') ||
+    (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach((e,idx)=>{
+      if(e.isIntersecting){
+        e.target.style.transitionDelay = Math.min(idx*70, 280) + 'ms';
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold:.1, rootMargin:'0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  const header = document.getElementById('site-header');
+  const bar = document.getElementById('mobile-bar');
+  const heroCta = document.querySelector('.hero-cta');
+  const footer = document.querySelector('.site-footer');
+
+  const onScroll = () => {
+    header.classList.toggle('stuck', window.scrollY > 8);
+
+    // Show the sticky bar once the hero buttons have scrolled away,
+    // and hide it again over the footer so it never covers the links.
+    if(bar && heroCta){
+      const heroGone = heroCta.getBoundingClientRect().bottom < 0;
+      const footerIn = footer.getBoundingClientRect().top < window.innerHeight - 40;
+      bar.classList.toggle('show', heroGone && !footerIn);
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive:true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+})();
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2c273905fce5c3a',t:'MTc4NjkwNDQwOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
