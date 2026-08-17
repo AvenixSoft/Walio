@@ -5831,6 +5831,151 @@ body.rtl-mode .profile-row-chevron svg { transform: scaleX(-1); }
   .profile-photo-strip .btn-secondary.is-danger { border-color: var(--color-red); }
 }
 
+/* ================= APP LOCK / SECURITY (PIN, Password, Face ID) ================= */
+body.app-locked > *:not(#app-lock-screen) {
+  filter: blur(18px) saturate(0.6);
+  pointer-events: none;
+  user-select: none;
+}
+body.app-locked { overflow: hidden; }
+
+#app-lock-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: calc(env(safe-area-inset-top, 0px) + 26px) 22px calc(env(safe-area-inset-bottom, 0px) + 26px);
+  background: var(--bg-main);
+  background-image: radial-gradient(120% 70% at 50% -10%, var(--accent-glow) 0%, transparent 60%);
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+  font-family: var(--font-main);
+  color: var(--text-primary);
+  overscroll-behavior: contain;
+}
+#app-lock-screen.visible { display: flex; }
+
+.lock-brand {
+  width: 78px; height: 78px;
+  border-radius: 24px;
+  background: var(--accent-gradient);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  box-shadow: 0 16px 40px var(--accent-glow);
+  margin-bottom: 2px;
+}
+.lock-title {
+  font-size: 21px; font-weight: 800; margin: 0; text-align: center;
+}
+.lock-subtitle {
+  font-size: 13.5px; color: var(--text-secondary); margin: 0 0 4px; text-align: center; max-width: 300px;
+  line-height: 1.7;
+}
+
+.lock-dots { display: flex; gap: 14px; margin: 10px 0 4px; min-height: 16px; }
+.lock-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 1.8px solid var(--border-hover, rgba(120,120,140,.5));
+  background: transparent;
+  transition: var(--transition-spring);
+}
+.lock-dot.filled { background: var(--accent-primary); border-color: var(--accent-primary); transform: scale(1.08); }
+
+.lock-error {
+  min-height: 18px; font-size: 12.5px; color: var(--color-red); font-weight: 600; text-align: center;
+}
+.lock-shake { animation: lockShake 0.42s cubic-bezier(.36,.07,.19,.97); }
+@keyframes lockShake {
+  10%, 90% { transform: translateX(-3px); }
+  20%, 80% { transform: translateX(5px); }
+  30%, 50%, 70% { transform: translateX(-8px); }
+  40%, 60% { transform: translateX(8px); }
+}
+
+.lock-keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 74px);
+  gap: 16px;
+  justify-content: center;
+  margin-top: 6px;
+}
+.lock-key {
+  width: 74px; height: 74px; border-radius: 50%;
+  border: 1px solid var(--border-glass);
+  background: var(--chip-bg-strong, rgba(120,120,140,.14));
+  color: var(--text-primary);
+  font-size: 27px; font-weight: 500;
+  font-family: var(--font-main);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .12s ease, background .18s ease;
+}
+.lock-key:active { transform: scale(0.92); background: var(--accent-primary); color: #fff; }
+.lock-key.ghost { background: transparent; border-color: transparent; font-size: 15px; font-weight: 600; color: var(--text-secondary); }
+.lock-key.ghost:active { background: transparent; color: var(--accent-primary); transform: scale(0.92); }
+.lock-key.ghost svg { width: 24px; height: 24px; }
+
+.lock-pass-form { width: 100%; max-width: 320px; display: flex; flex-direction: column; gap: 12px; }
+.lock-pass-form input {
+  width: 100%;
+  padding: 15px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-glass);
+  background: var(--input-bg, rgba(120,120,140,.10));
+  color: var(--text-primary);
+  font-size: 16px;
+  font-family: var(--font-main);
+  text-align: center;
+  letter-spacing: 2px;
+  outline: none;
+}
+.lock-pass-form input:focus { border-color: var(--accent-primary); }
+
+.lock-actions { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 6px; width: 100%; max-width: 320px; }
+.lock-bio-btn {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--border-glass);
+  background: var(--chip-bg, rgba(120,120,140,.10));
+  color: var(--text-primary);
+  font-size: 14px; font-weight: 600;
+  font-family: var(--font-main);
+  cursor: pointer;
+}
+.lock-bio-btn:active { transform: scale(0.97); }
+.lock-bio-btn svg { color: var(--accent-primary); }
+.lock-link-btn {
+  background: none; border: 0; color: var(--accent-primary);
+  font-size: 13px; font-weight: 600; font-family: var(--font-main); cursor: pointer; padding: 6px;
+}
+.lock-attempts { font-size: 12px; color: var(--text-muted); }
+
+/* ---- Security setup sheet ---- */
+.sec-sheet-body { display: flex; flex-direction: column; gap: 14px; padding: 4px 0 8px; }
+.sec-type-switch { display: flex; gap: 8px; background: var(--chip-bg, rgba(120,120,140,.10)); padding: 5px; border-radius: var(--radius-md); }
+.sec-type-btn {
+  flex: 1; padding: 11px 8px; border-radius: var(--radius-sm); border: 0;
+  background: transparent; color: var(--text-secondary);
+  font-size: 13.5px; font-weight: 600; font-family: var(--font-main); cursor: pointer;
+}
+.sec-type-btn.active { background: var(--accent-primary); color: #fff; }
+.sec-hint { font-size: 12.5px; color: var(--text-secondary); line-height: 1.75; }
+.sec-autolock-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.sec-autolock-chip {
+  padding: 9px 14px; border-radius: 999px;
+  border: 1px solid var(--border-glass);
+  background: var(--chip-bg, rgba(120,120,140,.10));
+  color: var(--text-secondary);
+  font-size: 12.5px; font-weight: 600; font-family: var(--font-main); cursor: pointer;
+}
+.sec-autolock-chip.active { background: var(--accent-primary); border-color: var(--accent-primary); color: #fff; }
+
    </style>
 </head>
 <body>
@@ -6085,6 +6230,66 @@ body.rtl-mode .profile-row-chevron svg { transform: scaleX(-1); }
         </div>
       </div>
 
+    </div>
+  </div>
+
+
+  <!-- ================= APP LOCK SCREEN ================= -->
+  <div id="app-lock-screen" role="dialog" aria-modal="true" aria-label="App locked">
+    <div class="lock-brand" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+      </svg>
+    </div>
+    <h2 class="lock-title" id="lock-title">Walio</h2>
+    <p class="lock-subtitle" id="lock-subtitle"></p>
+
+    <div class="lock-dots" id="lock-dots" style="display:none;"></div>
+
+    <form class="lock-pass-form" id="lock-pass-form" style="display:none;" autocomplete="off">
+      <input type="password" id="lock-pass-input" autocomplete="current-password" />
+      <button class="btn-primary-full" type="submit" id="lock-pass-submit">Unlock</button>
+    </form>
+
+    <div class="lock-error" id="lock-error"></div>
+
+    <div class="lock-keypad" id="lock-keypad" style="display:none;">
+      <button class="lock-key" type="button" data-key="1">1</button>
+      <button class="lock-key" type="button" data-key="2">2</button>
+      <button class="lock-key" type="button" data-key="3">3</button>
+      <button class="lock-key" type="button" data-key="4">4</button>
+      <button class="lock-key" type="button" data-key="5">5</button>
+      <button class="lock-key" type="button" data-key="6">6</button>
+      <button class="lock-key" type="button" data-key="7">7</button>
+      <button class="lock-key" type="button" data-key="8">8</button>
+      <button class="lock-key" type="button" data-key="9">9</button>
+      <button class="lock-key ghost" type="button" data-key="bio" id="lock-key-bio" style="visibility:hidden;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M9 10v1M15 10v1M9.5 15c1.5 1.2 3.5 1.2 5 0"/></svg>
+      </button>
+      <button class="lock-key" type="button" data-key="0">0</button>
+      <button class="lock-key ghost" type="button" data-key="del">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 5H9L3 12l6 7h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1z"/><path d="M17 9l-5 6M12 9l5 6"/></svg>
+      </button>
+    </div>
+
+    <div class="lock-actions">
+      <button class="lock-bio-btn" type="button" id="lock-bio-btn" style="display:none;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M9 10v1M15 10v1M9.5 15c1.5 1.2 3.5 1.2 5 0"/></svg>
+        <span id="lock-bio-label">Face ID</span>
+      </button>
+      <span class="lock-attempts" id="lock-attempts"></span>
+      <button class="lock-link-btn" type="button" id="lock-forgot-btn"></button>
+    </div>
+  </div>
+
+  <!-- ================= SECURITY SETUP SHEET ================= -->
+  <div id="security-modal-sheet" class="modal-overlay">
+    <div class="modal-sheet">
+      <div class="modal-sheet-header">
+        <h3 class="modal-title" id="sec-modal-title">App Lock</h3>
+        <button class="btn-close-modal" id="close-security-modal" type="button">✕</button>
+      </div>
+      <div class="sec-sheet-body" id="sec-sheet-body"></div>
     </div>
   </div>
 
@@ -6370,6 +6575,57 @@ const translations = {
     reset_data: "Reset All App Data",
     confirm_reset: "Are you sure you want to reset all data? This cannot be undone.",
     profile_updated: "Profile saved successfully!",
+    security_section: "Security",
+    app_lock: "App Lock",
+    app_lock_hint: "Require a passcode every time the app opens",
+    app_lock_setup: "Set up App Lock",
+    app_lock_disable: "Turn off App Lock",
+    app_lock_disable_hint: "Enter your current passcode to remove the lock. The app will open without asking for anything.",
+    app_lock_enabled_msg: "App Lock is on. You will be asked for it next time the app opens.",
+    app_lock_disabled_msg: "App Lock has been turned off.",
+    lock_type_pin: "Numeric PIN",
+    lock_type_password: "Password",
+    new_pin: "New PIN (4-8 digits)",
+    confirm_pin: "Confirm PIN",
+    new_password: "New password",
+    confirm_password: "Confirm password",
+    current_pin: "Current PIN",
+    current_password: "Current password",
+    change_pin: "Change PIN",
+    change_password: "Change password",
+    change_pass_hint: "Pick a new passcode for unlocking",
+    lock_setup_hint: "This passcode is stored hashed on this device only. There is no recovery if you forget it.",
+    lock_save: "Save",
+    lock_changed_msg: "Your passcode has been updated.",
+    err_pin_format: "PIN must be 4 to 8 digits.",
+    err_pass_short: "Password must be at least 4 characters.",
+    err_no_match: "The two entries do not match.",
+    face_id: "Face ID / Biometrics",
+    face_id_hint: "Unlock with your face or fingerprint",
+    face_id_unavailable: "Not available on this device or browser (needs HTTPS)",
+    face_id_enabled: "Biometric unlock enabled.",
+    face_id_failed: "Could not set up biometric unlock.",
+    auto_lock: "Auto-lock",
+    auto_lock_hint: "When to lock after leaving the app",
+    lock_auto_immediate: "Immediately",
+    lock_auto_1: "After 1 min",
+    lock_auto_5: "After 5 min",
+    lock_auto_15: "After 15 min",
+    lock_auto_never: "Only on app start",
+    lock_now: "Lock now",
+    lock_now_hint: "Lock the app right away",
+    lock_title: "Walio is locked",
+    lock_sub_pin: "Enter your PIN to continue",
+    lock_sub_pass: "Enter your password to continue",
+    lock_password_placeholder: "Password",
+    lock_unlock: "Unlock",
+    lock_biometric: "Unlock with Face ID",
+    lock_bio_failed: "Biometric unlock failed. Use your passcode.",
+    lock_wrong: "Wrong passcode. Try again.",
+    lock_cooldown: "Too many attempts. Try again in {s}s",
+    lock_forgot: "Forgot your passcode?",
+    lock_forgot_confirm: "There is no way to recover the passcode. The only option is erasing all Walio data on this device. Continue?",
+    lock_forgot_confirm2: "Are you absolutely sure? All wallets and transactions will be deleted.",
     backup_restored: "Backup restored successfully!",
     avatar_presets: "Or choose a preset avatar:",
     change_photo: "Change Photo",
@@ -6656,6 +6912,57 @@ const translations = {
     reset_data: "حذف کل اطلاعات برنامه (شروع از اول)",
     confirm_reset: "آیا از حذف تمامی اطلاعات اطمینان دارید؟ این عملیات غیرقابل بازگشت است.",
     profile_updated: "اطلاعات پروفایل با موفقیت ذخیره شد!",
+    security_section: "امنیت",
+    app_lock: "قفل برنامه",
+    app_lock_hint: "هر بار که برنامه باز می‌شود رمز پرسیده شود",
+    app_lock_setup: "فعال‌سازی قفل برنامه",
+    app_lock_disable: "غیرفعال کردن قفل",
+    app_lock_disable_hint: "برای حذف قفل، رمز فعلی را وارد کنید. پس از آن برنامه بدون رمز باز می‌شود.",
+    app_lock_enabled_msg: "قفل برنامه فعال شد. دفعهٔ بعد هنگام باز کردن برنامه رمز پرسیده می‌شود.",
+    app_lock_disabled_msg: "قفل برنامه غیرفعال شد.",
+    lock_type_pin: "رمز عددی (PIN)",
+    lock_type_password: "رمز عبور",
+    new_pin: "رمز عددی جدید (۴ تا ۸ رقم)",
+    confirm_pin: "تکرار رمز عددی",
+    new_password: "رمز عبور جدید",
+    confirm_password: "تکرار رمز عبور",
+    current_pin: "رمز عددی فعلی",
+    current_password: "رمز عبور فعلی",
+    change_pin: "تغییر رمز عددی",
+    change_password: "تغییر رمز عبور",
+    change_pass_hint: "انتخاب رمز جدید برای باز کردن قفل",
+    lock_setup_hint: "این رمز فقط به‌صورت هش‌شده روی همین دستگاه ذخیره می‌شود و در صورت فراموشی قابل بازیابی نیست.",
+    lock_save: "ذخیره",
+    lock_changed_msg: "رمز شما با موفقیت تغییر کرد.",
+    err_pin_format: "رمز عددی باید بین ۴ تا ۸ رقم باشد.",
+    err_pass_short: "رمز عبور باید حداقل ۴ کاراکتر باشد.",
+    err_no_match: "دو مقدار وارد شده یکسان نیستند.",
+    face_id: "فیس ایدی / اثر انگشت",
+    face_id_hint: "باز کردن قفل با چهره یا اثر انگشت",
+    face_id_unavailable: "روی این دستگاه یا مرورگر در دسترس نیست (نیازمند HTTPS)",
+    face_id_enabled: "ورود بیومتریک فعال شد.",
+    face_id_failed: "فعال‌سازی ورود بیومتریک انجام نشد.",
+    auto_lock: "قفل خودکار",
+    auto_lock_hint: "چه زمانی پس از خروج از برنامه قفل شود",
+    lock_auto_immediate: "بلافاصله",
+    lock_auto_1: "بعد از ۱ دقیقه",
+    lock_auto_5: "بعد از ۵ دقیقه",
+    lock_auto_15: "بعد از ۱۵ دقیقه",
+    lock_auto_never: "فقط هنگام اجرای برنامه",
+    lock_now: "همین حالا قفل کن",
+    lock_now_hint: "قفل کردن فوری برنامه",
+    lock_title: "والیو قفل است",
+    lock_sub_pin: "برای ادامه رمز عددی را وارد کنید",
+    lock_sub_pass: "برای ادامه رمز عبور را وارد کنید",
+    lock_password_placeholder: "رمز عبور",
+    lock_unlock: "باز کردن قفل",
+    lock_biometric: "ورود با فیس ایدی",
+    lock_bio_failed: "ورود بیومتریک ناموفق بود؛ از رمز استفاده کنید.",
+    lock_wrong: "رمز اشتباه است. دوباره تلاش کنید.",
+    lock_cooldown: "تلاش‌های زیاد. {s} ثانیه دیگر تلاش کنید",
+    lock_forgot: "رمز را فراموش کرده‌اید؟",
+    lock_forgot_confirm: "امکان بازیابی رمز وجود ندارد. تنها راه، پاک کردن کامل اطلاعات والیو روی این دستگاه است. ادامه می‌دهید؟",
+    lock_forgot_confirm2: "کاملاً مطمئن هستید؟ همهٔ کیف پول‌ها و تراکنش‌ها حذف می‌شوند.",
     backup_restored: "فایل پشتیبان با موفقیت بازیابی شد.",
     avatar_presets: "یا انتخاب از آواتارهای پیش‌فرض:",
     change_photo: "تغییر عکس",
@@ -8883,6 +9190,762 @@ window.toolsManager = new ToolsManager();
  * Crisp Vector SVG Icons Used for All System UI, Navigation, Tools, and Controls.
  */
 
+
+/* ==================== security.js — App Lock (PIN / Password / Face ID) ==================== */
+/**
+ * Walio App Lock
+ * - PIN (4-8 digits) or text password, hashed with PBKDF2-SHA256 (WebCrypto) + random salt.
+ * - Optional biometric unlock (Face ID / Touch ID / Windows Hello / Android biometrics)
+ *   through the WebAuthn platform authenticator. Requires HTTPS (or localhost).
+ * - Locks on every app start and after a configurable idle/background period.
+ */
+
+const SECURITY_KEY = 'walio_security';
+const SECURITY_LASTACTIVE_KEY = 'walio_last_active';
+
+/* --- tiny SHA-256 fallback for non-secure contexts (file://) --- */
+function walioSha256Hex(str) {
+  const K = [0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+             0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+             0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+             0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+             0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+             0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+             0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+             0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  let H = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  const utf8 = unescape(encodeURIComponent(str));
+  const bytes = [];
+  for (let i = 0; i < utf8.length; i++) bytes.push(utf8.charCodeAt(i));
+  const bitLen = bytes.length * 8;
+  bytes.push(0x80);
+  while (bytes.length % 64 !== 56) bytes.push(0);
+  for (let i = 7; i >= 0; i--) bytes.push((bitLen / Math.pow(2, i * 8)) & 0xff);
+  const rotr = (x, n) => (x >>> n) | (x << (32 - n));
+  for (let i = 0; i < bytes.length; i += 64) {
+    const w = new Array(64);
+    for (let j = 0; j < 16; j++) {
+      w[j] = (bytes[i + j*4] << 24) | (bytes[i + j*4 + 1] << 16) | (bytes[i + j*4 + 2] << 8) | bytes[i + j*4 + 3];
+    }
+    for (let j = 16; j < 64; j++) {
+      const s0 = rotr(w[j-15],7) ^ rotr(w[j-15],18) ^ (w[j-15] >>> 3);
+      const s1 = rotr(w[j-2],17) ^ rotr(w[j-2],19) ^ (w[j-2] >>> 10);
+      w[j] = (w[j-16] + s0 + w[j-7] + s1) | 0;
+    }
+    let [a,b,c,d,e,f,g,h] = H;
+    for (let j = 0; j < 64; j++) {
+      const S1 = rotr(e,6) ^ rotr(e,11) ^ rotr(e,25);
+      const ch = (e & f) ^ (~e & g);
+      const t1 = (h + S1 + ch + K[j] + w[j]) | 0;
+      const S0 = rotr(a,2) ^ rotr(a,13) ^ rotr(a,22);
+      const maj = (a & b) ^ (a & c) ^ (b & c);
+      const t2 = (S0 + maj) | 0;
+      h = g; g = f; f = e; e = (d + t1) | 0; d = c; c = b; b = a; a = (t1 + t2) | 0;
+    }
+    H = [ (H[0]+a)|0, (H[1]+b)|0, (H[2]+c)|0, (H[3]+d)|0, (H[4]+e)|0, (H[5]+f)|0, (H[6]+g)|0, (H[7]+h)|0 ];
+  }
+  return H.map(x => (x >>> 0).toString(16).padStart(8, '0')).join('');
+}
+
+class SecurityManager {
+  constructor() {
+    this.locked = false;
+    this.unlocking = false;
+    this.pinBuffer = '';
+    this.bound = false;
+    this.cooldownTimer = null;
+  }
+
+  /* ---------------- config ---------------- */
+  getConfig() {
+    let cfg = null;
+    try { cfg = JSON.parse(localStorage.getItem(SECURITY_KEY) || 'null'); } catch (e) { cfg = null; }
+    return Object.assign({
+      enabled: false,
+      type: 'pin',          // 'pin' | 'password'
+      salt: '',
+      hash: '',
+      algo: 'pbkdf2',
+      pinLength: 4,
+      bioEnabled: false,
+      bioCredId: '',
+      autoLock: 0,          // minutes in background before locking; 0 = immediately, -1 = only on app start
+      fails: 0,
+      lockedUntil: 0
+    }, cfg || {});
+  }
+
+  saveConfig(cfg) {
+    localStorage.setItem(SECURITY_KEY, JSON.stringify(cfg));
+  }
+
+  isEnabled() { return this.getConfig().enabled === true; }
+
+  t(key) { return window.i18n ? window.i18n.t(key) : key; }
+  isFa() { return window.i18n ? window.i18n.currentLang === 'fa' : false; }
+
+  /* ---------------- crypto helpers ---------------- */
+  randomSalt() {
+    const arr = new Uint8Array(16);
+    if (window.crypto && window.crypto.getRandomValues) window.crypto.getRandomValues(arr);
+    else for (let i = 0; i < arr.length; i++) arr[i] = Math.floor(Math.random() * 256);
+    return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  async hashSecret(secret, salt) {
+    const subtle = window.crypto && window.crypto.subtle;
+    if (subtle && subtle.importKey) {
+      try {
+        const enc = new TextEncoder();
+        const keyMaterial = await subtle.importKey('raw', enc.encode(secret), 'PBKDF2', false, ['deriveBits']);
+        const bits = await subtle.deriveBits(
+          { name: 'PBKDF2', salt: enc.encode(salt), iterations: 120000, hash: 'SHA-256' },
+          keyMaterial, 256
+        );
+        const hex = Array.from(new Uint8Array(bits)).map(b => b.toString(16).padStart(2, '0')).join('');
+        return { hash: hex, algo: 'pbkdf2' };
+      } catch (e) { /* fall through */ }
+    }
+    let h = salt + '|' + secret;
+    for (let i = 0; i < 5000; i++) h = walioSha256Hex(h + '|' + i);
+    return { hash: h, algo: 'sha256-js' };
+  }
+
+  async verifySecret(secret) {
+    const cfg = this.getConfig();
+    if (!cfg.hash) return false;
+    if (cfg.algo === 'pbkdf2') {
+      const { hash } = await this.hashSecret(secret, cfg.salt);
+      return hash === cfg.hash;
+    }
+    let h = cfg.salt + '|' + secret;
+    for (let i = 0; i < 5000; i++) h = walioSha256Hex(h + '|' + i);
+    return h === cfg.hash;
+  }
+
+  async setSecret(secret, type) {
+    const cfg = this.getConfig();
+    const salt = this.randomSalt();
+    const { hash, algo } = await this.hashSecret(secret, salt);
+    cfg.enabled = true;
+    cfg.type = type || 'pin';
+    cfg.salt = salt;
+    cfg.hash = hash;
+    cfg.algo = algo;
+    if ((type || 'pin') === 'pin') cfg.pinLength = secret.length;
+    cfg.fails = 0;
+    cfg.lockedUntil = 0;
+    this.saveConfig(cfg);
+    this.touch();
+  }
+
+  disable() {
+    this.saveConfig({
+      enabled: false, type: 'pin', salt: '', hash: '', algo: 'pbkdf2',
+      pinLength: 4, bioEnabled: false, bioCredId: '', autoLock: 0, fails: 0, lockedUntil: 0
+    });
+  }
+
+  /* ---------------- biometrics (WebAuthn) ---------------- */
+  static b64url(buf) {
+    const bytes = new Uint8Array(buf);
+    let s = '';
+    for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
+    return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+  static fromB64url(str) {
+    const s = str.replace(/-/g, '+').replace(/_/g, '/');
+    const bin = atob(s + '==='.slice((s.length + 3) % 4));
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return bytes;
+  }
+
+  async biometricSupported() {
+    try {
+      if (!window.PublicKeyCredential || !navigator.credentials) return false;
+      if (!window.isSecureContext) return false;
+      if (!PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable) return false;
+      return await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+    } catch (e) { return false; }
+  }
+
+  async registerBiometric() {
+    const challenge = new Uint8Array(32);
+    (window.crypto.getRandomValues || function(){}).call(window.crypto, challenge);
+    const userId = new Uint8Array(16);
+    window.crypto.getRandomValues(userId);
+    const profile = window.storage ? window.storage.getProfile() : { name: 'Walio User', username: '@user' };
+
+    const cred = await navigator.credentials.create({
+      publicKey: {
+        challenge,
+        rp: { name: 'Walio', id: location.hostname },
+        user: { id: userId, name: profile.username || '@user', displayName: profile.name || 'Walio User' },
+        pubKeyCredParams: [{ type: 'public-key', alg: -7 }, { type: 'public-key', alg: -257 }],
+        authenticatorSelection: {
+          authenticatorAttachment: 'platform',
+          userVerification: 'required',
+          residentKey: 'preferred'
+        },
+        timeout: 60000,
+        attestation: 'none'
+      }
+    });
+    if (!cred) throw new Error('no-credential');
+    const cfg = this.getConfig();
+    cfg.bioEnabled = true;
+    cfg.bioCredId = SecurityManager.b64url(cred.rawId);
+    this.saveConfig(cfg);
+    return true;
+  }
+
+  async verifyBiometric() {
+    const cfg = this.getConfig();
+    if (!cfg.bioEnabled || !cfg.bioCredId) return false;
+    const challenge = new Uint8Array(32);
+    window.crypto.getRandomValues(challenge);
+    const assertion = await navigator.credentials.get({
+      publicKey: {
+        challenge,
+        allowCredentials: [{ id: SecurityManager.fromB64url(cfg.bioCredId), type: 'public-key' }],
+        userVerification: 'required',
+        timeout: 60000
+      }
+    });
+    return !!assertion;
+  }
+
+  disableBiometric() {
+    const cfg = this.getConfig();
+    cfg.bioEnabled = false;
+    cfg.bioCredId = '';
+    this.saveConfig(cfg);
+  }
+
+  /* ---------------- lifecycle ---------------- */
+  boot() {
+    this.bindGlobalEvents();
+    if (this.isEnabled()) this.lock();
+    else this.touch();
+  }
+
+  touch() {
+    try { localStorage.setItem(SECURITY_LASTACTIVE_KEY, String(Date.now())); } catch (e) {}
+  }
+
+  bindGlobalEvents() {
+    if (this.bound) return;
+    this.bound = true;
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        this.touch();
+      } else {
+        this.maybeAutoLock();
+      }
+    });
+    window.addEventListener('pagehide', () => this.touch());
+    window.addEventListener('focus', () => this.maybeAutoLock());
+    ['click', 'keydown', 'touchstart'].forEach(evt => {
+      window.addEventListener(evt, () => { if (!this.locked) this.touch(); }, { passive: true });
+    });
+  }
+
+  maybeAutoLock() {
+    const cfg = this.getConfig();
+    if (!cfg.enabled || this.locked) return;
+    if (cfg.autoLock === -1) return; // only locks on app start
+    let last = 0;
+    try { last = parseInt(localStorage.getItem(SECURITY_LASTACTIVE_KEY) || '0', 10); } catch (e) {}
+    const elapsed = Date.now() - (last || 0);
+    if (elapsed >= cfg.autoLock * 60000) this.lock();
+  }
+
+  /* ---------------- lock screen ---------------- */
+  lock() {
+    const screen = document.getElementById('app-lock-screen');
+    if (!screen) return;
+    this.locked = true;
+    this.pinBuffer = '';
+    document.body.classList.add('app-locked');
+    screen.classList.add('visible');
+    this.renderLockScreen();
+    this.bindLockScreen();
+
+    const cfg = this.getConfig();
+    if (cfg.bioEnabled && cfg.bioCredId) {
+      // A user gesture is required on most platforms → offer the button, try once silently.
+      setTimeout(() => { this.tryBiometricUnlock(true); }, 350);
+    }
+  }
+
+  unlock() {
+    const screen = document.getElementById('app-lock-screen');
+    this.locked = false;
+    this.pinBuffer = '';
+    const cfg = this.getConfig();
+    cfg.fails = 0; cfg.lockedUntil = 0;
+    this.saveConfig(cfg);
+    this.touch();
+    if (screen) screen.classList.remove('visible');
+    document.body.classList.remove('app-locked');
+    window.dispatchEvent(new CustomEvent('walio_app_unlocked'));
+  }
+
+  renderLockScreen() {
+    const cfg = this.getConfig();
+    const isPin = cfg.type === 'pin';
+    const setTxt = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+
+    setTxt('lock-title', this.t('lock_title'));
+    setTxt('lock-subtitle', isPin ? this.t('lock_sub_pin') : this.t('lock_sub_pass'));
+    setTxt('lock-error', '');
+    setTxt('lock-attempts', '');
+    setTxt('lock-forgot-btn', this.t('lock_forgot'));
+    setTxt('lock-bio-label', this.t('lock_biometric'));
+    setTxt('lock-pass-submit', this.t('lock_unlock'));
+
+    const dots = document.getElementById('lock-dots');
+    const keypad = document.getElementById('lock-keypad');
+    const passForm = document.getElementById('lock-pass-form');
+    const passInput = document.getElementById('lock-pass-input');
+    const bioBtn = document.getElementById('lock-bio-btn');
+    const bioKey = document.getElementById('lock-key-bio');
+
+    if (dots) dots.style.display = isPin ? 'flex' : 'none';
+    if (keypad) keypad.style.display = isPin ? 'grid' : 'none';
+    if (passForm) passForm.style.display = isPin ? 'none' : 'flex';
+    if (passInput) {
+      passInput.value = '';
+      passInput.placeholder = this.t('lock_password_placeholder');
+      if (!isPin) setTimeout(() => passInput.focus(), 250);
+    }
+
+    const showBio = !!(cfg.bioEnabled && cfg.bioCredId);
+    if (bioBtn) bioBtn.style.display = showBio ? 'inline-flex' : 'none';
+    if (bioKey) bioKey.style.visibility = (showBio && isPin) ? 'visible' : 'hidden';
+
+    this.renderDots();
+    this.applyCooldownUI();
+  }
+
+  renderDots() {
+    const dots = document.getElementById('lock-dots');
+    if (!dots) return;
+    const cfg = this.getConfig();
+    const len = Math.max(cfg.pinLength || 4, this.pinBuffer.length);
+    let html = '';
+    for (let i = 0; i < len; i++) {
+      html += `<span class="lock-dot ${i < this.pinBuffer.length ? 'filled' : ''}"></span>`;
+    }
+    dots.innerHTML = html;
+  }
+
+  bindLockScreen() {
+    if (this.lockBound) return;
+    this.lockBound = true;
+
+    const keypad = document.getElementById('lock-keypad');
+    if (keypad) {
+      keypad.addEventListener('click', (e) => {
+        const btn = e.target.closest('.lock-key');
+        if (!btn || this.inCooldown()) return;
+        const key = btn.getAttribute('data-key');
+        if (key === 'del') {
+          this.pinBuffer = this.pinBuffer.slice(0, -1);
+          this.renderDots();
+        } else if (key === 'bio') {
+          this.tryBiometricUnlock(false);
+        } else {
+          const maxLen = this.getConfig().pinLength || 4;
+          if (this.pinBuffer.length >= maxLen) return;
+          this.pinBuffer += key;
+          this.renderDots();
+          if (this.pinBuffer.length >= maxLen) this.trySubmitPin();
+        }
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (!this.locked) return;
+      const cfg = this.getConfig();
+      if (cfg.type !== 'pin' || this.inCooldown()) return;
+      const maxLen = cfg.pinLength || 4;
+      if (/^[0-9]$/.test(e.key)) {
+        if (this.pinBuffer.length < maxLen) { this.pinBuffer += e.key; this.renderDots(); if (this.pinBuffer.length >= maxLen) this.trySubmitPin(); }
+      } else if (e.key === 'Backspace') {
+        this.pinBuffer = this.pinBuffer.slice(0, -1);
+        this.renderDots();
+      }
+    });
+
+    const passForm = document.getElementById('lock-pass-form');
+    if (passForm) {
+      passForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (this.inCooldown()) return;
+        const input = document.getElementById('lock-pass-input');
+        const val = input ? input.value : '';
+        if (!val) return;
+        const ok = await this.verifySecret(val);
+        if (ok) { this.unlock(); }
+        else { if (input) input.value = ''; this.onWrongAttempt(); }
+      });
+    }
+
+    const bioBtn = document.getElementById('lock-bio-btn');
+    if (bioBtn) bioBtn.addEventListener('click', () => this.tryBiometricUnlock(false));
+
+    const forgot = document.getElementById('lock-forgot-btn');
+    if (forgot) forgot.addEventListener('click', () => this.handleForgot());
+  }
+
+  async trySubmitPin() {
+    const pin = this.pinBuffer;
+    const ok = await this.verifySecret(pin);
+    if (ok) { this.unlock(); return; }
+    this.pinBuffer = '';
+    this.renderDots();
+    this.onWrongAttempt();
+  }
+
+  async tryBiometricUnlock(silent) {
+    try {
+      const ok = await this.verifyBiometric();
+      if (ok) this.unlock();
+    } catch (e) {
+      if (!silent) {
+        const err = document.getElementById('lock-error');
+        if (err) err.textContent = this.t('lock_bio_failed');
+      }
+    }
+  }
+
+  onWrongAttempt() {
+    const cfg = this.getConfig();
+    cfg.fails = (cfg.fails || 0) + 1;
+    const err = document.getElementById('lock-error');
+    const screen = document.getElementById('app-lock-screen');
+    if (err) err.textContent = this.t('lock_wrong');
+    if (screen) {
+      screen.classList.remove('lock-shake');
+      void screen.offsetWidth;
+      screen.classList.add('lock-shake');
+    }
+    if (navigator.vibrate) { try { navigator.vibrate(80); } catch (e) {} }
+
+    if (cfg.fails >= 5) {
+      const penalty = Math.min(300, 30 * Math.pow(2, cfg.fails - 5)); // seconds, max 5 min
+      cfg.lockedUntil = Date.now() + penalty * 1000;
+    }
+    this.saveConfig(cfg);
+    this.applyCooldownUI();
+  }
+
+  inCooldown() {
+    return this.getConfig().lockedUntil > Date.now();
+  }
+
+  applyCooldownUI() {
+    const attempts = document.getElementById('lock-attempts');
+    if (this.cooldownTimer) { clearInterval(this.cooldownTimer); this.cooldownTimer = null; }
+    const tick = () => {
+      const cfg = this.getConfig();
+      const remain = Math.ceil((cfg.lockedUntil - Date.now()) / 1000);
+      if (remain > 0) {
+        if (attempts) attempts.textContent = this.t('lock_cooldown').replace('{s}', remain);
+      } else {
+        if (attempts) attempts.textContent = '';
+        if (this.cooldownTimer) { clearInterval(this.cooldownTimer); this.cooldownTimer = null; }
+      }
+    };
+    if (this.inCooldown()) { tick(); this.cooldownTimer = setInterval(tick, 1000); }
+    else if (attempts) attempts.textContent = '';
+  }
+
+  handleForgot() {
+    const msg = this.t('lock_forgot_confirm');
+    if (confirm(msg)) {
+      if (confirm(this.t('lock_forgot_confirm2'))) {
+        try {
+          Object.keys(localStorage).forEach(k => { if (k.indexOf('walio_') === 0) localStorage.removeItem(k); });
+        } catch (e) {}
+        location.reload();
+      }
+    }
+  }
+
+  /* ---------------- profile section (settings UI) ---------------- */
+  renderProfileSection() {
+    const cfg = this.getConfig();
+    const t = (k) => this.t(k);
+    const chevron = `<span class="profile-row-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M7 4l6 6-6 6"/></svg></span>`;
+    const autoOptions = [
+      { v: 0, label: t('lock_auto_immediate') },
+      { v: 1, label: t('lock_auto_1') },
+      { v: 5, label: t('lock_auto_5') },
+      { v: 15, label: t('lock_auto_15') },
+      { v: -1, label: t('lock_auto_never') }
+    ];
+
+    return `
+      <section class="profile-group" aria-labelledby="profile-security-title">
+        <h3 class="profile-group-title" id="profile-security-title">${t('security_section')}</h3>
+        <div class="profile-group-list">
+
+          <div class="profile-row" data-tone="green">
+            <span class="profile-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            </span>
+            <span class="profile-row-copy">
+              <strong>${t('app_lock')}</strong>
+              <span>${t('app_lock_hint')}</span>
+            </span>
+            <label class="ios-switch">
+              <input type="checkbox" id="setting-applock-toggle" ${cfg.enabled ? 'checked' : ''} />
+              <span class="switch-slider"></span>
+            </label>
+          </div>
+
+          ${cfg.enabled ? `
+          <button class="profile-row" id="btn-change-passcode" data-tone="indigo" type="button">
+            <span class="profile-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 2l-2 2m-7.6 7.6a5 5 0 1 1-7.1 7.1 5 5 0 0 1 7.1-7.1zm0 0L15 8m0 0l3 3 3-3-3-3"/></svg>
+            </span>
+            <span class="profile-row-copy">
+              <strong>${cfg.type === 'pin' ? t('change_pin') : t('change_password')}</strong>
+              <span>${t('change_pass_hint')}</span>
+            </span>
+            ${chevron}
+          </button>
+
+          <div class="profile-row" data-tone="blue" id="row-biometric">
+            <span class="profile-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M9 10v1M15 10v1M9.5 15c1.5 1.2 3.5 1.2 5 0"/></svg>
+            </span>
+            <span class="profile-row-copy">
+              <strong>${t('face_id')}</strong>
+              <span id="biometric-hint">${t('face_id_hint')}</span>
+            </span>
+            <label class="ios-switch">
+              <input type="checkbox" id="setting-biometric-toggle" ${cfg.bioEnabled ? 'checked' : ''} />
+              <span class="switch-slider"></span>
+            </label>
+          </div>
+
+          <div class="profile-row" data-tone="amber" style="flex-wrap:wrap; align-items:flex-start;">
+            <span class="profile-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </span>
+            <span class="profile-row-copy">
+              <strong>${t('auto_lock')}</strong>
+              <span>${t('auto_lock_hint')}</span>
+            </span>
+            <div class="sec-autolock-options" style="flex-basis:100%; margin-top:10px;">
+              ${autoOptions.map(o => `<button type="button" class="sec-autolock-chip ${cfg.autoLock === o.v ? 'active' : ''}" data-autolock="${o.v}">${o.label}</button>`).join('')}
+            </div>
+          </div>
+
+          <button class="profile-row" id="btn-lock-now" data-tone="violet" type="button">
+            <span class="profile-row-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M12 14v3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            </span>
+            <span class="profile-row-copy">
+              <strong>${t('lock_now')}</strong>
+              <span>${t('lock_now_hint')}</span>
+            </span>
+            ${chevron}
+          </button>` : ''}
+        </div>
+      </section>
+    `;
+  }
+
+  bindProfileSection(container) {
+    const cfg = this.getConfig();
+
+    const toggle = container.querySelector('#setting-applock-toggle');
+    if (toggle) {
+      toggle.addEventListener('change', async (e) => {
+        if (e.target.checked) {
+          e.target.checked = false;
+          this.openSetupSheet('create');
+        } else {
+          e.target.checked = true;
+          this.openSetupSheet('disable');
+        }
+      });
+    }
+
+    const changeBtn = container.querySelector('#btn-change-passcode');
+    if (changeBtn) changeBtn.addEventListener('click', () => this.openSetupSheet('change'));
+
+    const bioToggle = container.querySelector('#setting-biometric-toggle');
+    if (bioToggle) {
+      this.biometricSupported().then(supported => {
+        const hint = container.querySelector('#biometric-hint');
+        if (!supported) {
+          bioToggle.disabled = true;
+          if (hint) hint.textContent = this.t('face_id_unavailable');
+        }
+      });
+      bioToggle.addEventListener('change', async (e) => {
+        if (e.target.checked) {
+          try {
+            await this.registerBiometric();
+            alert(this.t('face_id_enabled'));
+          } catch (err) {
+            e.target.checked = false;
+            alert(this.t('face_id_failed'));
+          }
+        } else {
+          this.disableBiometric();
+        }
+      });
+    }
+
+    container.querySelectorAll('.sec-autolock-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const val = parseInt(chip.getAttribute('data-autolock'), 10);
+        const c = this.getConfig();
+        c.autoLock = val;
+        this.saveConfig(c);
+        container.querySelectorAll('.sec-autolock-chip').forEach(x => x.classList.remove('active'));
+        chip.classList.add('active');
+      });
+    });
+
+    const lockNow = container.querySelector('#btn-lock-now');
+    if (lockNow) lockNow.addEventListener('click', () => this.lock());
+  }
+
+  /* ---------------- setup sheet ---------------- */
+  openSetupSheet(mode) {
+    const sheet = document.getElementById('security-modal-sheet');
+    const body = document.getElementById('sec-sheet-body');
+    const titleEl = document.getElementById('sec-modal-title');
+    if (!sheet || !body) return;
+
+    const cfg = this.getConfig();
+    const t = (k) => this.t(k);
+    this.setupMode = mode;
+    this.setupType = cfg.enabled ? cfg.type : 'pin';
+
+    if (titleEl) {
+      titleEl.textContent = mode === 'create' ? t('app_lock_setup')
+        : mode === 'change' ? (cfg.type === 'pin' ? t('change_pin') : t('change_password'))
+        : t('app_lock_disable');
+    }
+
+    const needsCurrent = (mode === 'change' || mode === 'disable') && cfg.enabled;
+
+    body.innerHTML = `
+      ${needsCurrent ? `
+        <div class="tool-input-row">
+          <label>${cfg.type === 'pin' ? t('current_pin') : t('current_password')}</label>
+          <input type="password" inputmode="${cfg.type === 'pin' ? 'numeric' : 'text'}" id="sec-current" class="tool-input" />
+        </div>` : ''}
+
+      ${mode !== 'disable' ? `
+        <div class="sec-type-switch" id="sec-type-switch">
+          <button type="button" class="sec-type-btn ${this.setupType === 'pin' ? 'active' : ''}" data-sectype="pin">${t('lock_type_pin')}</button>
+          <button type="button" class="sec-type-btn ${this.setupType === 'password' ? 'active' : ''}" data-sectype="password">${t('lock_type_password')}</button>
+        </div>
+
+        <div class="tool-input-row">
+          <label id="sec-new-label">${t('new_pin')}</label>
+          <input type="password" inputmode="numeric" id="sec-new" class="tool-input" />
+        </div>
+
+        <div class="tool-input-row">
+          <label id="sec-confirm-label">${t('confirm_pin')}</label>
+          <input type="password" inputmode="numeric" id="sec-confirm" class="tool-input" />
+        </div>` : `<p class="sec-hint">${t('app_lock_disable_hint')}</p>`}
+
+      <p class="sec-hint" id="sec-hint">${mode === 'disable' ? '' : t('lock_setup_hint')}</p>
+      <p class="sec-hint" id="sec-error" style="color:var(--color-red); font-weight:600;"></p>
+      <button class="btn-primary-full" type="button" id="sec-save-btn">${mode === 'disable' ? t('app_lock_disable') : t('lock_save')}</button>
+    `;
+
+    const typeSwitch = body.querySelector('#sec-type-switch');
+    if (typeSwitch) {
+      typeSwitch.addEventListener('click', (e) => {
+        const btn = e.target.closest('.sec-type-btn');
+        if (!btn) return;
+        this.setupType = btn.getAttribute('data-sectype');
+        typeSwitch.querySelectorAll('.sec-type-btn').forEach(b => b.classList.toggle('active', b === btn));
+        const isPin = this.setupType === 'pin';
+        body.querySelector('#sec-new-label').textContent = isPin ? t('new_pin') : t('new_password');
+        body.querySelector('#sec-confirm-label').textContent = isPin ? t('confirm_pin') : t('confirm_password');
+        const ni = body.querySelector('#sec-new'); const ci = body.querySelector('#sec-confirm');
+        ni.value = ''; ci.value = '';
+        ni.setAttribute('inputmode', isPin ? 'numeric' : 'text');
+        ci.setAttribute('inputmode', isPin ? 'numeric' : 'text');
+        body.querySelector('#sec-hint').textContent = t('lock_setup_hint');
+      });
+    }
+
+    const errEl = body.querySelector('#sec-error');
+    const saveBtn = body.querySelector('#sec-save-btn');
+    saveBtn.addEventListener('click', async () => {
+      errEl.textContent = '';
+      if (needsCurrent) {
+        const cur = body.querySelector('#sec-current').value;
+        const ok = await this.verifySecret(cur);
+        if (!ok) { errEl.textContent = t('lock_wrong'); return; }
+      }
+
+      if (mode === 'disable') {
+        this.disable();
+        this.closeSetupSheet();
+        alert(t('app_lock_disabled_msg'));
+        if (window.walioApp) window.walioApp.renderProfileTab();
+        return;
+      }
+
+      const isPin = this.setupType === 'pin';
+      const val = body.querySelector('#sec-new').value.trim();
+      const conf = body.querySelector('#sec-confirm').value.trim();
+
+      if (isPin) {
+        if (!/^[0-9]{4,8}$/.test(val)) { errEl.textContent = t('err_pin_format'); return; }
+      } else {
+        if (val.length < 4) { errEl.textContent = t('err_pass_short'); return; }
+      }
+      if (val !== conf) { errEl.textContent = t('err_no_match'); return; }
+
+      saveBtn.disabled = true;
+      await this.setSecret(val, isPin ? 'pin' : 'password');
+      saveBtn.disabled = false;
+      this.closeSetupSheet();
+      alert(mode === 'create' ? t('app_lock_enabled_msg') : t('lock_changed_msg'));
+      if (window.walioApp) window.walioApp.renderProfileTab();
+    });
+
+    sheet.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    const closeBtn = document.getElementById('close-security-modal');
+    if (closeBtn && !closeBtn.dataset.bound) {
+      closeBtn.dataset.bound = '1';
+      closeBtn.addEventListener('click', () => {
+        this.closeSetupSheet();
+        if (window.walioApp) window.walioApp.renderProfileTab();
+      });
+    }
+  }
+
+  closeSetupSheet() {
+    const sheet = document.getElementById('security-modal-sheet');
+    if (sheet) sheet.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+window.security = new SecurityManager();
+
+
 class WalioApp {
   constructor() {
     this.currentTab = 'home';
@@ -10098,6 +11161,8 @@ class WalioApp {
           </div>
         </section>
 
+        ${window.security ? window.security.renderProfileSection() : ''}
+
         <section class="profile-group" aria-labelledby="profile-data-title">
           <h3 class="profile-group-title" id="profile-data-title">${t('data_section')}</h3>
           <div class="profile-group-list">
@@ -10156,6 +11221,8 @@ class WalioApp {
     `;
 
     if (window.i18n) window.i18n.translateDOM();
+
+    if (window.security) window.security.bindProfileSection(container);
 
     const saveBtn = container.querySelector('#btn-save-profile');
     if (saveBtn) {
@@ -10556,10 +11623,11 @@ class WalioApp {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+  if (window.security) window.security.boot();
   window.walioApp = new WalioApp();
   window.walioApp.init();
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2ab93d17fd99723',t:'MTc4NjY2NDU1OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2ab93d17fd99723',t:'MTc4NjY2NDU1OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cafc5d1b5c0b68',t:'MTc4Njk5Mzg5OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
