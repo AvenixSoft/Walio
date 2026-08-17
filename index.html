@@ -3177,6 +3177,7 @@ body.currency-board-mode .main-content > .tab-view:not(#tab-currency),
 body.currency-board-mode #tab-currency > .currency-page-redesign > .currency-page-header,
 body.currency-board-mode #tab-currency > .currency-page-redesign > .currency-market-hero,
 body.currency-board-mode #tab-currency > .currency-page-redesign > .currency-quick-converter,
+body.currency-board-mode #tab-currency > .currency-page-redesign > .metals-card,
 body.currency-board-mode #tab-currency > .currency-page-redesign > .currency-market-list-card {
   display: none !important;
 }
@@ -5976,6 +5977,96 @@ body.app-locked { overflow: hidden; }
 }
 .sec-autolock-chip.active { background: var(--accent-primary); border-color: var(--accent-primary); color: #fff; }
 
+/* ================= GOLD & COIN MARKET (طلا و سکه) ================= */
+.metals-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 18px 16px 16px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-main);
+  -webkit-backdrop-filter: blur(22px);
+  backdrop-filter: blur(22px);
+}
+.metals-heading {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 12px;
+}
+.metals-title {
+  font-size: 16px; font-weight: 800; margin: 0 0 3px; color: var(--text-primary);
+  display: flex; align-items: center; gap: 7px;
+}
+.metals-subtitle { font-size: 11.5px; color: var(--text-secondary); margin: 0; }
+.metals-status {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 10px; border-radius: 999px;
+  background: var(--chip-bg, rgba(120,120,140,.10));
+  border: 1px solid var(--border-subtle);
+  font-size: 10.5px; font-weight: 600; color: var(--text-secondary);
+  white-space: nowrap;
+}
+.metals-status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--color-green); box-shadow: 0 0 0 3px rgba(16,185,129,.18); }
+.metals-status-dot.cached { background: var(--color-amber); box-shadow: 0 0 0 3px rgba(245,158,11,.18); }
+
+.metals-tabs { display: flex; gap: 6px; background: var(--chip-bg, rgba(120,120,140,.10)); padding: 4px; border-radius: var(--radius-md); margin-bottom: 14px; }
+.metals-tab {
+  flex: 1; padding: 9px 6px; border: 0; border-radius: var(--radius-sm);
+  background: transparent; color: var(--text-secondary);
+  font-size: 12.5px; font-weight: 700; font-family: var(--font-main); cursor: pointer;
+  transition: var(--transition-spring);
+}
+.metals-tab.active { background: var(--accent-primary); color: #fff; }
+
+.metals-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.metals-grid.hidden { display: none; }
+
+.metal-card {
+  position: relative;
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 13px 12px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-glass);
+  background: var(--result-bg, rgba(120,120,140,.07));
+  text-align: start;
+  cursor: pointer;
+  font-family: var(--font-main);
+  overflow: hidden;
+  transition: var(--transition-spring);
+}
+.metal-card::after {
+  content: ''; position: absolute; inset-inline-end: -26px; top: -26px;
+  width: 72px; height: 72px; border-radius: 50%;
+  background: var(--metal-accent-soft, rgba(245,158,11,.16));
+}
+.metal-card:active { transform: scale(0.97); border-color: var(--metal-accent, #F59E0B); }
+
+.metal-card-top { display: flex; align-items: center; gap: 8px; position: relative; z-index: 1; }
+.metal-icon {
+  width: 30px; height: 30px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--metal-accent-soft, rgba(245,158,11,.18));
+  font-size: 15px;
+}
+.metal-name { font-size: 12px; font-weight: 700; color: var(--text-primary); line-height: 1.4; }
+.metal-unit { font-size: 10px; color: var(--text-muted); display: block; }
+
+.metal-price { font-size: 15px; font-weight: 800; color: var(--text-primary); position: relative; z-index: 1; letter-spacing: -0.2px; }
+.metal-foot { display: flex; align-items: center; justify-content: space-between; gap: 6px; position: relative; z-index: 1; }
+.metal-change {
+  font-size: 10.5px; font-weight: 700; padding: 3px 7px; border-radius: 999px;
+  background: var(--color-green-bg, rgba(16,185,129,.15)); color: var(--color-green);
+}
+.metal-change.down { background: var(--color-red-bg, rgba(239,68,68,.15)); color: var(--color-red); }
+.metal-time { font-size: 9.5px; color: var(--text-muted); }
+
+.metals-note { font-size: 10.5px; color: var(--text-muted); margin: 12px 0 0; line-height: 1.7; text-align: center; }
+
+/* home page gold strip */
+.home-metal-icon {
+  width: 34px; height: 34px; border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(245,158,11,.16); font-size: 16px;
+}
+
    </style>
 </head>
 <body>
@@ -6575,6 +6666,42 @@ const translations = {
     reset_data: "Reset All App Data",
     confirm_reset: "Are you sure you want to reset all data? This cannot be undone.",
     profile_updated: "Profile saved successfully!",
+    metals_tracked: "gold & coin assets",
+    gold_coin_title: "Gold & Coin",
+    gold_coin_subtitle: "Live Iranian gold and coin market prices",
+    gold_coin_note: "Prices in Toman, sourced live from tgju.org. Tap any card for its chart.",
+    metals_tab_gold: "Gold",
+    metals_tab_coin: "Coins",
+    metal_GOLD18: "18K Gold",
+    metal_GOLD24: "24K Gold",
+    metal_MESGHAL: "Gold Mesghal",
+    metal_SILVER: "Silver 999",
+    metal_ONS: "Gold Ounce",
+    metal_SEKEE: "Emami Coin",
+    metal_SEKEB: "Bahar Azadi Coin",
+    metal_NIM: "Half Coin",
+    metal_ROB: "Quarter Coin",
+    metal_GERAMI: "Gram Coin",
+    metal_unit_GOLD18: "per gram",
+    metal_unit_GOLD24: "per gram",
+    metal_unit_MESGHAL: "per mesghal",
+    metal_unit_SILVER: "per gram",
+    metal_unit_ONS: "global spot, per ounce",
+    metal_unit_SEKEE: "new design",
+    metal_unit_SEKEB: "old design",
+    metal_unit_NIM: "half Bahar Azadi",
+    metal_unit_ROB: "quarter Bahar Azadi",
+    metal_unit_GERAMI: "1 gram coin",
+    metal_short_GOLD18: "GOLD",
+    metal_short_GOLD24: "GOLD24",
+    metal_short_MESGHAL: "MESGHAL",
+    metal_short_SILVER: "SILVER",
+    metal_short_ONS: "XAU",
+    metal_short_SEKEE: "COIN",
+    metal_short_SEKEB: "COIN-B",
+    metal_short_NIM: "HALF",
+    metal_short_ROB: "QUARTER",
+    metal_short_GERAMI: "GRAM",
     security_section: "Security",
     app_lock: "App Lock",
     app_lock_hint: "Require a passcode every time the app opens",
@@ -6912,6 +7039,42 @@ const translations = {
     reset_data: "حذف کل اطلاعات برنامه (شروع از اول)",
     confirm_reset: "آیا از حذف تمامی اطلاعات اطمینان دارید؟ این عملیات غیرقابل بازگشت است.",
     profile_updated: "اطلاعات پروفایل با موفقیت ذخیره شد!",
+    metals_tracked: "قلم طلا و سکه",
+    gold_coin_title: "طلا و سکه",
+    gold_coin_subtitle: "قیمت زندهٔ بازار طلا و سکهٔ ایران",
+    gold_coin_note: "قیمت‌ها به تومان و به‌صورت زنده از tgju.org دریافت می‌شود. برای دیدن نمودار روی هر کارت بزنید.",
+    metals_tab_gold: "طلا",
+    metals_tab_coin: "سکه",
+    metal_GOLD18: "طلای ۱۸ عیار",
+    metal_GOLD24: "طلای ۲۴ عیار",
+    metal_MESGHAL: "مثقال طلا",
+    metal_SILVER: "نقره ۹۹۹",
+    metal_ONS: "انس جهانی طلا",
+    metal_SEKEE: "سکه امامی",
+    metal_SEKEB: "سکه بهار آزادی",
+    metal_NIM: "نیم سکه",
+    metal_ROB: "ربع سکه",
+    metal_GERAMI: "سکه گرمی",
+    metal_unit_GOLD18: "هر گرم",
+    metal_unit_GOLD24: "هر گرم",
+    metal_unit_MESGHAL: "هر مثقال",
+    metal_unit_SILVER: "هر گرم",
+    metal_unit_ONS: "بازار جهانی، هر اونس",
+    metal_unit_SEKEE: "طرح جدید",
+    metal_unit_SEKEB: "طرح قدیم",
+    metal_unit_NIM: "نیم بهار آزادی",
+    metal_unit_ROB: "ربع بهار آزادی",
+    metal_unit_GERAMI: "سکه یک گرمی",
+    metal_short_GOLD18: "طلا ۱۸",
+    metal_short_GOLD24: "طلا ۲۴",
+    metal_short_MESGHAL: "مثقال",
+    metal_short_SILVER: "نقره",
+    metal_short_ONS: "انس",
+    metal_short_SEKEE: "سکه",
+    metal_short_SEKEB: "بهار",
+    metal_short_NIM: "نیم سکه",
+    metal_short_ROB: "ربع سکه",
+    metal_short_GERAMI: "گرمی",
     security_section: "امنیت",
     app_lock: "قفل برنامه",
     app_lock_hint: "هر بار که برنامه باز می‌شود رمز پرسیده شود",
@@ -7944,7 +8107,15 @@ class CurrencyManager {
     this.activeTimeRange = '1M';
     this.chartDataCache = {};
 
+    // Gold & coin (طلا و سکه) market — live from tgju.org
+    this.metals = this.defaultMetals();
+    this.metalsLive = false;
+    this.metalsUpdated = null;
+    this.metalsUpdatedAt = 0;
+    this.metalsSource = 'tgju.org';
+
     this.loadCachedRates();
+    this.loadCachedMetals();
   }
 
   loadCachedRates() {
@@ -8220,6 +8391,7 @@ class CurrencyManager {
     // If a refresh fails (e.g. every source momentarily unreachable) retry
     // quickly a few times instead of waiting a whole period.
     const run = (retriesLeft = 2) => {
+      this.fetchMetals();
       this.fetchLiveRates().then(ok => {
         if (!ok && retriesLeft > 0) {
           clearTimeout(this._retryTimer);
@@ -8250,7 +8422,175 @@ class CurrencyManager {
     });
   }
 
+
+  /* ================= GOLD & COIN (طلا و سکه) ================= */
+
+  /**
+   * tgju key -> internal asset.
+   *  unit 'IRT'  → price published in Rial, divided by 10 to get Toman
+   *  unit 'USD'  → global spot price, used as-is
+   */
+  static get METALS_MAP() {
+    return {
+      GOLD18:  { tgju: 'geram18',    unit: 'IRT', group: 'gold', icon: '🥇' },
+      GOLD24:  { tgju: 'geram24',    unit: 'IRT', group: 'gold', icon: '🏆' },
+      MESGHAL: { tgju: 'mesghal',    unit: 'IRT', group: 'gold', icon: '📿' },
+      SILVER:  { tgju: 'silver_999', unit: 'IRT', group: 'gold', icon: '🥈' },
+      ONS:     { tgju: 'ons',        unit: 'USD', group: 'gold', icon: '🌍' },
+      SEKEE:   { tgju: 'sekee',      unit: 'IRT', group: 'coin', icon: '🪙' },
+      SEKEB:   { tgju: 'sekeb',      unit: 'IRT', group: 'coin', icon: '🪙' },
+      NIM:     { tgju: 'nim',        unit: 'IRT', group: 'coin', icon: '🌗' },
+      ROB:     { tgju: 'rob',        unit: 'IRT', group: 'coin', icon: '🌘' },
+      GERAMI:  { tgju: 'gerami',     unit: 'IRT', group: 'coin', icon: '✨' }
+    };
+  }
+
+  defaultMetals() {
+    const map = CurrencyManager.METALS_MAP;
+    const seed = {
+      GOLD18: 19229200, GOLD24: 25638700, MESGHAL: 83301000, SILVER: 414970, ONS: 4405.28,
+      SEKEE: 190510000, SEKEB: 186710000, NIM: 96500000, ROB: 53500000, GERAMI: 28000000
+    };
+    const out = {};
+    Object.keys(map).forEach(code => {
+      out[code] = {
+        code,
+        rate: seed[code],
+        change: 0,
+        unit: map[code].unit,
+        group: map[code].group,
+        flag: map[code].icon,
+        time: ''
+      };
+    });
+    return out;
+  }
+
+  loadCachedMetals() {
+    try {
+      const cached = JSON.parse(localStorage.getItem('walio_metals_cache_v1') || 'null');
+      if (cached && cached.metals) {
+        this.metals = Object.assign(this.defaultMetals(), cached.metals);
+        this.metalsUpdated = cached.timestamp || null;
+        this.metalsUpdatedAt = cached.updatedAt || 0;
+        this.metalsSource = cached.source || this.metalsSource;
+        this.metalsLive = false;
+      }
+    } catch (e) { /* ignore */ }
+  }
+
+  /** Sources for gold/coin prices. tgju is hosted in Iran and CORS-enabled. */
+  static get METAL_SOURCES() {
+    const feed = 'https://call3.tgju.org/ajax.json';
+    return [
+      { url: 'https://call2.tgju.org/ajax.json', label: 'tgju.org' },
+      { url: feed, label: 'tgju.org' },
+      { url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(feed), label: 'tgju.org' },
+      { url: 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(feed), label: 'tgju.org' }
+    ];
+  }
+
+  parseTgjuMetals(payload) {
+    const data = payload && payload.current;
+    const out = {};
+    if (!data) return out;
+
+    const map = CurrencyManager.METALS_MAP;
+    Object.keys(map).forEach(code => {
+      const info = map[code];
+      const entry = data[info.tgju];
+      if (!entry || entry.p == null) return;
+
+      let value = CurrencyManager.parsePersianNumber(entry.p);
+      if (!isFinite(value) || value <= 0) return;
+      if (info.unit === 'IRT') value = value / 10; // Rial -> Toman
+
+      let change = CurrencyManager.parsePersianNumber(entry.dp);
+      if (!isFinite(change)) change = 0;
+      if (String(entry.dt || '').toLowerCase() === 'low') change = -Math.abs(change);
+
+      out[code] = {
+        code,
+        rate: info.unit === 'IRT' ? Math.round(value) : Math.round(value * 100) / 100,
+        change,
+        unit: info.unit,
+        group: info.group,
+        flag: info.icon,
+        time: entry.t_en || entry.t || ''
+      };
+    });
+    return out;
+  }
+
+  /** Fetch REAL live gold & coin prices. */
+  async fetchMetals() {
+    const sources = CurrencyManager.METAL_SOURCES;
+    for (let i = 0; i < sources.length; i++) {
+      const src = sources[i];
+      try {
+        const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+        const timer = controller ? setTimeout(() => controller.abort(), 9000) : null;
+        const response = await fetch(src.url, {
+          cache: 'no-store',
+          referrerPolicy: 'no-referrer',
+          signal: controller ? controller.signal : undefined
+        });
+        if (timer) clearTimeout(timer);
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+
+        const parsed = this.parseTgjuMetals(await response.json());
+        if (!parsed.GOLD18 || !parsed.SEKEE) throw new Error('gold/coin not found');
+
+        this.metals = Object.assign(this.defaultMetals(), this.metals, parsed);
+        this.metalsChartCache = {};
+        this.metalsLive = true;
+        this.metalsSource = src.label;
+        this.metalsUpdatedAt = Date.now();
+        this.metalsUpdated = new Date().toLocaleTimeString(
+          window.i18n ? (window.i18n.currentLang === 'fa' ? 'fa-IR' : 'en-US') : 'en-US',
+          { hour: '2-digit', minute: '2-digit' }
+        );
+
+        try {
+          localStorage.setItem('walio_metals_cache_v1', JSON.stringify({
+            metals: this.metals,
+            timestamp: this.metalsUpdated,
+            updatedAt: this.metalsUpdatedAt,
+            source: this.metalsSource
+          }));
+        } catch (e) { /* storage full */ }
+
+        // Charts derived from these prices are now stale
+        Object.keys(this.chartDataCache).forEach(k => {
+          if (CurrencyManager.METALS_MAP[k.split('_')[0]]) delete this.chartDataCache[k];
+        });
+
+        window.dispatchEvent(new CustomEvent('walio_metals_updated'));
+        return true;
+      } catch (e) { /* try next source */ }
+    }
+    console.warn('All gold/coin sources failed — keeping cached prices.');
+    return false;
+  }
+
+  isMetal(code) {
+    return !!CurrencyManager.METALS_MAP[code];
+  }
+
+  getMetal(code) {
+    return this.metals[code] || null;
+  }
+
+  /** All gold/coin assets of a group, ready to render */
+  getMetalsByGroup(group) {
+    return Object.keys(CurrencyManager.METALS_MAP)
+      .filter(code => CurrencyManager.METALS_MAP[code].group === group)
+      .map(code => this.metals[code])
+      .filter(Boolean);
+  }
+
   getRate(code) {
+    if (this.metals && this.metals[code]) return this.metals[code];
     return this.rates[code] || { code, rate: 1, change: 0, flag: '🌐' };
   }
 
@@ -8403,7 +8743,8 @@ class CurrencyManager {
       crosshair.setAttribute('x2', p.x);
 
       tooltipBox.style.display = 'block';
-      const formattedPrice = window.i18n ? window.i18n.formatCurrency(d.price, 'IRT', true) : `${d.price} Toman`;
+      const chartUnit = (this.getRate(currencyCode) || {}).unit === 'USD' ? 'USD' : 'IRT';
+      const formattedPrice = window.i18n ? window.i18n.formatCurrency(d.price, chartUnit, true) : `${d.price} Toman`;
       tooltipBox.innerHTML = `
         <div class="tooltip-date">${d.date}</div>
         <div class="tooltip-price">${formattedPrice}</div>
@@ -8444,7 +8785,8 @@ class CurrencyManager {
     const prefix = diffPct >= 0 ? '+' : '';
     const changeText = `${prefix}${diffPct}% (${range})`;
     const changeClass = `chart-badge ${diffPct >= 0 ? 'badge-green' : 'badge-red'}`;
-    const currentText = window.i18n ? window.i18n.formatCurrency(lastPrice, 'IRT') : lastPrice;
+    const headerUnit = (this.getRate(currencyCode) || {}).unit === 'USD' ? 'USD' : 'IRT';
+    const currentText = window.i18n ? window.i18n.formatCurrency(lastPrice, headerUnit) : lastPrice;
 
     const currentElem = document.getElementById('chart-header-current');
     const changeElem = document.getElementById('chart-header-change');
@@ -9995,6 +10337,11 @@ class WalioApp {
     window.addEventListener('walio_profile_updated', () => this.updateHeaderProfile());
     window.addEventListener('walio_wallets_updated', () => this.refreshCurrentTab());
     window.addEventListener('walio_transactions_updated', () => this.refreshCurrentTab());
+    window.addEventListener('walio_metals_updated', () => {
+      if (this.currentTab === 'currency' || this.currentTab === 'home') {
+        this.refreshCurrentTab();
+      }
+    });
     window.addEventListener('walio_currency_updated', () => {
       if (this.currentTab === 'currency' || this.currentTab === 'home') {
         this.refreshCurrentTab();
@@ -10409,7 +10756,7 @@ class WalioApp {
     const container = document.getElementById(containerId);
     if (!container || !window.currency) return;
 
-    const codes = ['USD', 'EUR', 'AED', 'GBP'];
+    const codes = ['USD', 'EUR', 'GOLD18', 'SEKEE'];
     const isLive = window.currency.isLive;
     const updatedText = window.currency.lastUpdated || (window.i18n && window.i18n.currentLang === 'fa' ? 'امروز' : 'Today');
     const t = (key) => window.i18n ? window.i18n.t(key) : key;
@@ -10443,14 +10790,16 @@ class WalioApp {
         ${codes.map(code => {
           const rate = window.currency.getRate(code);
           const isUp = rate.change >= 0;
-          const name = t('curr_' + code);
+          const isMetalRow = window.currency.isMetal && window.currency.isMetal(code);
+          const name = t((isMetalRow ? 'metal_' : 'curr_') + code);
+          const shortLabel = isMetalRow ? t('metal_short_' + code) : code;
           const price = window.i18n ? window.i18n.formatCurrency(rate.rate, 'IRT') : `${rate.rate} IRT`;
           return `
             <button class="home-market-row" type="button" data-code="${code}" aria-label="${name}">
               <span class="home-market-identity">
                 <span class="home-market-flag">${rate.flag}</span>
                 <span class="home-market-meta">
-                  <span class="home-market-code">${code}</span>
+                  <span class="home-market-code">${shortLabel}</span>
                   <span class="home-market-name">${name}</span>
                 </span>
               </span>
@@ -10664,7 +11013,63 @@ class WalioApp {
       CAD: ['#EA580C', 'rgba(234,88,12,.13)'],
       AUD: ['#0891B2', 'rgba(8,145,178,.13)'],
       CHF: ['#E11D48', 'rgba(225,29,72,.12)'],
-      JPY: ['#4F46E5', 'rgba(79,70,229,.13)']
+      JPY: ['#4F46E5', 'rgba(79,70,229,.13)'],
+      GOLD18: ['#F59E0B', 'rgba(245,158,11,.16)'],
+      GOLD24: ['#D97706', 'rgba(217,119,6,.16)'],
+      MESGHAL: ['#B45309', 'rgba(180,83,9,.15)'],
+      SILVER: ['#64748B', 'rgba(100,116,139,.16)'],
+      ONS: ['#0EA5E9', 'rgba(14,165,233,.15)'],
+      SEKEE: ['#EAB308', 'rgba(234,179,8,.16)'],
+      SEKEB: ['#CA8A04', 'rgba(202,138,4,.16)'],
+      NIM: ['#F97316', 'rgba(249,115,22,.15)'],
+      ROB: ['#EC4899', 'rgba(236,72,153,.14)'],
+      GERAMI: ['#8B5CF6', 'rgba(139,92,246,.14)']
+    };
+
+    // Gold & coin assets shown on the rate board next to the currencies
+    const metalCodes = window.currency.metals ? Object.keys(window.currency.metals) : [];
+    const isMetalCode = (code) => !!(window.currency.isMetal && window.currency.isMetal(code));
+    const assetName = (code) => t((isMetalCode(code) ? 'metal_' : 'curr_') + code);
+    const assetShort = (code) => isMetalCode(code) ? t('metal_short_' + code) : code;
+    const assetPrice = (asset) => window.i18n.formatCurrency(asset.rate, asset.unit === 'USD' ? 'USD' : 'IRT');
+    const assetNote = (code) => isMetalCode(code) ? t('metal_unit_' + code) : t('market_open');
+
+    const boardCard = (code) => {
+      const asset = window.currency.getRate(code);
+      const isUp = (asset.change || 0) >= 0;
+      const palette = boardPalette[code] || ['#4F46E5', 'rgba(79,70,229,.13)'];
+      return `
+        <button class="currency-board-card" type="button" data-code="${code}" style="--board-accent:${palette[0]}; --board-accent-soft:${palette[1]};" aria-label="${assetName(code)}">
+          <span class="currency-board-card-top">
+            <span class="currency-board-identity">
+              <span class="currency-board-flag">${asset.flag}</span>
+              <span>
+                <span class="currency-board-code">${assetShort(code)}</span>
+                <span class="currency-board-name">${assetName(code)}</span>
+              </span>
+            </span>
+            <span class="currency-board-arrow">
+              <svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4l6 6-6 6"/></svg>
+            </span>
+          </span>
+
+          <span class="currency-board-card-center">
+            <span class="currency-board-price-label">${t('currency_board_value_label')}</span>
+            <strong class="currency-board-price">${assetPrice(asset)}</strong>
+            <span class="currency-board-change-row">
+              <span class="currency-board-change ${isUp ? '' : 'down'}">${isUp ? '↗' : '↘'} ${isUp ? '+' : ''}${asset.change || 0}%</span>
+              <span class="currency-board-market-label">${assetNote(code)}</span>
+            </span>
+          </span>
+
+          <span class="currency-board-chart-wrap">
+            ${boardSparkline(code, isUp)}
+            <span class="currency-board-chart-caption">
+              <span>${t('price_chart')} · ${t('time_1m')}</span>
+              <span>${t('view_full_chart')}</span>
+            </span>
+          </span>
+        </button>`;
     };
 
     const boardSparkline = (code, isUp) => {
@@ -10728,43 +11133,19 @@ class WalioApp {
             </div>
 
             <div class="currency-board-grid">
-              ${codes.map(code => {
-                const rate = rates[code];
-                const isUp = rate.change >= 0;
-                const palette = boardPalette[code] || ['#4F46E5', 'rgba(79,70,229,.13)'];
-                return `
-                  <button class="currency-board-card" type="button" data-code="${code}" style="--board-accent:${palette[0]}; --board-accent-soft:${palette[1]};" aria-label="${t('curr_' + code)}">
-                    <span class="currency-board-card-top">
-                      <span class="currency-board-identity">
-                        <span class="currency-board-flag">${rate.flag}</span>
-                        <span>
-                          <span class="currency-board-code">${code}</span>
-                          <span class="currency-board-name">${t('curr_' + code)}</span>
-                        </span>
-                      </span>
-                      <span class="currency-board-arrow">
-                        <svg viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4l6 6-6 6"/></svg>
-                      </span>
-                    </span>
+              ${codes.map(boardCard).join('')}
+            </div>
 
-                    <span class="currency-board-card-center">
-                      <span class="currency-board-price-label">${t('currency_board_value_label')}</span>
-                      <strong class="currency-board-price">${window.i18n.formatCurrency(rate.rate, 'IRT')}</strong>
-                      <span class="currency-board-change-row">
-                        <span class="currency-board-change ${isUp ? '' : 'down'}">${isUp ? '↗' : '↘'} ${isUp ? '+' : ''}${rate.change}%</span>
-                        <span class="currency-board-market-label">${t('market_open')}</span>
-                      </span>
-                    </span>
+            <div class="currency-board-summary" style="margin-top:22px;">
+              <div>
+                <h2 class="currency-board-section-title">${t('gold_coin_title')}</h2>
+                <p class="currency-board-section-note">${t('gold_coin_subtitle')}</p>
+              </div>
+              <span class="currency-board-count"><strong>${metalCodes.length}</strong> ${t('metals_tracked')}</span>
+            </div>
 
-                    <span class="currency-board-chart-wrap">
-                      ${boardSparkline(code, isUp)}
-                      <span class="currency-board-chart-caption">
-                        <span>${t('price_chart')} · ${t('time_1m')}</span>
-                        <span>${t('view_full_chart')}</span>
-                      </span>
-                    </span>
-                  </button>`;
-              }).join('')}
+            <div class="currency-board-grid">
+              ${metalCodes.map(boardCard).join('')}
             </div>
           </div>
         </section>
@@ -10824,6 +11205,8 @@ class WalioApp {
           </button>
         </section>
 
+        ${this.renderMetalsSection()}
+
         <section class="currency-market-list-card" aria-labelledby="market-list-title">
           <div class="market-list-heading">
             <div>
@@ -10880,6 +11263,8 @@ class WalioApp {
       </div>`;
 
     if (window.i18n) window.i18n.translateDOM();
+
+    this.bindMetalsSection(container);
 
     // Preserve the dedicated rate-board view when data or language refreshes.
     document.body.classList.toggle('currency-board-mode', Boolean(this.currencyBoardMode));
@@ -10967,7 +11352,10 @@ class WalioApp {
           button.classList.add('is-loading');
         });
 
-        const success = await window.currency.fetchLiveRates();
+        const [success] = await Promise.all([
+          window.currency.fetchLiveRates(),
+          window.currency.fetchMetals()
+        ]);
         refreshButtons.forEach(button => {
           button.disabled = false;
           button.classList.remove('is-loading');
@@ -11000,6 +11388,103 @@ class WalioApp {
     }
   }
 
+
+  // ================= GOLD & COIN SECTION =================
+  renderMetalsSection() {
+    if (!window.currency || !window.currency.metals) return '';
+    const t = (key) => window.i18n ? window.i18n.t(key) : key;
+    const cur = window.currency;
+    const isFa = window.i18n && window.i18n.currentLang === 'fa';
+    const isLive = cur.metalsLive;
+    const updated = cur.metalsUpdated || (isFa ? 'امروز' : 'Today');
+
+    const palette = {
+      GOLD18: ['#F59E0B', 'rgba(245,158,11,.16)'],
+      GOLD24: ['#D97706', 'rgba(217,119,6,.16)'],
+      MESGHAL: ['#B45309', 'rgba(180,83,9,.15)'],
+      SILVER: ['#64748B', 'rgba(100,116,139,.16)'],
+      ONS: ['#0EA5E9', 'rgba(14,165,233,.15)'],
+      SEKEE: ['#EAB308', 'rgba(234,179,8,.16)'],
+      SEKEB: ['#CA8A04', 'rgba(202,138,4,.16)'],
+      NIM: ['#F97316', 'rgba(249,115,22,.15)'],
+      ROB: ['#EC4899', 'rgba(236,72,153,.14)'],
+      GERAMI: ['#8B5CF6', 'rgba(139,92,246,.14)']
+    };
+
+    const card = (asset) => {
+      if (!asset) return '';
+      const isUp = (asset.change || 0) >= 0;
+      const colors = palette[asset.code] || ['#F59E0B', 'rgba(245,158,11,.16)'];
+      const price = window.i18n
+        ? window.i18n.formatCurrency(asset.rate, asset.unit === 'USD' ? 'USD' : 'IRT')
+        : `${asset.rate}`;
+      return `
+        <button class="metal-card" type="button" data-metal="${asset.code}"
+                style="--metal-accent:${colors[0]}; --metal-accent-soft:${colors[1]};"
+                aria-label="${t('metal_' + asset.code)}">
+          <span class="metal-card-top">
+            <span class="metal-icon">${asset.flag || '🥇'}</span>
+            <span>
+              <span class="metal-name">${t('metal_' + asset.code)}</span>
+              <span class="metal-unit">${t('metal_unit_' + asset.code)}</span>
+            </span>
+          </span>
+          <span class="metal-price">${price}</span>
+          <span class="metal-foot">
+            <span class="metal-change ${isUp ? '' : 'down'}">${isUp ? '↗ +' : '↘ '}${asset.change || 0}%</span>
+            ${asset.time ? `<span class="metal-time">${asset.time}</span>` : ''}
+          </span>
+        </button>`;
+    };
+
+    const gold = cur.getMetalsByGroup('gold').map(card).join('');
+    const coins = cur.getMetalsByGroup('coin').map(card).join('');
+
+    return `
+      <section class="metals-card" id="metals-section" aria-labelledby="metals-title">
+        <div class="metals-heading">
+          <div>
+            <h3 class="metals-title" id="metals-title">🥇 ${t('gold_coin_title')}</h3>
+            <p class="metals-subtitle">${t('gold_coin_subtitle')}</p>
+          </div>
+          <span class="metals-status">
+            <span class="metals-status-dot ${isLive ? '' : 'cached'}"></span>
+            <span>${t(isLive ? 'rates_live_status' : 'rates_cached_status')} · ${updated}</span>
+          </span>
+        </div>
+
+        <div class="metals-tabs" role="group" aria-label="${t('gold_coin_title')}">
+          <button class="metals-tab active" type="button" data-metal-group="gold">${t('metals_tab_gold')}</button>
+          <button class="metals-tab" type="button" data-metal-group="coin">${t('metals_tab_coin')}</button>
+        </div>
+
+        <div class="metals-grid" data-metal-grid="gold">${gold}</div>
+        <div class="metals-grid hidden" data-metal-grid="coin">${coins}</div>
+
+        <p class="metals-note">${t('gold_coin_note')}</p>
+      </section>`;
+  }
+
+  bindMetalsSection(container) {
+    const tabs = container.querySelectorAll('.metals-tab');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const group = tab.getAttribute('data-metal-group');
+        tabs.forEach(x => x.classList.toggle('active', x === tab));
+        container.querySelectorAll('[data-metal-grid]').forEach(grid => {
+          grid.classList.toggle('hidden', grid.getAttribute('data-metal-grid') !== group);
+        });
+      });
+    });
+
+    container.querySelectorAll('.metal-card').forEach(cardEl => {
+      cardEl.addEventListener('click', () => {
+        const code = cardEl.getAttribute('data-metal');
+        this.openCurrencyChart(code);
+      });
+    });
+  }
+
   openCurrencyChart(code) {
     const overlay = document.getElementById('currency-chart-overlay');
     if (!overlay || !window.currency) return;
@@ -11012,7 +11497,10 @@ class WalioApp {
     const nameEl = document.getElementById('cc-name');
     if (flagEl) flagEl.textContent = rate.flag || '🌐';
     if (codeEl) codeEl.textContent = code;
-    if (nameEl) nameEl.textContent = window.i18n ? window.i18n.t('curr_' + code) : rate.name;
+    const isMetalAsset = window.currency.isMetal && window.currency.isMetal(code);
+    if (nameEl) nameEl.textContent = window.i18n
+      ? window.i18n.t((isMetalAsset ? 'metal_' : 'curr_') + code)
+      : rate.name;
 
     const pills = overlay.querySelectorAll('.time-range-pill');
     pills.forEach(p => {
@@ -11629,5 +12117,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2ab93d17fd99723',t:'MTc4NjY2NDU1OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cafc5d1b5c0b68',t:'MTc4Njk5Mzg5OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2ab93d17fd99723',t:'MTc4NjY2NDU1OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cb16fb1ed766dc',t:'MTc4Njk5NDk4OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
