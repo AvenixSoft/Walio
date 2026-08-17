@@ -6067,9 +6067,192 @@ body.app-locked { overflow: hidden; }
   background: rgba(245,158,11,.16); font-size: 16px;
 }
 
-   </style>
+   
+/* ================= FIRST-LAUNCH TYPOGRAPHIC INTRO ================= */
+.walio-welcome-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 120000;
+  display: none;
+  place-items: center;
+  overflow: hidden;
+  padding: max(24px, env(safe-area-inset-top)) 18px max(24px, env(safe-area-inset-bottom));
+  color: #FFFFFF;
+  background: #090C18;
+  opacity: 0;
+  visibility: hidden;
+  isolation: isolate;
+  direction: ltr;
+  cursor: pointer;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.walio-welcome-intro::before {
+  content: '';
+  position: absolute;
+  inset: -25%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 26% 38%, rgba(79,70,229,.18), transparent 31%),
+    radial-gradient(circle at 76% 62%, rgba(37,99,235,.13), transparent 34%);
+  opacity: 0;
+  transform: scale(.82);
+}
+
+.walio-welcome-intro.active {
+  display: grid;
+  visibility: visible;
+  animation: walio-simple-screen-in .42s ease-out both;
+}
+
+.walio-welcome-intro.active::before {
+  animation: walio-simple-glow-in 1.6s .18s cubic-bezier(.16,1,.3,1) forwards;
+}
+
+.walio-welcome-intro.is-leaving {
+  animation: walio-simple-screen-out .72s cubic-bezier(.4,0,.2,1) both;
+  pointer-events: none;
+}
+
+.walio-intro-title {
+  width: min(100%, 1180px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: .12em .22em;
+  margin: 0;
+  color: #FFFFFF;
+  font-size: clamp(48px, 11.5vw, 126px);
+  font-weight: 790;
+  line-height: .98;
+  letter-spacing: clamp(-6px, -.062em, -2px);
+  text-align: center;
+  text-wrap: balance;
+  text-shadow: 0 18px 54px rgba(0,0,0,.30);
+  perspective: 1100px;
+}
+
+.walio-intro-word {
+  display: inline-flex;
+  white-space: nowrap;
+}
+
+.walio-intro-letter {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(14px);
+  transform: translate3d(0, .78em, 0) rotateX(-78deg) scale(.78);
+  transform-origin: 50% 100%;
+  will-change: transform, opacity, filter;
+  animation: walio-simple-letter-in .86s cubic-bezier(.16,1,.3,1) forwards;
+  animation-delay: calc(.28s + (var(--letter-index) * 58ms));
+}
+
+.walio-intro-word:last-child {
+  color: #A5B4FC;
+}
+
+.walio-intro-word:last-child .walio-intro-letter {
+  text-shadow: 0 14px 46px rgba(99,102,241,.28);
+}
+
+body.walio-intro-open { overflow: hidden !important; }
+
+@keyframes walio-simple-screen-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes walio-simple-glow-in {
+  0% { opacity: 0; transform: scale(.82) rotate(-4deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes walio-simple-letter-in {
+  0% {
+    opacity: 0;
+    filter: blur(14px);
+    transform: translate3d(0, .78em, 0) rotateX(-78deg) scale(.78);
+  }
+  58% { opacity: 1; filter: blur(1px); }
+  78% { transform: translate3d(0, -.055em, 0) rotateX(4deg) scale(1.025); }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0) rotateX(0) scale(1);
+  }
+}
+
+@keyframes walio-simple-screen-out {
+  0% { opacity: 1; transform: scale(1); filter: blur(0); }
+  100% { opacity: 0; transform: scale(1.045); filter: blur(10px); }
+}
+
+@media (max-width: 430px) {
+  .walio-intro-title {
+    max-width: 370px;
+    font-size: clamp(46px, 14vw, 62px);
+    gap: .08em .18em;
+    line-height: 1.02;
+    letter-spacing: -.06em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .walio-welcome-intro.active,
+  .walio-welcome-intro.active::before,
+  .walio-welcome-intro.is-leaving,
+  .walio-intro-letter {
+    animation-duration: .01ms !important;
+    animation-delay: 0ms !important;
+  }
+}
+
+/* ================= OPTIONAL TOMAN PRICE LABEL =================
+ * When the user hides the default Toman label, these rules reclaim its space
+ * while preserving the original numeral font and end alignment.
+ */
+body.toman-unit-hidden .market-rate-price,
+body.toman-unit-hidden .home-market-price,
+body.toman-unit-hidden .market-hero-price,
+body.toman-unit-hidden .metal-price,
+body.toman-unit-hidden .currency-board-price,
+body.toman-unit-hidden .tooltip-price {
+  /* Keep exactly the same numeral glyphs used when the Toman label is visible. */
+  font-family: var(--font-main);
+  font-variant-numeric: normal;
+  font-feature-settings: normal;
+  padding-inline: 0;
+}
+
+body.toman-unit-hidden .market-rate-row {
+  grid-template-columns: minmax(0, 1fr) 54px minmax(84px, auto) 18px;
+}
+
+body.toman-unit-hidden .market-rate-values,
+body.toman-unit-hidden .home-market-values {
+  min-width: 84px;
+}
+
+@media (max-width: 380px) {
+  body.toman-unit-hidden .market-rate-row {
+    grid-template-columns: minmax(0, 1fr) minmax(80px, auto) 16px;
+  }
+  body.toman-unit-hidden .market-rate-values,
+  body.toman-unit-hidden .home-market-values {
+    min-width: 76px;
+  }
+}
+
+</style>
 </head>
 <body>
+  <div class="walio-welcome-intro" id="walio-welcome-intro" aria-hidden="true" role="status">
+    <h1 class="walio-intro-title" aria-label="Welcome To Walio"><span class="walio-intro-word" aria-hidden="true"><span class="walio-intro-letter" style="--letter-index:0">W</span><span class="walio-intro-letter" style="--letter-index:1">e</span><span class="walio-intro-letter" style="--letter-index:2">l</span><span class="walio-intro-letter" style="--letter-index:3">c</span><span class="walio-intro-letter" style="--letter-index:4">o</span><span class="walio-intro-letter" style="--letter-index:5">m</span><span class="walio-intro-letter" style="--letter-index:6">e</span></span><span class="walio-intro-word" aria-hidden="true"><span class="walio-intro-letter" style="--letter-index:7">T</span><span class="walio-intro-letter" style="--letter-index:8">o</span></span><span class="walio-intro-word" aria-hidden="true"><span class="walio-intro-letter" style="--letter-index:9">W</span><span class="walio-intro-letter" style="--letter-index:10">a</span><span class="walio-intro-letter" style="--letter-index:11">l</span><span class="walio-intro-letter" style="--letter-index:12">i</span><span class="walio-intro-letter" style="--letter-index:13">o</span></span></h1>
+  </div>
+
   <div class="app-container">
     <div class="mobile-frame">
 
@@ -6641,6 +6824,8 @@ const translations = {
     profile_photo_hint: "JPG or PNG · resized automatically",
     profile_appearance: "Appearance",
     profile_theme_hint: "Switch between light and dark",
+    show_toman_unit: "Show “Toman” beside prices",
+    show_toman_unit_hint: "Turn off for clean, number-only IRT prices",
     profile_language_hint: "Interface language",
     profile_backup_hint: "Save a copy of your data",
     profile_restore_hint: "Load data from a backup file",
@@ -7014,6 +7199,8 @@ const translations = {
     profile_photo_hint: "فرمت JPG یا PNG · اندازه به‌صورت خودکار تنظیم می‌شود",
     profile_appearance: "ظاهر برنامه",
     profile_theme_hint: "جابه‌جایی بین حالت روشن و تاریک",
+    show_toman_unit: "نمایش «تومان» کنار قیمت‌ها",
+    show_toman_unit_hint: "با خاموش‌کردن، قیمت‌های تومانی فقط به‌صورت عددی نمایش داده می‌شوند",
     profile_language_hint: "زبان محیط برنامه",
     profile_backup_hint: "ذخیره یک نسخه از اطلاعات شما",
     profile_restore_hint: "بازیابی اطلاعات از فایل پشتیبان",
@@ -7243,7 +7430,17 @@ class I18nManager {
 
     const formattedNum = new Intl.NumberFormat(isFa ? 'fa-IR' : 'en-US', options).format(num);
 
-    if (!showSymbol) return formattedNum;
+    // IRT prices show “Toman” by default. The user can hide the label from
+    // Profile > Preferences whenever a cleaner number-only view is preferred.
+    let showTomanUnit = true;
+    if (currency === 'IRT') {
+      try {
+        const settings = window.storage ? window.storage.getSettings() : null;
+        showTomanUnit = Boolean(settings && settings.showTomanUnit === true);
+      } catch (e) { /* Keep the default Toman label visible. */ }
+    }
+
+    if (!showSymbol || (currency === 'IRT' && !showTomanUnit)) return formattedNum;
 
     const symbols = {
       IRT: isFa ? 'تومان' : 'Toman',
@@ -7575,8 +7772,20 @@ class StorageManager {
 
   // --- Settings ---
   getSettings() {
+    const defaults = {
+      darkMode: 'light',
+      hideBalance: false,
+      useRealRates: true,
+      // Show the Toman label by default; users can hide it from Profile.
+      showTomanUnit: true
+    };
     const data = localStorage.getItem(STORAGE_KEYS.SETTINGS);
-    return data ? JSON.parse(data) : { darkMode: 'light', hideBalance: false, useRealRates: true };
+    if (!data) return defaults;
+    try {
+      return { ...defaults, ...JSON.parse(data) };
+    } catch (e) {
+      return defaults;
+    }
   }
 
   saveSettings(settings) {
@@ -8433,15 +8642,15 @@ class CurrencyManager {
   static get METALS_MAP() {
     return {
       GOLD18:  { tgju: 'geram18',    unit: 'IRT', group: 'gold', icon: '🥇' },
-      GOLD24:  { tgju: 'geram24',    unit: 'IRT', group: 'gold', icon: '🏆' },
-      MESGHAL: { tgju: 'mesghal',    unit: 'IRT', group: 'gold', icon: '📿' },
+      GOLD24:  { tgju: 'geram24',    unit: 'IRT', group: 'gold', icon: '🥇' },
+      MESGHAL: { tgju: 'mesghal',    unit: 'IRT', group: 'gold', icon: '🥇' },
       SILVER:  { tgju: 'silver_999', unit: 'IRT', group: 'gold', icon: '🥈' },
-      ONS:     { tgju: 'ons',        unit: 'USD', group: 'gold', icon: '🌍' },
+      ONS:     { tgju: 'ons',        unit: 'USD', group: 'gold', icon: '🥇' },
       SEKEE:   { tgju: 'sekee',      unit: 'IRT', group: 'coin', icon: '🪙' },
       SEKEB:   { tgju: 'sekeb',      unit: 'IRT', group: 'coin', icon: '🪙' },
-      NIM:     { tgju: 'nim',        unit: 'IRT', group: 'coin', icon: '🌗' },
-      ROB:     { tgju: 'rob',        unit: 'IRT', group: 'coin', icon: '🌘' },
-      GERAMI:  { tgju: 'gerami',     unit: 'IRT', group: 'coin', icon: '✨' }
+      NIM:     { tgju: 'nim',        unit: 'IRT', group: 'coin', icon: '🪙' },
+      ROB:     { tgju: 'rob',        unit: 'IRT', group: 'coin', icon: '🪙' },
+      GERAMI:  { tgju: 'gerami',     unit: 'IRT', group: 'coin', icon: '🪙' }
     };
   }
 
@@ -8578,19 +8787,29 @@ class CurrencyManager {
   }
 
   getMetal(code) {
-    return this.metals[code] || null;
+    const asset = this.metals[code] || null;
+    const meta = CurrencyManager.METALS_MAP[code];
+    return asset && meta ? { ...asset, flag: meta.icon } : asset;
   }
 
   /** All gold/coin assets of a group, ready to render */
   getMetalsByGroup(group) {
     return Object.keys(CurrencyManager.METALS_MAP)
       .filter(code => CurrencyManager.METALS_MAP[code].group === group)
-      .map(code => this.metals[code])
+      // Always take the emoji from METALS_MAP so an older cache cannot restore
+      // the previous trophy, globe, moon or sparkle icons.
+      .map(code => {
+        const asset = this.metals[code];
+        return asset ? { ...asset, flag: CurrencyManager.METALS_MAP[code].icon } : null;
+      })
       .filter(Boolean);
   }
 
   getRate(code) {
-    if (this.metals && this.metals[code]) return this.metals[code];
+    if (this.metals && this.metals[code]) {
+      const meta = CurrencyManager.METALS_MAP[code];
+      return meta ? { ...this.metals[code], flag: meta.icon } : this.metals[code];
+    }
     return this.rates[code] || { code, rate: 1, change: 0, flag: '🌐' };
   }
 
@@ -8744,7 +8963,7 @@ class CurrencyManager {
 
       tooltipBox.style.display = 'block';
       const chartUnit = (this.getRate(currencyCode) || {}).unit === 'USD' ? 'USD' : 'IRT';
-      const formattedPrice = window.i18n ? window.i18n.formatCurrency(d.price, chartUnit, true) : `${d.price} Toman`;
+      const formattedPrice = window.i18n ? window.i18n.formatCurrency(d.price, chartUnit, true) : `${d.price}`;
       tooltipBox.innerHTML = `
         <div class="tooltip-date">${d.date}</div>
         <div class="tooltip-price">${formattedPrice}</div>
@@ -10318,13 +10537,13 @@ class WalioApp {
 
   init() {
     this.applyTheme();
+    this.applyPriceUnitPreference();
     this.setupNavigation();
     this.setupModals();
     this.setupQuickActions();
 
-    if (!window.storage.isOnboardingCompleted()) {
-      this.showOnboardingModal();
-    }
+    // On the very first launch, play the branded intro before onboarding.
+    this.runFirstLaunchExperience();
 
     if (window.currency) {
       // Live arzdigital.com prices + automatic periodic refresh
@@ -10335,6 +10554,7 @@ class WalioApp {
 
     window.addEventListener('walio_lang_changed', () => this.refreshCurrentTab());
     window.addEventListener('walio_profile_updated', () => this.updateHeaderProfile());
+    window.addEventListener('walio_settings_updated', () => this.applyPriceUnitPreference());
     window.addEventListener('walio_wallets_updated', () => this.refreshCurrentTab());
     window.addEventListener('walio_transactions_updated', () => this.refreshCurrentTab());
     window.addEventListener('walio_metals_updated', () => {
@@ -10363,6 +10583,11 @@ class WalioApp {
     } else {
       document.documentElement.setAttribute('data-theme', 'dark');
     }
+  }
+
+  applyPriceUnitPreference() {
+    const settings = window.storage ? window.storage.getSettings() : { showTomanUnit: true };
+    document.body.classList.toggle('toman-unit-hidden', settings.showTomanUnit !== true);
   }
 
   registerServiceWorker() {
@@ -11633,6 +11858,20 @@ class WalioApp {
               </label>
             </div>
 
+            <div class="profile-row" data-tone="teal">
+              <span class="profile-row-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1 0-4h12v4"/><path d="M4 6v12a2 2 0 0 0 2 2h14v-4"/><path d="M16 12h5v4h-5a2 2 0 0 1 0-4z"/></svg>
+              </span>
+              <span class="profile-row-copy">
+                <strong data-i18n="show_toman_unit">${t('show_toman_unit')}</strong>
+                <span data-i18n="show_toman_unit_hint">${t('show_toman_unit_hint')}</span>
+              </span>
+              <label class="ios-switch" aria-label="${t('show_toman_unit')}">
+                <input type="checkbox" id="setting-toman-unit-toggle" ${settings.showTomanUnit === true ? 'checked' : ''} />
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+
             <div class="profile-row" data-tone="violet">
               <span class="profile-row-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
@@ -11745,6 +11984,15 @@ class WalioApp {
         settings.darkMode = mode;
         window.storage.saveSettings(settings);
         this.applyTheme();
+      });
+    }
+
+    const tomanUnitToggle = container.querySelector('#setting-toman-unit-toggle');
+    if (tomanUnitToggle) {
+      tomanUnitToggle.addEventListener('change', (e) => {
+        settings.showTomanUnit = e.target.checked;
+        window.storage.saveSettings(settings);
+        this.applyPriceUnitPreference();
       });
     }
 
@@ -12008,6 +12256,77 @@ class WalioApp {
     }
   }
 
+  runFirstLaunchExperience() {
+    const introKey = 'walio_intro_seen_v1';
+    let shouldShowIntro = true;
+    try {
+      shouldShowIntro = localStorage.getItem(introKey) !== 'true';
+    } catch (e) { /* Show it when storage is unavailable. */ }
+
+    const continueToOnboarding = () => {
+      if (!window.storage.isOnboardingCompleted()) this.showOnboardingModal();
+    };
+
+    if (!shouldShowIntro) {
+      continueToOnboarding();
+      return;
+    }
+
+    // Mark it as seen as soon as playback starts, so a refresh cannot replay it.
+    try { localStorage.setItem(introKey, 'true'); } catch (e) {}
+    this.showWelcomeIntro(continueToOnboarding);
+  }
+
+  showWelcomeIntro(onComplete) {
+    const intro = document.getElementById('walio-welcome-intro');
+    if (!intro) {
+      if (typeof onComplete === 'function') onComplete();
+      return;
+    }
+
+    let finished = false;
+    let exitTimer = null;
+    let onKey = null;
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      window.clearTimeout(exitTimer);
+      if (onKey) document.removeEventListener('keydown', onKey);
+      intro.classList.add('is-leaving');
+
+      window.setTimeout(() => {
+        intro.classList.remove('active', 'is-leaving');
+        intro.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('walio-intro-open');
+        if (typeof onComplete === 'function') onComplete();
+      }, reduceMotion ? 40 : 680);
+    };
+
+    intro.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('walio-intro-open');
+    // Two animation frames guarantee the browser paints the initial letter state.
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => intro.classList.add('active'));
+    });
+
+    intro.addEventListener('click', finish, { once: true });
+
+    onKey = (event) => {
+      if (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        finish();
+      }
+    };
+    document.addEventListener('keydown', onKey);
+
+    exitTimer = window.setTimeout(() => {
+      document.removeEventListener('keydown', onKey);
+      finish();
+    }, reduceMotion ? 900 : 3400);
+  }
+
   showOnboardingModal() {
     const modal = document.getElementById('onboarding-modal');
     if (modal) {
@@ -12117,5 +12436,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2ab93d17fd99723',t:'MTc4NjY2NDU1OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cb16fb1ed766dc',t:'MTc4Njk5NDk4OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2ab93d17fd99723',t:'MTc4NjY2NDU1OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cb16fb1ed766dc',t:'MTc4Njk5NDk4OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cb66d69dabfeb0',t:'MTc4Njk5ODI2MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
