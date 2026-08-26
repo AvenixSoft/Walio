@@ -8,9 +8,12 @@
   <!-- PWA & Mobile Web App Meta Tags -->
   <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Walio">
-  <meta name="theme-color" content="#2563EB">
+  <meta name="theme-color" content="#1D4ED8" id="meta-theme-color">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#1D4ED8">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0B1F4A">
   
   <!-- Icons -->
   <link rel="icon" type="image/png" href="1.png">
@@ -132,16 +135,75 @@ body.rtl-mode {
   -webkit-tap-highlight-color: transparent;
 }
 
+html {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-main);
+  /* iOS PWA: root bg shows behind translucent status bar */
+  background-color: var(--bg-main);
+}
+
 html, body {
   width: 100%;
   min-height: 100%;
+  min-height: 100dvh;
   font-family: var(--font-main);
   background: var(--bg-main);
+  background-color: var(--bg-main);
   color: var(--text-primary);
   font-size: clamp(14px, 3.5vw, 15px);
   line-height: 1.5;
   overflow-x: hidden;
   user-select: none;
+}
+
+/* When Home/Wallets immersive — paint entire page chrome the hero top color
+   so Dynamic Island / status icons never sit on a mismatched strip */
+html.immersive-blue,
+html.immersive-blue body,
+body.immersive-blue {
+  background: #1D4ED8 !important;
+  background-color: #1D4ED8 !important;
+}
+
+html.immersive-blue[data-theme="dark"],
+html.immersive-blue[data-theme="dark"] body,
+body.immersive-blue[data-theme="dark"],
+[data-theme="dark"] body.immersive-blue {
+  background: #0B1F4A !important;
+  background-color: #0B1F4A !important;
+}
+
+/* Fixed bleed under status bar / Dynamic Island */
+.ios-status-bleed {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 440px;
+  height: env(safe-area-inset-top, 0px);
+  min-height: env(safe-area-inset-top, 0px);
+  z-index: 60;
+  pointer-events: none;
+  background: transparent;
+}
+
+body.immersive-blue .ios-status-bleed,
+.mobile-frame.home-immersive .ios-status-bleed,
+.mobile-frame.wallets-immersive .ios-status-bleed {
+  background: #1D4ED8;
+}
+
+[data-theme="dark"] body.immersive-blue .ios-status-bleed,
+[data-theme="dark"] .mobile-frame.home-immersive .ios-status-bleed,
+[data-theme="dark"] .mobile-frame.wallets-immersive .ios-status-bleed {
+  background: #0B1F4A;
+}
+
+/* Non-immersive tabs: match page bg so no flash */
+body:not(.immersive-blue) .ios-status-bleed {
+  background: var(--bg-main);
 }
 
 button {
@@ -167,16 +229,18 @@ input, select, textarea {
 .app-container {
   width: 100%;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background: var(--bg-main);
+  background: transparent; /* let html/body immersive color show edge-to-edge on iPhone */
 }
 
 .mobile-frame {
   width: 100%;
   max-width: 100%;
   min-height: 100vh;
+  min-height: 100dvh;
   background: var(--bg-main);
   position: relative;
   display: flex;
@@ -201,13 +265,17 @@ input, select, textarea {
 
 /* ================= TOP HEADER BAR (iOS fintech) ================= */
 .app-header {
-  padding: max(env(safe-area-inset-top), 12px) clamp(16px, 4vw, 20px) 10px;
+  /* safe-area first, then comfortable content inset — critical on iPhone 17 Pro Max */
+  padding:
+    calc(env(safe-area-inset-top, 0px) + 10px)
+    clamp(16px, 4vw, 20px)
+    12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 55;
   background: var(--header-bg);
   backdrop-filter: blur(28px) saturate(180%);
   -webkit-backdrop-filter: blur(28px) saturate(180%);
@@ -215,15 +283,47 @@ input, select, textarea {
   transition: background .35s ease, border-color .35s ease, color .35s ease, box-shadow .35s ease;
 }
 
-/* On Home: header melts into the blue hero like the reference apps */
-.mobile-frame.home-immersive .app-header {
-  background: transparent;
+/* Immersive header: solid brand blue under Dynamic Island / status icons.
+   Fade is NOT used here — mismatched strips on iPhone Pro Max come from
+   translucent/gradient headers over a different root background. */
+.mobile-frame.home-immersive .app-header,
+.mobile-frame.wallets-immersive .app-header {
+  background: #1D4ED8;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   border-bottom-color: transparent;
   box-shadow: none;
   color: #fff;
 }
+
+[data-theme="dark"] .mobile-frame.home-immersive .app-header,
+[data-theme="dark"] .mobile-frame.wallets-immersive .app-header {
+  background: #0B1F4A;
+}
+
+/* Soft blend from solid header into the hero below */
+.mobile-frame.home-immersive .app-header::after,
+.mobile-frame.wallets-immersive .app-header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -20px;
+  height: 20px;
+  pointer-events: none;
+  background: linear-gradient(180deg, #1D4ED8 0%, rgba(29,78,216,0) 100%);
+}
+[data-theme="dark"] .mobile-frame.home-immersive .app-header::after,
+[data-theme="dark"] .mobile-frame.wallets-immersive .app-header::after {
+  background: linear-gradient(180deg, #0B1F4A 0%, rgba(11,31,74,0) 100%);
+}
+.mobile-frame.home-immersive .app-header,
+.mobile-frame.wallets-immersive .app-header {
+  position: sticky; /* ensure ::after anchors */
+}
+
+/* On Home: header melts into the blue hero like the reference apps */
+/* home-immersive header bg handled in unified immersive header rule above */
 
 .mobile-frame.home-immersive .header-greeting-text {
   color: rgba(255, 255, 255, 0.78);
@@ -259,17 +359,7 @@ input, select, textarea {
   box-shadow: 0 4px 16px rgba(15, 40, 120, 0.25), 0 0 0 3px rgba(255,255,255,0.28);
 }
 
-.mobile-frame.home-immersive.home-scrolled .app-header {
-  background: rgba(37, 99, 235, 0.92);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border-bottom-color: rgba(255,255,255,0.12);
-  box-shadow: 0 8px 24px rgba(15, 40, 120, 0.18);
-}
-
-[data-theme="dark"] .mobile-frame.home-immersive.home-scrolled .app-header {
-  background: rgba(18, 58, 140, 0.94);
-}
+/* scrolled handled by unified rule below */
 
 
 .header-left {
@@ -381,15 +471,7 @@ input, select, textarea {
 
 
 /* Shared immersive blue chrome (Home + Wallets) */
-.mobile-frame.wallets-immersive .app-header,
-.mobile-frame.immersive-blue.wallets-immersive .app-header {
-  background: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border-bottom-color: transparent;
-  box-shadow: none;
-  color: #fff;
-}
+/* wallets-immersive header bg handled in unified immersive header rule above */
 
 .mobile-frame.wallets-immersive .header-greeting-text {
   color: rgba(255, 255, 255, 0.78);
@@ -439,26 +521,28 @@ input, select, textarea {
 
 .mobile-frame.wallets-immersive {
   background:
-    radial-gradient(ellipse 80% 40% at 70% -5%, rgba(125, 211, 252, 0.35), transparent 50%),
-    linear-gradient(180deg, #1D4ED8 0px, #2563EB 160px, #3B82F6 230px, var(--bg-main) 310px, var(--bg-main) 100%) !important;
+    radial-gradient(ellipse 80% 40% at 70% -5%, rgba(125, 211, 252, 0.30), transparent 50%),
+    linear-gradient(180deg, #1D4ED8 0px, #2563EB 150px, #3B82F6 220px, var(--bg-main) 300px, var(--bg-main) 100%) !important;
 }
 
 [data-theme="dark"] .mobile-frame.wallets-immersive {
   background:
-    radial-gradient(ellipse 80% 40% at 70% -5%, rgba(56, 189, 248, 0.18), transparent 50%),
-    linear-gradient(180deg, #0B1F4A 0px, #123A8C 160px, #1E40AF 230px, var(--bg-main) 310px, var(--bg-main) 100%) !important;
+    radial-gradient(ellipse 80% 40% at 70% -5%, rgba(56, 189, 248, 0.16), transparent 50%),
+    linear-gradient(180deg, #0B1F4A 0px, #123A8C 150px, #1E40AF 220px, var(--bg-main) 300px, var(--bg-main) 100%) !important;
 }
 
-.mobile-frame.wallets-immersive.home-scrolled .app-header {
-  background: linear-gradient(180deg, rgba(29, 78, 216, 0.96), rgba(37, 99, 235, 0.92)) !important;
-  backdrop-filter: blur(22px) saturate(170%) !important;
-  -webkit-backdrop-filter: blur(22px) saturate(170%) !important;
-  border-bottom-color: rgba(255,255,255,0.14) !important;
-  box-shadow: 0 10px 28px rgba(15, 40, 120, 0.28) !important;
+.mobile-frame.wallets-immersive.home-scrolled .app-header,
+.mobile-frame.home-immersive.home-scrolled .app-header {
+  background: #1D4ED8 !important;
+  backdrop-filter: blur(20px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  border-bottom-color: rgba(255,255,255,0.12) !important;
+  box-shadow: 0 10px 28px rgba(15, 40, 120, 0.25) !important;
 }
 
-[data-theme="dark"] .mobile-frame.wallets-immersive.home-scrolled .app-header {
-  background: linear-gradient(180deg, rgba(11, 31, 74, 0.96), rgba(18, 58, 140, 0.94)) !important;
+[data-theme="dark"] .mobile-frame.wallets-immersive.home-scrolled .app-header,
+[data-theme="dark"] .mobile-frame.home-immersive.home-scrolled .app-header {
+  background: #0B1F4A !important;
 }
 
 /* ================= MAIN CONTENT VIEWS ================= */
@@ -5022,11 +5106,11 @@ body.rtl-mode .home-market-row:hover { transform: translateX(-2px); }
   content: '';
   position: absolute;
   left: 50%;
-  top: -88px;
+  top: calc(-1 * (env(safe-area-inset-top, 0px) + 88px));
   transform: translateX(-50%);
   width: 100vw;
   max-width: 440px;
-  height: 420px;
+  height: calc(420px + env(safe-area-inset-top, 0px));
   z-index: 0;
   pointer-events: none;
   background:
@@ -5051,11 +5135,11 @@ body.rtl-mode .home-market-row:hover { transform: translateX(-2px); }
   content: '';
   position: absolute;
   left: 50%;
-  top: -88px;
+  top: calc(-1 * (env(safe-area-inset-top, 0px) + 88px));
   transform: translateX(-50%);
   width: 100vw;
   max-width: 440px;
-  height: 420px;
+  height: calc(420px + env(safe-area-inset-top, 0px));
   z-index: 0;
   pointer-events: none;
   border-radius: 0 0 40px 40px;
@@ -5428,7 +5512,7 @@ body.rtl-mode .home-hero-glow--b { right: auto; left: -10px; }
 .mobile-frame.home-immersive {
   background:
     radial-gradient(ellipse 80% 40% at 70% -5%, rgba(125, 211, 252, 0.35), transparent 50%),
-    linear-gradient(180deg, #1D4ED8 0px, #2563EB 160px, #3B82F6 230px, var(--bg-main) 310px, var(--bg-main) 100%) !important;
+    linear-gradient(180deg, #1D4ED8 0px, #1D4ED8 env(safe-area-inset-top, 0px), #2563EB 160px, #3B82F6 230px, var(--bg-main) 310px, var(--bg-main) 100%) !important;
 }
 
 [data-theme="dark"] .mobile-frame.home-immersive {
@@ -5437,17 +5521,7 @@ body.rtl-mode .home-hero-glow--b { right: auto; left: -10px; }
     linear-gradient(180deg, #0B1F4A 0px, #123A8C 160px, #1E40AF 230px, var(--bg-main) 310px, var(--bg-main) 100%) !important;
 }
 
-.mobile-frame.home-immersive.home-scrolled .app-header {
-  background: linear-gradient(180deg, rgba(29, 78, 216, 0.96), rgba(37, 99, 235, 0.92)) !important;
-  backdrop-filter: blur(22px) saturate(170%) !important;
-  -webkit-backdrop-filter: blur(22px) saturate(170%) !important;
-  border-bottom-color: rgba(255,255,255,0.14) !important;
-  box-shadow: 0 10px 28px rgba(15, 40, 120, 0.28) !important;
-}
-
-[data-theme="dark"] .mobile-frame.home-immersive.home-scrolled .app-header {
-  background: linear-gradient(180deg, rgba(11, 31, 74, 0.96), rgba(18, 58, 140, 0.94)) !important;
-}
+/* scrolled handled by unified rule */
 
 /* Stats as soft white cards */
 .home-stats-row {
@@ -6458,209 +6532,62 @@ body.rtl-mode .tool-overlay-back svg { transform: scaleX(-1); }
 
 /* Wallets page */
 
-/* ================= WALLETS PAGE — 2026 (matches Home blue hero + white sheet) ================= */
+
+
+/* ================= WALLETS PAGE — clean redesign ================= */
 .wallets-page-2026 {
   width: 100%;
-  padding-bottom: 8px;
+  padding-bottom: 12px;
   position: relative;
   isolation: isolate;
 }
 
-/* Full-bleed blue stage (same language as home) */
+/* Blue stage — same DNA as Home so status bar always matches */
 .wallets-page-2026::before {
   content: '';
   position: absolute;
   left: 50%;
-  top: -88px;
+  top: calc(-1 * (env(safe-area-inset-top, 0px) + 88px));
   transform: translateX(-50%);
   width: 100vw;
   max-width: 440px;
-  height: 420px;
+  height: calc(360px + env(safe-area-inset-top, 0px));
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 55% 42% at 88% 8%, rgba(165, 243, 252, 0.42), transparent 58%),
-    radial-gradient(ellipse 48% 38% at 6% 22%, rgba(129, 140, 248, 0.55), transparent 55%),
-    radial-gradient(ellipse 40% 30% at 70% 55%, rgba(96, 165, 250, 0.35), transparent 60%),
-    linear-gradient(165deg,
-      #0B2F9F 0%,
-      #1D4ED8 22%,
-      #2563EB 48%,
-      #3B82F6 74%,
-      #60A5FA 100%);
-  border-radius: 0 0 40px 40px;
-  box-shadow:
-    inset 0 -40px 60px rgba(15, 40, 120, 0.18),
-    0 30px 60px rgba(37, 99, 235, 0.22);
-}
-
-.wallets-page-2026::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: -88px;
-  transform: translateX(-50%);
-  width: 100vw;
-  max-width: 440px;
-  height: 420px;
-  z-index: 0;
-  pointer-events: none;
-  border-radius: 0 0 40px 40px;
-  opacity: 0.55;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.22) 0%, transparent 28%),
-    radial-gradient(circle at 85% 18%, rgba(186, 230, 253, 0.35) 0%, transparent 32%),
-    radial-gradient(circle at 60% 70%, rgba(255,255,255,0.08) 0%, transparent 40%);
-  mix-blend-mode: soft-light;
-  animation: homeAurora 10s ease-in-out infinite alternate;
+    radial-gradient(ellipse 55% 42% at 88% 12%, rgba(147, 197, 253, 0.45), transparent 58%),
+    radial-gradient(ellipse 48% 38% at 8% 30%, rgba(96, 165, 250, 0.35), transparent 55%),
+    linear-gradient(165deg, #1D4ED8 0%, #2563EB 40%, #3B82F6 75%, #60A5FA 100%);
+  border-radius: 0 0 36px 36px;
 }
 
 [data-theme="dark"] .wallets-page-2026::before {
   background:
-    radial-gradient(ellipse 55% 42% at 88% 8%, rgba(56, 189, 248, 0.22), transparent 58%),
-    radial-gradient(ellipse 48% 38% at 6% 22%, rgba(99, 102, 241, 0.35), transparent 55%),
-    linear-gradient(165deg,
-      #061433 0%,
-      #0B1F4A 24%,
-      #123A8C 52%,
-      #1E40AF 78%,
-      #1D4ED8 100%);
+    radial-gradient(ellipse 55% 42% at 88% 12%, rgba(96, 165, 250, 0.22), transparent 58%),
+    linear-gradient(165deg, #0B1F4A 0%, #123A8C 45%, #1E40AF 100%);
 }
 
-.wallets-page-2026 > * {
-  position: relative;
-  z-index: 1;
-}
+.wallets-page-2026 > * { position: relative; z-index: 1; }
 
-/* Glass hero card */
-.wallets-overview-hero {
-  position: relative;
-  isolation: isolate;
-  margin: 4px 2px 0;
-  padding: 14px 14px 26px;
-  overflow: hidden;
+/* Hero */
+.wallets-hero {
+  margin: 0 0 4px;
+  padding: 8px 8px 18px;
   color: #fff;
-  background:
-    linear-gradient(160deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.05) 42%, rgba(255,255,255,0.02) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 32px;
-  box-shadow:
-    0 24px 48px rgba(15, 40, 120, 0.28),
-    0 2px 0 rgba(255,255,255,0.18) inset,
-    0 -1px 0 rgba(15, 40, 120, 0.12) inset;
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
 }
 
-.wallets-overview-hero::before {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  top: -90px;
-  right: -70px;
-  width: 240px;
-  height: 240px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255,255,255,0.18);
-  box-shadow:
-    0 0 0 28px rgba(255,255,255,0.045),
-    0 0 0 58px rgba(255,255,255,0.03),
-    0 0 60px rgba(147, 197, 253, 0.25);
-  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.22), transparent 55%);
-  pointer-events: none;
-  animation: homeOrbFloat 12s ease-in-out infinite;
-}
-
-body.rtl-mode .wallets-overview-hero::before {
-  right: auto;
-  left: -70px;
-}
-
-.wallets-overview-hero::after {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  pointer-events: none;
-  border-radius: inherit;
-  background:
-    radial-gradient(ellipse 80% 55% at 20% 110%, rgba(56, 189, 248, 0.28), transparent 55%),
-    radial-gradient(ellipse 50% 40% at 90% 80%, rgba(129, 140, 248, 0.22), transparent 50%),
-    radial-gradient(rgba(255,255,255,0.55) 0.6px, transparent 0.6px);
-  background-size: auto, auto, 16px 16px;
-  mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
-}
-
-.wallets-hero-glow {
-  position: absolute;
-  z-index: 0;
-  pointer-events: none;
-  border-radius: 50%;
-  filter: blur(28px);
-  opacity: 0.7;
-}
-.wallets-hero-glow--a {
-  width: 140px;
-  height: 140px;
-  top: -30px;
-  left: -20px;
-  background: rgba(125, 211, 252, 0.55);
-  animation: homeGlowPulse 7s ease-in-out infinite;
-}
-.wallets-hero-glow--b {
-  width: 110px;
-  height: 110px;
-  bottom: 20px;
-  right: -10px;
-  background: rgba(165, 180, 252, 0.5);
-  animation: homeGlowPulse 9s ease-in-out infinite reverse;
-}
-body.rtl-mode .wallets-hero-glow--a { left: auto; right: -20px; }
-body.rtl-mode .wallets-hero-glow--b { right: auto; left: -10px; }
-
-.wallets-hero-inner {
-  position: relative;
-  z-index: 2;
-}
-
-.wallets-balance-label-row {
+.wallets-hero-label-row {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 0 6px;
+  padding: 0 8px;
 }
 
-.wallets-balance-label-group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  min-width: 0;
-}
-
-.wallets-balance-label {
-  color: rgba(255, 255, 255, 0.78);
+.wallets-hero-label {
+  color: rgba(255,255,255,0.78);
   font-size: 13px;
   font-weight: 650;
-  letter-spacing: 0.2px;
-  text-shadow: 0 1px 8px rgba(15, 40, 120, 0.25);
-}
-
-.wallets-period-chip {
-  display: inline-flex;
-  align-items: center;
-  min-height: 26px;
-  padding: 0 11px;
-  color: rgba(255,255,255,0.88);
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.16);
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 700;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
 .wallets-privacy-btn {
@@ -6668,241 +6595,185 @@ body.rtl-mode .wallets-hero-glow--b { right: auto; left: -10px; }
   height: 36px;
   display: grid;
   place-items: center;
-  flex: 0 0 auto;
-  color: rgba(255,255,255,.98);
-  background: rgba(255,255,255,.16);
-  border: 1px solid rgba(255,255,255,.22);
-  border-radius: 50%;
-  box-shadow: 0 6px 16px rgba(15, 40, 120, 0.18), inset 0 1px 0 rgba(255,255,255,0.25);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: var(--transition-spring);
-}
-.wallets-privacy-btn:hover { background: rgba(255,255,255,.26); transform: scale(1.05); }
-.wallets-privacy-btn:active { transform: scale(0.92); }
-
-.wallets-summary-value {
-  display: block;
-  margin: 10px 6px 10px;
   color: #fff;
-  font-size: clamp(36px, 10.5vw, 46px);
+  background: rgba(255,255,255,0.16);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 50%;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+.wallets-hero-value {
+  display: block;
+  margin: 8px 8px 6px;
+  font-size: clamp(34px, 10vw, 44px);
   font-weight: 850;
-  line-height: 1.02;
-  letter-spacing: -1.8px;
-  background: linear-gradient(180deg, #FFFFFF 10%, #E0EFFF 70%, #BFDBFE 100%);
+  letter-spacing: -1.6px;
+  line-height: 1.05;
+  background: linear-gradient(180deg, #fff 10%, #DBEAFE 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 10px 24px rgba(15, 40, 120, 0.28));
+  filter: drop-shadow(0 10px 24px rgba(15,40,120,0.25));
   overflow-wrap: anywhere;
 }
 
 @supports not (-webkit-background-clip: text) {
-  .wallets-summary-value {
-    color: #fff;
-    -webkit-text-fill-color: #fff;
-    background: none;
-  }
+  .wallets-hero-value { color: #fff; -webkit-text-fill-color: #fff; background: none; }
 }
 
-.wallets-balance-trend {
+.wallets-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 8px 16px;
+}
+
+.wallets-hero-pill-stat {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  margin: 0 6px 18px;
-  padding: 7px 14px 7px 10px;
-  color: #ECFDF5;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.32), rgba(52, 211, 153, 0.18));
-  border: 1px solid rgba(167, 243, 208, 0.35);
+  gap: 6px;
+  min-height: 30px;
+  padding: 0 12px;
+  color: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.16);
   border-radius: 999px;
-  font-size: 12.5px;
-  font-weight: 780;
-  box-shadow:
-    0 8px 20px rgba(6, 78, 59, 0.18),
-    inset 0 1px 0 rgba(255,255,255,0.22);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  font-size: 12px;
+  font-weight: 750;
 }
-.wallets-balance-trend.negative {
+
+.wallets-hero-pill-stat.up {
+  color: #ECFDF5;
+  background: rgba(16,185,129,0.22);
+  border-color: rgba(167,243,208,0.3);
+}
+.wallets-hero-pill-stat.down {
   color: #FFF1F2;
-  background: linear-gradient(135deg, rgba(244, 63, 94, 0.35), rgba(251, 113, 133, 0.18));
-  border-color: rgba(254, 205, 211, 0.38);
+  background: rgba(244,63,94,0.22);
+  border-color: rgba(254,205,211,0.3);
 }
 
 .wallets-hero-actions {
   display: flex;
-  align-items: center;
   gap: 10px;
-  padding: 0 2px;
+  padding: 0 4px;
 }
 
-.wallets-hero-pill {
+.wallets-hero-btn {
   flex: 1;
-  min-width: 0;
-  min-height: 52px;
-  display: flex;
+  min-height: 50px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   padding: 0 14px;
   color: #0F172A;
-  background: linear-gradient(180deg, #FFFFFF 0%, #F1F5FF 100%);
-  border: 1px solid rgba(255,255,255,0.85);
+  background: linear-gradient(180deg, #fff, #F8FAFF);
   border-radius: 999px;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 800;
-  letter-spacing: -0.25px;
-  box-shadow:
-    0 14px 28px rgba(15, 40, 120, 0.22),
-    0 2px 0 rgba(255,255,255,0.9) inset;
-  transition: var(--transition-spring);
+  box-shadow: 0 12px 26px rgba(15,40,120,0.2);
 }
-.wallets-hero-pill:hover { transform: translateY(-2px); }
-.wallets-hero-pill:active { transform: scale(.96); }
+.wallets-hero-btn:active { transform: scale(.96); }
 
-.wallets-hero-pill-icon {
-  width: 26px;
-  height: 26px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: rgba(37, 99, 235, 0.08);
-  color: #1E3A8A;
-  flex: 0 0 auto;
-}
-
-.wallets-hero-fab {
-  width: 52px;
-  height: 52px;
-  flex: 0 0 auto;
-  display: grid;
-  place-items: center;
+.wallets-hero-btn.dark {
+  flex: 0 0 50px;
+  width: 50px;
+  padding: 0;
   color: #fff;
-  background: linear-gradient(145deg, #1E293B 0%, #0B1220 55%, #020617 100%);
-  border: 1px solid rgba(255,255,255,0.14);
-  border-radius: 18px;
-  box-shadow:
-    0 14px 28px rgba(2, 6, 23, 0.4),
-    0 1px 0 rgba(255,255,255,0.18) inset;
-  transition: var(--transition-spring);
+  background: #0B1220;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(2,6,23,0.35);
 }
-.wallets-hero-fab:hover { transform: translateY(-2px) scale(1.03); }
-.wallets-hero-fab:active { transform: scale(.92); }
 
-/* White sheet */
+/* Sheet */
 .wallets-sheet {
-  margin-top: 18px;
-  padding: 24px 16px 8px;
+  margin-top: 10px;
+  padding: 22px 14px 12px;
   background: var(--bg-main);
-  border-radius: 30px 30px 0 0;
-  box-shadow:
-    0 -18px 50px rgba(15, 40, 120, 0.14),
-    0 -1px 0 rgba(255,255,255,0.65) inset;
+  border-radius: 28px 28px 0 0;
+  box-shadow: 0 -16px 40px rgba(15,40,120,0.12);
   position: relative;
-}
-[data-theme="dark"] .wallets-sheet {
-  box-shadow:
-    0 -18px 50px rgba(0, 0, 0, 0.4),
-    0 -1px 0 rgba(255,255,255,0.06) inset;
 }
 .wallets-sheet::before {
   content: '';
   position: absolute;
-  top: 11px;
+  top: 10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 40px;
-  height: 4.5px;
+  width: 36px;
+  height: 4px;
   border-radius: 999px;
-  background: linear-gradient(90deg, rgba(148,163,184,0.25), rgba(148,163,184,0.55), rgba(148,163,184,0.25));
+  background: rgba(148,163,184,0.45);
 }
 
-/* Stats */
-.wallets-stats-row {
+.wallets-month-row {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
-  margin: 8px 0 22px;
+  margin: 6px 0 18px;
 }
 
-.wallets-stat-tile {
-  min-width: 0;
+.wallets-month-card {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 14px 12px;
+  gap: 6px;
+  padding: 14px;
   background: #fff;
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+  border: 1px solid rgba(226,232,240,0.95);
+  border-radius: 18px;
+  box-shadow: 0 8px 18px rgba(15,23,42,0.04);
 }
-[data-theme="dark"] .wallets-stat-tile {
+[data-theme="dark"] .wallets-month-card {
   background: var(--card-bg);
   border-color: var(--border-glass);
-  box-shadow: 0 10px 22px rgba(0,0,0,.18);
 }
-
-.wallets-stat-icon {
-  width: 32px;
-  height: 32px;
-  display: grid;
-  place-items: center;
-  border-radius: 12px;
-}
-.wallets-stat-tile.accounts .wallets-stat-icon { color: #2563EB; background: rgba(37,99,235,.12); }
-.wallets-stat-tile.income .wallets-stat-icon { color: #059669; background: rgba(16,185,129,.12); }
-.wallets-stat-tile.expense .wallets-stat-icon { color: #E11D48; background: rgba(244,63,94,.12); }
-
-.wallets-stat-label {
+.wallets-month-card .lbl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   color: var(--text-muted);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
 }
-.wallets-stat-value {
-  overflow: hidden;
+.wallets-month-card .lbl i {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+}
+.wallets-month-card.income .lbl i { color: #059669; background: rgba(16,185,129,.12); }
+.wallets-month-card.expense .lbl i { color: #E11D48; background: rgba(244,63,94,.12); }
+.wallets-month-card strong {
   color: var(--text-primary);
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: -.25px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 100%;
+  font-size: 15px;
+  font-weight: 850;
+  letter-spacing: -.3px;
 }
 
-/* List heading */
-.wallets-list-section { margin-bottom: 12px; }
-
-.wallets-list-heading {
+.wallets-section-head {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
-.wallets-list-kicker {
+.wallets-section-kicker {
   display: block;
-  margin-bottom: 2px;
   color: var(--text-muted);
   font-size: 11px;
   font-weight: 650;
-  letter-spacing: 0;
-  text-transform: none;
+  margin-bottom: 2px;
 }
-.wallets-list-title {
+.wallets-section-title {
   color: var(--text-primary);
   font-size: 18px;
   font-weight: 800;
-  line-height: 1.3;
   letter-spacing: -.4px;
 }
-.wallets-list-heading-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 0 0 auto;
-}
-.wallets-list-count {
+.wallets-section-count {
   min-width: 28px;
   height: 28px;
   display: inline-flex;
@@ -6910,220 +6781,102 @@ body.rtl-mode .wallets-hero-glow--b { right: auto; left: -10px; }
   justify-content: center;
   padding: 0 8px;
   color: #2563EB;
-  background: rgba(37, 99, 235, 0.10);
+  background: rgba(37,99,235,.1);
   border-radius: 999px;
   font-size: 11px;
   font-weight: 800;
 }
-.wallets-list-add {
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  background: #2563EB;
-  border-radius: 12px;
-  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.35);
-  transition: var(--transition-spring);
-}
-.wallets-list-add:active { transform: scale(.92); }
 
-/* Wallet cards grid */
-.wallets-page-2026 .wallets-grid {
+/* Card stack */
+.wallets-stack {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
-.wallets-page-2026 .wallet-item-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+.wallet-block {
   padding: 10px;
-  overflow: hidden;
   background: #fff;
-  border: 1px solid rgba(226, 232, 240, 0.95);
-  border-radius: 28px;
-  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
-  animation: walletCardIn .45s cubic-bezier(.16,1,.3,1) both;
+  border: 1px solid rgba(226,232,240,0.95);
+  border-radius: 26px;
+  box-shadow: 0 12px 28px rgba(15,23,42,0.05);
+  animation: walletCardIn .4s cubic-bezier(.16,1,.3,1) both;
   animation-delay: var(--reveal-delay, 0ms);
 }
-[data-theme="dark"] .wallets-page-2026 .wallet-item-wrap {
+[data-theme="dark"] .wallet-block {
   background: var(--card-bg);
   border-color: var(--border-glass);
-  box-shadow: 0 14px 34px rgba(0,0,0,.22);
 }
 
-@keyframes walletCardIn {
-  from { opacity: 0; transform: translateY(14px) scale(.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .wallets-page-2026 .wallet-item-wrap,
-  .wallets-page-2026::after,
-  .wallets-overview-hero::before,
-  .wallets-hero-glow { animation: none !important; }
-}
-
-.wallets-page-2026 .wallet-item-wrap .wallet-card-2026 {
+.wallet-block .wallet-card-2026 {
   width: 100%;
-  height: 196px;
-  border-radius: 22px;
-  box-shadow:
-    0 16px 34px rgba(15, 23, 42, 0.22),
-    inset 0 1px 0 rgba(255,255,255,.22);
+  height: 188px;
+  border-radius: 20px;
 }
 
-.wallet-item-body {
-  padding: 4px 2px 2px;
-}
-
-.wallet-account-insights {
+.wallet-block-foot {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
-  padding: 12px 4px 8px;
+  margin-top: 10px;
 }
 
-.wallet-flow-stat {
-  min-width: 0;
+.wallet-block-stat {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 11px 10px;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
   background: #F8FAFC;
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  border-radius: 16px;
+  border-radius: 14px;
 }
-[data-theme="dark"] .wallet-flow-stat {
-  background: var(--result-bg);
-  border-color: var(--border-subtle);
-}
-
-.wallet-flow-icon {
-  width: 34px;
-  height: 34px;
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  border-radius: 12px;
-}
-.wallet-flow-stat.income .wallet-flow-icon { color: #059669; background: rgba(16,185,129,.12); }
-.wallet-flow-stat.expense .wallet-flow-icon { color: #E11D48; background: rgba(244,63,94,.12); }
-
-.wallet-flow-copy { min-width: 0; }
-.wallet-flow-copy span {
-  display: block;
+[data-theme="dark"] .wallet-block-stat { background: var(--result-bg); }
+.wallet-block-stat span {
   color: var(--text-muted);
   font-size: 10px;
   font-weight: 650;
 }
-.wallet-flow-copy strong {
-  display: block;
-  margin-top: 2px;
-  overflow: hidden;
+.wallet-block-stat strong {
   color: var(--text-primary);
   font-size: 12.5px;
   font-weight: 800;
-  letter-spacing: -.2px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
+.wallet-block-stat.income strong { color: #059669; }
+.wallet-block-stat.expense strong { color: #E11D48; }
 
-.wallet-share-row {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-areas:
-    "label value"
-    "track track";
-  gap: 6px 10px;
-  align-items: center;
-  margin: 2px 4px 10px;
-  padding: 10px 12px;
-  background: linear-gradient(180deg, rgba(37,99,235,0.06), rgba(37,99,235,0.02));
-  border: 1px solid rgba(37, 99, 235, 0.08);
-  border-radius: 16px;
-}
-[data-theme="dark"] .wallet-share-row {
-  background: rgba(37,99,235,0.08);
-  border-color: rgba(37,99,235,0.14);
-}
-.wallet-share-label {
-  grid-area: label;
-  color: var(--text-muted);
-  font-size: 10.5px;
-  font-weight: 650;
-}
-.wallet-share-value {
-  grid-area: value;
-  color: #2563EB;
-  font-size: 12px;
-  font-weight: 800;
-  direction: ltr;
-  unicode-bidi: isolate;
-}
-.wallet-share-track {
-  grid-area: track;
-  width: 100%;
-  height: 6px;
-  overflow: hidden;
-  background: rgba(37, 99, 235, 0.10);
-  border-radius: 999px;
-}
-.wallet-share-track span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #60A5FA, #2563EB 55%, #1D4ED8);
-  transition: width .55s cubic-bezier(.16,1,.3,1);
-}
-
-.wallet-item-actions {
+.wallet-block-actions {
   display: flex;
-  align-items: center;
   gap: 8px;
-  padding: 4px 4px 6px;
+  margin-top: 10px;
 }
 
-.wallet-action-btn {
+.wallet-block-btn {
   flex: 1;
   min-height: 42px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  padding: 0 12px;
-  color: #1E3A8A;
-  background: rgba(37, 99, 235, 0.08);
-  border: 0;
-  border-radius: 14px;
-  font-size: 12px;
+  gap: 6px;
+  border-radius: 13px;
+  font-size: 12.5px;
   font-weight: 750;
-  transition: var(--transition-spring);
 }
-.wallet-action-btn:active { transform: scale(.97); }
-.wallet-action-btn.danger {
+.wallet-block-btn.edit {
+  color: #1D4ED8;
+  background: rgba(37,99,235,.1);
+}
+.wallet-block-btn.delete {
   color: #BE123C;
-  background: rgba(244, 63, 94, 0.10);
+  background: rgba(244,63,94,.1);
 }
-[data-theme="dark"] .wallet-action-btn {
-  color: #93C5FD;
-  background: rgba(59, 130, 246, 0.12);
-}
-[data-theme="dark"] .wallet-action-btn.danger {
-  color: #FDA4AF;
-  background: rgba(244, 63, 94, 0.14);
-}
+.wallet-block-btn:active { transform: scale(.97); }
 
-/* Empty state */
+/* Empty */
 .wallets-empty-state {
-  padding: 40px 22px;
+  padding: 42px 22px;
   text-align: center;
   background: #fff;
-  border: 1px solid rgba(226, 232, 240, 0.95);
+  border: 1px solid rgba(226,232,240,.95);
   border-radius: 24px;
-  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.04);
 }
 [data-theme="dark"] .wallets-empty-state {
   background: var(--card-bg);
@@ -7138,20 +6891,18 @@ body.rtl-mode .wallets-hero-glow--b { right: auto; left: -10px; }
   color: #2563EB;
   background: linear-gradient(145deg, #DBEAFE, #BFDBFE);
   border-radius: 20px;
-  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.2);
 }
 .wallets-empty-state h3 {
   color: var(--text-primary);
   font-size: 16px;
   font-weight: 800;
-  letter-spacing: -.3px;
 }
 .wallets-empty-state p {
-  max-width: 270px;
+  max-width: 260px;
   margin: 6px auto 18px;
   color: var(--text-secondary);
-  font-size: 12.5px;
-  line-height: 1.65;
+  font-size: 13px;
+  line-height: 1.6;
 }
 .wallets-empty-cta {
   min-height: 48px;
@@ -7162,57 +6913,61 @@ body.rtl-mode .wallets-hero-glow--b { right: auto; left: -10px; }
   margin: 0 auto;
   padding: 0 20px;
   color: #fff;
-  background: linear-gradient(145deg, #3B82F6, #2563EB 50%, #1D4ED8);
+  background: linear-gradient(145deg, #3B82F6, #2563EB);
   border-radius: 999px;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 800;
-  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 12px 24px rgba(37,99,235,.35);
 }
-.wallets-empty-cta:active { transform: scale(.96); }
 
-/* Legacy class hooks still referenced elsewhere */
+/* legacy hooks */
 .wallets-add-button {
-  min-width: 42px;
-  height: 42px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 0 12px;
+  min-height: 42px;
+  padding: 0 14px;
   color: #fff;
-  background: linear-gradient(145deg, #3B82F6, #2563EB);
+  background: #2563EB;
   border-radius: 14px;
-  box-shadow: 0 8px 18px rgba(37,99,235,.35);
-  font-size: 11px;
   font-weight: 750;
 }
-.wallets-portfolio-hero { display: contents; }
+.wallets-portfolio-hero,
+.wallets-overview-hero,
+.wallets-topbar,
+.wallets-vault-summary,
+.wallets-card-rail-wrap,
+.wallets-panel { display: contents; }
+
+.wallets-page-2026 .wallets-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+@keyframes walletCardIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
 
 @media (max-width: 380px) {
-  .wallets-hero-pill { min-height: 48px; padding: 0 10px; font-size: 12px; }
-  .wallets-hero-fab { width: 48px; height: 48px; border-radius: 16px; }
-  .wallets-summary-value { font-size: clamp(32px, 9.5vw, 40px); }
-  .wallets-stat-value { font-size: 11.5px; }
-  .wallets-page-2026 .wallet-item-wrap .wallet-card-2026 { height: 180px; }
-  .wallet-action-btn span { font-size: 11px; }
-  .wallet-card-2026 .wallet-balance-amount { font-size: 19px; }
-  .wallet-card-2026 .wallet-number { font-size: 11.5px; letter-spacing: 1px; }
+  .wallets-hero-value { font-size: clamp(30px, 9vw, 38px); }
+  .wallet-block .wallet-card-2026 { height: 172px; }
+  .wallets-hero-btn { min-height: 46px; font-size: 13px; }
   .home-hero-pill { min-height: 42px; padding: 0 10px; font-size: 12px; }
   .home-hero-fab { width: 42px; height: 42px; }
   .home-page-2026 .wallets-carousel .wallet-card-2026 { flex-basis: calc(100vw - 47px); height: 186px; }
-  .home-tx-item { grid-template-columns: 40px minmax(0,1fr) auto; gap: 8px; padding-inline: 12px 10px; }
+  .home-tx-item { grid-template-columns: 40px minmax(0,1fr) auto; gap: 8px; }
   .home-tx-icon { width: 40px; height: 40px; border-radius: 13px; }
-  .home-tx-title { font-size: 12px; }
-  .home-tx-amount { font-size: 11px; }
-  .home-market-row { grid-template-columns: minmax(0,1fr) auto; gap: 8px; padding-inline: 12px; }
   .home-market-spark { display: none; }
-  .home-market-flag { width: 38px; height: 38px; font-size: 19px; }
-  .home-market-price { font-size: 11.5px; }
+  .wallet-card-2026 .wallet-balance-amount { font-size: 19px; }
+  .wallet-card-2026 .wallet-number { font-size: 11.5px; letter-spacing: 1px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wallet-card-2026::after,
-  .home-cashflow-track span { transition: none; }
+  .wallet-block { animation: none !important; }
+  .wallet-card-2026::after { transition: none; }
 }
 
 /* ================= PROFILE PAGE — 2026 REDESIGN (matches Home / Wallets / Tools) ================= */
@@ -7941,6 +7696,8 @@ body.toman-unit-hidden .home-market-values {
 
   <div class="app-container">
     <div class="mobile-frame">
+      <!-- Paints under iOS status bar (Dynamic Island / battery) so color never mismatches -->
+      <div class="ios-status-bleed" id="ios-status-bleed" aria-hidden="true"></div>
 
       <!-- TOP HEADER (iOS fintech style) -->
       <header class="app-header" id="app-header">
@@ -9723,193 +9480,148 @@ class WalletManager {
     const t = (key) => window.i18n ? window.i18n.t(key) : key;
     const isFa = window.i18n && window.i18n.currentLang === 'fa';
 
-    const totalBalance = wallets.reduce((sum, wallet) => sum + (parseFloat(wallet.balance) || 0), 0);
+    const totalBalance = wallets.reduce((sum, w) => sum + (parseFloat(w.balance) || 0), 0);
     const now = new Date();
-    const monthTransactions = transactions.filter(tx => {
-      const date = new Date(tx.date);
-      return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+    const monthTx = transactions.filter(tx => {
+      const d = new Date(tx.date);
+      return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
     });
-    const monthlyIncome = monthTransactions
-      .filter(tx => tx.type === 'income')
-      .reduce((sum, tx) => sum + (parseFloat(tx.amount) || 0), 0);
-    const monthlyExpense = monthTransactions
-      .filter(tx => tx.type === 'expense')
-      .reduce((sum, tx) => sum + (parseFloat(tx.amount) || 0), 0);
+    const monthlyIncome = monthTx.filter(tx => tx.type === 'income')
+      .reduce((s, tx) => s + (parseFloat(tx.amount) || 0), 0);
+    const monthlyExpense = monthTx.filter(tx => tx.type === 'expense')
+      .reduce((s, tx) => s + (parseFloat(tx.amount) || 0), 0);
     const monthlyNet = monthlyIncome - monthlyExpense;
-    const locale = isFa ? 'fa-IR' : 'en-US';
-    const monthLabel = new Intl.DateTimeFormat(locale, { month: 'long' }).format(now);
 
-    const formatMoney = (amount, compactMask = false) => {
-      if (hideBalance) return compactMask ? '••••' : '••••••••';
+    const formatMoney = (amount, compact = false) => {
+      if (hideBalance) return compact ? '••••' : '••••••••';
       return window.i18n ? window.i18n.formatCurrency(amount, 'IRT') : `${amount} IRT`;
     };
 
     const netPrefix = monthlyNet > 0 ? '+' : monthlyNet < 0 ? '−' : '';
-    const formattedMonthlyNet = hideBalance
-      ? '••••'
-      : `${netPrefix}${window.i18n ? window.i18n.formatCurrency(Math.abs(monthlyNet), 'IRT') : Math.abs(monthlyNet)}`;
+    const netText = hideBalance ? '••••' : `${netPrefix}${window.i18n ? window.i18n.formatCurrency(Math.abs(monthlyNet), 'IRT') : Math.abs(monthlyNet)}`;
 
     const eyeSVG = hideBalance
       ? `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`
       : `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
 
-    const trendUpSVG = `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16l6-6 4 4 6-8"/><path d="M14 6h6v6"/></svg>`;
-    const trendDownSVG = `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8l6 6 4-4 6 8"/><path d="M14 18h6v-6"/></svg>`;
+    const trendUp = `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16l6-6 4 4 6-8"/><path d="M14 6h6v6"/></svg>`;
+    const trendDown = `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8l6 6 4-4 6 8"/><path d="M14 18h6v-6"/></svg>`;
     const hasFlow = monthlyIncome > 0 || monthlyExpense > 0;
 
-    const walletListHTML = wallets.length ? wallets.map((wallet, index) => {
+    const listHTML = wallets.length ? wallets.map((wallet, index) => {
       const income = parseFloat(wallet.income) || 0;
       const expense = parseFloat(wallet.expense) || 0;
-      const share = totalBalance > 0 ? Math.round(((parseFloat(wallet.balance) || 0) / totalBalance) * 100) : 0;
       return `
-      <article class="wallet-item-wrap" style="--reveal-delay:${Math.min(index, 6) * 40}ms">
+      <article class="wallet-block" style="--reveal-delay:${Math.min(index, 6) * 40}ms">
         ${this.renderCardHTML(wallet, true)}
-        <div class="wallet-item-body">
-          <div class="wallet-account-insights">
-            <div class="wallet-flow-stat income">
-              <span class="wallet-flow-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 4v16M6 14l6 6 6-6"/></svg>
-              </span>
-              <span class="wallet-flow-copy">
-                <span>${t('income')}</span>
-                <strong>+${formatMoney(income, true)}</strong>
-              </span>
-            </div>
-            <div class="wallet-flow-stat expense">
-              <span class="wallet-flow-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 20V4M6 10l6-6 6 6"/></svg>
-              </span>
-              <span class="wallet-flow-copy">
-                <span>${t('expenses')}</span>
-                <strong>−${formatMoney(expense, true)}</strong>
-              </span>
-            </div>
+        <div class="wallet-block-foot">
+          <div class="wallet-block-stat income">
+            <span>${t('income')}</span>
+            <strong>+${formatMoney(income, true)}</strong>
           </div>
-          <div class="wallet-share-row" aria-hidden="true">
-            <span class="wallet-share-label">${isFa ? 'سهم از کل' : 'Share of total'}</span>
-            <span class="wallet-share-value">${hideBalance ? '••' : share + '%'}</span>
-            <div class="wallet-share-track"><span style="width:${hideBalance ? 0 : Math.min(100, share)}%"></span></div>
+          <div class="wallet-block-stat expense">
+            <span>${t('expenses')}</span>
+            <strong>−${formatMoney(expense, true)}</strong>
           </div>
-          <div class="wallet-item-actions">
-            <button class="wallet-action-btn edit-wallet-btn" type="button" data-id="${wallet.id}">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4z"/></svg>
-              <span data-i18n="edit_wallet">${t('edit_wallet')}</span>
-            </button>
-            <button class="wallet-action-btn danger delete-wallet-btn" type="button" data-id="${wallet.id}">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M10 11v6M14 11v6"/></svg>
-              <span data-i18n="delete_wallet">${t('delete_wallet')}</span>
-            </button>
-          </div>
+        </div>
+        <div class="wallet-block-actions">
+          <button type="button" class="wallet-block-btn edit edit-wallet-btn" data-id="${wallet.id}">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4z"/></svg>
+            <span>${t('edit_wallet')}</span>
+          </button>
+          <button type="button" class="wallet-block-btn delete delete-wallet-btn" data-id="${wallet.id}">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            <span>${t('delete_wallet')}</span>
+          </button>
         </div>
       </article>`;
     }).join('') : `
       <div class="wallets-empty-state">
         <div class="wallets-empty-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="6" width="19" height="13" rx="3"/><path d="M2.5 10h19"/><path d="M16 13.5h2.5"/><path d="M12 8v4M10 10h4"/></svg>
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="6" width="19" height="13" rx="3"/><path d="M2.5 10h19M16 13.5h2.5"/></svg>
         </div>
         <h3>${t('wallets_empty_title')}</h3>
         <p>${t('wallets_empty_desc')}</p>
-        <button class="wallets-empty-cta empty-create-wallet" type="button">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+        <button type="button" class="wallets-empty-cta empty-create-wallet">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
           <span>${t('new_wallet')}</span>
         </button>
       </div>`;
 
     container.innerHTML = `
       <div class="wallets-page-2026">
-        <section class="wallets-overview-hero" aria-label="${t('account_overview')}">
-          <span class="wallets-hero-glow wallets-hero-glow--a" aria-hidden="true"></span>
-          <span class="wallets-hero-glow wallets-hero-glow--b" aria-hidden="true"></span>
-          <div class="wallets-hero-inner">
-            <div class="wallets-balance-label-row">
-              <div class="wallets-balance-label-group">
-                <span class="wallets-balance-label" data-i18n="portfolio_balance">${t('portfolio_balance')}</span>
-                <span class="wallets-period-chip">${monthLabel}</span>
-              </div>
-              <button class="wallets-privacy-btn" id="wallets-toggle-privacy" type="button" aria-label="Toggle balance visibility">${eyeSVG}</button>
-            </div>
-            <strong class="wallets-summary-value">${formatMoney(totalBalance)}</strong>
+        <section class="wallets-hero" aria-label="${t('portfolio_balance')}">
+          <div class="wallets-hero-label-row">
+            <span class="wallets-hero-label" data-i18n="portfolio_balance">${t('portfolio_balance')}</span>
+            <button type="button" class="wallets-privacy-btn" id="wallets-toggle-privacy" aria-label="Toggle balance">${eyeSVG}</button>
+          </div>
+          <strong class="wallets-hero-value">${formatMoney(totalBalance)}</strong>
+          <div class="wallets-hero-meta">
+            <span class="wallets-hero-pill-stat">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="6" width="19" height="13" rx="3"/><path d="M2.5 10h19"/></svg>
+              ${wallets.length} ${t('active_accounts')}
+            </span>
             ${hasFlow && !hideBalance ? `
-            <div class="wallets-balance-trend ${monthlyNet < 0 ? 'negative' : ''}">
-              ${monthlyNet < 0 ? trendDownSVG : trendUpSVG}
-              <span>${formattedMonthlyNet} · ${t('home_monthly_flow')}</span>
-            </div>` : `<div style="height:10px"></div>`}
-
-            <div class="wallets-hero-actions">
-              <button class="wallets-hero-pill" id="btn-create-wallet" type="button">
-                <span class="wallets-hero-pill-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-                </span>
-                <span data-i18n="new_wallet">${t('new_wallet')}</span>
-              </button>
-              <button class="wallets-hero-pill secondary" id="wallets-qa-transfer" type="button">
-                <span class="wallets-hero-pill-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                </span>
-                <span data-i18n="action_transfer">${t('action_transfer')}</span>
-              </button>
-              <button class="wallets-hero-fab" id="wallets-qa-add-tx" type="button" aria-label="${t('action_add_tx')}">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-              </button>
-            </div>
+            <span class="wallets-hero-pill-stat ${monthlyNet < 0 ? 'down' : 'up'}">
+              ${monthlyNet < 0 ? trendDown : trendUp}
+              ${netText}
+            </span>` : ''}
+          </div>
+          <div class="wallets-hero-actions">
+            <button type="button" class="wallets-hero-btn" id="btn-create-wallet">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+              <span data-i18n="new_wallet">${t('new_wallet')}</span>
+            </button>
+            <button type="button" class="wallets-hero-btn" id="wallets-qa-transfer">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              <span data-i18n="action_transfer">${t('action_transfer')}</span>
+            </button>
+            <button type="button" class="wallets-hero-btn dark" id="wallets-qa-add-tx" aria-label="${t('action_add_tx')}">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
           </div>
         </section>
 
         <div class="wallets-sheet">
-          <section class="wallets-stats-row" aria-label="${t('account_overview')}">
-            <div class="wallets-stat-tile accounts">
-              <span class="wallets-stat-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2.5" y="6" width="19" height="13" rx="3"/><path d="M2.5 10h19"/><path d="M16 13.5h2.5"/></svg>
+          <div class="wallets-month-row">
+            <div class="wallets-month-card income">
+              <span class="lbl">
+                <i aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 4v16M6 14l6 6 6-6"/></svg></i>
+                <span data-i18n="income">${t('income')}</span>
               </span>
-              <span class="wallets-stat-label" data-i18n="active_accounts">${t('active_accounts')}</span>
-              <strong class="wallets-stat-value">${wallets.length}</strong>
+              <strong>+${formatMoney(monthlyIncome, true)}</strong>
             </div>
-            <div class="wallets-stat-tile income">
-              <span class="wallets-stat-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M12 4v16M6 14l6 6 6-6"/></svg>
+            <div class="wallets-month-card expense">
+              <span class="lbl">
+                <i aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20V4M6 10l6-6 6 6"/></svg></i>
+                <span data-i18n="expenses">${t('expenses')}</span>
               </span>
-              <span class="wallets-stat-label" data-i18n="income">${t('income')}</span>
-              <strong class="wallets-stat-value">+${formatMoney(monthlyIncome, true)}</strong>
+              <strong>−${formatMoney(monthlyExpense, true)}</strong>
             </div>
-            <div class="wallets-stat-tile expense">
-              <span class="wallets-stat-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M12 20V4M6 10l6-6 6 6"/></svg>
-              </span>
-              <span class="wallets-stat-label" data-i18n="expenses">${t('expenses')}</span>
-              <strong class="wallets-stat-value">−${formatMoney(monthlyExpense, true)}</strong>
-            </div>
-          </section>
+          </div>
 
-          <section class="wallets-list-section">
-            <div class="wallets-list-heading">
-              <div>
-                <span class="wallets-list-kicker" data-i18n="account_overview">${t('account_overview')}</span>
-                <h2 class="wallets-list-title" data-i18n="all_wallets">${t('all_wallets')}</h2>
-              </div>
-              <div class="wallets-list-heading-actions">
-                <span class="wallets-list-count">${wallets.length}</span>
-                <button class="wallets-list-add" id="btn-create-wallet-secondary" type="button" aria-label="${t('new_wallet')}">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-                </button>
-              </div>
+          <div class="wallets-section-head">
+            <div>
+              <span class="wallets-section-kicker" data-i18n="account_overview">${t('account_overview')}</span>
+              <h2 class="wallets-section-title" data-i18n="all_wallets">${t('all_wallets')}</h2>
             </div>
-            <div class="wallets-grid">${walletListHTML}</div>
-          </section>
+            <span class="wallets-section-count">${wallets.length}</span>
+          </div>
+
+          <div class="wallets-stack">${listHTML}</div>
         </div>
       </div>`;
 
     if (window.i18n) window.i18n.translateDOM();
 
-    const createButtons = [
+    [
       container.querySelector('#btn-create-wallet'),
-      container.querySelector('#btn-create-wallet-secondary'),
       container.querySelector('.empty-create-wallet')
-    ].filter(Boolean);
-    createButtons.forEach(button => button.addEventListener('click', () => this.openEditWalletModal(null)));
+    ].filter(Boolean).forEach(btn => btn.addEventListener('click', () => this.openEditWalletModal(null)));
 
-    const privacyButton = container.querySelector('#wallets-toggle-privacy');
-    if (privacyButton) {
-      privacyButton.addEventListener('click', () => {
+    const privacyBtn = container.querySelector('#wallets-toggle-privacy');
+    if (privacyBtn) {
+      privacyBtn.addEventListener('click', () => {
         const settings = window.storage.getSettings();
         settings.hideBalance = !settings.hideBalance;
         window.storage.saveSettings(settings);
@@ -9936,32 +9648,31 @@ class WalletManager {
     }
 
     container.querySelectorAll('.wallet-card-2026').forEach(card => {
-      const openWallet = () => this.openEditWalletModal(card.getAttribute('data-wallet-id'));
-      card.addEventListener('click', openWallet);
-      card.addEventListener('keydown', event => {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          openWallet();
+      const open = () => this.openEditWalletModal(card.getAttribute('data-wallet-id'));
+      card.addEventListener('click', open);
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+      });
+    });
+
+    container.querySelectorAll('.edit-wallet-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        this.openEditWalletModal(btn.getAttribute('data-id'));
+      });
+    });
+
+    container.querySelectorAll('.delete-wallet-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        if (confirm(t('confirm_delete_wallet'))) {
+          window.storage.deleteWallet(btn.getAttribute('data-id'));
         }
       });
     });
-
-    container.querySelectorAll('.edit-wallet-btn').forEach(button => {
-      button.addEventListener('click', (e) => {
-        e.stopPropagation();
-        this.openEditWalletModal(button.getAttribute('data-id'));
-      });
-    });
-
-    container.querySelectorAll('.delete-wallet-btn').forEach(button => {
-      button.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const id = button.getAttribute('data-id');
-        const confirmMsg = t('confirm_delete_wallet');
-        if (confirm(confirmMsg)) window.storage.deleteWallet(id);
-      });
-    });
   }
+
+
 
 
   /**
@@ -12377,6 +12088,12 @@ class WalioApp {
     } else {
       document.documentElement.setAttribute('data-theme', 'dark');
     }
+    // Keep iOS status-bar theme-color aligned after theme flip
+    const immersive = document.body.classList.contains('immersive-blue');
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const topColor = immersive ? (dark ? '#0B1F4A' : '#1D4ED8') : (dark ? '#0A0A0E' : '#F4F6FB');
+    const themeMeta = document.getElementById('meta-theme-color');
+    if (themeMeta) themeMeta.setAttribute('content', topColor);
   }
 
   applyPriceUnitPreference() {
@@ -12495,11 +12212,23 @@ class WalioApp {
     }
 
     const frame = document.querySelector('.mobile-frame');
+    const immersive = (tabId === 'home' || tabId === 'wallets');
     if (frame) {
       frame.classList.toggle('home-immersive', tabId === 'home');
       frame.classList.toggle('wallets-immersive', tabId === 'wallets');
-      frame.classList.toggle('immersive-blue', tabId === 'home' || tabId === 'wallets');
+      frame.classList.toggle('immersive-blue', immersive);
     }
+    document.documentElement.classList.toggle('immersive-blue', immersive);
+    document.body.classList.toggle('immersive-blue', immersive);
+
+    // Keep iOS status bar / theme-color in sync with the top chrome
+    const themeMeta = document.getElementById('meta-theme-color');
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const topColor = immersive ? (dark ? '#0B1F4A' : '#1D4ED8') : (dark ? '#0A0A0E' : '#F4F6FB');
+    if (themeMeta) themeMeta.setAttribute('content', topColor);
+    document.querySelectorAll('meta[name="theme-color"]').forEach(m => {
+      if (m.id === 'meta-theme-color' || !m.getAttribute('media')) m.setAttribute('content', topColor);
+    });
 
     switch (tabId) {
       case 'home':
@@ -14325,5 +14054,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2ab93d17fd99723',t:'MTc4NjY2NDU1OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cb16fb1ed766dc',t:'MTc4Njk5NDk4OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cb66d69dabfeb0',t:'MTc4Njk5ODI2MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a315b11699fc51a2',t:'MTc4Nzc3NzI0Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2ab93d17fd99723',t:'MTc4NjY2NDU1OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cb16fb1ed766dc',t:'MTc4Njk5NDk4OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cb66d69dabfeb0',t:'MTc4Njk5ODI2MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a315cc009c1dae59',t:'MTc4Nzc3ODM1MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
