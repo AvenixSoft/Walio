@@ -11,9 +11,9 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Walio">
-  <meta name="theme-color" content="#1D4ED8" id="meta-theme-color">
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#1D4ED8">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0B1F4A">
+  <meta name="theme-color" content="#2563EB" id="meta-theme-color">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#2563EB">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1E3A8A">
   
   <!-- Icons -->
   <link rel="icon" type="image/png" href="1.png">
@@ -140,8 +140,8 @@ html {
   height: 100%;
   background: var(--bg-main);
   background-color: var(--bg-main);
-  --immersive-top: #1D4ED8;
-  --immersive-top-dark: #0B1F4A;
+  --immersive-top: #2563EB;
+  --immersive-top-dark: #1E3A8A;
 }
 
 html, body {
@@ -162,16 +162,16 @@ html, body {
 html.immersive-blue,
 html.immersive-blue body,
 body.immersive-blue {
-  background: var(--immersive-top) !important;
-  background-color: var(--immersive-top) !important;
+  background: #2563EB !important;
+  background-color: #2563EB !important;
 }
 
 html.immersive-blue[data-theme="dark"],
 html.immersive-blue[data-theme="dark"] body,
 body.immersive-blue[data-theme="dark"],
 [data-theme="dark"] body.immersive-blue {
-  background: var(--immersive-top-dark) !important;
-  background-color: var(--immersive-top-dark) !important;
+  background: #1E3A8A !important;
+  background-color: #1E3A8A !important;
 }
 
 /* Status-bar fill: same pixel color as everything above the fold */
@@ -193,13 +193,13 @@ body.immersive-blue[data-theme="dark"],
 body.immersive-blue .ios-status-bleed,
 .mobile-frame.home-immersive .ios-status-bleed,
 .mobile-frame.wallets-immersive .ios-status-bleed {
-  background: var(--immersive-top);
+  background: #2563EB !important;
 }
 
 [data-theme="dark"] body.immersive-blue .ios-status-bleed,
 [data-theme="dark"] .mobile-frame.home-immersive .ios-status-bleed,
 [data-theme="dark"] .mobile-frame.wallets-immersive .ios-status-bleed {
-  background: var(--immersive-top-dark);
+  background: #1E3A8A !important;
 }
 
 body:not(.immersive-blue) .ios-status-bleed {
@@ -286,8 +286,9 @@ input, select, textarea {
    No transparency, no gradient edge, no border — one continuous slab. */
 .mobile-frame.home-immersive .app-header,
 .mobile-frame.wallets-immersive .app-header {
-  background: var(--immersive-top) !important;
-  background-color: var(--immersive-top) !important;
+  background: #2563EB !important;
+  background-color: #2563EB !important;
+  background-image: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   border: 0 !important;
@@ -311,15 +312,17 @@ input, select, textarea {
 
 [data-theme="dark"] .mobile-frame.home-immersive .app-header,
 [data-theme="dark"] .mobile-frame.wallets-immersive .app-header {
-  background: var(--immersive-top-dark) !important;
-  background-color: var(--immersive-top-dark) !important;
+  background: #1E3A8A !important;
+  background-color: #1E3A8A !important;
+  background-image: none !important;
 }
 
 /* Keep exact same color while scrolling — never a different tint/band */
 .mobile-frame.home-immersive.home-scrolled .app-header,
 .mobile-frame.wallets-immersive.home-scrolled .app-header {
-  background: var(--immersive-top) !important;
-  background-color: var(--immersive-top) !important;
+  background: #2563EB !important;
+  background-color: #2563EB !important;
+  background-image: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   border: 0 !important;
@@ -328,8 +331,9 @@ input, select, textarea {
 
 [data-theme="dark"] .mobile-frame.home-immersive.home-scrolled .app-header,
 [data-theme="dark"] .mobile-frame.wallets-immersive.home-scrolled .app-header {
-  background: var(--immersive-top-dark) !important;
-  background-color: var(--immersive-top-dark) !important;
+  background: #1E3A8A !important;
+  background-color: #1E3A8A !important;
+  background-image: none !important;
 }
 
 
@@ -525,23 +529,23 @@ input, select, textarea {
 /* wallets main spacing handled in unified immersive main rules */
 
 .mobile-frame.wallets-immersive {
-  background:
-    linear-gradient(180deg,
-      var(--immersive-top) 0px,
-      var(--immersive-top) 160px,
-      #2563EB 230px,
-      var(--bg-main) 320px,
-      var(--bg-main) 100%) !important;
+  background: linear-gradient(
+    180deg,
+    var(--immersive-top) 0px,
+    var(--immersive-top) 280px,
+    var(--bg-main) 360px,
+    var(--bg-main) 100%
+  ) !important;
 }
 
 [data-theme="dark"] .mobile-frame.wallets-immersive {
-  background:
-    linear-gradient(180deg,
-      var(--immersive-top-dark) 0px,
-      var(--immersive-top-dark) 160px,
-      #123A8C 230px,
-      var(--bg-main) 320px,
-      var(--bg-main) 100%) !important;
+  background: linear-gradient(
+    180deg,
+    var(--immersive-top-dark) 0px,
+    var(--immersive-top-dark) 280px,
+    var(--bg-main) 360px,
+    var(--bg-main) 100%
+  ) !important;
 }
 
 /* scrolled header color unified above */
@@ -5119,48 +5123,28 @@ body.rtl-mode .home-market-row:hover { transform: translateX(-2px); }
   content: '';
   position: absolute;
   left: 50%;
-  /* Pull well under the sticky header so no color break at the join */
-  top: calc(-1 * (env(safe-area-inset-top, 0px) + 120px));
+  top: calc(-1 * (env(safe-area-inset-top, 0px) + 160px));
   transform: translateX(-50%);
   width: 100vw;
   max-width: 440px;
-  height: calc(460px + env(safe-area-inset-top, 0px));
+  height: calc(520px + env(safe-area-inset-top, 0px));
   z-index: 0;
   pointer-events: none;
-  /* TOP must be exact --immersive-top (#1D4ED8) — never a darker navy */
-  background:
-    radial-gradient(ellipse 55% 42% at 88% 28%, rgba(147, 197, 253, 0.32), transparent 58%),
-    radial-gradient(ellipse 48% 38% at 8% 40%, rgba(96, 165, 250, 0.22), transparent 55%),
-    linear-gradient(180deg,
-      var(--immersive-top) 0%,
-      var(--immersive-top) 28%,
-      #2563EB 55%,
-      #3B82F6 78%,
-      #60A5FA 100%);
-  border-radius: 0 0 40px 40px;
+  /* ONE flat blue — same as header. Fade only at the very bottom into the sheet. */
+  background: linear-gradient(
+    180deg,
+    var(--immersive-top) 0%,
+    var(--immersive-top) 72%,
+    var(--bg-main) 100%
+  );
+  border-radius: 0;
   box-shadow: none;
 }
 
 /* Soft animated aurora sheen over the blue stage */
 .home-page-2026::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: calc(-1 * (env(safe-area-inset-top, 0px) + 120px));
-  transform: translateX(-50%);
-  width: 100vw;
-  max-width: 440px;
-  height: calc(460px + env(safe-area-inset-top, 0px));
-  z-index: 0;
-  pointer-events: none;
-  border-radius: 0 0 40px 40px;
-  opacity: 0.55;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.22) 0%, transparent 28%),
-    radial-gradient(circle at 85% 18%, rgba(186, 230, 253, 0.35) 0%, transparent 32%),
-    radial-gradient(circle at 60% 70%, rgba(255,255,255,0.08) 0%, transparent 40%);
-  mix-blend-mode: soft-light;
-  animation: homeAurora 10s ease-in-out infinite alternate;
+  content: none !important;
+  display: none !important;
 }
 
 @keyframes homeAurora {
@@ -5174,13 +5158,12 @@ body.rtl-mode .home-market-row:hover { transform: translateX(-2px); }
 }
 
 [data-theme="dark"] .home-page-2026::before {
-  background:
-    radial-gradient(ellipse 55% 42% at 88% 28%, rgba(96, 165, 250, 0.18), transparent 58%),
-    linear-gradient(180deg,
-      var(--immersive-top-dark) 0%,
-      var(--immersive-top-dark) 28%,
-      #123A8C 55%,
-      #1E40AF 100%);
+  background: linear-gradient(
+    180deg,
+    var(--immersive-top-dark) 0%,
+    var(--immersive-top-dark) 72%,
+    var(--bg-main) 100%
+  );
   box-shadow: none;
 }
 
@@ -5194,49 +5177,53 @@ body.rtl-mode .home-market-row:hover { transform: translateX(-2px); }
   position: relative !important;
   isolation: isolate;
   min-height: 0 !important;
-  margin: 4px 2px 0 !important;
-  padding: 14px 14px 26px !important;
+  margin: 4px 2px 8px !important;
+  padding: 16px 16px 22px !important;
   overflow: hidden !important;
   color: #fff !important;
+  /* Glass box (previous premium style) on the flat unified blue */
   background:
-    linear-gradient(160deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.05) 42%, rgba(255,255,255,0.02) 100%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.22) !important;
-  border-radius: 32px !important;
+    linear-gradient(160deg,
+      rgba(255,255,255,0.20) 0%,
+      rgba(255,255,255,0.08) 42%,
+      rgba(255,255,255,0.04) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  border-radius: 28px !important;
   box-shadow:
-    0 24px 48px rgba(15, 40, 120, 0.28),
-    0 2px 0 rgba(255,255,255,0.18) inset,
-    0 -1px 0 rgba(15, 40, 120, 0.12) inset !important;
-  backdrop-filter: blur(18px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(160%) !important;
+    0 20px 44px rgba(15, 40, 120, 0.22),
+    0 1px 0 rgba(255,255,255,0.28) inset,
+    0 -1px 0 rgba(15, 40, 120, 0.08) inset !important;
+  backdrop-filter: blur(22px) saturate(165%) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(165%) !important;
 }
 
-/* Floating orbital rings */
+/* Soft orbital ring decoration inside the glass */
 .home-overview-hero::before {
   content: '' !important;
   display: block !important;
   position: absolute !important;
   z-index: 0 !important;
-  top: -90px !important;
-  right: -70px !important;
-  width: 240px !important;
-  height: 240px !important;
+  top: -80px !important;
+  right: -60px !important;
+  width: 210px !important;
+  height: 210px !important;
   border-radius: 50% !important;
-  border: 1.5px solid rgba(255,255,255,0.18) !important;
+  border: 1.5px solid rgba(255,255,255,0.20) !important;
   box-shadow:
-    0 0 0 28px rgba(255,255,255,0.045),
-    0 0 0 58px rgba(255,255,255,0.03),
-    0 0 60px rgba(147, 197, 253, 0.25) !important;
-  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.22), transparent 55%) !important;
+    0 0 0 26px rgba(255,255,255,0.04),
+    0 0 0 54px rgba(255,255,255,0.025),
+    0 0 50px rgba(147, 197, 253, 0.18) !important;
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.18), transparent 55%) !important;
   pointer-events: none !important;
   animation: homeOrbFloat 12s ease-in-out infinite !important;
 }
 
 body.rtl-mode .home-overview-hero::before {
   right: auto !important;
-  left: -70px !important;
+  left: -60px !important;
 }
 
-/* Bottom glow blob + film grain */
+/* Bottom light + subtle grain inside glass */
 .home-overview-hero::after {
   content: '' !important;
   display: block !important;
@@ -5246,18 +5233,13 @@ body.rtl-mode .home-overview-hero::before {
   pointer-events: none !important;
   border-radius: inherit !important;
   background:
-    radial-gradient(ellipse 80% 55% at 20% 110%, rgba(56, 189, 248, 0.28), transparent 55%),
-    radial-gradient(ellipse 50% 40% at 90% 80%, rgba(129, 140, 248, 0.22), transparent 50%),
-    radial-gradient(rgba(255,255,255,0.55) 0.6px, transparent 0.6px) !important;
-  background-size: auto, auto, 16px 16px !important;
-  opacity: 1 !important;
-  mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%) !important;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%) !important;
-}
-
-@keyframes homeOrbFloat {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(-10px, 12px) rotate(8deg); }
+    radial-gradient(ellipse 80% 55% at 20% 110%, rgba(255,255,255,0.16), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 90% 80%, rgba(191, 219, 254, 0.14), transparent 50%),
+    radial-gradient(rgba(255,255,255,0.45) 0.55px, transparent 0.55px) !important;
+  background-size: auto, auto, 15px 15px !important;
+  opacity: 0.85 !important;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 60%, transparent 100%) !important;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 60%, transparent 100%) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -5268,14 +5250,14 @@ body.rtl-mode .home-overview-hero::before {
   display: none !important; /* greeting lives in the real header now */
 }
 
-/* Decorative glow orb element injected in HTML */
+/* Soft glow orbs inside glass */
 .home-hero-glow {
   position: absolute;
   z-index: 0;
   pointer-events: none;
   border-radius: 50%;
   filter: blur(28px);
-  opacity: 0.7;
+  opacity: 0.55;
 }
 
 .home-hero-glow--a {
@@ -5517,23 +5499,23 @@ body.rtl-mode .home-hero-glow--b { right: auto; left: -10px; }
 
 /* Immersive frame blue bleed — richer match */
 .mobile-frame.home-immersive {
-  background:
-    linear-gradient(180deg,
-      var(--immersive-top) 0px,
-      var(--immersive-top) 160px,
-      #2563EB 230px,
-      var(--bg-main) 320px,
-      var(--bg-main) 100%) !important;
+  background: linear-gradient(
+    180deg,
+    var(--immersive-top) 0px,
+    var(--immersive-top) 280px,
+    var(--bg-main) 360px,
+    var(--bg-main) 100%
+  ) !important;
 }
 
 [data-theme="dark"] .mobile-frame.home-immersive {
-  background:
-    linear-gradient(180deg,
-      var(--immersive-top-dark) 0px,
-      var(--immersive-top-dark) 160px,
-      #123A8C 230px,
-      var(--bg-main) 320px,
-      var(--bg-main) 100%) !important;
+  background: linear-gradient(
+    180deg,
+    var(--immersive-top-dark) 0px,
+    var(--immersive-top-dark) 280px,
+    var(--bg-main) 360px,
+    var(--bg-main) 100%
+  ) !important;
 }
 
 /* scrolled handled by unified rule */
@@ -6562,43 +6544,98 @@ body.rtl-mode .tool-overlay-back svg { transform: scaleX(-1); }
   content: '';
   position: absolute;
   left: 50%;
-  top: calc(-1 * (env(safe-area-inset-top, 0px) + 120px));
+  top: calc(-1 * (env(safe-area-inset-top, 0px) + 160px));
   transform: translateX(-50%);
   width: 100vw;
   max-width: 440px;
-  height: calc(400px + env(safe-area-inset-top, 0px));
+  height: calc(480px + env(safe-area-inset-top, 0px));
   z-index: 0;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse 55% 42% at 88% 30%, rgba(147, 197, 253, 0.28), transparent 58%),
-    radial-gradient(ellipse 48% 38% at 8% 42%, rgba(96, 165, 250, 0.18), transparent 55%),
-    linear-gradient(180deg,
-      var(--immersive-top) 0%,
-      var(--immersive-top) 30%,
-      #2563EB 58%,
-      #3B82F6 82%,
-      #60A5FA 100%);
-  border-radius: 0 0 36px 36px;
+  background: linear-gradient(
+    180deg,
+    var(--immersive-top) 0%,
+    var(--immersive-top) 72%,
+    var(--bg-main) 100%
+  );
+  border-radius: 0;
   box-shadow: none;
 }
 
 [data-theme="dark"] .wallets-page-2026::before {
-  background:
-    radial-gradient(ellipse 55% 42% at 88% 30%, rgba(96, 165, 250, 0.16), transparent 58%),
-    linear-gradient(180deg,
-      var(--immersive-top-dark) 0%,
-      var(--immersive-top-dark) 30%,
-      #123A8C 58%,
-      #1E40AF 100%);
+  background: linear-gradient(
+    180deg,
+    var(--immersive-top-dark) 0%,
+    var(--immersive-top-dark) 72%,
+    var(--bg-main) 100%
+  );
 }
 
 .wallets-page-2026 > * { position: relative; z-index: 1; }
 
 /* Hero */
 .wallets-hero {
-  margin: 0 0 4px;
-  padding: 8px 8px 18px;
+  position: relative;
+  isolation: isolate;
+  margin: 4px 2px 8px;
+  padding: 16px 16px 20px;
+  overflow: hidden;
   color: #fff;
+  background:
+    linear-gradient(160deg,
+      rgba(255,255,255,0.20) 0%,
+      rgba(255,255,255,0.08) 42%,
+      rgba(255,255,255,0.04) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 28px;
+  box-shadow:
+    0 20px 44px rgba(15, 40, 120, 0.22),
+    0 1px 0 rgba(255,255,255,0.28) inset,
+    0 -1px 0 rgba(15, 40, 120, 0.08) inset;
+  backdrop-filter: blur(22px) saturate(165%);
+  -webkit-backdrop-filter: blur(22px) saturate(165%);
+}
+
+.wallets-hero::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: -70px;
+  right: -50px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.18);
+  box-shadow:
+    0 0 0 24px rgba(255,255,255,0.035),
+    0 0 0 50px rgba(255,255,255,0.02);
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.16), transparent 55%);
+  pointer-events: none;
+}
+
+body.rtl-mode .wallets-hero::before {
+  right: auto;
+  left: -50px;
+}
+
+.wallets-hero::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 100%, rgba(255,255,255,0.12), transparent 55%),
+    radial-gradient(rgba(255,255,255,0.4) 0.55px, transparent 0.55px);
+  background-size: auto, 15px 15px;
+  opacity: 0.75;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+}
+
+.wallets-hero > * {
+  position: relative;
+  z-index: 1;
 }
 
 .wallets-hero-label-row {
@@ -12116,7 +12153,7 @@ class WalioApp {
     // Keep iOS status-bar theme-color aligned after theme flip
     const immersive = document.body.classList.contains('immersive-blue');
     const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const topColor = immersive ? (dark ? '#0B1F4A' : '#1D4ED8') : (dark ? '#0A0A0E' : '#F4F6FB');
+    const topColor = immersive ? (dark ? '#1E3A8A' : '#2563EB') : (dark ? '#0A0A0E' : '#F4F6FB');
     const themeMeta = document.getElementById('meta-theme-color');
     if (themeMeta) themeMeta.setAttribute('content', topColor);
   }
@@ -12249,7 +12286,7 @@ class WalioApp {
     // Keep iOS status bar / theme-color in sync with the top chrome
     const themeMeta = document.getElementById('meta-theme-color');
     const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const topColor = immersive ? (dark ? '#0B1F4A' : '#1D4ED8') : (dark ? '#0A0A0E' : '#F4F6FB');
+    const topColor = immersive ? (dark ? '#1E3A8A' : '#2563EB') : (dark ? '#0A0A0E' : '#F4F6FB');
     if (themeMeta) themeMeta.setAttribute('content', topColor);
     document.querySelectorAll('meta[name="theme-color"]').forEach(m => {
       if (m.id === 'meta-theme-color' || !m.getAttribute('media')) m.setAttribute('content', topColor);
@@ -14079,5 +14116,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2ab93d17fd99723',t:'MTc4NjY2NDU1OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cb16fb1ed766dc',t:'MTc4Njk5NDk4OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cb66d69dabfeb0',t:'MTc4Njk5ODI2MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2ab93d17fd99723',t:'MTc4NjY2NDU1OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cb16fb1ed766dc',t:'MTc4Njk5NDk4OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cb66d69dabfeb0',t:'MTc4Njk5ODI2MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a315f4c74d2e75ad',t:'MTc4Nzc4MDAyMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
