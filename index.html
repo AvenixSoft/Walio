@@ -193,14 +193,16 @@ body.immersive-blue[data-theme="dark"],
 body.immersive-blue .ios-status-bleed,
 .mobile-frame.home-immersive .ios-status-bleed,
 .mobile-frame.wallets-immersive .ios-status-bleed,
-.mobile-frame.profile-immersive .ios-status-bleed {
+.mobile-frame.profile-immersive .ios-status-bleed,
+.mobile-frame.tools-immersive .ios-status-bleed {
   background: #2563EB !important;
 }
 
 [data-theme="dark"] body.immersive-blue .ios-status-bleed,
 [data-theme="dark"] .mobile-frame.home-immersive .ios-status-bleed,
 [data-theme="dark"] .mobile-frame.profile-immersive .ios-status-bleed,
-[data-theme="dark"] .mobile-frame.wallets-immersive .ios-status-bleed {
+[data-theme="dark"] .mobile-frame.wallets-immersive .ios-status-bleed,
+[data-theme="dark"] .mobile-frame.tools-immersive .ios-status-bleed {
   background: #1E3A8A !important;
 }
 
@@ -288,7 +290,8 @@ input, select, textarea {
    No transparency, no gradient edge, no border — one continuous slab. */
 .mobile-frame.home-immersive .app-header,
 .mobile-frame.wallets-immersive .app-header,
-.mobile-frame.profile-immersive .app-header {
+.mobile-frame.profile-immersive .app-header,
+.mobile-frame.tools-immersive .app-header {
   background: #2563EB !important;
   background-color: #2563EB !important;
   background-image: none !important;
@@ -307,7 +310,9 @@ input, select, textarea {
 .mobile-frame.wallets-immersive .app-header::before,
 .mobile-frame.wallets-immersive .app-header::after,
 .mobile-frame.profile-immersive .app-header::before,
-.mobile-frame.profile-immersive .app-header::after {
+.mobile-frame.profile-immersive .app-header::after,
+.mobile-frame.tools-immersive .app-header::before,
+.mobile-frame.tools-immersive .app-header::after {
   content: none !important;
   display: none !important;
   border: 0 !important;
@@ -317,7 +322,8 @@ input, select, textarea {
 
 [data-theme="dark"] .mobile-frame.home-immersive .app-header,
 [data-theme="dark"] .mobile-frame.wallets-immersive .app-header,
-[data-theme="dark"] .mobile-frame.profile-immersive .app-header {
+[data-theme="dark"] .mobile-frame.profile-immersive .app-header,
+[data-theme="dark"] .mobile-frame.tools-immersive .app-header {
   background: #1E3A8A !important;
   background-color: #1E3A8A !important;
   background-image: none !important;
@@ -326,7 +332,8 @@ input, select, textarea {
 /* Keep exact same color while scrolling — never a different tint/band */
 .mobile-frame.home-immersive.home-scrolled .app-header,
 .mobile-frame.wallets-immersive.home-scrolled .app-header,
-.mobile-frame.profile-immersive.home-scrolled .app-header {
+.mobile-frame.profile-immersive.home-scrolled .app-header,
+.mobile-frame.tools-immersive.home-scrolled .app-header {
   background: #2563EB !important;
   background-color: #2563EB !important;
   background-image: none !important;
@@ -338,7 +345,8 @@ input, select, textarea {
 
 [data-theme="dark"] .mobile-frame.home-immersive.home-scrolled .app-header,
 [data-theme="dark"] .mobile-frame.wallets-immersive.home-scrolled .app-header,
-[data-theme="dark"] .mobile-frame.profile-immersive.home-scrolled .app-header {
+[data-theme="dark"] .mobile-frame.profile-immersive.home-scrolled .app-header,
+[data-theme="dark"] .mobile-frame.tools-immersive.home-scrolled .app-header {
   background: #1E3A8A !important;
   background-color: #1E3A8A !important;
   background-image: none !important;
@@ -497,7 +505,8 @@ input, select, textarea {
 /* wallets-immersive header bg handled in unified immersive header rule above */
 
 .mobile-frame.wallets-immersive .header-greeting-text,
-.mobile-frame.profile-immersive .header-greeting-text {
+.mobile-frame.profile-immersive .header-greeting-text,
+.mobile-frame.tools-immersive .header-greeting-text {
   color: rgba(255, 255, 255, 0.78);
   text-transform: none;
   letter-spacing: 0;
@@ -506,14 +515,16 @@ input, select, textarea {
 }
 
 .mobile-frame.wallets-immersive .header-user-name,
-.mobile-frame.profile-immersive .header-user-name {
+.mobile-frame.profile-immersive .header-user-name,
+.mobile-frame.tools-immersive .header-user-name {
   color: #fff;
   font-size: clamp(17px, 4.8vw, 20px);
   font-weight: 800;
 }
 
 .mobile-frame.wallets-immersive .header-icon-btn,
-.mobile-frame.profile-immersive .header-icon-btn {
+.mobile-frame.profile-immersive .header-icon-btn,
+.mobile-frame.tools-immersive .header-icon-btn {
   color: #fff;
   background: rgba(255, 255, 255, 0.18);
   border-color: rgba(255, 255, 255, 0.28);
@@ -525,25 +536,29 @@ input, select, textarea {
 }
 
 .mobile-frame.wallets-immersive .header-icon-btn:hover,
-.mobile-frame.profile-immersive .header-icon-btn:hover {
+.mobile-frame.profile-immersive .header-icon-btn:hover,
+.mobile-frame.tools-immersive .header-icon-btn:hover {
   color: #fff;
   background: rgba(255, 255, 255, 0.26);
 }
 
 .mobile-frame.wallets-immersive .header-user-avatar,
-.mobile-frame.profile-immersive .header-user-avatar {
+.mobile-frame.profile-immersive .header-user-avatar,
+.mobile-frame.tools-immersive .header-user-avatar {
   box-shadow: 0 4px 16px rgba(15, 40, 120, 0.25), 0 0 0 3px rgba(255,255,255,0.28);
 }
 
 .mobile-frame.wallets-immersive .header-bell-dot,
-.mobile-frame.profile-immersive .header-bell-dot {
+.mobile-frame.profile-immersive .header-bell-dot,
+.mobile-frame.tools-immersive .header-bell-dot {
   border-color: rgba(37, 99, 235, 0.55);
 }
 
 /* wallets main spacing handled in unified immersive main rules */
 
 .mobile-frame.wallets-immersive,
-.mobile-frame.profile-immersive {
+.mobile-frame.profile-immersive,
+.mobile-frame.tools-immersive {
   background: linear-gradient(
     180deg,
     var(--immersive-top) 0px,
@@ -554,7 +569,8 @@ input, select, textarea {
 }
 
 [data-theme="dark"] .mobile-frame.wallets-immersive,
-[data-theme="dark"] .mobile-frame.profile-immersive {
+[data-theme="dark"] .mobile-frame.profile-immersive,
+[data-theme="dark"] .mobile-frame.tools-immersive {
   background: linear-gradient(
     180deg,
     var(--immersive-top-dark) 0px,
@@ -576,7 +592,8 @@ input, select, textarea {
 
 .mobile-frame.home-immersive .main-content,
 .mobile-frame.wallets-immersive .main-content,
-.mobile-frame.profile-immersive .main-content {
+.mobile-frame.profile-immersive .main-content,
+.mobile-frame.tools-immersive .main-content {
   padding-top: 0;
   margin-top: 0;
   background: transparent;
@@ -584,7 +601,8 @@ input, select, textarea {
 
 .mobile-frame.home-immersive #tab-home.tab-view.active,
 .mobile-frame.wallets-immersive #tab-wallets.tab-view.active,
-.mobile-frame.profile-immersive #tab-profile.tab-view.active {
+.mobile-frame.profile-immersive #tab-profile.tab-view.active,
+.mobile-frame.tools-immersive #tab-tools.tab-view.active {
   margin-top: 0;
   background: transparent;
 }
@@ -592,7 +610,8 @@ input, select, textarea {
 /* No transform gap on first paint of immersive tabs */
 .mobile-frame.home-immersive #tab-home.tab-view,
 .mobile-frame.wallets-immersive #tab-wallets.tab-view,
-.mobile-frame.profile-immersive #tab-profile.tab-view {
+.mobile-frame.profile-immersive #tab-profile.tab-view,
+.mobile-frame.tools-immersive #tab-tools.tab-view {
   transform: none;
 }
 
@@ -6181,221 +6200,562 @@ body.rtl-mode .wallet-card-2026::before { right: auto; left: -52px; }
   border-radius: 22px;
 }
 
-/* ================= TOOLS — iOS APP SHELL ================= */
+/* ================= TOOLS PAGE — 2026 IMMERSIVE REDESIGN (matches Home / Wallets / Profile) ================= */
 .tools-page-2026 {
   width: 100%;
   padding-bottom: 8px;
-}
-
-.tools-page-header {
-  margin-bottom: 18px;
-}
-.tools-page-kicker {
-  display: block;
-  margin-bottom: 3px;
-  color: var(--text-muted);
-  font-size: 10px;
-  font-weight: 750;
-  letter-spacing: .7px;
-  text-transform: uppercase;
-}
-.tools-page-header .page-title {
-  font-size: clamp(26px, 7vw, 32px);
-  letter-spacing: -1px;
-}
-.tools-page-header .page-subtitle {
-  max-width: 320px;
-  margin-top: 4px;
-  line-height: 1.6;
-}
-
-.tools-featured {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
-  width: 100%;
-  min-height: 148px;
-  display: flex;
-  align-items: flex-end;
-  padding: 18px;
-  margin-bottom: 22px;
-  color: #fff;
-  text-align: inherit;
-  background:
-    radial-gradient(circle at 92% 8%, rgba(186,230,253,.28), transparent 34%),
-    radial-gradient(circle at 4% 100%, rgba(129,140,248,.30), transparent 40%),
-    linear-gradient(145deg, #1E1B4B 0%, #312E81 46%, #4338CA 100%);
-  border: 1px solid rgba(255,255,255,.16);
-  border-radius: 26px;
-  box-shadow: 0 18px 36px rgba(49,46,129,.24), inset 0 1px 0 rgba(255,255,255,.18);
+  min-height: calc(100vh - 180px);
 }
-.tools-featured::before {
+
+/* Blue stage — same DNA as Home / Wallets / Profile so the status bar always matches */
+.tools-page-2026::before {
   content: '';
   position: absolute;
-  z-index: -1;
-  width: 160px;
-  height: 160px;
-  top: -70px;
-  right: -48px;
-  border: 1px solid rgba(255,255,255,.14);
-  border-radius: 50%;
-  box-shadow: 0 0 0 24px rgba(255,255,255,.035);
+  left: 50%;
+  top: calc(-1 * (env(safe-area-inset-top, 0px) + 160px));
+  transform: translateX(-50%);
+  width: 100vw;
+  max-width: 440px;
+  height: calc(480px + env(safe-area-inset-top, 0px));
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    var(--immersive-top) 0%,
+    var(--immersive-top) 72%,
+    var(--bg-main) 100%
+  );
+  border-radius: 0;
+  box-shadow: none;
 }
-body.rtl-mode .tools-featured::before { right: auto; left: -48px; }
-.tools-featured:active { transform: scale(.985); }
+
+[data-theme="dark"] .tools-page-2026::before {
+  background: linear-gradient(
+    180deg,
+    var(--immersive-top-dark) 0%,
+    var(--immersive-top-dark) 72%,
+    var(--bg-main) 100%
+  );
+}
+
+.tools-page-2026 > *:not(.tool-overlay) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Hero: identical glass construction to .wallets-hero / .home-overview-hero / .profile-hero ---- */
+.tools-hero {
+  position: relative;
+  isolation: isolate;
+  margin: 4px 2px 8px;
+  padding: 16px 16px 20px;
+  overflow: hidden;
+  color: #fff;
+  background:
+    linear-gradient(160deg,
+      rgba(255,255,255,0.20) 0%,
+      rgba(255,255,255,0.08) 42%,
+      rgba(255,255,255,0.04) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 28px;
+  box-shadow:
+    0 20px 44px rgba(15, 40, 120, 0.22),
+    0 1px 0 rgba(255,255,255,0.28) inset,
+    0 -1px 0 rgba(15, 40, 120, 0.08) inset;
+  backdrop-filter: blur(22px) saturate(165%);
+  -webkit-backdrop-filter: blur(22px) saturate(165%);
+}
+
+/* Soft orbital ring — same decoration as .wallets-hero::before */
+.tools-hero::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: -70px;
+  right: -50px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.18);
+  box-shadow:
+    0 0 0 24px rgba(255,255,255,0.035),
+    0 0 0 50px rgba(255,255,255,0.02);
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.16), transparent 55%);
+  pointer-events: none;
+}
+
+body.rtl-mode .tools-hero::before {
+  right: auto;
+  left: -50px;
+}
+
+/* Bottom light + subtle grain — same as .wallets-hero::after */
+.tools-hero::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 100%, rgba(255,255,255,0.12), transparent 55%),
+    radial-gradient(rgba(255,255,255,0.4) 0.55px, transparent 0.55px);
+  background-size: auto, 15px 15px;
+  opacity: 0.75;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+}
+
+.tools-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Label row — mirrors .wallets-hero-label-row */
+.tools-hero-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 8px;
+}
+
+.tools-hero-label {
+  color: rgba(255,255,255,0.78);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+/* Count pill — mirrors .wallets-hero-pill-stat */
+.tools-hero-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 27px;
+  padding: 0 11px;
+  color: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+/* Icon tile + title — mirrors .profile-hero-identity */
+.tools-hero-identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 14px 8px 2px;
+}
+
+.tools-hero-tile {
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(160deg, rgba(255,255,255,0.34), rgba(255,255,255,0.10));
+  border: 1.5px solid rgba(255,255,255,0.55);
+  border-radius: 19px;
+  box-shadow:
+    0 12px 28px rgba(15,40,120,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.tools-hero-idcopy {
+  min-width: 0;
+  flex: 1;
+}
+
+.tools-hero-title {
+  display: block;
+  overflow: hidden;
+  color: #fff;
+  font-size: clamp(22px, 6.2vw, 28px);
+  font-weight: 850;
+  line-height: 1.14;
+  letter-spacing: -0.7px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-shadow: 0 6px 22px rgba(15,40,120,0.3);
+}
+
+.tools-hero-sub {
+  display: block;
+  margin-top: 4px;
+  color: rgba(226,232,240,0.72);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Quick actions — mirrors .wallets-hero-actions / .profile-hero-actions */
+.tools-hero-actions {
+  display: flex;
+  gap: 10px;
+  padding: 0 4px;
+  margin-top: 16px;
+}
+
+.tools-hero-btn {
+  flex: 1;
+  min-width: 0;
+  min-height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 12px;
+  color: #0F172A;
+  background: linear-gradient(180deg, #fff, #F8FAFF);
+  border: 0;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: 0 12px 26px rgba(15,40,120,0.2);
+  transition: var(--transition-spring);
+}
+
+.tools-hero-btn:hover {
+  transform: translateY(-2px);
+}
+
+.tools-hero-btn:active {
+  transform: scale(.96);
+}
+
+.tools-hero-btn svg {
+  flex: 0 0 auto;
+}
+
+.tools-hero-btn.dark {
+  flex: 0 0 50px;
+  width: 50px;
+  padding: 0;
+  color: #fff;
+  background:
+    linear-gradient(145deg, #1E293B 0%, #0B1220 55%, #020617 100%);
+  border-radius: 16px;
+  box-shadow:
+    0 12px 24px rgba(2,6,23,0.35),
+    0 1px 0 rgba(255,255,255,0.18) inset;
+}
+
+/* ---- Sheet: identical to .wallets-sheet / .profile-sheet ---- */
+.tools-sheet {
+  margin-top: 10px;
+  padding: 22px 14px 12px;
+  background: var(--bg-main);
+  border-radius: 28px 28px 0 0;
+  box-shadow: 0 -16px 40px rgba(15,40,120,0.12);
+  position: relative;
+}
+
+[data-theme="dark"] .tools-sheet {
+  box-shadow: 0 -16px 40px rgba(0,0,0,0.4);
+}
+
+.tools-sheet::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(148,163,184,0.45);
+}
+
+/* Featured tool card — soft elevated white, like .home-insight-card */
+.tools-featured-card {
+  display: block;
+  width: 100%;
+  margin: 6px 2px 18px;
+  padding: 16px 16px 14px;
+  text-align: inherit;
+  background: #fff;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  border-radius: 24px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.05);
+  transition: var(--transition-spring);
+}
+
+[data-theme="dark"] .tools-featured-card {
+  background: var(--card-bg);
+  border-color: var(--border-glass);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+}
+
+.tools-featured-card:hover {
+  transform: translateY(-1px);
+}
+
+.tools-featured-card:active {
+  transform: scale(.985);
+}
+
+.tools-featured-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.tools-featured-icon {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  color: #4338CA;
+  background: linear-gradient(145deg, #E0E7FF, #C7D2FE);
+  border-radius: 14px;
+  box-shadow: 0 6px 14px rgba(67, 56, 202, 0.2);
+}
+
+[data-theme="dark"] .tools-featured-icon {
+  color: #A5B4FC;
+  background: rgba(79, 70, 229, 0.22);
+  box-shadow: 0 6px 14px rgba(2, 6, 23, 0.4);
+}
 
 .tools-featured-copy {
   min-width: 0;
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  text-align: start;
 }
+
 .tools-featured-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  min-height: 22px;
+  gap: 5px;
+  min-height: 20px;
   padding: 0 8px;
-  color: rgba(255,255,255,.82);
-  background: rgba(255,255,255,.12);
-  border: 1px solid rgba(255,255,255,.12);
+  color: #4F46E5;
+  background: rgba(79,70,229,.10);
   border-radius: 999px;
-  font-size: 10px;
-  font-weight: 700;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: .4px;
+  text-transform: uppercase;
 }
+
+[data-theme="dark"] .tools-featured-badge {
+  color: #A5B4FC;
+  background: rgba(165, 180, 252, 0.16);
+}
+
 .tools-featured-copy strong {
   display: block;
-  font-size: 22px;
-  font-weight: 850;
-  letter-spacing: -.5px;
+  margin-top: 5px;
+  color: var(--text-primary);
+  font-size: 15.5px;
+  font-weight: 800;
+  letter-spacing: -.3px;
 }
+
 .tools-featured-copy em {
   display: block;
-  max-width: 230px;
-  color: rgba(238,242,255,.72);
-  font-size: 12px;
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: 11.5px;
   font-style: normal;
-  font-weight: 500;
-  line-height: 1.45;
+  line-height: 1.5;
 }
+
 .tools-featured-cta {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #1E293B;
+  background: #F1F5F9;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+[data-theme="dark"] .tools-featured-cta {
+  color: var(--text-primary);
+  background: var(--chip-bg-strong);
+}
+
+.tools-featured-cta:active {
+  transform: scale(.98);
+}
+
+body.rtl-mode .tools-featured-cta svg {
+  transform: scaleX(-1);
+}
+
+/* Tool groups */
+.tools-group {
+  margin-bottom: 18px;
+}
+
+.tools-group-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+  padding: 0 4px;
+}
+
+.tools-group-title {
+  color: var(--text-primary);
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -.35px;
+}
+
+.tools-group-count {
+  min-width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  min-height: 32px;
-  padding: 0 12px;
-  color: #1E1B4B;
-  background: #fff;
+  justify-content: center;
+  padding: 0 8px;
+  color: #2563EB;
+  background: rgba(37, 99, 235, 0.10);
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
 }
-body.rtl-mode .tools-featured-cta svg { transform: scaleX(-1); }
 
-.tools-featured-visual {
-  width: 72px;
-  height: 72px;
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  color: #fff;
-  background: rgba(255,255,255,.12);
-  border: 1px solid rgba(255,255,255,.14);
-  border-radius: 22px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.18);
+[data-theme="dark"] .tools-group-count {
+  color: #A5B4FC;
+  background: rgba(129, 140, 248, 0.16);
 }
-
-.tools-group {
-  margin-bottom: 20px;
-}
-.tools-group-title {
-  padding: 0 4px 8px 16px;
-  color: var(--text-muted);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .2px;
-}
-body.rtl-mode .tools-group-title { padding: 0 16px 8px 4px; }
 
 .tools-group-list {
   overflow: hidden;
-  background: var(--card-bg);
-  border: 1px solid var(--border-glass);
-  border-radius: 18px;
-  box-shadow: 0 8px 22px rgba(15,23,42,.045);
+  background: #fff;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  border-radius: 22px;
+  box-shadow: 0 10px 28px rgba(15,23,42,.04);
 }
 
+[data-theme="dark"] .tools-group-list {
+  background: var(--card-bg);
+  border-color: var(--border-glass);
+}
+
+/* Rows — soft list rows like .home-tx-item */
 .tools-row {
+  --tools-accent: #4F46E5;
+  --tools-accent-soft: rgba(79,70,229,.12);
   width: 100%;
-  min-height: 64px;
+  min-height: 66px;
   display: grid;
-  grid-template-columns: 42px minmax(0, 1fr) 16px;
+  grid-template-columns: 46px minmax(0, 1fr) 18px;
   align-items: center;
   gap: 12px;
-  padding: 10px 14px;
+  padding: 11px 14px;
   text-align: inherit;
   background: transparent;
   border: 0;
-  border-bottom: .5px solid var(--border-subtle);
+  border-bottom: 1px solid rgba(241, 245, 249, 1);
+  border-radius: 0;
+  transition: background .2s ease;
 }
-.tools-row:last-child { border-bottom: 0; }
-.tools-row:active { background: var(--chip-bg); }
+
+[data-theme="dark"] .tools-row {
+  border-bottom-color: var(--border-subtle);
+}
+
+.tools-row:last-child {
+  border-bottom: 0;
+}
+
+.tools-row:hover {
+  background: rgba(241, 245, 249, 0.6);
+}
+
+[data-theme="dark"] .tools-row:hover {
+  background: var(--chip-bg);
+}
+
+.tools-row:active {
+  background: var(--chip-bg);
+}
+
+.tools-row[data-tool="percentage"] { --tools-accent: #7C3AED; --tools-accent-soft: rgba(124,58,237,.12); }
+.tools-row[data-tool="discount"]   { --tools-accent: #DB2777; --tools-accent-soft: rgba(219,39,119,.12); }
+.tools-row[data-tool="tip"]        { --tools-accent: #059669; --tools-accent-soft: rgba(5,150,105,.12); }
+.tools-row[data-tool="interest"]   { --tools-accent: #D97706; --tools-accent-soft: rgba(217,119,6,.13); }
+.tools-row[data-tool="loan"]       { --tools-accent: #2563EB; --tools-accent-soft: rgba(37,99,235,.12); }
+.tools-row[data-tool="currency"]   { --tools-accent: #0D9488; --tools-accent-soft: rgba(13,148,136,.12); }
 
 .tools-row-icon {
-  width: 34px;
-  height: 34px;
+  width: 46px;
+  height: 46px;
   display: grid;
   place-items: center;
-  border-radius: 9px;
-  color: #fff;
+  flex: 0 0 auto;
+  color: var(--tools-accent);
+  background: var(--tools-accent-soft);
+  border-radius: 15px;
 }
-.tools-row[data-tool="percentage"] .tools-row-icon { background: #8B5CF6; }
-.tools-row[data-tool="discount"] .tools-row-icon { background: #EC4899; }
-.tools-row[data-tool="tip"] .tools-row-icon { background: #10B981; }
-.tools-row[data-tool="interest"] .tools-row-icon { background: #F59E0B; }
-.tools-row[data-tool="loan"] .tools-row-icon { background: #3B82F6; }
-.tools-row[data-tool="currency"] .tools-row-icon { background: #0D9488; }
 
-.tools-row-copy { min-width: 0; text-align: start; }
+.tools-row-copy {
+  min-width: 0;
+  text-align: start;
+}
+
 .tools-row-copy strong {
   display: block;
   overflow: hidden;
   color: var(--text-primary);
-  font-size: 15px;
-  font-weight: 650;
+  font-size: 14px;
+  font-weight: 750;
   letter-spacing: -.2px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .tools-row-copy span {
   display: block;
   overflow: hidden;
-  margin-top: 1px;
+  margin-top: 2px;
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 500;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .tools-row-chevron {
   display: grid;
   place-items: center;
   color: #C4C9D4;
 }
-body.rtl-mode .tools-row-chevron svg { transform: scaleX(-1); }
-[data-theme="dark"] .tools-row-chevron { color: #64748B; }
+
+body.rtl-mode .tools-row-chevron svg {
+  transform: scaleX(-1);
+}
+
+[data-theme="dark"] .tools-row-chevron {
+  color: #64748B;
+}
 
 /* Tool detail — in-page sheet (avoids broken fixed overlay inside transformed tabs) */
-.tools-page-2026 {
-  position: relative;
-  min-height: calc(100vh - 180px);
-}
-.tools-page-2026.tool-open > .tools-page-header,
-.tools-page-2026.tool-open > .tools-featured,
-.tools-page-2026.tool-open > .tools-group {
+.tools-page-2026.tool-open > .tools-hero,
+.tools-page-2026.tool-open > .tools-sheet {
   visibility: hidden;
   pointer-events: none;
 }
@@ -6412,14 +6772,17 @@ body.rtl-mode .tools-row-chevron svg { transform: scaleX(-1); }
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: var(--bg-main);
-  border-radius: 22px;
+  background: transparent;
   opacity: 0;
   pointer-events: none;
   transform: translate3d(18px, 0, 0);
   transition: transform .32s cubic-bezier(.22, 1, .36, 1), opacity .22s ease;
 }
-body.rtl-mode .tool-overlay { transform: translate3d(-18px, 0, 0); }
+
+body.rtl-mode .tool-overlay {
+  transform: translate3d(-18px, 0, 0);
+}
+
 .tool-overlay.open {
   opacity: 1;
   pointer-events: auto;
@@ -6427,50 +6790,105 @@ body.rtl-mode .tool-overlay { transform: translate3d(-18px, 0, 0); }
 }
 
 .tool-overlay-head {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  display: flex;
   align-items: center;
-  gap: 8px;
-  min-height: 48px;
-  margin-bottom: 14px;
-  padding: 4px 2px 12px;
-  border-bottom: 1px solid var(--border-subtle);
+  gap: 12px;
+  min-height: 50px;
+  margin: 10px 2px 0;
 }
+
 .tool-overlay-back {
-  min-height: 38px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 4px;
-  padding: 0 12px 0 8px;
-  color: var(--accent-primary);
-  background: rgba(79, 70, 229, .08);
-  border: 1px solid rgba(79, 70, 229, .12);
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 700;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: var(--transition-spring);
 }
-.tool-overlay-back:hover { background: rgba(79, 70, 229, .14); }
-.tool-overlay-back svg { flex: 0 0 auto; }
-body.rtl-mode .tool-overlay-back svg { transform: scaleX(-1); }
+
+.tool-overlay-back:hover {
+  background: rgba(255, 255, 255, 0.26);
+}
+
+.tool-overlay-back:active {
+  transform: scale(0.92);
+}
+
+.tool-overlay-back span {
+  display: none;
+}
+
+.tool-overlay-back svg {
+  flex: 0 0 auto;
+}
+
+body.rtl-mode .tool-overlay-back svg {
+  transform: scaleX(-1);
+}
+
 .tool-overlay-title {
+  flex: 1;
+  min-width: 0;
   overflow: hidden;
-  color: var(--text-primary);
-  font-size: 16px;
+  color: #fff;
+  font-size: 18px;
   font-weight: 800;
   letter-spacing: -.35px;
-  text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-shadow: 0 4px 16px rgba(15, 40, 120, 0.28);
 }
+
 .tool-overlay-head > span:last-child {
-  width: 72px;
+  display: none;
 }
+
 .tool-overlay-body {
   flex: 1;
-  padding: 0 2px 8px;
+  min-height: 0;
+  margin-top: 12px;
+  padding: 22px 14px 12px;
+  background: var(--bg-main);
+  border-radius: 28px 28px 0 0;
+  box-shadow: 0 -16px 40px rgba(15, 40, 120, 0.12);
+  position: relative;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
-.tool-overlay .tool-sheet-title { display: none; }
+
+[data-theme="dark"] .tool-overlay-body {
+  box-shadow: 0 -16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.tool-overlay-body::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.45);
+}
+
+.tool-overlay-body::-webkit-scrollbar {
+  display: none;
+}
+
+.tool-overlay .tool-sheet-title {
+  display: none;
+}
+
 .tool-overlay .ios-calculator-container,
 .tool-overlay .tool-sheet-card {
   margin: 0;
@@ -6479,27 +6897,32 @@ body.rtl-mode .tool-overlay-back svg { transform: scaleX(-1); }
 .tool-sheet-card {
   padding: 18px 16px 16px;
 }
+
 .tool-input-row label {
   font-size: 12px;
   font-weight: 650;
 }
+
 .tool-input,
 .tool-select {
   height: 48px;
   border-radius: 14px;
   background: var(--chip-bg);
 }
+
 .tool-input:focus,
 .tool-select:focus {
   border-color: var(--accent-primary);
   box-shadow: 0 0 0 3px var(--accent-glow);
 }
+
 .tool-result-box {
   margin-top: 8px;
   padding: 16px 16px 14px;
   border-radius: 16px;
   background: linear-gradient(180deg, color-mix(in srgb, var(--result-bg) 70%, var(--accent-primary) 8%), var(--result-bg));
 }
+
 .tool-result-box .result-value {
   font-size: 22px;
   letter-spacing: -.5px;
@@ -6509,6 +6932,7 @@ body.rtl-mode .tool-overlay-back svg { transform: scaleX(-1); }
   padding: 14px 12px 12px;
   border-radius: 24px;
 }
+
 .calc-screen {
   height: 86px;
   padding: 14px 16px;
@@ -6518,32 +6942,39 @@ body.rtl-mode .tool-overlay-back svg { transform: scaleX(-1); }
   border-radius: 18px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
 }
+
 .calc-value {
   color: #F8FAFC;
   font-variant-numeric: tabular-nums;
 }
+
 .calc-keypad {
   gap: 8px;
 }
+
 .calc-btn {
   height: 58px;
   border-radius: 16px;
 }
+
 .btn-equals {
   background: var(--accent-primary);
   color: #fff;
 }
 
 @supports not (background: color-mix(in srgb, white 50%, black)) {
-  .tool-overlay-head { background: var(--bg-main); }
   .tool-result-box { background: var(--result-bg); }
 }
 
 @media (max-width: 380px) {
-  .tools-featured { min-height: 136px; padding: 15px; }
-  .tools-featured-copy strong { font-size: 19px; }
-  .tools-featured-visual { width: 60px; height: 60px; border-radius: 18px; }
+  .tools-hero-identity { gap: 12px; margin-inline: 6px; }
+  .tools-hero-tile { width: 52px; height: 52px; flex-basis: 52px; }
+  .tools-hero-sub { font-size: 11.5px; }
+  .tools-hero-btn { font-size: 12px; padding: 0 10px; }
+  .tools-hero-btn.dark { flex-basis: 46px; width: 46px; }
   .tools-row { gap: 10px; padding-inline: 12px; }
+  .tools-row-icon { width: 42px; height: 42px; border-radius: 13px; }
+  .tools-featured-card { padding: 14px 14px 12px; }
 }
 
 /* Wallets page */
@@ -8592,6 +9023,8 @@ const translations = {
     tools_everyday: "Everyday",
     tools_planning: "Planning",
     tools_open: "Open",
+    tools_unit: "tools",
+    tool_conv_short: "Converter",
     tool_calc: "Calculator",
     tool_calc_desc: "Standard arithmetic calculator",
     tool_perc: "Percentage",
@@ -8979,6 +9412,8 @@ const translations = {
     tools_everyday: "روزمره",
     tools_planning: "برنامه‌ریزی",
     tools_open: "باز کردن",
+    tools_unit: "ابزار",
+    tool_conv_short: "تبدیل ارز",
     tool_calc: "ماشین‌حساب",
     tool_calc_desc: "محاسبات ساده ریاضی",
     tool_perc: "محاسبه درصد",
@@ -10985,69 +11420,121 @@ class ToolsManager {
   }
 
   /**
-   * Render Tools Overview & Individual Card Sheets
+   * Render Tools Overview (2026 immersive — matches Home / Wallets / Profile)
    */
   renderToolsPage(containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
     const t = (key) => window.i18n ? window.i18n.t(key) : key;
+    const num = (value) => window.i18n ? window.i18n.formatNumber(value, 0) : String(value);
+
+    const ICONS = {
+      calculator: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2.5"/><line x1="8" y1="6.5" x2="16" y2="6.5"/><path d="M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 19h.01M12 19h.01"/></svg>',
+      percentage: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="8" cy="8" r="2.4"/><circle cx="16" cy="16" r="2.4"/><line x1="18.5" y1="5.5" x2="5.5" y2="18.5"/></svg>',
+      discount: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>',
+      tip: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8c0-3.3-2.7-6-6-6M6 8c0-3.3 2.7-6 6-6"/><path d="M2 12h20"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/></svg>',
+      interest: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>',
+      loan: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+      currency: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16.2 7.8l-2 6.3-6.4 2.1 2-6.3z"/></svg>'
+    };
+
+    const TOOLS = [
+      { id: 'percentage', title: 'tool_perc', desc: 'tool_perc_desc' },
+      { id: 'discount', title: 'tool_disc', desc: 'tool_disc_desc' },
+      { id: 'tip', title: 'tool_tip', desc: 'tool_tip_desc' },
+      { id: 'interest', title: 'tool_interest', desc: 'tool_interest_desc' },
+      { id: 'loan', title: 'tool_loan', desc: 'tool_loan_desc' },
+      { id: 'currency', title: 'tool_convert', desc: 'tool_convert_desc' }
+    ];
+
+    const groups = [
+      { id: 'everyday', key: 'tools_everyday', items: TOOLS.slice(0, 3) },
+      { id: 'planning', key: 'tools_planning', items: TOOLS.slice(3) }
+    ];
+
     const chevron = `<span class="tools-row-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M7 4l6 6-6 6"/></svg></span>`;
-    const row = (id, titleKey, descKey, icon) => `
-      <button class="tools-row tool-card" data-tool="${id}" type="button">
-        <span class="tools-row-icon" aria-hidden="true">${icon}</span>
-        <span class="tools-row-copy">
-          <strong>${t(titleKey)}</strong>
-          <span>${t(descKey)}</span>
-        </span>
-        ${chevron}
-      </button>`;
+    const arrow = `<svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 4l6 6-6 6"/></svg>`;
+    const gridIcon = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/></svg>`;
+    const wrenchIcon = `<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`;
+
+    const totalTools = TOOLS.length + 1; // + featured calculator
+
+    const row = (item) => `
+        <button class="tools-row tool-card" data-tool="${item.id}" type="button">
+          <span class="tools-row-icon" aria-hidden="true">${ICONS[item.id]}</span>
+          <span class="tools-row-copy">
+            <strong data-i18n="${item.title}">${t(item.title)}</strong>
+            <span data-i18n="${item.desc}">${t(item.desc)}</span>
+          </span>
+          ${chevron}
+        </button>`;
 
     container.innerHTML = `
       <div class="tools-page-2026">
-        <header class="tools-page-header">
-          <span class="tools-page-kicker">${t('tools_kicker')}</span>
-          <h2 class="page-title">${t('tools_title')}</h2>
-          <p class="page-subtitle">${t('tools_subtitle')}</p>
-        </header>
+        <section class="tools-hero" aria-label="${t('tools_title')}">
+          <div class="tools-hero-label-row">
+            <span class="tools-hero-label" data-i18n="tools_kicker">${t('tools_kicker')}</span>
+            <span class="tools-hero-count" aria-hidden="true">${gridIcon} ${num(totalTools)} ${t('tools_unit')}</span>
+          </div>
 
-        <button class="tools-featured tool-card" data-tool="calculator" type="button">
-          <span class="tools-featured-copy">
-            <span class="tools-featured-badge">${t('tools_featured')}</span>
-            <strong>${t('tool_calc')}</strong>
-            <em>${t('tool_calc_desc')}</em>
-            <span class="tools-featured-cta">
-              ${t('tools_open')}
-              <svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 4l6 6-6 6"/></svg>
+          <div class="tools-hero-identity">
+            <span class="tools-hero-tile" aria-hidden="true">${wrenchIcon}</span>
+            <span class="tools-hero-idcopy">
+              <strong class="tools-hero-title" data-i18n="tools_title">${t('tools_title')}</strong>
+              <span class="tools-hero-sub" data-i18n="tools_subtitle">${t('tools_subtitle')}</span>
             </span>
-          </span>
-          <span class="tools-featured-visual" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="2" width="16" height="20" rx="2.5"/><line x1="8" y1="6.5" x2="16" y2="6.5"/><path d="M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 19h.01M12 19h.01"/></svg>
-          </span>
-        </button>
+          </div>
 
-        <section class="tools-group" aria-labelledby="tools-everyday-title">
-          <h3 class="tools-group-title" id="tools-everyday-title">${t('tools_everyday')}</h3>
-          <div class="tools-group-list">
-            ${row('percentage', 'tool_perc', 'tool_perc_desc', '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="8" cy="8" r="2.4"/><circle cx="16" cy="16" r="2.4"/><line x1="18.5" y1="5.5" x2="5.5" y2="18.5"/></svg>')}
-            ${row('discount', 'tool_disc', 'tool_disc_desc', '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>')}
-            ${row('tip', 'tool_tip', 'tool_tip_desc', '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8c0-3.3-2.7-6-6-6M6 8c0-3.3 2.7-6 6-6"/><path d="M2 12h20"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/></svg>')}
+          <div class="tools-hero-actions">
+            <button class="tools-hero-btn tool-card" data-tool="calculator" type="button">
+              ${ICONS.calculator}
+              <span data-i18n="tool_calc">${t('tool_calc')}</span>
+            </button>
+            <button class="tools-hero-btn tool-card" data-tool="currency" type="button">
+              ${ICONS.currency}
+              <span data-i18n="tool_conv_short">${t('tool_conv_short')}</span>
+            </button>
+            <button class="tools-hero-btn dark tool-card" data-tool="percentage" type="button" aria-label="${t('tool_perc')}">
+              ${ICONS.percentage}
+            </button>
           </div>
         </section>
 
-        <section class="tools-group" aria-labelledby="tools-planning-title">
-          <h3 class="tools-group-title" id="tools-planning-title">${t('tools_planning')}</h3>
-          <div class="tools-group-list">
-            ${row('interest', 'tool_interest', 'tool_interest_desc', '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>')}
-            ${row('loan', 'tool_loan', 'tool_loan_desc', '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>')}
-            ${row('currency', 'tool_convert', 'tool_convert_desc', '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16.2 7.8l-2 6.3-6.4 2.1 2-6.3z"/></svg>')}
-          </div>
-        </section>
+        <div class="tools-sheet">
+          <button class="tools-featured-card tool-card" data-tool="calculator" type="button">
+            <span class="tools-featured-head">
+              <span class="tools-featured-icon" aria-hidden="true">${ICONS.calculator}</span>
+              <span class="tools-featured-copy">
+                <span class="tools-featured-badge" data-i18n="tools_featured">${t('tools_featured')}</span>
+                <strong data-i18n="tool_calc">${t('tool_calc')}</strong>
+                <em data-i18n="tool_calc_desc">${t('tool_calc_desc')}</em>
+              </span>
+            </span>
+            <span class="tools-featured-cta">
+              <span data-i18n="tools_open">${t('tools_open')}</span>
+              ${arrow}
+            </span>
+          </button>
+
+          ${groups.map(g => `
+          <section class="tools-group" aria-labelledby="tools-group-${g.id}">
+            <div class="tools-group-head">
+              <div>
+                <h3 class="tools-group-title" id="tools-group-${g.id}" data-i18n="${g.key}">${t(g.key)}</h3>
+              </div>
+              <span class="tools-group-count">${num(g.items.length)}</span>
+            </div>
+            <div class="tools-group-list">
+              ${g.items.map(row).join('')}
+            </div>
+          </section>`).join('')}
+        </div>
 
         <div class="tool-overlay-backdrop" id="tool-overlay-backdrop"></div>
         <section class="tool-overlay" id="tool-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="tool-overlay-title">
           <header class="tool-overlay-head">
-            <button class="tool-overlay-back" id="tool-overlay-back" type="button">
+            <button class="tool-overlay-back" id="tool-overlay-back" type="button" aria-label="${t('tool_back')}">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
               <span>${t('tool_back')}</span>
             </button>
@@ -11081,7 +11568,6 @@ class ToolsManager {
       this.openTool(next);
     }
   }
-
   openTool(toolName) {
     const workspace = document.getElementById('tool-workspace');
     if (!workspace) {
@@ -11141,6 +11627,7 @@ class ToolsManager {
     }
     if (backdrop) backdrop.classList.add('open');
     if (page) page.classList.add('tool-open');
+    window.scrollTo(0, 0);
   }
 
   closeTool() {
@@ -12572,7 +13059,7 @@ class WalioApp {
       const frame = document.querySelector('.mobile-frame');
       if (!frame) return;
       const scrolled = (window.scrollY || document.documentElement.scrollTop || 0) > 28;
-      const immersive = frame.classList.contains('home-immersive') || frame.classList.contains('wallets-immersive') || frame.classList.contains('profile-immersive');
+      const immersive = frame.classList.contains('home-immersive') || frame.classList.contains('wallets-immersive') || frame.classList.contains('profile-immersive') || frame.classList.contains('tools-immersive');
       frame.classList.toggle('home-scrolled', immersive && scrolled);
     };
     window.addEventListener('scroll', onHomeScroll, { passive: true });
@@ -12657,11 +13144,12 @@ class WalioApp {
     }
 
     const frame = document.querySelector('.mobile-frame');
-    const immersive = (tabId === 'home' || tabId === 'wallets' || tabId === 'profile');
+    const immersive = (tabId === 'home' || tabId === 'wallets' || tabId === 'profile' || tabId === 'tools');
     if (frame) {
       frame.classList.toggle('home-immersive', tabId === 'home');
       frame.classList.toggle('wallets-immersive', tabId === 'wallets');
       frame.classList.toggle('profile-immersive', tabId === 'profile');
+      frame.classList.toggle('tools-immersive', tabId === 'tools');
       frame.classList.toggle('immersive-blue', immersive);
     }
     document.documentElement.classList.toggle('immersive-blue', immersive);
@@ -14591,5 +15079,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2ab93d17fd99723',t:'MTc4NjY2NDU1OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cb16fb1ed766dc',t:'MTc4Njk5NDk4OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cb66d69dabfeb0',t:'MTc4Njk5ODI2MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a315f4c74d2e75ad',t:'MTc4Nzc4MDAyMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31679ccd99fe329',t:'MTc4Nzc4NTQ2OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31ab9567ef82362',t:'MTc4NzgzMDAxNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
