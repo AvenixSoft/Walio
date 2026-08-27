@@ -8379,145 +8379,1014 @@ body.app-locked { overflow: hidden; }
 }
 
    
-/* ================= FIRST-LAUNCH TYPOGRAPHIC INTRO ================= */
-.walio-welcome-intro {
+/* ================= FIRST-LAUNCH WELCOME SCREEN (3D) ================= */
+.walio-welcome {
   position: fixed;
   inset: 0;
   z-index: 120000;
   display: none;
-  place-items: center;
   overflow: hidden;
-  padding: max(24px, env(safe-area-inset-top)) 18px max(24px, env(safe-area-inset-bottom));
-  color: #FFFFFF;
-  background: #090C18;
+  color: #fff;
+  isolation: isolate;
+  background:
+    radial-gradient(135% 90% at 80% -12%, rgba(37, 99, 235, 0.5) 0%, transparent 55%),
+    radial-gradient(110% 80% at 10% 112%, rgba(79, 70, 229, 0.55) 0%, transparent 55%),
+    radial-gradient(60% 42% at 50% 44%, rgba(14, 165, 233, 0.12) 0%, transparent 65%),
+    linear-gradient(166deg, #0A1130 0%, #0A0F2B 42%, #060918 76%, #04060F 100%);
   opacity: 0;
   visibility: hidden;
-  isolation: isolate;
-  direction: ltr;
-  cursor: pointer;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-.walio-welcome-intro::before {
-  content: '';
-  position: absolute;
-  inset: -25%;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 26% 38%, rgba(79,70,229,.18), transparent 31%),
-    radial-gradient(circle at 76% 62%, rgba(37,99,235,.13), transparent 34%);
-  opacity: 0;
-  transform: scale(.82);
-}
-
-.walio-welcome-intro.active {
-  display: grid;
+.walio-welcome.active {
+  display: block;
   visibility: visible;
-  animation: walio-simple-screen-in .42s ease-out both;
+  animation: walioWScreenIn .55s cubic-bezier(.16, 1, .3, 1) both;
 }
 
-.walio-welcome-intro.active::before {
-  animation: walio-simple-glow-in 1.6s .18s cubic-bezier(.16,1,.3,1) forwards;
-}
-
-.walio-welcome-intro.is-leaving {
-  animation: walio-simple-screen-out .72s cubic-bezier(.4,0,.2,1) both;
+.walio-welcome.is-leaving {
+  animation: walioWScreenOut .8s cubic-bezier(.4, 0, .2, 1) both;
   pointer-events: none;
 }
 
-.walio-intro-title {
-  width: min(100%, 1180px);
+@media (min-width: 640px) {
+  .walio-welcome {
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 440px;
+    top: 24px;
+    height: calc(100vh - 24px);
+    min-height: 620px;
+    border-radius: 46px;
+    box-shadow: 0 0 0 1px var(--border-glass), 0 0 60px rgba(0, 0, 0, 0.45);
+  }
+}
+
+/* ---------- Background scene layers ---------- */
+.walio-w-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Slow-rotating nebula wash */
+.walio-w-nebula {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  width: 120vmax;
+  height: 120vmax;
+  margin: -60vmax 0 0 -60vmax;
+  background: conic-gradient(from 90deg at 50% 50%,
+    transparent 0deg,
+    rgba(79, 70, 229, .17) 70deg,
+    transparent 150deg,
+    rgba(14, 165, 233, .12) 215deg,
+    transparent 285deg,
+    rgba(245, 158, 11, .09) 330deg,
+    transparent 360deg);
+  filter: blur(75px);
+  will-change: transform;
+  animation: walioWNebula 80s linear infinite;
+}
+
+@keyframes walioWNebula { to { transform: rotate(360deg); } }
+
+.walio-w-aurora {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: .55;
+  will-change: transform;
+}
+
+.walio-w-aurora--a {
+  width: 360px;
+  height: 360px;
+  top: -90px;
+  right: -100px;
+  background: radial-gradient(circle, rgba(59, 130, 246, .6), transparent 65%);
+  animation: walioWAurora 12s ease-in-out infinite;
+}
+
+.walio-w-aurora--b {
+  width: 320px;
+  height: 320px;
+  bottom: -80px;
+  left: -90px;
+  background: radial-gradient(circle, rgba(79, 70, 229, .55), transparent 65%);
+  animation: walioWAurora 14s ease-in-out infinite reverse;
+}
+
+.walio-w-aurora--c {
+  width: 230px;
+  height: 230px;
+  top: 40%;
+  left: 56%;
+  background: radial-gradient(circle, rgba(16, 185, 129, .32), transparent 65%);
+  animation: walioWAurora 10s ease-in-out infinite;
+}
+
+.walio-w-aurora--d {
+  width: 220px;
+  height: 220px;
+  top: 58%;
+  right: -70px;
+  background: radial-gradient(circle, rgba(245, 158, 11, .26), transparent 65%);
+  animation: walioWAurora 11s ease-in-out infinite reverse;
+}
+
+@keyframes walioWAurora {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-28px, 22px, 0) scale(1.18); }
+}
+
+/* Diagonal light beam */
+.walio-w-beam {
+  position: absolute;
+  top: -35%;
+  right: 2%;
+  width: 28%;
+  height: 170%;
+  background: linear-gradient(90deg, transparent, rgba(96, 165, 250, .09) 42%, rgba(147, 197, 253, .16) 50%, rgba(96, 165, 250, .09) 58%, transparent);
+  transform: rotate(16deg);
+  filter: blur(26px);
+  animation: walioWBeam 9s ease-in-out infinite;
+}
+
+@keyframes walioWBeam {
+  0%, 100% { opacity: .5; transform: rotate(16deg) translateX(0); }
+  50% { opacity: 1; transform: rotate(14deg) translateX(-14px); }
+}
+
+.walio-w-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, .045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(75% 60% at 50% 40%, #000 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(75% 60% at 50% 40%, #000 30%, transparent 100%);
+}
+
+.walio-w-stars { position: absolute; inset: 0; }
+
+.walio-w-stars span {
+  position: absolute;
+  bottom: -14px;
+  border-radius: 50%;
+  animation: walioWRise linear infinite;
+}
+
+@keyframes walioWRise {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  10% { opacity: var(--walio-o, .4); }
+  90% { opacity: var(--walio-o, .4); }
+  100% { transform: translate3d(16px, -105vh, 0); opacity: 0; }
+}
+
+/* Cinematic vignette + film grain */
+.walio-w-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(115% 95% at 50% 38%, transparent 52%, rgba(2, 4, 14, .62) 100%);
+}
+
+.walio-w-grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: .05;
+  mix-blend-mode: overlay;
+}
+
+/* ---------- Viewport & slide track ---------- */
+.walio-w-viewport {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding: max(env(safe-area-inset-top, 0px), 20px) 0 0;
+}
+
+.walio-w-track {
+  display: flex;
+  width: 200%;
+  height: 100%;
+  transition: transform .6s cubic-bezier(.16, 1, .3, 1);
+}
+
+.walio-w-track.at-profile { transform: translateX(-50%); }
+body.rtl-mode .walio-w-track.at-profile { transform: translateX(50%); }
+
+.walio-w-slide {
+  flex: 0 0 50%;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 24px max(env(safe-area-inset-bottom, 0px), 28px);
+  overflow-y: auto;
+}
+
+.walio-w-landing-mid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 0;
+}
+
+/* ---------- Top bar (badge / language / back) ---------- */
+.walio-w-topbar {
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: .12em .22em;
-  margin: 0;
-  color: #FFFFFF;
-  font-size: clamp(48px, 11.5vw, 126px);
-  font-weight: 790;
-  line-height: .98;
-  letter-spacing: clamp(-6px, -.062em, -2px);
-  text-align: center;
-  text-wrap: balance;
-  text-shadow: 0 18px 54px rgba(0,0,0,.30);
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 0 14px;
+  flex: 0 0 auto;
+}
+
+.walio-w-badge {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  color: #DBEAFE;
+  background: linear-gradient(145deg, rgba(59, 130, 246, .4), rgba(30, 58, 138, .55));
+  border: 1px solid rgba(147, 197, 253, .4);
+  box-shadow: 0 8px 18px rgba(2, 6, 23, .45), inset 0 1px 0 rgba(255, 255, 255, .35);
+}
+
+.walio-w-lang { display: flex; gap: 6px; }
+
+.walio-w-lang-btn {
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #94A3B8;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .12);
+}
+
+.walio-w-lang-btn.active {
+  color: #fff;
+  background: linear-gradient(135deg, #4F46E5, #2563EB);
+  border-color: transparent;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, .4);
+}
+
+.walio-w-back {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  color: #E2E8F0;
+  background: rgba(255, 255, 255, .07);
+  border: 1px solid rgba(255, 255, 255, .14);
+}
+
+.walio-w-back:active { transform: scale(.92); }
+body.rtl-mode .walio-w-back svg { transform: scaleX(-1); }
+.walio-w-topbar-spacer { width: 40px; flex: 0 0 auto; }
+
+/* ---------- 3D scene ---------- */
+.walio-w-scene {
+  position: relative;
+  flex: 0 0 auto;
+  height: clamp(225px, 40vh, 345px);
+  display: grid;
+  place-items: center;
   perspective: 1100px;
 }
 
-.walio-intro-word {
-  display: inline-flex;
+.walio-w-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: walioWFloat 6.5s ease-in-out infinite;
+}
+
+@keyframes walioWFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+.walio-w-pedestal {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  width: 68%;
+  height: 44px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(59, 130, 246, .55), transparent 68%);
+  filter: blur(12px);
+  animation: walioWPedestal 4.5s ease-in-out infinite;
+}
+
+@keyframes walioWPedestal {
+  0%, 100% { opacity: .5; transform: translateX(-50%) scaleX(1); }
+  50% { opacity: .95; transform: translateX(-50%) scaleX(1.14); }
+}
+
+.walio-w-floorline {
+  position: absolute;
+  bottom: 13%;
+  left: 50%;
+  width: 78%;
+  height: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(147, 197, 253, .6) 50%, transparent);
+  box-shadow: 0 0 12px rgba(96, 165, 250, .55), 0 0 32px rgba(59, 130, 246, .35);
+  opacity: .85;
+}
+
+/* Orbit rings */
+.walio-w-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.walio-w-orbit--1 {
+  width: min(330px, 98vw);
+  height: min(330px, 98vw);
+  margin: calc(min(330px, 98vw) / -2) 0 0 calc(min(330px, 98vw) / -2);
+  border: 1px solid rgba(147, 197, 253, .28);
+  filter: drop-shadow(0 0 6px rgba(96, 165, 250, .35));
+  animation: walioWOrbit 16s linear infinite;
+}
+
+.walio-w-orbit--1::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  border-radius: 50%;
+  background: #7DD3FC;
+  box-shadow: 0 0 12px rgba(125, 211, 252, .95), 0 0 26px rgba(56, 189, 248, .55);
+}
+
+.walio-w-orbit--1::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background: #A5B4FC;
+  box-shadow: 0 0 10px rgba(165, 180, 252, .9);
+}
+
+.walio-w-orbit--2 {
+  width: min(400px, 114vw);
+  height: min(400px, 114vw);
+  margin: calc(min(400px, 114vw) / -2) 0 0 calc(min(400px, 114vw) / -2);
+  border: 1px dashed rgba(129, 140, 248, .22);
+  animation: walioWOrbit2 28s linear infinite reverse;
+}
+
+.walio-w-orbit--3 {
+  width: min(252px, 78vw);
+  height: min(252px, 78vw);
+  margin: calc(min(252px, 78vw) / -2) 0 0 calc(min(252px, 78vw) / -2);
+  border: 1px solid rgba(252, 211, 77, .24);
+  filter: drop-shadow(0 0 5px rgba(251, 191, 36, .3));
+  animation: walioWOrbit3 21s linear infinite;
+}
+
+.walio-w-orbit--3::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  border-radius: 50%;
+  background: #FDE68A;
+  box-shadow: 0 0 10px rgba(252, 211, 77, .95), 0 0 22px rgba(245, 158, 11, .5);
+}
+
+@keyframes walioWOrbit {
+  from { transform: rotateX(74deg) rotateZ(0deg); }
+  to { transform: rotateX(74deg) rotateZ(360deg); }
+}
+
+@keyframes walioWOrbit2 {
+  from { transform: rotateX(78deg) rotateZ(0deg); }
+  to { transform: rotateX(78deg) rotateZ(360deg); }
+}
+
+@keyframes walioWOrbit3 {
+  from { transform: rotateX(71deg) rotateZ(180deg); }
+  to { transform: rotateX(71deg) rotateZ(540deg); }
+}
+
+/* Floating glass cube */
+.walio-w-gemcube {
+  position: absolute;
+  top: 13%;
+  left: 7%;
+  width: 44px;
+  height: 44px;
+  transform-style: preserve-3d;
+  animation: walioWCube 17s linear infinite;
+}
+
+@keyframes walioWCube {
+  from { transform: rotateX(-16deg) rotateY(0deg); }
+  to { transform: rotateX(-16deg) rotateY(360deg); }
+}
+
+.walio-w-gemcube-face {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(147, 197, 253, .42);
+  background: rgba(125, 211, 252, .07);
+  box-shadow: inset 0 0 14px rgba(56, 189, 248, .28);
+}
+
+.walio-w-gemcube-face.f1 { transform: translateZ(22px); }
+.walio-w-gemcube-face.f2 { transform: rotateY(180deg) translateZ(22px); }
+.walio-w-gemcube-face.f3 { transform: rotateY(90deg) translateZ(22px); }
+.walio-w-gemcube-face.f4 { transform: rotateY(-90deg) translateZ(22px); }
+.walio-w-gemcube-face.f5 { transform: rotateX(90deg) translateZ(22px); }
+.walio-w-gemcube-face.f6 { transform: rotateX(-90deg) translateZ(22px); }
+
+.walio-w-gemcube-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: #E0F2FE;
+  box-shadow: 0 0 14px rgba(125, 211, 252, .95), 0 0 36px rgba(56, 189, 248, .6);
+}
+
+/* Stacked wallet cards (front + ghost depth layer) */
+.walio-w-card3d {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(228px, 60vw);
+  height: 144px;
+  transform-style: preserve-3d;
+  animation: walioWCard 9s ease-in-out infinite;
+}
+
+@keyframes walioWCard {
+  0%, 100% { transform: translate(-50%, -50%) rotateX(18deg) rotateY(-28deg) translateZ(0); }
+  50% { transform: translate(-50%, -56%) rotateX(9deg) rotateY(-9deg) translateZ(30px); }
+}
+
+.walio-w-card3d--ghost {
+  animation: walioWCardGhost 9s ease-in-out infinite;
+}
+
+@keyframes walioWCardGhost {
+  0%, 100% { transform: translate(-44%, -40%) rotateX(19deg) rotateY(-32deg) rotateZ(-9deg) translateZ(-44px); }
+  50% { transform: translate(-56%, -62%) rotateX(9deg) rotateY(-12deg) rotateZ(-4deg) translateZ(-22px); }
+}
+
+.walio-w-card3d-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #fff;
+  background:
+    radial-gradient(circle at 88% 10%, rgba(125, 211, 252, .55), transparent 42%),
+    radial-gradient(circle at 8% 100%, rgba(147, 197, 253, .35), transparent 45%),
+    linear-gradient(135deg, #3B82F6 0%, #2563EB 48%, #1E3A8A 100%);
+  border: 1px solid rgba(255, 255, 255, .4);
+  box-shadow: 0 34px 64px rgba(2, 6, 23, .6), inset 0 1px 0 rgba(255, 255, 255, .4), inset 0 -1px 0 rgba(2, 6, 23, .4);
+  backface-visibility: hidden;
+  overflow: hidden;
+  transform: translateZ(2px);
+}
+
+.walio-w-card3d-face::after {
+  content: '';
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  width: 55%;
+  background: linear-gradient(105deg, transparent 0%, rgba(255, 255, 255, .3) 50%, transparent 100%);
+  transform: translateX(-220%) skewX(-18deg);
+  animation: walioWSheen 5.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes walioWSheen {
+  0%, 58% { transform: translateX(-220%) skewX(-18deg); }
+  82%, 100% { transform: translateX(320%) skewX(-18deg); }
+}
+
+/* Iridescent holographic band */
+.walio-w-card-holo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 18%, rgba(125, 211, 252, .18) 36%, rgba(196, 181, 253, .22) 50%, rgba(110, 231, 183, .16) 64%, transparent 82%);
+  background-size: 220% 100%;
+  mix-blend-mode: screen;
+  animation: walioWHolo 6s ease-in-out infinite;
+}
+
+@keyframes walioWHolo {
+  0%, 100% { background-position: 125% 0; }
+  50% { background-position: -25% 0; }
+}
+
+.walio-w-card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.walio-w-card-top .walio-w-card-contact {
+  margin-left: auto;
+  margin-right: 8px;
+  display: grid;
+  place-items: center;
+  color: rgba(224, 242, 254, .9);
+}
+
+.walio-w-card-chip {
+  width: 34px;
+  height: 25px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #FDE68A, #F59E0B 60%, #B45309);
+  border: 1px solid rgba(255, 255, 255, .5);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, .6), inset 0 -1px 2px rgba(120, 53, 15, .5);
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.walio-w-card-chip::after {
+  content: '';
+  position: absolute;
+  inset: 5px 7px;
+  border: 1px solid rgba(120, 53, 15, .55);
+  border-radius: 3px;
+}
+
+.walio-w-card-brand {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+  color: #EFF6FF;
+  text-shadow: 0 1px 2px rgba(2, 6, 23, .4);
+}
+
+.walio-w-card-num {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 12.5px;
+  letter-spacing: 2px;
+  color: rgba(224, 242, 254, .92);
+  direction: ltr;
+  position: relative;
+  z-index: 1;
+}
+
+.walio-w-card-foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.walio-w-card-ic {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: rgba(191, 219, 254, .75);
+}
+
+.walio-w-card-watermark {
+  position: absolute;
+  bottom: -20px;
+  right: -6px;
+  font-size: 92px;
+  font-weight: 900;
+  line-height: 1;
+  color: rgba(255, 255, 255, .07);
+  pointer-events: none;
+}
+
+/* Ghost (back) card face */
+.walio-w-card3d-face--ghost {
+  background: linear-gradient(135deg, rgba(59, 130, 246, .26) 0%, rgba(30, 58, 138, .16) 55%, rgba(15, 23, 42, .28) 100%);
+  border: 1px solid rgba(147, 197, 253, .3);
+  box-shadow: 0 30px 60px rgba(2, 6, 23, .5), inset 0 1px 0 rgba(255, 255, 255, .2);
+}
+
+.walio-w-card3d-face--ghost::after { display: none; }
+.walio-w-card3d-face--ghost .walio-w-card-watermark { color: rgba(147, 197, 253, .1); }
+
+/* Spinning 3D gold coins (faces + cylindrical rim) */
+.walio-w-coin {
+  position: absolute;
+  transform-style: preserve-3d;
+  animation: walioWSpin 7s linear infinite;
+}
+
+.walio-w-coin--a {
+  top: 3%;
+  right: 4%;
+  width: 78px;
+  height: 78px;
+  animation-duration: 6.5s;
+  z-index: 2;
+}
+
+.walio-w-coin--b {
+  bottom: 9%;
+  left: 2%;
+  width: 56px;
+  height: 56px;
+  animation-duration: 10s;
+  animation-direction: reverse;
+}
+
+.walio-w-coin--c {
+  bottom: 24%;
+  right: 10%;
+  width: 40px;
+  height: 40px;
+  animation-duration: 13s;
+  animation-delay: -4s;
+  z-index: 2;
+}
+
+.walio-w-coin::before {
+  content: '';
+  position: absolute;
+  inset: -16px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(251, 191, 36, .42), transparent 65%);
+  filter: blur(8px);
+  z-index: -1;
+  animation: walioWCoinsGlow 3.2s ease-in-out infinite;
+}
+
+@keyframes walioWCoinsGlow {
+  0%, 100% { opacity: .5; }
+  50% { opacity: 1; }
+}
+
+@keyframes walioWSpin {
+  from { transform: rotateX(12deg) rotateY(0deg); }
+  to { transform: rotateX(12deg) rotateY(360deg); }
+}
+
+.walio-w-coin-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 28px;
+  color: #78350F;
+  background: radial-gradient(circle at 32% 28%, #FEF3C7 0%, #FCD34D 34%, #F59E0B 62%, #B45309 100%);
+  border: 2px solid #FCD34D;
+  box-shadow:
+    inset 0 0 0 4px rgba(180, 83, 9, .4),
+    inset 0 2px 6px rgba(255, 251, 235, .8),
+    inset 0 -3px 8px rgba(120, 53, 15, .55),
+    0 20px 36px rgba(2, 6, 23, .5);
+  text-shadow: 0 1px 1px rgba(255, 251, 235, .8), 0 -1px 1px rgba(120, 53, 15, .5);
+  backface-visibility: hidden;
+  transform: translateZ(4.5px);
+}
+
+.walio-w-coin-face::after {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border-radius: 50%;
+  border: 2px solid rgba(180, 83, 9, .45);
+  box-shadow: inset 0 1px 2px rgba(255, 251, 235, .5);
+}
+
+.walio-w-coin--b .walio-w-coin-face { font-size: 20px; }
+.walio-w-coin--b .walio-w-coin-face::after { inset: 5px; }
+.walio-w-coin--c .walio-w-coin-face { font-size: 14px; }
+.walio-w-coin--c .walio-w-coin-face::after { inset: 3px; border-width: 1px; }
+
+.walio-w-coin-face--back { transform: rotateY(180deg) translateZ(4.5px); }
+
+/* Cylindrical rim segments (built by JS) */
+.walio-w-coin-rim {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 1px;
+  background: linear-gradient(180deg, #FDE68A 0%, #F59E0B 38%, #B45309 72%, #78350F 100%);
+  box-shadow: inset 0 1px 1px rgba(255, 251, 235, .65), inset 0 -1px 1px rgba(69, 26, 3, .65);
+  backface-visibility: hidden;
+}
+
+/* Twinkling sparkles */
+.walio-w-sparkle {
+  position: absolute;
+  clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+  background: radial-gradient(circle at 50% 50%, #fff 0%, rgba(186, 230, 253, .85) 45%, transparent 72%);
+  animation: walioWSparkle 3.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes walioWSparkle {
+  0%, 100% { transform: scale(0) rotate(0deg); opacity: 0; }
+  45% { transform: scale(1) rotate(95deg); opacity: 1; }
+  62% { transform: scale(1.18) rotate(140deg); opacity: .9; }
+  82% { transform: scale(0) rotate(185deg); opacity: 0; }
+}
+
+/* ---------- Brand ---------- */
+.walio-w-brand { text-align: center; flex: 0 0 auto; }
+
+.walio-w-title {
+  margin: 0;
+  font-size: clamp(46px, 13vw, 60px);
+  font-weight: 900;
+  letter-spacing: -1.8px;
+  line-height: 1.05;
+  background: linear-gradient(180deg, #FFFFFF 16%, #BFDBFE 60%, #818CF8 112%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 14px 34px rgba(37, 99, 235, .42));
+}
+
+.walio-w-title-line {
+  width: 58px;
+  height: 3px;
+  margin: 14px auto 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #4F46E5, #38BDF8 55%, #34D399);
+  box-shadow: 0 0 14px rgba(56, 189, 248, .75), 0 0 30px rgba(79, 70, 229, .4);
+}
+
+/* ---------- Action buttons ---------- */
+.walio-w-actions {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-top: 20px;
+  margin-top: auto;
+}
+
+.walio-w-btn {
+  position: relative;
+  width: 100%;
+  max-width: 330px;
+  height: 56px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 15.5px;
+  font-weight: 800;
+  letter-spacing: -.2px;
+  overflow: hidden;
+  transition: var(--transition-spring);
+}
+
+.walio-w-btn:active { transform: scale(.965); }
+
+.walio-w-btn--primary {
+  color: #fff;
+  background: linear-gradient(135deg, #4F46E5 0%, #2563EB 55%, #0284C7 120%);
+  box-shadow: 0 20px 44px rgba(37, 99, 235, .5), inset 0 2px 0 rgba(255, 255, 255, .25), inset 0 -2px 0 rgba(2, 6, 23, .35);
+}
+
+.walio-w-btn--primary:hover {
+  box-shadow: 0 24px 54px rgba(37, 99, 235, .62), inset 0 2px 0 rgba(255, 255, 255, .3);
+  transform: translateY(-2px);
+}
+
+.walio-w-btn--primary::after {
+  content: '';
+  position: absolute;
+  top: -30%;
+  bottom: -30%;
+  width: 40%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .35), transparent);
+  transform: translateX(-260%) skewX(-20deg);
+  animation: walioWBtnSheen 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes walioWBtnSheen {
+  0%, 62% { transform: translateX(-260%) skewX(-20deg); }
+  86%, 100% { transform: translateX(340%) skewX(-20deg); }
+}
+
+.walio-w-btn--ghost {
+  color: #E2E8F0;
+  background: rgba(255, 255, 255, .07);
+  border: 1px solid rgba(255, 255, 255, .2);
+  backdrop-filter: blur(12px);
+}
+
+.walio-w-btn--ghost:hover {
+  background: rgba(255, 255, 255, .12);
+  border-color: rgba(255, 255, 255, .32);
+}
+
+body.rtl-mode .walio-w-slide .walio-w-btn svg { transform: scaleX(-1); }
+
+/* ---------- Profile slide ---------- */
+.walio-w-profile-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+.walio-w-profile-head { text-align: center; margin: 4px 0 20px; }
+
+.walio-w-profile-title {
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: -.4px;
+  color: #F8FAFC;
+}
+
+.walio-w-avatar {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  margin: 4px auto 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.walio-w-avatar-ring {
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  background: conic-gradient(from 90deg, #4F46E5, #0EA5E9, #10B981, #F59E0B, #4F46E5);
+  animation: walioWRingSpin 5s linear infinite;
+  opacity: .9;
+  filter: drop-shadow(0 0 16px rgba(56, 189, 248, .45));
+}
+
+@keyframes walioWRingSpin { to { transform: rotate(360deg); } }
+
+.walio-w-avatar-core {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(150deg, #1E293B, #0B1226);
+  border: 3px solid #0A102A;
+  display: grid;
+  place-items: center;
+  color: #64748B;
+  overflow: hidden;
+}
+
+.walio-w-avatar-core img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.walio-w-avatar-add {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(135deg, #2563EB, #0EA5E9);
+  border: 2.5px solid #0A102A;
+  box-shadow: 0 8px 16px rgba(37, 99, 235, .5);
+}
+
+body.rtl-mode .walio-w-avatar-add { right: auto; left: 2px; }
+
+.walio-w-avatar-hint {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 7px;
   white-space: nowrap;
+  font-size: 11px;
+  font-weight: 700;
+  color: #7DD3FC;
 }
 
-.walio-intro-letter {
-  display: inline-block;
-  opacity: 0;
-  filter: blur(14px);
-  transform: translate3d(0, .78em, 0) rotateX(-78deg) scale(.78);
-  transform-origin: 50% 100%;
-  will-change: transform, opacity, filter;
-  animation: walio-simple-letter-in .86s cubic-bezier(.16,1,.3,1) forwards;
-  animation-delay: calc(.28s + (var(--letter-index) * 58ms));
+.walio-w-field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 13px; }
+
+.walio-w-field > span {
+  font-size: 11.5px;
+  font-weight: 750;
+  color: #94A3B8;
+  letter-spacing: .2px;
 }
 
-.walio-intro-word:last-child {
-  color: #A5B4FC;
+.walio-w-input {
+  width: 100%;
+  height: 52px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .14);
+  color: #F8FAFC;
+  padding: 0 16px;
+  font-size: 16px !important; /* mobile Safari zoom-safe */
+  font-weight: 600;
+  outline: none;
+  user-select: text;
+  transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
 }
 
-.walio-intro-word:last-child .walio-intro-letter {
-  text-shadow: 0 14px 46px rgba(99,102,241,.28);
+.walio-w-input::placeholder { color: #475569; font-weight: 500; }
+
+.walio-w-input:focus {
+  border-color: #60A5FA;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, .22);
+  background: rgba(255, 255, 255, .09);
+}
+
+.walio-w-input.is-error {
+  border-color: #F87171;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, .18);
+  animation: walioWShake .5s ease;
+}
+
+@keyframes walioWShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-7px); }
+  40% { transform: translateX(7px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(4px); }
 }
 
 body.walio-intro-open { overflow: hidden !important; }
 
-@keyframes walio-simple-screen-in {
+@keyframes walioWScreenIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
-@keyframes walio-simple-glow-in {
-  0% { opacity: 0; transform: scale(.82) rotate(-4deg); }
-  100% { opacity: 1; transform: scale(1) rotate(0); }
-}
-
-@keyframes walio-simple-letter-in {
-  0% {
-    opacity: 0;
-    filter: blur(14px);
-    transform: translate3d(0, .78em, 0) rotateX(-78deg) scale(.78);
-  }
-  58% { opacity: 1; filter: blur(1px); }
-  78% { transform: translate3d(0, -.055em, 0) rotateX(4deg) scale(1.025); }
-  100% {
-    opacity: 1;
-    filter: blur(0);
-    transform: translate3d(0, 0, 0) rotateX(0) scale(1);
-  }
-}
-
-@keyframes walio-simple-screen-out {
+@keyframes walioWScreenOut {
   0% { opacity: 1; transform: scale(1); filter: blur(0); }
-  100% { opacity: 0; transform: scale(1.045); filter: blur(10px); }
+  100% { opacity: 0; transform: scale(1.05); filter: blur(12px); }
 }
 
-@media (max-width: 430px) {
-  .walio-intro-title {
-    max-width: 370px;
-    font-size: clamp(46px, 14vw, 62px);
-    gap: .08em .18em;
-    line-height: 1.02;
-    letter-spacing: -.06em;
-  }
+@media (max-height: 640px) {
+  .walio-w-scene { height: 190px; }
+  .walio-w-title { font-size: 40px; }
+  .walio-w-gemcube { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .walio-welcome-intro.active,
-  .walio-welcome-intro.active::before,
-  .walio-welcome-intro.is-leaving,
-  .walio-intro-letter {
-    animation-duration: .01ms !important;
-    animation-delay: 0ms !important;
+  .walio-w-nebula,
+  .walio-w-aurora,
+  .walio-w-beam,
+  .walio-w-stage,
+  .walio-w-card3d,
+  .walio-w-card-holo,
+  .walio-w-coin,
+  .walio-w-coin::before,
+  .walio-w-orbit,
+  .walio-w-gemcube,
+  .walio-w-sparkle,
+  .walio-w-card3d-face::after,
+  .walio-w-btn--primary::after,
+  .walio-w-pedestal,
+  .walio-w-avatar-ring,
+  .walio-w-stars span {
+    animation: none !important;
   }
 }
 
@@ -8560,8 +9429,155 @@ body.toman-unit-hidden .home-market-values {
 </style>
 </head>
 <body>
-  <div class="walio-welcome-intro" id="walio-welcome-intro" aria-hidden="true" role="status">
-    <h1 class="walio-intro-title" aria-label="Welcome To Walio"><span class="walio-intro-word" aria-hidden="true"><span class="walio-intro-letter" style="--letter-index:0">W</span><span class="walio-intro-letter" style="--letter-index:1">e</span><span class="walio-intro-letter" style="--letter-index:2">l</span><span class="walio-intro-letter" style="--letter-index:3">c</span><span class="walio-intro-letter" style="--letter-index:4">o</span><span class="walio-intro-letter" style="--letter-index:5">m</span><span class="walio-intro-letter" style="--letter-index:6">e</span></span><span class="walio-intro-word" aria-hidden="true"><span class="walio-intro-letter" style="--letter-index:7">T</span><span class="walio-intro-letter" style="--letter-index:8">o</span></span><span class="walio-intro-word" aria-hidden="true"><span class="walio-intro-letter" style="--letter-index:9">W</span><span class="walio-intro-letter" style="--letter-index:10">a</span><span class="walio-intro-letter" style="--letter-index:11">l</span><span class="walio-intro-letter" style="--letter-index:12">i</span><span class="walio-intro-letter" style="--letter-index:13">o</span></span></h1>
+  <div class="walio-welcome" id="walio-welcome-intro" aria-hidden="true" role="dialog" aria-label="Welcome to Walio">
+    <div class="walio-w-bg" aria-hidden="true">
+      <div class="walio-w-nebula"></div>
+      <div class="walio-w-aurora walio-w-aurora--a"></div>
+      <div class="walio-w-aurora walio-w-aurora--b"></div>
+      <div class="walio-w-aurora walio-w-aurora--c"></div>
+      <div class="walio-w-aurora walio-w-aurora--d"></div>
+      <div class="walio-w-beam"></div>
+      <div class="walio-w-grid"></div>
+      <div class="walio-w-stars" id="walio-w-stars"></div>
+      <div class="walio-w-vignette"></div>
+      <div class="walio-w-grain"></div>
+    </div>
+    <div class="walio-w-viewport">
+      <div class="walio-w-track" id="walio-w-track">
+        <!-- ============ SLIDE 1 · LANDING ============ -->
+        <section class="walio-w-slide walio-w-slide--landing">
+          <div class="walio-w-topbar">
+            <span class="walio-w-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 3H6a2 2 0 0 0-2 2v2"/><path d="M17 13h.01"/></svg>
+            </span>
+            <div class="walio-w-lang" role="group" aria-label="Language">
+              <button class="walio-w-lang-btn" type="button" data-lang="fa">فارسی</button>
+              <button class="walio-w-lang-btn" type="button" data-lang="en">EN</button>
+            </div>
+          </div>
+
+          <div class="walio-w-landing-mid">
+            <div class="walio-w-scene" aria-hidden="true">
+              <div class="walio-w-stage">
+                <div class="walio-w-orbit walio-w-orbit--1"></div>
+                <div class="walio-w-orbit walio-w-orbit--2"></div>
+                <div class="walio-w-orbit walio-w-orbit--3"></div>
+                <div class="walio-w-gemcube">
+                  <span class="walio-w-gemcube-face f1"></span>
+                  <span class="walio-w-gemcube-face f2"></span>
+                  <span class="walio-w-gemcube-face f3"></span>
+                  <span class="walio-w-gemcube-face f4"></span>
+                  <span class="walio-w-gemcube-face f5"></span>
+                  <span class="walio-w-gemcube-face f6"></span>
+                  <span class="walio-w-gemcube-core"></span>
+                </div>
+                <div class="walio-w-card3d walio-w-card3d--ghost">
+                  <div class="walio-w-card3d-face walio-w-card3d-face--ghost"><span class="walio-w-card-watermark">W</span></div>
+                </div>
+                <div class="walio-w-card3d">
+                  <div class="walio-w-card3d-face">
+                    <div class="walio-w-card-holo"></div>
+                    <div class="walio-w-card-top">
+                      <span class="walio-w-card-chip"></span>
+                      <span class="walio-w-card-contact" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6.5 9.5a4.5 4.5 0 0 1 0 5"/><path d="M9.5 7.5a8 8 0 0 1 0 9"/><path d="M12.5 5.5a11.5 11.5 0 0 1 0 13"/></svg>
+                      </span>
+                      <span class="walio-w-card-brand">WALIO</span>
+                    </div>
+                    <div class="walio-w-card-num">•••• •••• •••• 2026</div>
+                    <div class="walio-w-card-foot">
+                      <span class="walio-w-card-ic">WALIO PAY</span>
+                    </div>
+                    <span class="walio-w-card-watermark">W</span>
+                  </div>
+                </div>
+                <div class="walio-w-coin walio-w-coin--a" data-diameter="78">
+                  <span class="walio-w-coin-face">W</span>
+                  <span class="walio-w-coin-face walio-w-coin-face--back">W</span>
+                </div>
+                <div class="walio-w-coin walio-w-coin--b" data-diameter="56">
+                  <span class="walio-w-coin-face">W</span>
+                  <span class="walio-w-coin-face walio-w-coin-face--back">W</span>
+                </div>
+                <div class="walio-w-coin walio-w-coin--c" data-diameter="40">
+                  <span class="walio-w-coin-face">W</span>
+                  <span class="walio-w-coin-face walio-w-coin-face--back">W</span>
+                </div>
+                <span class="walio-w-sparkle" style="top:14%; right:20%; width:15px; height:15px;"></span>
+                <span class="walio-w-sparkle" style="top:58%; left:9%; width:10px; height:10px; animation-delay:1.3s;"></span>
+                <span class="walio-w-sparkle" style="bottom:22%; right:13%; width:12px; height:12px; animation-delay:2.5s;"></span>
+                <div class="walio-w-floorline"></div>
+                <div class="walio-w-pedestal"></div>
+              </div>
+            </div>
+
+            <div class="walio-w-brand">
+              <h1 class="walio-w-title" data-i18n="app_name">Walio</h1>
+              <div class="walio-w-title-line" aria-hidden="true"></div>
+            </div>
+          </div>
+
+          <div class="walio-w-actions">
+            <button class="walio-w-btn walio-w-btn--primary" id="walio-w-getstarted" type="button">
+              <span data-i18n="walio_w_get_started">Get Started</span>
+              <svg viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h12M11 5l5 5-5 5"/></svg>
+            </button>
+            <button class="walio-w-btn walio-w-btn--ghost" id="walio-w-signin" type="button">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <span data-i18n="walio_w_sign_in">Sign In</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- ============ SLIDE 2 · PROFILE ============ -->
+        <section class="walio-w-slide walio-w-slide--profile">
+          <div class="walio-w-topbar">
+            <button class="walio-w-back" id="walio-w-back" type="button" data-i18n-title="walio_w_back" title="Back" aria-label="Back">
+              <svg viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10H4M9 5l-5 5 5 5"/></svg>
+            </button>
+            <span class="walio-w-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 3H6a2 2 0 0 0-2 2v2"/><path d="M17 13h.01"/></svg>
+            </span>
+            <span class="walio-w-topbar-spacer" aria-hidden="true"></span>
+          </div>
+
+          <div class="walio-w-profile-body">
+            <div class="walio-w-profile-head">
+              <h2 class="walio-w-profile-title" data-i18n="walio_w_profile_title">Create your profile</h2>
+            </div>
+
+            <div class="walio-w-avatar" id="walio-w-avatar" role="button" tabindex="0" data-i18n-title="walio_w_photo_hint" title="Add photo">
+              <div class="walio-w-avatar-ring" aria-hidden="true"></div>
+              <div class="walio-w-avatar-core" id="walio-w-avatar-core">
+                <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              </div>
+              <span class="walio-w-avatar-add" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+              <span class="walio-w-avatar-hint" data-i18n="walio_w_photo_hint">Add photo</span>
+            </div>
+
+            <label class="walio-w-field">
+              <span data-i18n="walio_w_name">Your name</span>
+              <input type="text" id="walio-w-name" class="walio-w-input" data-i18n-placeholder="walio_w_name_ph" placeholder="e.g. Sina Ahmadi" autocomplete="name" maxlength="40">
+            </label>
+
+            <label class="walio-w-field">
+              <span data-i18n="walio_w_username">Username</span>
+              <input type="text" id="walio-w-username" class="walio-w-input" dir="ltr" placeholder="@sina" autocomplete="username" maxlength="30">
+            </label>
+
+            <div class="walio-w-actions">
+              <button class="walio-w-btn walio-w-btn--primary" id="walio-w-enter" type="button">
+                <span data-i18n="walio_w_enter">Enter Walio</span>
+                <svg viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h12M11 5l5 5-5 5"/></svg>
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <input type="file" id="walio-w-photo" accept="image/*" hidden>
   </div>
 
   <div class="app-container">
@@ -8944,6 +9960,17 @@ const translations = {
   en: {
     // App & Navigation
     app_name: "Walio",
+
+    // First-launch welcome screen
+    walio_w_get_started: "Get Started",
+    walio_w_sign_in: "Sign In",
+    walio_w_profile_title: "Create your profile",
+    walio_w_photo_hint: "Add photo",
+    walio_w_name: "Your name",
+    walio_w_name_ph: "e.g. Sina Ahmadi",
+    walio_w_username: "Username",
+    walio_w_enter: "Enter Walio",
+    walio_w_back: "Back",
     nav_home: "Home",
     nav_wallets: "Wallets",
     nav_currency: "Currency",
@@ -9333,6 +10360,17 @@ const translations = {
   fa: {
     // App & Navigation
     app_name: "والیـو",
+
+    // First-launch welcome screen
+    walio_w_get_started: "شروع کنید",
+    walio_w_sign_in: "ورود با پروفایل",
+    walio_w_profile_title: "پروفایل بسازید",
+    walio_w_photo_hint: "افزودن عکس",
+    walio_w_name: "نام شما",
+    walio_w_name_ph: "مثلاً سینا احمدی",
+    walio_w_username: "نام کاربری",
+    walio_w_enter: "ورود به والیو",
+    walio_w_back: "بازگشت",
     nav_home: "خانه",
     nav_wallets: "کیف‌ پول‌ها",
     nav_currency: "ارز و طلا",
@@ -14924,74 +15962,190 @@ class WalioApp {
   }
 
   runFirstLaunchExperience() {
-    const introKey = 'walio_intro_seen_v1';
+    const introKey = 'walio_intro_seen_v2';
     let shouldShowIntro = true;
     try {
       shouldShowIntro = localStorage.getItem(introKey) !== 'true';
     } catch (e) { /* Show it when storage is unavailable. */ }
 
-    const continueToOnboarding = () => {
-      if (!window.storage.isOnboardingCompleted()) this.showOnboardingModal();
-    };
+    if (!shouldShowIntro) return;
 
-    if (!shouldShowIntro) {
-      continueToOnboarding();
-      return;
-    }
-
-    // Mark it as seen as soon as playback starts, so a refresh cannot replay it.
+    // Mark it as seen as soon as the screen opens, so a refresh cannot replay it.
     try { localStorage.setItem(introKey, 'true'); } catch (e) {}
-    this.showWelcomeIntro(continueToOnboarding);
+    this.showWelcomeScreen();
   }
 
-  showWelcomeIntro(onComplete) {
-    const intro = document.getElementById('walio-welcome-intro');
-    if (!intro) {
-      if (typeof onComplete === 'function') onComplete();
+  showWelcomeScreen() {
+    const screen = document.getElementById('walio-welcome-intro');
+    if (!screen) return;
+
+    screen.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('walio-intro-open');
+    this.spawnWelcomeParticles(screen);
+    this.buildWelcomeCoinRims(screen);
+    if (!this._walioWelcomeBound) {
+      this._walioWelcomeBound = true;
+      this.bindWelcomeScreen(screen);
+    }
+    // Two animation frames guarantee the browser paints the initial state.
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => screen.classList.add('active'));
+    });
+  }
+
+  spawnWelcomeParticles(screen) {
+    const layer = screen.querySelector('#walio-w-stars');
+    if (!layer || layer.childElementCount > 0) return;
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < 22; i++) {
+      const s = document.createElement('span');
+      const size = 2 + Math.random() * 3;
+      const gold = Math.random() < 0.28;
+      s.style.cssText = `left:${(Math.random() * 100).toFixed(1)}%;width:${size.toFixed(1)}px;height:${size.toFixed(1)}px;background:${gold ? '#FDE68A' : '#BFDBFE'};box-shadow:0 0 ${(7 + size * 2).toFixed(0)}px ${gold ? 'rgba(252,211,77,.85)' : 'rgba(147,197,253,.8)'};animation-duration:${(7 + Math.random() * 9).toFixed(1)}s;animation-delay:${(Math.random() * 9).toFixed(1)}s;--walio-o:${(0.25 + Math.random() * 0.5).toFixed(2)};`;
+      frag.appendChild(s);
+    }
+    layer.appendChild(frag);
+  }
+
+  buildWelcomeCoinRims(screen) {
+    screen.querySelectorAll('.walio-w-coin').forEach((coin) => {
+      if (coin.querySelector('.walio-w-coin-rim')) return;
+      const d = parseFloat(coin.getAttribute('data-diameter')) || 76;
+      const r = d / 2 - 2;
+      const t = 9;
+      const n = 18;
+      const segW = 2 * r * Math.tan(Math.PI / n) + 1.2;
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < n; i++) {
+        const rim = document.createElement('span');
+        rim.className = 'walio-w-coin-rim';
+        rim.style.cssText = `width:${segW.toFixed(1)}px;height:${t}px;margin-left:${(-segW / 2).toFixed(1)}px;margin-top:${-t / 2}px;transform:rotateY(${(360 / n * i).toFixed(2)}deg) translateZ(${r}px);`;
+        frag.appendChild(rim);
+      }
+      coin.appendChild(frag);
+    });
+  }
+
+  bindWelcomeScreen(screen) {
+    const track = screen.querySelector('#walio-w-track');
+    const goLanding = () => { if (track) track.classList.remove('at-profile'); };
+    const goProfile = () => { if (track) track.classList.add('at-profile'); };
+
+    const getStartedBtn = screen.querySelector('#walio-w-getstarted');
+    if (getStartedBtn) getStartedBtn.addEventListener('click', () => this.finishWelcome());
+
+    const signInBtn = screen.querySelector('#walio-w-signin');
+    if (signInBtn) signInBtn.addEventListener('click', () => {
+      goProfile();
+      window.setTimeout(() => {
+        const nameInput = screen.querySelector('#walio-w-name');
+        if (nameInput) { try { nameInput.focus({ preventScroll: true }); } catch (e) { nameInput.focus(); } }
+      }, 650);
+    });
+
+    const backBtn = screen.querySelector('#walio-w-back');
+    if (backBtn) backBtn.addEventListener('click', goLanding);
+
+    const enterBtn = screen.querySelector('#walio-w-enter');
+    if (enterBtn) enterBtn.addEventListener('click', () => this.submitWelcomeProfile(screen));
+
+    const avatar = screen.querySelector('#walio-w-avatar');
+    const fileInput = screen.querySelector('#walio-w-photo');
+    if (avatar && fileInput) {
+      const openPicker = () => fileInput.click();
+      avatar.addEventListener('click', openPicker);
+      avatar.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPicker(); }
+      });
+      fileInput.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) this.processWelcomePhoto(file, screen);
+        fileInput.value = '';
+      });
+    }
+
+    screen.querySelectorAll('.walio-w-lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (window.i18n) window.i18n.setLanguage(btn.getAttribute('data-lang'), true);
+      });
+    });
+  }
+
+  processWelcomePhoto(file, screen) {
+    if (!file || !file.type || file.type.indexOf('image/') !== 0) {
+      alert(window.i18n && window.i18n.currentLang === 'fa' ? 'لطفاً یک فایل تصویری انتخاب کنید' : 'Please choose an image file');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        // Downscale & compress so it fits comfortably in localStorage
+        const maxDim = 320;
+        let w = img.naturalWidth || img.width;
+        let h = img.naturalHeight || img.height;
+        if (w > h) {
+          if (w > maxDim) { h = Math.round(h * maxDim / w); w = maxDim; }
+        } else {
+          if (h > maxDim) { w = Math.round(w * maxDim / h); h = maxDim; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        const isWebp = canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+        const dataUrl = canvas.toDataURL(isWebp ? 'image/webp' : 'image/png', 0.85);
+        this._walioWelcomeAvatar = dataUrl;
+        const core = screen.querySelector('#walio-w-avatar-core');
+        if (core) core.innerHTML = `<img src="${dataUrl}" alt="Profile photo">`;
+      };
+      img.onerror = () => {
+        alert(window.i18n && window.i18n.currentLang === 'fa' ? 'خطا در بارگذاری تصویر' : 'Could not load the image');
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  submitWelcomeProfile(screen) {
+    const nameInput = screen.querySelector('#walio-w-name');
+    const userInput = screen.querySelector('#walio-w-username');
+    const name = nameInput ? nameInput.value.trim() : '';
+    const username = userInput ? userInput.value.trim() : '';
+
+    if (!name) {
+      if (nameInput) {
+        nameInput.classList.remove('is-error');
+        void nameInput.offsetWidth;
+        nameInput.classList.add('is-error');
+        nameInput.focus();
+      }
       return;
     }
 
-    let finished = false;
-    let exitTimer = null;
-    let onKey = null;
-    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const current = window.storage.getProfile();
+    const updated = {
+      name,
+      username: username || '@user',
+      currency: current.currency || 'IRT'
+    };
+    if (this._walioWelcomeAvatar) updated.avatar = this._walioWelcomeAvatar;
+    window.storage.saveProfile(updated);
 
-    const finish = () => {
-      if (finished) return;
-      finished = true;
-      window.clearTimeout(exitTimer);
-      if (onKey) document.removeEventListener('keydown', onKey);
-      intro.classList.add('is-leaving');
+    this.finishWelcome();
+  }
 
+  finishWelcome() {
+    try { window.storage.setOnboardingCompleted(true); } catch (e) {}
+    const screen = document.getElementById('walio-welcome-intro');
+    document.body.classList.remove('walio-intro-open');
+    if (screen) {
+      screen.classList.add('is-leaving');
       window.setTimeout(() => {
-        intro.classList.remove('active', 'is-leaving');
-        intro.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('walio-intro-open');
-        if (typeof onComplete === 'function') onComplete();
-      }, reduceMotion ? 40 : 680);
-    };
-
-    intro.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('walio-intro-open');
-    // Two animation frames guarantee the browser paints the initial letter state.
-    window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(() => intro.classList.add('active'));
-    });
-
-    intro.addEventListener('click', finish, { once: true });
-
-    onKey = (event) => {
-      if (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        finish();
-      }
-    };
-    document.addEventListener('keydown', onKey);
-
-    exitTimer = window.setTimeout(() => {
-      document.removeEventListener('keydown', onKey);
-      finish();
-    }, reduceMotion ? 900 : 3400);
+        screen.classList.remove('active', 'is-leaving');
+        screen.setAttribute('aria-hidden', 'true');
+      }, 820);
+    }
   }
 
   showOnboardingModal() {
@@ -15103,5 +16257,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31ab9567ef82362',t:'MTc4NzgzMDAxNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31ae3da9c59b0de',t:'MTc4NzgzMTc1NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31ab9567ef82362',t:'MTc4NzgzMDAxNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31b954cf834db87',t:'MTc4NzgzOTAyNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
