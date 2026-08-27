@@ -192,12 +192,14 @@ body.immersive-blue[data-theme="dark"],
 
 body.immersive-blue .ios-status-bleed,
 .mobile-frame.home-immersive .ios-status-bleed,
-.mobile-frame.wallets-immersive .ios-status-bleed {
+.mobile-frame.wallets-immersive .ios-status-bleed,
+.mobile-frame.profile-immersive .ios-status-bleed {
   background: #2563EB !important;
 }
 
 [data-theme="dark"] body.immersive-blue .ios-status-bleed,
 [data-theme="dark"] .mobile-frame.home-immersive .ios-status-bleed,
+[data-theme="dark"] .mobile-frame.profile-immersive .ios-status-bleed,
 [data-theme="dark"] .mobile-frame.wallets-immersive .ios-status-bleed {
   background: #1E3A8A !important;
 }
@@ -285,7 +287,8 @@ input, select, textarea {
 /* Immersive: header is the SAME flat blue as status bar + hero top.
    No transparency, no gradient edge, no border — one continuous slab. */
 .mobile-frame.home-immersive .app-header,
-.mobile-frame.wallets-immersive .app-header {
+.mobile-frame.wallets-immersive .app-header,
+.mobile-frame.profile-immersive .app-header {
   background: #2563EB !important;
   background-color: #2563EB !important;
   background-image: none !important;
@@ -302,7 +305,9 @@ input, select, textarea {
 .mobile-frame.home-immersive .app-header::before,
 .mobile-frame.home-immersive .app-header::after,
 .mobile-frame.wallets-immersive .app-header::before,
-.mobile-frame.wallets-immersive .app-header::after {
+.mobile-frame.wallets-immersive .app-header::after,
+.mobile-frame.profile-immersive .app-header::before,
+.mobile-frame.profile-immersive .app-header::after {
   content: none !important;
   display: none !important;
   border: 0 !important;
@@ -311,7 +316,8 @@ input, select, textarea {
 }
 
 [data-theme="dark"] .mobile-frame.home-immersive .app-header,
-[data-theme="dark"] .mobile-frame.wallets-immersive .app-header {
+[data-theme="dark"] .mobile-frame.wallets-immersive .app-header,
+[data-theme="dark"] .mobile-frame.profile-immersive .app-header {
   background: #1E3A8A !important;
   background-color: #1E3A8A !important;
   background-image: none !important;
@@ -319,7 +325,8 @@ input, select, textarea {
 
 /* Keep exact same color while scrolling — never a different tint/band */
 .mobile-frame.home-immersive.home-scrolled .app-header,
-.mobile-frame.wallets-immersive.home-scrolled .app-header {
+.mobile-frame.wallets-immersive.home-scrolled .app-header,
+.mobile-frame.profile-immersive.home-scrolled .app-header {
   background: #2563EB !important;
   background-color: #2563EB !important;
   background-image: none !important;
@@ -330,7 +337,8 @@ input, select, textarea {
 }
 
 [data-theme="dark"] .mobile-frame.home-immersive.home-scrolled .app-header,
-[data-theme="dark"] .mobile-frame.wallets-immersive.home-scrolled .app-header {
+[data-theme="dark"] .mobile-frame.wallets-immersive.home-scrolled .app-header,
+[data-theme="dark"] .mobile-frame.profile-immersive.home-scrolled .app-header {
   background: #1E3A8A !important;
   background-color: #1E3A8A !important;
   background-image: none !important;
@@ -488,7 +496,8 @@ input, select, textarea {
 /* Shared immersive blue chrome (Home + Wallets) */
 /* wallets-immersive header bg handled in unified immersive header rule above */
 
-.mobile-frame.wallets-immersive .header-greeting-text {
+.mobile-frame.wallets-immersive .header-greeting-text,
+.mobile-frame.profile-immersive .header-greeting-text {
   color: rgba(255, 255, 255, 0.78);
   text-transform: none;
   letter-spacing: 0;
@@ -496,13 +505,15 @@ input, select, textarea {
   font-weight: 600;
 }
 
-.mobile-frame.wallets-immersive .header-user-name {
+.mobile-frame.wallets-immersive .header-user-name,
+.mobile-frame.profile-immersive .header-user-name {
   color: #fff;
   font-size: clamp(17px, 4.8vw, 20px);
   font-weight: 800;
 }
 
-.mobile-frame.wallets-immersive .header-icon-btn {
+.mobile-frame.wallets-immersive .header-icon-btn,
+.mobile-frame.profile-immersive .header-icon-btn {
   color: #fff;
   background: rgba(255, 255, 255, 0.18);
   border-color: rgba(255, 255, 255, 0.28);
@@ -513,22 +524,26 @@ input, select, textarea {
   -webkit-backdrop-filter: blur(12px);
 }
 
-.mobile-frame.wallets-immersive .header-icon-btn:hover {
+.mobile-frame.wallets-immersive .header-icon-btn:hover,
+.mobile-frame.profile-immersive .header-icon-btn:hover {
   color: #fff;
   background: rgba(255, 255, 255, 0.26);
 }
 
-.mobile-frame.wallets-immersive .header-user-avatar {
+.mobile-frame.wallets-immersive .header-user-avatar,
+.mobile-frame.profile-immersive .header-user-avatar {
   box-shadow: 0 4px 16px rgba(15, 40, 120, 0.25), 0 0 0 3px rgba(255,255,255,0.28);
 }
 
-.mobile-frame.wallets-immersive .header-bell-dot {
+.mobile-frame.wallets-immersive .header-bell-dot,
+.mobile-frame.profile-immersive .header-bell-dot {
   border-color: rgba(37, 99, 235, 0.55);
 }
 
 /* wallets main spacing handled in unified immersive main rules */
 
-.mobile-frame.wallets-immersive {
+.mobile-frame.wallets-immersive,
+.mobile-frame.profile-immersive {
   background: linear-gradient(
     180deg,
     var(--immersive-top) 0px,
@@ -538,7 +553,8 @@ input, select, textarea {
   ) !important;
 }
 
-[data-theme="dark"] .mobile-frame.wallets-immersive {
+[data-theme="dark"] .mobile-frame.wallets-immersive,
+[data-theme="dark"] .mobile-frame.profile-immersive {
   background: linear-gradient(
     180deg,
     var(--immersive-top-dark) 0px,
@@ -559,21 +575,24 @@ input, select, textarea {
 }
 
 .mobile-frame.home-immersive .main-content,
-.mobile-frame.wallets-immersive .main-content {
+.mobile-frame.wallets-immersive .main-content,
+.mobile-frame.profile-immersive .main-content {
   padding-top: 0;
   margin-top: 0;
   background: transparent;
 }
 
 .mobile-frame.home-immersive #tab-home.tab-view.active,
-.mobile-frame.wallets-immersive #tab-wallets.tab-view.active {
+.mobile-frame.wallets-immersive #tab-wallets.tab-view.active,
+.mobile-frame.profile-immersive #tab-profile.tab-view.active {
   margin-top: 0;
   background: transparent;
 }
 
 /* No transform gap on first paint of immersive tabs */
 .mobile-frame.home-immersive #tab-home.tab-view,
-.mobile-frame.wallets-immersive #tab-wallets.tab-view {
+.mobile-frame.wallets-immersive #tab-wallets.tab-view,
+.mobile-frame.profile-immersive #tab-profile.tab-view {
   transform: none;
 }
 
@@ -7035,177 +7054,479 @@ body.rtl-mode .wallets-hero::before {
 /* ================= PROFILE PAGE — 2026 REDESIGN (matches Home / Wallets / Tools) ================= */
 .profile-page-2026 {
   width: 100%;
-  padding-bottom: 8px;
+  padding-bottom: 12px;
+  position: relative;
+  isolation: isolate;
 }
 
-/* Header — same language as .tools-page-header */
-.profile-page-header {
-  margin-bottom: 18px;
-}
-.profile-page-kicker {
-  display: block;
-  margin-bottom: 3px;
-  color: var(--text-muted);
-  font-size: 10px;
-  font-weight: 750;
-  letter-spacing: .7px;
-  text-transform: uppercase;
-}
-.profile-page-header .page-title {
-  font-size: clamp(26px, 7vw, 32px);
-  letter-spacing: -1px;
-}
-.profile-page-header .page-subtitle {
-  max-width: 320px;
-  margin-top: 4px;
-  line-height: 1.6;
+/* Blue stage — same DNA as Home / Wallets so the status bar always matches */
+.profile-page-2026::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: calc(-1 * (env(safe-area-inset-top, 0px) + 160px));
+  transform: translateX(-50%);
+  width: 100vw;
+  max-width: 440px;
+  height: calc(500px + env(safe-area-inset-top, 0px));
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    var(--immersive-top) 0%,
+    var(--immersive-top) 72%,
+    var(--bg-main) 100%
+  );
+  border-radius: 0;
+  box-shadow: none;
 }
 
-/* Hero — same construction as .wallets-portfolio-hero / .home-overview-hero */
+[data-theme="dark"] .profile-page-2026::before {
+  background: linear-gradient(
+    180deg,
+    var(--immersive-top-dark) 0%,
+    var(--immersive-top-dark) 72%,
+    var(--bg-main) 100%
+  );
+}
+
+.profile-page-2026 > * { position: relative; z-index: 1; }
+
+/* ---- Hero: identical glass construction to .wallets-hero / .home-overview-hero ---- */
 .profile-hero {
   position: relative;
   isolation: isolate;
+  margin: 4px 2px 8px;
+  padding: 16px 16px 20px;
   overflow: hidden;
-  margin-bottom: 24px;
-  padding: 18px;
   color: #fff;
   background:
-    radial-gradient(circle at 88% 6%, rgba(196,181,253,.26), transparent 33%),
-    radial-gradient(circle at 2% 100%, rgba(56,189,248,.24), transparent 38%),
-    linear-gradient(145deg, #1E1B4B 0%, #312E81 52%, #1E3A8A 115%);
-  border: 1px solid rgba(255,255,255,.15);
-  border-radius: 27px;
-  box-shadow: 0 19px 40px rgba(30,27,75,.26), inset 0 1px 0 rgba(255,255,255,.16);
+    linear-gradient(160deg,
+      rgba(255,255,255,0.20) 0%,
+      rgba(255,255,255,0.08) 42%,
+      rgba(255,255,255,0.04) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 28px;
+  box-shadow:
+    0 20px 44px rgba(15, 40, 120, 0.22),
+    0 1px 0 rgba(255,255,255,0.28) inset,
+    0 -1px 0 rgba(15, 40, 120, 0.08) inset;
+  backdrop-filter: blur(22px) saturate(165%);
+  -webkit-backdrop-filter: blur(22px) saturate(165%);
 }
+
+/* Soft orbital ring — same decoration as .wallets-hero::before */
 .profile-hero::before {
   content: '';
   position: absolute;
-  z-index: -1;
-  right: -58px;
-  top: -62px;
-  width: 190px;
-  height: 190px;
-  border: 1px solid rgba(255,255,255,.10);
+  z-index: 0;
+  top: -70px;
+  right: -50px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
-  box-shadow: 0 0 0 30px rgba(255,255,255,.022), 0 0 0 61px rgba(255,255,255,.014);
+  border: 1.5px solid rgba(255,255,255,0.18);
+  box-shadow:
+    0 0 0 24px rgba(255,255,255,0.035),
+    0 0 0 50px rgba(255,255,255,0.02);
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.16), transparent 55%);
+  pointer-events: none;
 }
-body.rtl-mode .profile-hero::before { right: auto; left: -58px; }
 
-.profile-hero-top {
+body.rtl-mode .profile-hero::before {
+  right: auto;
+  left: -50px;
+}
+
+/* Bottom light + subtle grain — same as .wallets-hero::after */
+.profile-hero::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 100%, rgba(255,255,255,0.12), transparent 55%),
+    radial-gradient(rgba(255,255,255,0.4) 0.55px, transparent 0.55px);
+  background-size: auto, 15px 15px;
+  opacity: 0.75;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+}
+
+.profile-hero > * { position: relative; z-index: 1; }
+
+/* Label row — mirrors .wallets-hero-label-row */
+.profile-hero-label-row {
   display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 8px;
 }
 
-.profile-hero .profile-avatar-wrap {
-  width: 68px;
-  height: 68px;
-}
-.profile-hero .profile-avatar-icon {
-  width: 68px;
-  height: 68px;
-  overflow: hidden;
-  background: rgba(255,255,255,.14);
-  border: 1px solid rgba(255,255,255,.2);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
-}
-.profile-hero .profile-avatar-badge {
-  width: 24px;
-  height: 24px;
-  border-color: rgba(30,27,75,.9);
+.profile-hero-label {
+  color: rgba(255,255,255,0.78);
+  font-size: 13px;
+  font-weight: 650;
 }
 
-.profile-hero-identity { min-width: 0; flex: 1; }
-.profile-hero-identity h4 {
-  overflow: hidden;
+/* Circular glass button — mirrors .wallets-privacy-btn */
+.profile-hero-edit-btn {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  display: grid;
+  place-items: center;
   color: #fff;
-  font-size: 19px;
-  font-weight: 800;
-  letter-spacing: -.4px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  background: rgba(255,255,255,0.16);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 50%;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+  transition: var(--transition-spring);
 }
-.profile-hero-identity span {
-  display: block;
-  margin-top: 2px;
-  overflow: hidden;
-  color: rgba(226,232,240,.66);
-  font-size: 12px;
-  font-weight: 550;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.profile-hero-chip {
+
+.profile-hero-edit-btn:hover { background: rgba(255,255,255,0.26); }
+.profile-hero-edit-btn:active { transform: scale(0.92); }
+
+/* Status flag on the label row — same slot as .wallets-privacy-btn */
+.profile-hero-flag {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  width: fit-content;
-  max-width: 100%;
-  min-height: 21px;
-  margin-top: 7px;
-  white-space: nowrap;
-  padding: 0 8px;
-  color: rgba(255,255,255,.82);
-  background: rgba(255,255,255,.12);
-  border: 1px solid rgba(255,255,255,.12);
+  flex: 0 0 auto;
+  min-height: 26px;
+  padding: 0 11px;
+  color: #ECFDF5;
+  background: rgba(16,185,129,0.24);
+  border: 1px solid rgba(167,243,208,0.32);
   border-radius: 999px;
-  font-size: 9.5px;
-  font-weight: 700;
+  font-size: 11.5px;
+  font-weight: 750;
+  white-space: nowrap;
 }
 
-/* Stat grid — mirrors .wallets-summary-grid */
-.profile-hero-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 7px;
-  margin-top: 16px;
+.profile-hero-flag.is-incomplete {
+  color: #FFF7ED;
+  background: rgba(245,158,11,0.26);
+  border-color: rgba(253,230,138,0.34);
 }
-.profile-hero-stat {
-  min-width: 0;
-  padding: 9px 8px;
-  background: rgba(255,255,255,.075);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 13px;
+
+/* Avatar + identity block */
+.profile-hero-identity {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 14px 8px 2px;
 }
-.profile-hero-stat span {
-  display: block;
+
+.profile-hero .profile-avatar-wrap { width: 84px; height: 84px; }
+
+.profile-hero .profile-avatar-icon {
+  width: 84px;
+  height: 84px;
   overflow: hidden;
-  color: rgba(226,232,240,.57);
-  font-size: 8px;
-  font-weight: 600;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  background: linear-gradient(160deg, rgba(255,255,255,0.34), rgba(255,255,255,0.10));
+  border: 1.5px solid rgba(255,255,255,0.55);
+  box-shadow:
+    0 12px 28px rgba(15,40,120,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
-.profile-hero-stat strong {
+
+.profile-hero .profile-avatar-badge {
+  width: 26px;
+  height: 26px;
+  color: #2563EB;
+  background: #fff;
+  border: 2.5px solid rgba(37, 99, 235, 0.9);
+  box-shadow: 0 4px 12px rgba(15,40,120,0.32);
+}
+
+.profile-hero-idcopy { min-width: 0; flex: 1; }
+
+.profile-hero-value {
   display: block;
-  margin-top: 2px;
   overflow: hidden;
   color: #fff;
-  font-size: 12.5px;
+  font-size: clamp(22px, 6.2vw, 28px);
+  font-weight: 850;
+  line-height: 1.14;
+  letter-spacing: -0.7px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-shadow: 0 6px 22px rgba(15,40,120,0.3);
+}
+
+.profile-hero-handle {
+  display: block;
+  overflow: hidden;
+  margin-top: 3px;
+  color: rgba(226,232,240,0.72);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+/* Meta pills — mirrors .wallets-hero-pill-stat */
+.profile-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 8px 16px;
+}
+
+.profile-hero-pill-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 0 12px;
+  color: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+/* Hero actions — mirrors .wallets-hero-actions */
+.profile-hero-actions {
+  display: flex;
+  gap: 10px;
+  padding: 0 4px;
+}
+
+.profile-hero-btn {
+  flex: 1;
+  min-width: 0;
+  min-height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 10px;
+  color: #0F172A;
+  background: linear-gradient(180deg, #fff, #F8FAFF);
+  border: 0;
+  border-radius: 999px;
+  font-size: 13.5px;
   font-weight: 800;
+  white-space: nowrap;
+  box-shadow: 0 12px 26px rgba(15,40,120,0.2);
+  transition: var(--transition-spring);
+}
+
+.profile-hero-btn:active { transform: scale(.96); }
+
+.profile-hero-btn.dark {
+  flex: 0 0 50px;
+  width: 50px;
+  padding: 0;
+  color: #fff;
+  background: #0B1220;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(2,6,23,0.35);
+}
+
+.profile-hero-btn.dark.is-disabled {
+  opacity: .35;
+  pointer-events: none;
+}
+
+/* ---- Sheet: identical to .wallets-sheet ---- */
+.profile-sheet {
+  margin-top: 10px;
+  padding: 22px 14px 12px;
+  background: var(--bg-main);
+  border-radius: 28px 28px 0 0;
+  box-shadow: 0 -16px 40px rgba(15,40,120,0.12);
+  position: relative;
+}
+
+[data-theme="dark"] .profile-sheet {
+  box-shadow: 0 -16px 40px rgba(0,0,0,0.4);
+}
+
+.profile-sheet::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(148,163,184,0.45);
+}
+
+/* Account stat tiles — mirrors .wallets-month-card */
+.profile-stats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 6px 0 18px;
+}
+
+.profile-stat-card.span2 {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 14px;
+}
+
+.profile-stat-card.span2 strong {
+  font-size: 16px;
+  letter-spacing: -.4px;
+}
+
+.profile-stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: 13px 11px;
+  background: #fff;
+  border: 1px solid rgba(226,232,240,0.95);
+  border-radius: 18px;
+  box-shadow: 0 8px 18px rgba(15,23,42,0.04);
+}
+
+[data-theme="dark"] .profile-stat-card {
+  background: var(--card-bg);
+  border-color: var(--border-glass);
+}
+
+.profile-stat-card .lbl {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 10.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.profile-stat-card .lbl i {
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+}
+
+.profile-stat-card .lbl span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-stat-card.tone-indigo .lbl i { color: #4F46E5; background: rgba(79,70,229,.12); }
+.profile-stat-card.tone-teal   .lbl i { color: #0D9488; background: rgba(13,148,136,.12); }
+.profile-stat-card.tone-amber  .lbl i { color: #D97706; background: rgba(245,158,11,.14); }
+
+.profile-stat-card strong {
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 850;
+  letter-spacing: -.3px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* Section head — mirrors .wallets-section-head */
+.profile-section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 0 2px;
+}
+
+.profile-section-kicker {
+  display: block;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 650;
+  margin-bottom: 2px;
+}
+
+.profile-section-title {
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -.4px;
+}
+
+.profile-section-count {
+  min-width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  color: #2563EB;
+  background: rgba(37,99,235,.1);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.profile-section-count.is-danger {
+  color: #E11D48;
+  background: rgba(244,63,94,.12);
+}
+
+.profile-section-count.is-ok {
+  color: #059669;
+  background: rgba(16,185,129,.12);
+}
+
+.profile-section-count.is-muted {
+  color: var(--text-muted);
+  background: var(--chip-bg);
+}
+
+button.profile-section-count {
+  border: 0;
+  cursor: pointer;
+  transition: var(--transition-spring);
+}
+
+button.profile-section-count:active { transform: scale(.92); }
 
 /* Grouped sections — mirrors .tools-group / .tools-group-list */
 .profile-group {
   margin-bottom: 20px;
 }
-.profile-group-title {
-  padding: 0 4px 8px 16px;
-  color: var(--text-muted);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .2px;
-}
-body.rtl-mode .profile-group-title { padding: 0 16px 8px 4px; }
+
+.profile-group:last-child { margin-bottom: 8px; }
 
 .profile-group-list {
   overflow: hidden;
-  background: var(--card-bg);
-  border: 1px solid var(--border-glass);
+  background: #fff;
+  border: 1px solid rgba(226,232,240,0.95);
   border-radius: 18px;
   box-shadow: 0 8px 22px rgba(15,23,42,.045);
+}
+
+[data-theme="dark"] .profile-group-list {
+  background: var(--card-bg);
+  border-color: var(--border-glass);
 }
 
 /* A row — mirrors .tools-row */
@@ -7222,7 +7543,9 @@ body.rtl-mode .profile-group-title { padding: 0 16px 8px 4px; }
   border: 0;
   border-bottom: .5px solid var(--border-subtle);
 }
+
 .profile-row:last-child { border-bottom: 0; }
+
 button.profile-row:active,
 label.profile-row:active { background: var(--chip-bg); }
 
@@ -7234,6 +7557,7 @@ label.profile-row:active { background: var(--chip-bg); }
   border-radius: 9px;
   color: #fff;
 }
+
 .profile-row[data-tone="indigo"] .profile-row-icon { background: #6366F1; }
 .profile-row[data-tone="violet"] .profile-row-icon { background: #8B5CF6; }
 .profile-row[data-tone="teal"]   .profile-row-icon { background: #0D9488; }
@@ -7244,6 +7568,7 @@ label.profile-row:active { background: var(--chip-bg); }
 .profile-row[data-tone="red"]    .profile-row-icon { background: #EF4444; }
 
 .profile-row-copy { min-width: 0; text-align: start; }
+
 .profile-row-copy strong {
   display: block;
   overflow: hidden;
@@ -7254,6 +7579,7 @@ label.profile-row:active { background: var(--chip-bg); }
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .profile-row-copy span {
   display: block;
   overflow: hidden;
@@ -7264,12 +7590,15 @@ label.profile-row:active { background: var(--chip-bg); }
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .profile-row-chevron {
   display: grid;
   place-items: center;
   color: #C4C9D4;
 }
+
 body.rtl-mode .profile-row-chevron svg { transform: scaleX(-1); }
+
 [data-theme="dark"] .profile-row-chevron { color: #64748B; }
 
 .profile-row.danger .profile-row-copy strong { color: var(--color-red); }
@@ -7278,7 +7607,9 @@ body.rtl-mode .profile-row-chevron svg { transform: scaleX(-1); }
 .profile-fields {
   padding: 16px 14px 14px;
 }
+
 .profile-fields .tool-input-row:last-of-type { margin-bottom: 14px; }
+
 .profile-fields-hint {
   display: block;
   margin: -6px 0 12px;
@@ -7286,11 +7617,18 @@ body.rtl-mode .profile-row-chevron svg { transform: scaleX(-1); }
   font-size: 11px;
   line-height: 1.6;
 }
+
 .profile-fields .btn-primary-full {
   height: 46px;
   border-radius: 15px;
   font-size: 14px;
 }
+
+#prof-input-user {
+  text-align: right;
+  letter-spacing: .2px;
+}
+body:not(.rtl-mode) #prof-input-user { text-align: left; }
 
 /* Photo actions strip */
 .profile-photo-strip {
@@ -7299,12 +7637,14 @@ body.rtl-mode .profile-row-chevron svg { transform: scaleX(-1); }
   padding: 12px 14px;
   border-bottom: .5px solid var(--border-subtle);
 }
+
 .profile-photo-strip .btn-secondary {
   height: 40px;
   border-radius: 13px;
   gap: 6px;
   font-size: 12px;
 }
+
 .profile-photo-strip .btn-secondary.is-danger {
   color: var(--color-red);
   border-color: color-mix(in srgb, var(--color-red) 35%, transparent);
@@ -7312,6 +7652,7 @@ body.rtl-mode .profile-row-chevron svg { transform: scaleX(-1); }
 
 /* Language pills inside a row */
 .profile-row .lang-pill-selector { gap: 6px; }
+
 .profile-row .lang-btn {
   padding: 6px 12px;
   border-radius: 999px;
@@ -7320,15 +7661,27 @@ body.rtl-mode .profile-row-chevron svg { transform: scaleX(-1); }
 }
 
 @media (max-width: 380px) {
-  .profile-hero { padding: 15px; border-radius: 24px; }
+  .profile-hero { padding: 14px 14px 18px; border-radius: 24px; }
+  .profile-hero-identity { gap: 12px; margin-inline: 4px; }
   .profile-hero .profile-avatar-wrap,
-  .profile-hero .profile-avatar-icon { width: 58px; height: 58px; }
-  .profile-hero-identity h4 { font-size: 17px; }
-  .profile-hero-grid { gap: 5px; }
-  .profile-hero-stat { padding-inline: 6px; }
-  .profile-hero-stat strong { font-size: 11px; }
+  .profile-hero .profile-avatar-icon { width: 68px; height: 68px; }
+  .profile-hero-value { font-size: clamp(19px, 5.6vw, 23px); }
+  .profile-hero-handle { font-size: 12px; }
+  .profile-hero-meta { margin-inline: 4px; gap: 6px; }
+  .profile-hero-pill-stat { font-size: 11px; padding: 0 10px; }
+  .profile-hero-btn { font-size: 12.5px; padding: 0 10px; }
+  .profile-stats-row { gap: 7px; }
+  .profile-stat-card { padding: 11px 9px; }
+  .profile-stat-card .lbl { font-size: 9.5px; gap: 5px; }
+  .profile-stat-card .lbl i { width: 22px; height: 22px; flex-basis: 22px; }
+  .profile-stat-card strong { font-size: 12.5px; }
   .profile-row { gap: 10px; padding-inline: 12px; }
   .profile-row .lang-btn { padding: 5px 9px; font-size: 10.5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-hero-btn,
+  .profile-hero-edit-btn { transition: none; }
 }
 
 @supports not (background: color-mix(in srgb, white 50%, black)) {
@@ -8349,6 +8702,18 @@ const translations = {
     profile_title: "Profile & Settings",
     profile_subtitle: "Manage your account and preferences",
     profile_kicker: "Account",
+    profile_hero_kicker: "Your account",
+    profile_edit_account: "Edit account",
+    profile_stats_kicker: "Account overview",
+    profile_stats_title: "Your activity",
+    profile_prefs_title: "App preferences",
+    profile_security_title: "Lock & privacy",
+    profile_data_title: "Backup & restore",
+    profile_danger_title: "Reset everything",
+    profile_security_active: "Active",
+    profile_security_off: "Off",
+    profile_flag_complete: "Profile complete",
+    profile_flag_incomplete: "Complete your profile",
     profile_section_account: "Account details",
     profile_section_account_hint: "Your name and username shown across the app",
     profile_stat_wallets: "Wallets",
@@ -8724,6 +9089,18 @@ const translations = {
     profile_title: "پروفایل و تنظیمات",
     profile_subtitle: "مدیریت حساب کاربری و ترجیحات",
     profile_kicker: "حساب کاربری",
+    profile_hero_kicker: "حساب کاربری شما",
+    profile_edit_account: "ویرایش حساب",
+    profile_stats_kicker: "نمای کلی حساب",
+    profile_stats_title: "فعالیت شما",
+    profile_prefs_title: "ترجیحات برنامه",
+    profile_security_title: "قفل و حریم خصوصی",
+    profile_data_title: "پشتیبان‌گیری و بازیابی",
+    profile_danger_title: "بازنشانی کامل",
+    profile_security_active: "فعال",
+    profile_security_off: "خاموش",
+    profile_flag_complete: "پروفایل کامل",
+    profile_flag_incomplete: "تکمیل پروفایل",
     profile_section_account: "مشخصات حساب",
     profile_section_account_hint: "نام و آیدی شما در سراسر برنامه نمایش داده می‌شود",
     profile_stat_wallets: "کیف پول",
@@ -11819,7 +12196,13 @@ class SecurityManager {
 
     return `
       <section class="profile-group" aria-labelledby="profile-security-title">
-        <h3 class="profile-group-title" id="profile-security-title">${t('security_section')}</h3>
+        <div class="profile-section-head">
+          <div>
+            <span class="profile-section-kicker" data-i18n="profile_kicker">${t('profile_kicker')}</span>
+            <h2 class="profile-section-title" id="profile-security-title" data-i18n="profile_security_title">${t('profile_security_title')}</h2>
+          </div>
+          <span class="profile-section-count ${cfg.enabled ? 'is-ok' : 'is-muted'}" data-i18n="${cfg.enabled ? 'profile_security_active' : 'profile_security_off'}">${cfg.enabled ? t('profile_security_active') : t('profile_security_off')}</span>
+        </div>
         <div class="profile-group-list">
 
           <div class="profile-row" data-tone="green">
@@ -11862,7 +12245,7 @@ class SecurityManager {
             </label>
           </div>
 
-          <div class="profile-row" data-tone="amber" style="flex-wrap:wrap; align-items:flex-start;">
+          <div class="profile-row" data-tone="amber" style="align-items:start;">
             <span class="profile-row-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
             </span>
@@ -11870,7 +12253,7 @@ class SecurityManager {
               <strong>${t('auto_lock')}</strong>
               <span>${t('auto_lock_hint')}</span>
             </span>
-            <div class="sec-autolock-options" style="flex-basis:100%; margin-top:10px;">
+            <div class="sec-autolock-options" style="grid-column:1 / -1; margin-top:10px;">
               ${autoOptions.map(o => `<button type="button" class="sec-autolock-chip ${cfg.autoLock === o.v ? 'active' : ''}" data-autolock="${o.v}">${o.label}</button>`).join('')}
             </div>
           </div>
@@ -12189,7 +12572,7 @@ class WalioApp {
       const frame = document.querySelector('.mobile-frame');
       if (!frame) return;
       const scrolled = (window.scrollY || document.documentElement.scrollTop || 0) > 28;
-      const immersive = frame.classList.contains('home-immersive') || frame.classList.contains('wallets-immersive');
+      const immersive = frame.classList.contains('home-immersive') || frame.classList.contains('wallets-immersive') || frame.classList.contains('profile-immersive');
       frame.classList.toggle('home-scrolled', immersive && scrolled);
     };
     window.addEventListener('scroll', onHomeScroll, { passive: true });
@@ -12274,10 +12657,11 @@ class WalioApp {
     }
 
     const frame = document.querySelector('.mobile-frame');
-    const immersive = (tabId === 'home' || tabId === 'wallets');
+    const immersive = (tabId === 'home' || tabId === 'wallets' || tabId === 'profile');
     if (frame) {
       frame.classList.toggle('home-immersive', tabId === 'home');
       frame.classList.toggle('wallets-immersive', tabId === 'wallets');
+      frame.classList.toggle('profile-immersive', tabId === 'profile');
       frame.classList.toggle('immersive-blue', immersive);
     }
     document.documentElement.classList.toggle('immersive-blue', immersive);
@@ -13435,194 +13819,266 @@ class WalioApp {
     const currentLang = window.i18n ? window.i18n.currentLang : 'fa';
     const t = (key) => window.i18n ? window.i18n.t(key) : key;
     const num = (value) => window.i18n ? window.i18n.formatNumber(value, 0) : String(value);
+    const isFa = currentLang === 'fa';
+    const hideBalance = settings.hideBalance === true;
 
     const wallets = window.storage.getWallets ? window.storage.getWallets() : [];
     const transactions = window.storage.getTransactions ? window.storage.getTransactions() : [];
-    const locale = currentLang === 'fa' ? 'fa-IR' : 'en-US';
+    const locale = isFa ? 'fa-IR' : 'en-US';
     const memberSince = new Intl.DateTimeFormat(locale, { month: 'short', year: 'numeric' })
       .format(new Date());
 
+    const totalNetWorth = wallets.reduce((sum, w) => sum + (parseFloat(w.balance) || 0), 0);
+    const balanceText = hideBalance
+      ? '••••••••'
+      : (window.i18n ? window.i18n.formatCurrency(totalNetWorth, 'IRT') : `${totalNetWorth} IRT`);
+
+    const displayName = profile.name || 'User';
+    const handle = profile.username || '@user';
+    const recordCount = wallets.length + transactions.length;
+    const isComplete = !!(profile.avatar && (profile.name || '').trim() && (profile.username || '').trim());
+    const secCfg = window.security && window.security.getConfig ? window.security.getConfig() : null;
+    const secOn = !!(secCfg && secCfg.enabled);
+
     const avatarInner = profile.avatar
-      ? `<img src="${profile.avatar}" alt="Profile photo" />`
-      : `<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+      ? `<img src="${profile.avatar}" alt="${displayName}" />`
+      : `<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
 
     const chevron = `<span class="profile-row-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M7 4l6 6-6 6"/></svg></span>`;
 
+    const cameraSVG = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`;
+    const pencilSVG = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4z"/></svg>`;
+    const trashSVG = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>`;
+    const checkSVG = `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>`;
+
     container.innerHTML = `
       <div class="profile-page-2026">
-        <header class="profile-page-header">
-          <span class="profile-page-kicker">${t('profile_kicker')}</span>
-          <h2 class="page-title" data-i18n="profile_title">${t('profile_title')}</h2>
-          <p class="page-subtitle" data-i18n="profile_subtitle">${t('profile_subtitle')}</p>
-        </header>
-
         <section class="profile-hero" aria-label="${t('profile_title')}">
-          <div class="profile-hero-top">
+          <div class="profile-hero-label-row">
+            <span class="profile-hero-label" data-i18n="profile_hero_kicker">${t('profile_hero_kicker')}</span>
+            <span class="profile-hero-flag ${isComplete ? '' : 'is-incomplete'}">
+              ${isComplete ? checkSVG : `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 8v5M12 16.5v.5"/><circle cx="12" cy="12" r="9"/></svg>`}
+              <span data-i18n="${isComplete ? 'profile_flag_complete' : 'profile_flag_incomplete'}">${isComplete ? t('profile_flag_complete') : t('profile_flag_incomplete')}</span>
+            </span>
+          </div>
+
+          <div class="profile-hero-identity">
             <div class="profile-avatar-wrap" id="profile-avatar-wrap" role="button" tabindex="0" title="${t('change_photo')}">
               <div class="profile-avatar-icon" id="profile-avatar-icon">${avatarInner}</div>
               <div class="profile-avatar-badge" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
               </div>
             </div>
-            <div class="profile-hero-identity">
-              <h4 id="profile-identity-name">${profile.name}</h4>
-              <span id="profile-identity-username">${profile.username}</span>
-              <span class="profile-hero-chip">
-                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
-                ${t('profile_stat_since')} ${memberSince}
-              </span>
+            <div class="profile-hero-idcopy">
+              <strong class="profile-hero-value" id="profile-identity-name">${displayName}</strong>
+              <span class="profile-hero-handle" id="profile-identity-username">${handle}</span>
             </div>
           </div>
 
-          <div class="profile-hero-grid">
-            <div class="profile-hero-stat">
-              <span>${t('profile_stat_wallets')}</span>
+          <div class="profile-hero-meta">
+            <span class="profile-hero-pill-stat">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+              ${t('profile_stat_since')} · ${memberSince}
+            </span>
+            <span class="profile-hero-pill-stat">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
+              ${isFa ? t('lang_name_fa') : t('lang_name_en')}
+            </span>
+          </div>
+
+          <div class="profile-hero-actions">
+            <button class="profile-hero-btn" id="btn-change-photo" type="button">
+              ${cameraSVG}
+              <span data-i18n="change_photo">${t('change_photo')}</span>
+            </button>
+            <button class="profile-hero-btn" id="btn-hero-edit-account" type="button">
+              ${pencilSVG}
+              <span data-i18n="profile_edit_account">${t('profile_edit_account')}</span>
+            </button>
+            <button class="profile-hero-btn dark ${profile.avatar ? '' : 'is-disabled'}" id="btn-remove-photo" type="button" title="${t('remove_photo')}" aria-label="${t('remove_photo')}">
+              ${trashSVG}
+            </button>
+          </div>
+        </section>
+
+        <input type="file" id="profile-photo-input" accept="image/*" style="display:none;" />
+
+        <div class="profile-sheet">
+          <div class="profile-stats-row">
+            <div class="profile-stat-card tone-amber span2">
+              <span class="lbl">
+                <i aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v9M9.7 9.8h3.4a1.85 1.85 0 0 1 0 3.7H9.7h3.5a1.85 1.85 0 0 1 0 3.7H9.7"/></svg></i>
+                <span data-i18n="total_net_worth">${t('total_net_worth')}</span>
+              </span>
+              <strong>${balanceText}</strong>
+            </div>
+            <div class="profile-stat-card tone-indigo">
+              <span class="lbl">
+                <i aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2.5" y="6" width="19" height="13" rx="3"/><path d="M2.5 10h19"/></svg></i>
+                <span data-i18n="profile_stat_wallets">${t('profile_stat_wallets')}</span>
+              </span>
               <strong>${num(wallets.length)}</strong>
             </div>
-            <div class="profile-hero-stat">
-              <span>${t('profile_stat_transactions')}</span>
+            <div class="profile-stat-card tone-teal">
+              <span class="lbl">
+                <i aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></i>
+                <span data-i18n="profile_stat_transactions">${t('profile_stat_transactions')}</span>
+              </span>
               <strong>${num(transactions.length)}</strong>
             </div>
-            <div class="profile-hero-stat">
-              <span>${t('language')}</span>
-              <strong>${currentLang === 'fa' ? t('lang_name_fa') : t('lang_name_en')}</strong>
-            </div>
           </div>
-        </section>
 
-        <section class="profile-group" aria-labelledby="profile-account-title">
-          <h3 class="profile-group-title" id="profile-account-title">${t('profile_section_account')}</h3>
-          <div class="profile-group-list">
-            <div class="profile-photo-strip">
-              <button class="btn-secondary" id="btn-change-photo" type="button">
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-                <span data-i18n="change_photo">${t('change_photo')}</span>
+          <section class="profile-group" aria-labelledby="profile-account-title">
+            <div class="profile-section-head">
+              <div>
+                <span class="profile-section-kicker" data-i18n="profile_kicker">${t('profile_kicker')}</span>
+                <h2 class="profile-section-title" id="profile-account-title" data-i18n="profile_section_account">${t('profile_section_account')}</h2>
+              </div>
+              <span class="profile-section-count ${isComplete ? 'is-ok' : ''}">${isComplete ? '✓' : '!'}</span>
+            </div>
+            <div class="profile-group-list">
+              <div class="profile-fields">
+                <div class="tool-input-row">
+                  <label data-i18n="profile_name">${t('profile_name')}</label>
+                  <input type="text" id="prof-input-name" class="tool-input" value="${(profile.name || '').replace(/"/g, '&quot;')}" />
+                </div>
+
+                <div class="tool-input-row">
+                  <label data-i18n="profile_username">${t('profile_username')}</label>
+                  <input type="text" id="prof-input-user" class="tool-input" dir="ltr" value="${(profile.username || '').replace(/"/g, '&quot;')}" />
+                </div>
+
+                <small class="profile-fields-hint" data-i18n="profile_section_account_hint">${t('profile_section_account_hint')}</small>
+
+                <button class="btn-primary-full" id="btn-save-profile" type="button" data-i18n="profile_save">${t('profile_save')}</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="profile-group" aria-labelledby="profile-prefs-title">
+            <div class="profile-section-head">
+              <div>
+                <span class="profile-section-kicker" data-i18n="settings_section">${t('settings_section')}</span>
+                <h2 class="profile-section-title" id="profile-prefs-title" data-i18n="profile_prefs_title">${t('profile_prefs_title')}</h2>
+              </div>
+              <span class="profile-section-count">${isFa ? t('lang_name_fa') : t('lang_name_en')}</span>
+            </div>
+            <div class="profile-group-list">
+              <div class="profile-row" data-tone="indigo">
+                <span class="profile-row-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </span>
+                <span class="profile-row-copy">
+                  <strong data-i18n="dark_mode">${t('dark_mode')}</strong>
+                  <span data-i18n="profile_theme_hint">${t('profile_theme_hint')}</span>
+                </span>
+                <label class="ios-switch" aria-label="${t('dark_mode')}">
+                  <input type="checkbox" id="setting-dark-toggle" ${settings.darkMode === 'dark' ? 'checked' : ''} />
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+
+              <div class="profile-row" data-tone="teal">
+                <span class="profile-row-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1 0-4h12v4"/><path d="M4 6v12a2 2 0 0 0 2 2h14v-4"/><path d="M16 12h5v4h-5a2 2 0 0 1 0-4z"/></svg>
+                </span>
+                <span class="profile-row-copy">
+                  <strong data-i18n="show_toman_unit">${t('show_toman_unit')}</strong>
+                  <span data-i18n="show_toman_unit_hint">${t('show_toman_unit_hint')}</span>
+                </span>
+                <label class="ios-switch" aria-label="${t('show_toman_unit')}">
+                  <input type="checkbox" id="setting-toman-unit-toggle" ${settings.showTomanUnit === true ? 'checked' : ''} />
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+
+              <div class="profile-row" data-tone="violet">
+                <span class="profile-row-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
+                </span>
+                <span class="profile-row-copy">
+                  <strong data-i18n="language">${t('language')}</strong>
+                  <span data-i18n="profile_language_hint">${t('profile_language_hint')}</span>
+                </span>
+                <div class="lang-pill-selector">
+                  <button class="lang-btn ${isFa ? 'active' : ''}" type="button" data-lang="fa" data-i18n="lang_name_fa">فارسی</button>
+                  <button class="lang-btn ${!isFa ? 'active' : ''}" type="button" data-lang="en" data-i18n="lang_name_en">English</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          ${window.security ? window.security.renderProfileSection() : ''}
+
+          <section class="profile-group" aria-labelledby="profile-data-title">
+            <div class="profile-section-head">
+              <div>
+                <span class="profile-section-kicker" data-i18n="data_section">${t('data_section')}</span>
+                <h2 class="profile-section-title" id="profile-data-title" data-i18n="profile_data_title">${t('profile_data_title')}</h2>
+              </div>
+              <span class="profile-section-count">${num(recordCount)}</span>
+            </div>
+            <div class="profile-group-list">
+              <button class="profile-row" id="btn-export-data" data-tone="teal" type="button">
+                <span class="profile-row-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                </span>
+                <span class="profile-row-copy">
+                  <strong data-i18n="export_data">${t('export_data')}</strong>
+                  <span data-i18n="profile_backup_hint">${t('profile_backup_hint')}</span>
+                </span>
+                ${chevron}
               </button>
-              <button class="btn-secondary is-danger" id="btn-remove-photo" type="button" data-i18n="remove_photo" ${profile.avatar ? '' : 'style="display:none;"'}>${t('remove_photo')}</button>
-              <input type="file" id="profile-photo-input" accept="image/*" style="display:none;" />
-            </div>
 
-            <div class="profile-fields">
-              <div class="tool-input-row">
-                <label data-i18n="profile_name">${t('profile_name')}</label>
-                <input type="text" id="prof-input-name" class="tool-input" value="${profile.name || ''}" />
-              </div>
-
-              <div class="tool-input-row">
-                <label data-i18n="profile_username">${t('profile_username')}</label>
-                <input type="text" id="prof-input-user" class="tool-input" value="${profile.username || ''}" />
-              </div>
-
-              <small class="profile-fields-hint">${t('profile_section_account_hint')}</small>
-
-              <button class="btn-primary-full" id="btn-save-profile" type="button" data-i18n="profile_save">${t('profile_save')}</button>
-            </div>
-          </div>
-        </section>
-
-        <section class="profile-group" aria-labelledby="profile-prefs-title">
-          <h3 class="profile-group-title" id="profile-prefs-title">${t('settings_section')}</h3>
-          <div class="profile-group-list">
-            <div class="profile-row" data-tone="indigo">
-              <span class="profile-row-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-              </span>
-              <span class="profile-row-copy">
-                <strong data-i18n="dark_mode">${t('dark_mode')}</strong>
-                <span>${t('profile_theme_hint')}</span>
-              </span>
-              <label class="ios-switch">
-                <input type="checkbox" id="setting-dark-toggle" ${settings.darkMode === 'dark' ? 'checked' : ''} />
-                <span class="switch-slider"></span>
+              <label class="profile-row" for="import-file-input" data-tone="blue">
+                <span class="profile-row-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                </span>
+                <span class="profile-row-copy">
+                  <strong data-i18n="import_data">${t('import_data')}</strong>
+                  <span data-i18n="profile_restore_hint">${t('profile_restore_hint')}</span>
+                </span>
+                ${chevron}
               </label>
-            </div>
+              <input type="file" id="import-file-input" accept=".json" style="display:none;" />
 
-            <div class="profile-row" data-tone="teal">
-              <span class="profile-row-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1 0-4h12v4"/><path d="M4 6v12a2 2 0 0 0 2 2h14v-4"/><path d="M16 12h5v4h-5a2 2 0 0 1 0-4z"/></svg>
-              </span>
-              <span class="profile-row-copy">
-                <strong data-i18n="show_toman_unit">${t('show_toman_unit')}</strong>
-                <span data-i18n="show_toman_unit_hint">${t('show_toman_unit_hint')}</span>
-              </span>
-              <label class="ios-switch" aria-label="${t('show_toman_unit')}">
-                <input type="checkbox" id="setting-toman-unit-toggle" ${settings.showTomanUnit === true ? 'checked' : ''} />
-                <span class="switch-slider"></span>
-              </label>
+              <button class="profile-row" id="btn-load-demo" data-tone="amber" type="button">
+                <span class="profile-row-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.6 6.6L21 9.7l-4.8 4.5 1.3 6.8-5.5-3.2-5.5 3.2 1.3-6.8L3 9.7l6.4-1.1z"/></svg>
+                </span>
+                <span class="profile-row-copy">
+                  <strong data-i18n="load_demo_data">${t('load_demo_data')}</strong>
+                  <span data-i18n="profile_demo_hint">${t('profile_demo_hint')}</span>
+                </span>
+                ${chevron}
+              </button>
             </div>
+          </section>
 
-            <div class="profile-row" data-tone="violet">
-              <span class="profile-row-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
-              </span>
-              <span class="profile-row-copy">
-                <strong data-i18n="language">${t('language')}</strong>
-                <span>${t('profile_language_hint')}</span>
-              </span>
-              <div class="lang-pill-selector">
-                <button class="lang-btn ${currentLang === 'fa' ? 'active' : ''}" type="button" data-lang="fa" data-i18n="lang_name_fa">فارسی</button>
-                <button class="lang-btn ${currentLang === 'en' ? 'active' : ''}" type="button" data-lang="en" data-i18n="lang_name_en">English</button>
+          <section class="profile-group" aria-labelledby="profile-danger-title">
+            <div class="profile-section-head">
+              <div>
+                <span class="profile-section-kicker" data-i18n="profile_danger_zone">${t('profile_danger_zone')}</span>
+                <h2 class="profile-section-title" id="profile-danger-title" data-i18n="profile_danger_title">${t('profile_danger_title')}</h2>
               </div>
+              <span class="profile-section-count is-danger">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 8v5M12 16.5v.5"/><path d="M10.3 3.9 2.6 17.4A2 2 0 0 0 4.3 20.4h15.4a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+              </span>
             </div>
-          </div>
-        </section>
-
-        ${window.security ? window.security.renderProfileSection() : ''}
-
-        <section class="profile-group" aria-labelledby="profile-data-title">
-          <h3 class="profile-group-title" id="profile-data-title">${t('data_section')}</h3>
-          <div class="profile-group-list">
-            <button class="profile-row" id="btn-export-data" data-tone="teal" type="button">
-              <span class="profile-row-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              </span>
-              <span class="profile-row-copy">
-                <strong data-i18n="export_data">${t('export_data')}</strong>
-                <span>${t('profile_backup_hint')}</span>
-              </span>
-              ${chevron}
-            </button>
-
-            <label class="profile-row" for="import-file-input" data-tone="blue">
-              <span class="profile-row-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              </span>
-              <span class="profile-row-copy">
-                <strong data-i18n="import_data">${t('import_data')}</strong>
-                <span>${t('profile_restore_hint')}</span>
-              </span>
-              ${chevron}
-            </label>
-            <input type="file" id="import-file-input" accept=".json" style="display:none;" />
-
-            <button class="profile-row" id="btn-load-demo" data-tone="amber" type="button">
-              <span class="profile-row-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.6 6.6L21 9.7l-4.8 4.5 1.3 6.8-5.5-3.2-5.5 3.2 1.3-6.8L3 9.7l6.4-1.1z"/></svg>
-              </span>
-              <span class="profile-row-copy">
-                <strong data-i18n="load_demo_data">${t('load_demo_data')}</strong>
-                <span>${t('profile_demo_hint')}</span>
-              </span>
-              ${chevron}
-            </button>
-          </div>
-        </section>
-
-        <section class="profile-group" aria-labelledby="profile-danger-title">
-          <h3 class="profile-group-title" id="profile-danger-title">${t('profile_danger_zone')}</h3>
-          <div class="profile-group-list">
-            <button class="profile-row danger" id="btn-reset-data" data-tone="red" type="button">
-              <span class="profile-row-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-              </span>
-              <span class="profile-row-copy">
-                <strong data-i18n="reset_data">${t('reset_data')}</strong>
-                <span>${t('profile_reset_hint')}</span>
-              </span>
-              ${chevron}
-            </button>
-          </div>
-        </section>
+            <div class="profile-group-list">
+              <button class="profile-row danger" id="btn-reset-data" data-tone="red" type="button">
+                <span class="profile-row-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                </span>
+                <span class="profile-row-copy">
+                  <strong data-i18n="reset_data">${t('reset_data')}</strong>
+                  <span data-i18n="profile_reset_hint">${t('profile_reset_hint')}</span>
+                </span>
+                ${chevron}
+              </button>
+            </div>
+          </section>
+        </div>
       </div>
     `;
 
@@ -13709,7 +14165,20 @@ class WalioApp {
       });
     }
     if (removePhotoBtn) {
-      removePhotoBtn.addEventListener('click', () => this.removeProfilePhoto());
+      removePhotoBtn.addEventListener('click', () => {
+        if (removePhotoBtn.classList.contains('is-disabled')) return;
+        this.removeProfilePhoto();
+      });
+    }
+
+    const heroEditBtn = container.querySelector('#btn-hero-edit-account');
+    if (heroEditBtn) {
+      heroEditBtn.addEventListener('click', () => {
+        const nameInput = container.querySelector('#prof-input-name');
+        if (!nameInput) return;
+        nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => { try { nameInput.focus({ preventScroll: true }); } catch (e) { nameInput.focus(); } }, 320);
+      });
     }
 
     const expBtn = container.querySelector('#btn-export-data');
@@ -13822,12 +14291,18 @@ class WalioApp {
     if (iconEl) {
       iconEl.innerHTML = profile.avatar
         ? `<img src="${profile.avatar}" alt="Profile photo" />`
-        : `<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+        : `<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
     }
+
+    // The hero "remove photo" gem stays in the action row; it just goes inert.
     const removeBtn = document.getElementById('btn-remove-photo');
     if (removeBtn) {
-      removeBtn.style.display = profile.avatar ? '' : 'none';
+      removeBtn.classList.toggle('is-disabled', !profile.avatar);
     }
+
+    // Keep the header avatar and the hero completeness flag in sync.
+    this.updateHeaderProfile();
+    if (this.currentTab === 'profile') this.renderProfileTab();
   }
 
   // ================= MODALS & SHEETS =================
@@ -14116,5 +14591,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2ab93d17fd99723',t:'MTc4NjY2NDU1OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cb16fb1ed766dc',t:'MTc4Njk5NDk4OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cb66d69dabfeb0',t:'MTc4Njk5ODI2MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a315f4c74d2e75ad',t:'MTc4Nzc4MDAyMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a90ade6e123c73',t:'MTc4NjYzNzk3Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9421768fefbdc',t:'MTc4NjY0MDIzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a9751acb516627',t:'MTc4NjY0MjMyOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2ab93d17fd99723',t:'MTc4NjY2NDU1OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cb16fb1ed766dc',t:'MTc4Njk5NDk4OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2cb66d69dabfeb0',t:'MTc4Njk5ODI2MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a315f4c74d2e75ad',t:'MTc4Nzc4MDAyMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31679ccd99fe329',t:'MTc4Nzc4NTQ2OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
