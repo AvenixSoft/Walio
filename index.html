@@ -146,28 +146,16 @@ html {
 
 html, body {
   width: 100%;
-  height: 100vh;
-  height: 100dvh;
+  min-height: 100%;
+  min-height: 100dvh;
   font-family: var(--font-main);
   background: var(--bg-main);
   background-color: var(--bg-main);
   color: var(--text-primary);
   font-size: clamp(14px, 3.5vw, 15px);
   line-height: 1.5;
-  overflow: hidden;
+  overflow-x: hidden;
   user-select: none;
-}
-
-/* App-like: content scrolls internally — no visible scrollbars anywhere */
-* {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-*::-webkit-scrollbar {
-  display: none;
-  width: 0 !important;
-  height: 0 !important;
 }
 
 /* One continuous paint from status bar → header → hero */
@@ -188,7 +176,7 @@ body.immersive-blue[data-theme="dark"],
 
 /* Status-bar fill: same pixel color as everything above the fold */
 .ios-status-bleed {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -244,51 +232,38 @@ input, select, textarea {
 /* ================= DESKTOP MOBILE FRAME vs FULLSCREEN MOBILE ================= */
 .app-container {
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   justify-content: center;
-  align-items: stretch;
+  align-items: flex-start;
   background: transparent; /* let html/body immersive color show edge-to-edge on iPhone */
 }
 
 .mobile-frame {
   width: 100%;
   max-width: 100%;
-  height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
   background: var(--bg-main);
   position: relative;
   display: flex;
   flex-direction: column;
   padding-bottom: max(112px, calc(92px + env(safe-area-inset-bottom)));
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
-@media (min-width: 640px) and (min-height: 500px) {
+@media (min-width: 640px) {
   .app-container {
     padding: 24px 0;
   }
   .mobile-frame {
     max-width: 440px;
-    height: 100%;
+    min-height: 844px;
     border-radius: 46px;
     border: 1px solid var(--border-glass);
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.45);
     overflow: hidden;
-  }
-}
-
-/* Portrait lock — on phones held in landscape the app canvas rotates so the UI
-   always stays upright, like a native portrait-locked app. */
-@media (orientation: landscape) and (max-height: 500px) and (pointer: coarse) {
-  .app-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vh;
-    height: 100vw;
-    padding: 0;
-    transform-origin: top left;
-    transform: rotate(90deg) translateY(-100%);
   }
 }
 
@@ -611,13 +586,8 @@ input, select, textarea {
 /* ================= MAIN CONTENT VIEWS ================= */
 .main-content {
   flex: 1;
-  min-height: 0;
   padding: 16px clamp(14px, 4vw, 20px);
   width: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
 }
 
 .mobile-frame.home-immersive .main-content,
@@ -635,11 +605,6 @@ input, select, textarea {
 .mobile-frame.tools-immersive #tab-tools.tab-view.active {
   margin-top: 0;
   background: transparent;
-}
-
-/* Tools page can rely on a definite height for its full-bleed stage + overlay */
-.mobile-frame.tools-immersive #tab-tools.tab-view.active {
-  height: 100%;
 }
 
 /* No transform gap on first paint of immersive tabs */
@@ -666,7 +631,7 @@ input, select, textarea {
 
 /* ================= FLOATING PILL BOTTOM NAV (ref style) ================= */
 .bottom-nav {
-  position: absolute;
+  position: fixed;
   bottom: max(12px, env(safe-area-inset-bottom));
   left: 50%;
   transform: translateX(-50%);
@@ -737,7 +702,7 @@ input, select, textarea {
 .bottom-nav-fab:hover { transform: translateY(-2px) scale(1.03); }
 .bottom-nav-fab:active { transform: scale(0.92); }
 
-@media (min-width: 640px) and (min-height: 500px) {
+@media (min-width: 640px) {
   .bottom-nav {
     max-width: 412px;
   }
@@ -2358,7 +2323,7 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
 
 /* ================= MODAL SHEETS (IOS BOTTOM SHEET) ================= */
 .modal-overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -3627,7 +3592,7 @@ body.rtl-mode .market-rate-row:hover { transform: translateX(-2px); }
 .currency-fullscreen-board {
   display: none;
   width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
   color: var(--text-primary);
   background:
     radial-gradient(circle at 12% 2%, rgba(79,70,229,0.10), transparent 28%),
@@ -3642,14 +3607,14 @@ body.currency-board-mode {
 
 body.currency-board-mode .app-container {
   display: block;
-  height: 100%;
+  min-height: 100vh;
   padding: 0 !important;
 }
 
 body.currency-board-mode .mobile-frame {
   width: 100%;
   max-width: none !important;
-  height: 100%;
+  min-height: 100vh;
   padding-bottom: 0;
   overflow: visible;
   border: 0 !important;
@@ -3687,7 +3652,7 @@ body.currency-board-mode #tab-currency {
 body.currency-board-mode .currency-page-redesign,
 body.currency-board-mode .currency-fullscreen-board {
   width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
 }
 
 body.currency-board-mode .currency-fullscreen-board {
@@ -6241,7 +6206,7 @@ body.rtl-mode .wallet-card-2026::before { right: auto; left: -52px; }
   padding-bottom: 8px;
   position: relative;
   isolation: isolate;
-  min-height: 100%;
+  min-height: calc(100vh - 180px);
 }
 
 /* Blue stage — same DNA as Home / Wallets / Profile so the status bar always matches */
@@ -11662,8 +11627,7 @@ class ToolsManager {
     }
     if (backdrop) backdrop.classList.add('open');
     if (page) page.classList.add('tool-open');
-    const mainScrollerEl = document.querySelector('.main-content');
-    if (mainScrollerEl) mainScrollerEl.scrollTo(0, 0);
+    window.scrollTo(0, 0);
   }
 
   closeTool() {
@@ -13091,15 +13055,14 @@ class WalioApp {
       navFab.addEventListener('click', () => this.openTransactionModal());
     }
 
-    const mainScroller = document.querySelector('.main-content');
     const onHomeScroll = () => {
       const frame = document.querySelector('.mobile-frame');
       if (!frame) return;
-      const scrolled = (mainScroller ? mainScroller.scrollTop : 0) > 28;
+      const scrolled = (window.scrollY || document.documentElement.scrollTop || 0) > 28;
       const immersive = frame.classList.contains('home-immersive') || frame.classList.contains('wallets-immersive') || frame.classList.contains('profile-immersive') || frame.classList.contains('tools-immersive');
       frame.classList.toggle('home-scrolled', immersive && scrolled);
     };
-    if (mainScroller) mainScroller.addEventListener('scroll', onHomeScroll, { passive: true });
+    window.addEventListener('scroll', onHomeScroll, { passive: true });
     this._onHomeScroll = onHomeScroll;
 
     const notifyBtn = document.getElementById('header-btn-notify');
@@ -13220,8 +13183,7 @@ class WalioApp {
     }
 
     if (window.i18n) window.i18n.translateDOM();
-    const mainScrollerEl = document.querySelector('.main-content');
-    if (mainScrollerEl) mainScrollerEl.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     requestAnimationFrame(() => { if (this._onHomeScroll) this._onHomeScroll(); });
   }
 
@@ -14193,8 +14155,7 @@ class WalioApp {
     document.body.classList.toggle('currency-board-mode', this.currencyBoardMode);
 
     // The board is a distraction-free app view; returning restores the regular app shell.
-    const mainScrollerEl = document.querySelector('.main-content');
-    if (mainScrollerEl) mainScrollerEl.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     if (!this.currencyBoardMode) {
       window.requestAnimationFrame(() => {
         const openButton = document.getElementById('open-currency-board');
@@ -15118,5 +15079,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31ab9567ef82362',t:'MTc4NzgzMDAxNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
