@@ -8144,7 +8144,7 @@ body:not(.rtl-mode) #prof-input-user { text-align: left; }
 }
 
 /* ================= APP LOCK / SECURITY (PIN, Password, Face ID) ================= */
-body.app-locked > *:not(#app-lock-screen) {
+body.app-locked > *:not(#app-lock-screen):not(#walio-boot-loader) {
   filter: blur(18px) saturate(0.6);
   pointer-events: none;
   user-select: none;
@@ -9646,15 +9646,141 @@ body.toman-unit-hidden .home-market-values {
   body.toman-unit-hidden .market-rate-row {
     grid-template-columns: minmax(0, 1fr) minmax(80px, auto) 16px;
   }
-  body.toman-unit-hidden .market-rate-values,
+body.toman-unit-hidden .market-rate-values,
   body.toman-unit-hidden .home-market-values {
     min-width: 76px;
   }
 }
 
+/* ================= APP BOOT LOADER (simple circular spinner) =================
+ * Shown for ~1s on every app start / resume, but NEVER while the first-launch
+ * welcome screen is still pending.
+ */
+#walio-boot-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 130000;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background: var(--bg-main);
+  background-image: radial-gradient(120% 70% at 50% -10%, var(--accent-glow) 0%, transparent 62%);
+  font-family: var(--font-main);
+  color: var(--text-secondary);
+}
+
+html.walio-booting #walio-boot-loader,
+#walio-boot-loader.is-visible {
+  display: flex;
+}
+
+html.walio-booting body {
+  overflow: hidden !important;
+}
+
+#walio-boot-loader.is-hiding {
+  animation: walioBootLoaderOut .34s cubic-bezier(.4, 0, .2, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes walioBootLoaderOut {
+  from { opacity: 1; }
+  to   { opacity: 0; visibility: hidden; }
+}
+
+.walio-boot-spinner {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 3px solid var(--border-glass);
+  border-top-color: var(--accent-primary);
+  border-right-color: var(--accent-primary);
+  animation: walioBootSpin .8s linear infinite;
+}
+
+@keyframes walioBootSpin {
+  to { transform: rotate(360deg); }
+}
+
+.walio-boot-word {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  opacity: .75;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: walioBootPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes walioBootPulse {
+  0%, 100% { opacity: .55; }
+  50%      { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .walio-boot-spinner { animation-duration: 1.6s; }
+  .walio-boot-word { animation: none; opacity: .85; }
+}
+
+/* Auto (day/night) theme row: the manual dark switch is managed automatically */
+.profile-row.is-theme-locked .ios-switch {
+  opacity: .45;
+  pointer-events: none;
+}
+
 </style>
+<script>
+/*
+ * Runs before first paint:
+ *  1. Applies the stored theme (including the automatic day/night option)
+ *     so there is no light-to-dark flash.
+ *  2. Decides whether the boot loader should be painted at all — it must stay
+ *     hidden while the first-launch welcome screen is still pending.
+ */
+var WALIO_INTRO_KEY = 'walio_intro_seen_v2';
+
+function walioIsNightTime(date) {
+  var h = (date || new Date()).getHours();
+  // Night = 19:00 → 06:59
+  return h >= 19 || h < 7;
+}
+
+function walioResolveThemeMode(settings) {
+  var s = settings || {};
+  if (s.autoTheme === true) return walioIsNightTime() ? 'dark' : 'light';
+  return s.darkMode === 'dark' ? 'dark' : 'light';
+}
+
+function walioWelcomePending() {
+  try { return localStorage.getItem(WALIO_INTRO_KEY) !== 'true'; }
+  catch (e) { return true; }
+}
+
+(function () {
+  var settings = {};
+  try { settings = JSON.parse(localStorage.getItem('walio_settings') || '{}') || {}; } catch (e) {}
+  try {
+    document.documentElement.setAttribute('data-theme', walioResolveThemeMode(settings));
+  } catch (e) {}
+
+  // No loading spinner on the very first launch (welcome screen shows instead).
+  if (!walioWelcomePending()) {
+    document.documentElement.classList.add('walio-booting');
+  }
+})();
+</script>
 </head>
 <body>
+  <div id="walio-boot-loader" role="status" aria-live="polite" aria-label="Loading Walio">
+    <div class="walio-boot-spinner" aria-hidden="true"></div>
+    <span class="walio-boot-word">Walio</span>
+  </div>
+
   <div class="walio-welcome" id="walio-welcome-intro" aria-hidden="true" role="dialog" aria-label="Welcome to Walio">
     <div class="walio-w-bg" aria-hidden="true">
       <div class="walio-w-nebula"></div>
@@ -10440,6 +10566,9 @@ const translations = {
     profile_photo_hint: "JPG or PNG · resized automatically",
     profile_appearance: "Appearance",
     profile_theme_hint: "Switch between light and dark",
+    profile_theme_auto_locked: "Controlled automatically by the day/night option",
+    auto_theme: "Automatic (Day / Night)",
+    auto_theme_hint: "Light during the day, dark at night, based on your local time",
     show_toman_unit: "Show “Toman” beside prices",
     show_toman_unit_hint: "Turn off for clean, number-only IRT prices",
     profile_language_hint: "Interface language",
@@ -10840,6 +10969,9 @@ const translations = {
     profile_photo_hint: "فرمت JPG یا PNG · اندازه به‌صورت خودکار تنظیم می‌شود",
     profile_appearance: "ظاهر برنامه",
     profile_theme_hint: "جابه‌جایی بین حالت روشن و تاریک",
+    profile_theme_auto_locked: "به‌صورت خودکار توسط گزینه روز/شب کنترل می‌شود",
+    auto_theme: "خودکار (روز / شب)",
+    auto_theme_hint: "روزها روشن و شب‌ها تاریک، بر اساس ساعت محلی شما",
     show_toman_unit: "نمایش «تومان» کنار قیمت‌ها",
     show_toman_unit_hint: "با خاموش‌کردن، قیمت‌های تومانی فقط به‌صورت عددی نمایش داده می‌شوند",
     profile_language_hint: "زبان محیط برنامه",
@@ -11143,7 +11275,7 @@ class StorageManager {
 
   applyStoredTheme() {
     const s = this.getSettings();
-    document.documentElement.setAttribute('data-theme', s.darkMode === 'dark' ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', walioResolveThemeMode(s));
   }
 
   init() {
@@ -11184,10 +11316,17 @@ class StorageManager {
       currency: 'IRT'
     };
 
+    let existingSettings = {};
+    try { existingSettings = JSON.parse(localStorage.getItem(STORAGE_KEYS.SETTINGS) || '{}') || {}; } catch (e) {}
+
     const defaultSettings = {
       darkMode: 'light',
+      autoTheme: false,
       hideBalance: false,
-      useRealRates: true
+      useRealRates: true,
+      showTomanUnit: true,
+      // Never clobber preferences the user already picked (e.g. auto theme).
+      ...existingSettings
     };
 
     localStorage.setItem(STORAGE_KEYS.WALLETS, JSON.stringify(defaultWallets));
@@ -11415,6 +11554,8 @@ class StorageManager {
   getSettings() {
     const defaults = {
       darkMode: 'light',
+      // When true the theme follows the user's local day/night time.
+      autoTheme: false,
       hideBalance: false,
       useRealRates: true,
       // Show the Toman label by default; users can hide it from Profile.
@@ -14278,6 +14419,10 @@ class WalioApp {
     // On the very first launch, play the branded intro before onboarding.
     this.runFirstLaunchExperience();
 
+    // 1s circular loader on every start (skipped on the welcome screen).
+    this.runBootLoader(1000);
+    this.setupResumeLoader();
+
     if (window.currency) {
       // Live arzdigital.com prices + automatic periodic refresh
       window.currency.startAutoRefresh(120000);
@@ -14311,17 +14456,124 @@ class WalioApp {
 
   applyTheme() {
     const settings = window.storage.getSettings();
-    if (settings.darkMode === 'light') {
-      document.documentElement.setAttribute('data-theme', 'light');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'dark');
+    const mode = walioResolveThemeMode(settings);
+    document.documentElement.setAttribute('data-theme', mode);
+
+    // Keep the stored manual value in sync while auto mode drives the theme,
+    // so the Dark Mode switch always mirrors what is on screen.
+    if (settings.autoTheme === true && settings.darkMode !== mode) {
+      settings.darkMode = mode;
+      try { localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings)); } catch (e) {}
     }
+
+    this.scheduleAutoThemeWatcher();
+
     // Keep iOS status-bar theme-color aligned after theme flip
     const immersive = document.body.classList.contains('immersive-blue');
     const dark = document.documentElement.getAttribute('data-theme') === 'dark';
     const topColor = immersive ? (dark ? '#1E3A8A' : '#2563EB') : (dark ? '#0A0A0E' : '#F4F6FB');
     const themeMeta = document.getElementById('meta-theme-color');
     if (themeMeta) themeMeta.setAttribute('content', topColor);
+  }
+
+  /**
+   * While the automatic day/night option is on, re-evaluate the theme every
+   * minute (and whenever the app is brought back to the foreground) so the
+   * flip happens on its own at dawn/dusk without a reload.
+   */
+  scheduleAutoThemeWatcher() {
+    const settings = window.storage ? window.storage.getSettings() : {};
+    const auto = settings.autoTheme === true;
+
+    if (!auto) {
+      if (this._autoThemeTimer) {
+        clearInterval(this._autoThemeTimer);
+        this._autoThemeTimer = null;
+      }
+      return;
+    }
+
+    if (this._autoThemeTimer) return;
+    this._autoThemeTimer = setInterval(() => {
+      const s = window.storage.getSettings();
+      if (s.autoTheme !== true) return;
+      const expected = walioResolveThemeMode(s);
+      if (document.documentElement.getAttribute('data-theme') !== expected) {
+        this.applyTheme();
+        this.updateHeaderThemeIcon();
+        const toggle = document.getElementById('setting-dark-toggle');
+        if (toggle) toggle.checked = expected === 'dark';
+      }
+    }, 60000);
+  }
+
+  /* ---------------- boot loader ---------------- */
+  /**
+   * Simple 1-second circular loader on every start/resume.
+   * Skipped entirely while the first-launch welcome screen is pending.
+   */
+  runBootLoader(duration = 1000) {
+    const loader = document.getElementById('walio-boot-loader');
+    const html = document.documentElement;
+
+    if (!loader) {
+      html.classList.remove('walio-booting');
+      return;
+    }
+
+    // First launch → welcome screen owns the screen, no loader.
+    if (this.isWelcomePending()) {
+      html.classList.remove('walio-booting');
+      loader.classList.remove('is-visible', 'is-hiding');
+      return;
+    }
+
+    loader.classList.remove('is-hiding');
+    loader.classList.add('is-visible');
+    html.classList.add('walio-booting');
+
+    if (this._bootLoaderTimer) clearTimeout(this._bootLoaderTimer);
+    this._bootLoaderTimer = window.setTimeout(() => this.hideBootLoader(), duration);
+  }
+
+  hideBootLoader() {
+    const loader = document.getElementById('walio-boot-loader');
+    document.documentElement.classList.remove('walio-booting');
+    if (!loader) return;
+    loader.classList.add('is-hiding');
+    window.setTimeout(() => {
+      loader.classList.remove('is-visible', 'is-hiding');
+    }, 340);
+  }
+
+  /**
+   * Replay the loader when the user comes back to the app (tab/PWA resume)
+   * after having been away for a moment.
+   */
+  setupResumeLoader() {
+    const AWAY_THRESHOLD = 800; // ms away before a resume counts as a re-entry
+    let hiddenAt = 0;
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        hiddenAt = Date.now();
+      } else if (hiddenAt && Date.now() - hiddenAt >= AWAY_THRESHOLD) {
+        hiddenAt = 0;
+        // Auto theme may need to change if a lot of time passed.
+        this.applyTheme();
+        this.updateHeaderThemeIcon();
+        this.runBootLoader(1000);
+      }
+    });
+
+    // Back/forward cache restore (common on iOS PWAs)
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) {
+        this.applyTheme();
+        this.updateHeaderThemeIcon();
+        this.runBootLoader(1000);
+      }
+    });
   }
 
   applyPriceUnitPreference() {
@@ -14396,10 +14648,14 @@ class WalioApp {
     if (themeBtn) {
       themeBtn.addEventListener('click', () => {
         const settings = window.storage.getSettings();
-        settings.darkMode = settings.darkMode === 'dark' ? 'light' : 'dark';
+        const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+        settings.darkMode = current === 'dark' ? 'light' : 'dark';
+        // A manual flip takes over from the automatic day/night schedule.
+        settings.autoTheme = false;
         window.storage.saveSettings(settings);
         this.applyTheme();
         this.updateHeaderThemeIcon();
+        if (this.currentTab === 'profile') this.refreshCurrentTab();
       });
     }
     this.updateHeaderThemeIcon();
@@ -14408,8 +14664,8 @@ class WalioApp {
   updateHeaderThemeIcon() {
     const holder = document.getElementById('header-theme-icon');
     if (!holder) return;
-    const settings = window.storage ? window.storage.getSettings() : { darkMode: 'light' };
-    holder.innerHTML = settings.darkMode === 'dark'
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    holder.innerHTML = isDark
       ? `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>`
       : `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
   }
@@ -15748,16 +16004,30 @@ class WalioApp {
               <span class="profile-section-count">${isFa ? t('lang_name_fa') : t('lang_name_en')}</span>
             </div>
             <div class="profile-group-list">
-              <div class="profile-row" data-tone="indigo">
+              <div class="profile-row ${settings.autoTheme === true ? 'is-theme-locked' : ''}" data-tone="indigo">
                 <span class="profile-row-icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
                 </span>
                 <span class="profile-row-copy">
                   <strong data-i18n="dark_mode">${t('dark_mode')}</strong>
-                  <span data-i18n="profile_theme_hint">${t('profile_theme_hint')}</span>
+                  <span data-i18n="${settings.autoTheme === true ? 'profile_theme_auto_locked' : 'profile_theme_hint'}">${t(settings.autoTheme === true ? 'profile_theme_auto_locked' : 'profile_theme_hint')}</span>
                 </span>
                 <label class="ios-switch" aria-label="${t('dark_mode')}">
-                  <input type="checkbox" id="setting-dark-toggle" ${settings.darkMode === 'dark' ? 'checked' : ''} />
+                  <input type="checkbox" id="setting-dark-toggle" ${document.documentElement.getAttribute('data-theme') === 'dark' ? 'checked' : ''} ${settings.autoTheme === true ? 'disabled' : ''} />
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+
+              <div class="profile-row" data-tone="amber">
+                <span class="profile-row-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/><path d="M16 12a4 4 0 1 1-5.4-3.75A5 5 0 0 0 16 12z"/></svg>
+                </span>
+                <span class="profile-row-copy">
+                  <strong data-i18n="auto_theme">${t('auto_theme')}</strong>
+                  <span data-i18n="auto_theme_hint">${t('auto_theme_hint')}</span>
+                </span>
+                <label class="ios-switch" aria-label="${t('auto_theme')}">
+                  <input type="checkbox" id="setting-auto-theme-toggle" ${settings.autoTheme === true ? 'checked' : ''} />
                   <span class="switch-slider"></span>
                 </label>
               </div>
@@ -15899,11 +16169,33 @@ class WalioApp {
     const darkToggle = container.querySelector('#setting-dark-toggle');
     if (darkToggle) {
       darkToggle.addEventListener('change', (e) => {
-        const mode = e.target.checked ? 'dark' : 'light';
-        settings.darkMode = mode;
-        window.storage.saveSettings(settings);
+        const latest = window.storage.getSettings();
+        if (latest.autoTheme === true) {
+          // Auto mode owns the theme; keep the switch in sync and bail out.
+          e.target.checked = document.documentElement.getAttribute('data-theme') === 'dark';
+          return;
+        }
+        latest.darkMode = e.target.checked ? 'dark' : 'light';
+        window.storage.saveSettings(latest);
         this.applyTheme();
         this.updateHeaderThemeIcon();
+      });
+    }
+
+    // --- Automatic day/night theme ---
+    const autoThemeToggle = container.querySelector('#setting-auto-theme-toggle');
+    if (autoThemeToggle) {
+      autoThemeToggle.addEventListener('change', (e) => {
+        const latest = window.storage.getSettings();
+        latest.autoTheme = e.target.checked;
+        if (latest.autoTheme) {
+          // Snap immediately to whatever the current local time implies.
+          latest.darkMode = walioIsNightTime() ? 'dark' : 'light';
+        }
+        window.storage.saveSettings(latest);
+        this.applyTheme();
+        this.updateHeaderThemeIcon();
+        this.renderProfileTab();
       });
     }
 
@@ -16195,17 +16487,25 @@ class WalioApp {
     }
   }
 
-  runFirstLaunchExperience() {
-    const introKey = 'walio_intro_seen_v2';
-    let shouldShowIntro = true;
+  /**
+   * Returns true when the welcome screen still has to be shown.
+   * The flag is ONLY written once the user finishes the welcome flow
+   * (Get Started / Sign In → Enter Walio), so closing the app on the
+   * welcome screen brings it back on the next launch.
+   */
+  isWelcomePending() {
     try {
-      shouldShowIntro = localStorage.getItem(introKey) !== 'true';
-    } catch (e) { /* Show it when storage is unavailable. */ }
+      return localStorage.getItem(WALIO_INTRO_KEY) !== 'true';
+    } catch (e) {
+      return true; // Show it when storage is unavailable.
+    }
+  }
 
-    if (!shouldShowIntro) return;
-
-    // Mark it as seen as soon as the screen opens, so a refresh cannot replay it.
-    try { localStorage.setItem(introKey, 'true'); } catch (e) {}
+  runFirstLaunchExperience() {
+    if (!this.isWelcomePending()) return;
+    // NOTE: the "seen" flag is intentionally NOT written here.
+    // It is written in finishWelcome(), i.e. only after the user
+    // taps "Get Started" or completes the profile step.
     this.showWelcomeScreen();
   }
 
@@ -16393,6 +16693,9 @@ class WalioApp {
   }
 
   finishWelcome() {
+    // Persist "welcome completed" only now — this is the single place the
+    // intro is marked as seen, so it survives reloads/app closes correctly.
+    try { localStorage.setItem(WALIO_INTRO_KEY, 'true'); } catch (e) {}
     try { window.storage.setOnboardingCompleted(true); } catch (e) {}
     const screen = document.getElementById('walio-welcome-intro');
     document.body.classList.remove('walio-intro-open');
@@ -16514,5 +16817,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31ab9567ef82362',t:'MTc4NzgzMDAxNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31bbbd58fd9a895',t:'MTc4Nzg0MDYwMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31ab9567ef82362',t:'MTc4NzgzMDAxNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31bbbd58fd9a895',t:'MTc4Nzg0MDYwMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a323cc45cd40d93d',t:'MTc4NzkyNTE2MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
