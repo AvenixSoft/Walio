@@ -27,7 +27,7 @@
  * Crisp Vector SVG Icons Used for All System UI, Navigation, Tools, and Controls.
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
+/* Fonts: offline system stack (SF Pro / SF Arabic on iOS) — no network needed. */
 
 /* ================= THEME CSS VARIABLES ================= */
 :root,
@@ -14584,7 +14584,34 @@ class WalioApp {
   registerServiceWorker() {
     if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
+        navigator.serviceWorker.register('./sw.js').then((reg) => {
+          // one-time "ready for offline" hint (first install only)
+          let shown = false;
+          try { shown = !!sessionStorage.getItem('walio_sw_ready'); } catch (e) {}
+          if (shown) return;
+          const announce = () => {
+            try { sessionStorage.setItem('walio_sw_ready', '1'); } catch (e) {}
+            try {
+              const t = document.createElement('div');
+              t.setAttribute('dir', 'auto');
+              t.textContent = '\u2713 \u0622\u0645\u0627\u062F\u0647 \u0628\u0631\u0627\u06CC \u0627\u0633\u062A\u0641\u0627\u062F\u0647 \u0622\u0641\u0644\u0627\u06CC\u0646 \u0634\u062F';
+              t.style.cssText = 'position:fixed;left:50%;bottom:100px;transform:translateX(-50%);z-index:99999;background:rgba(16,185,129,0.96);color:#fff;padding:10px 18px;border-radius:14px;font:600 13px -apple-system,system-ui,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,0.28);pointer-events:none;white-space:nowrap;max-width:88vw;overflow:hidden;text-overflow:ellipsis;transition:opacity .4s';
+              document.body.appendChild(t);
+              setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 500); }, 2800);
+            } catch (e) {}
+          };
+          const sw = reg.installing || reg.waiting;
+          if (sw) {
+            sw.addEventListener('statechange', () => {
+              if (sw.state === 'activated' && !navigator.serviceWorker.controller) announce();
+            });
+          } else if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.addEventListener('controllerchange', function once() {
+              navigator.serviceWorker.removeEventListener('controllerchange', once);
+              announce();
+            });
+          }
+        }).catch(() => {});
       });
     }
   }
@@ -16817,5 +16844,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31ab9567ef82362',t:'MTc4NzgzMDAxNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31bbbd58fd9a895',t:'MTc4Nzg0MDYwMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a323cc45cd40d93d',t:'MTc4NzkyNTE2MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
