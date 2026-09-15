@@ -679,11 +679,11 @@ input, select, textarea {
 /* ================= FLOATING PILL BOTTOM NAV (ref style) ================= */
 .bottom-nav {
   position: fixed;
-  bottom: max(12px, env(safe-area-inset-bottom));
+  bottom: max(14px, env(safe-area-inset-bottom));
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - 20px);
-  max-width: 416px;
+  max-width: 428px;
   height: auto;
   padding: 0;
   background: transparent;
@@ -692,7 +692,7 @@ input, select, textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 9px;
   z-index: 100;
   box-shadow: none;
   pointer-events: none;
@@ -702,37 +702,37 @@ input, select, textarea {
   pointer-events: auto;
   flex: 1 1 auto;
   min-width: 0;
-  max-width: 350px;
-  height: 60px;
-  padding: 5px;
+  max-width: 362px;
+  height: 65px;
+  padding: 6px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2px;
-  background: rgba(255, 255, 255, 0.92);
+  gap: 3px;
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(28px) saturate(180%);
   -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.75);
   border-radius: 999px;
   box-shadow:
-    0 14px 34px rgba(15, 23, 42, 0.14),
+    0 16px 36px rgba(15, 23, 42, 0.14),
     0 2px 8px rgba(15, 23, 42, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-[data-theme="dark"] .bottom-nav-pill {
-  background: rgba(22, 22, 32, 0.88);
-  border-color: rgba(255, 255, 255, 0.10);
+[data-theme=dark] .bottom-nav-pill {
+  background: rgba(22, 22, 32, 0.90);
+  border-color: rgba(255, 255, 255, 0.12);
   box-shadow:
-    0 16px 36px rgba(0, 0, 0, 0.45),
+    0 18px 38px rgba(0, 0, 0, 0.48),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .bottom-nav-fab {
   pointer-events: auto;
-  width: 52px;
-  height: 52px;
-  flex: 0 0 52px;
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
   display: grid;
   place-items: center;
   color: #fff;
@@ -746,12 +746,17 @@ input, select, textarea {
   transition: var(--transition-spring);
 }
 
+.bottom-nav-fab svg {
+  width: 24px;
+  height: 24px;
+}
+
 .bottom-nav-fab:hover { transform: translateY(-2px) scale(1.03); }
 .bottom-nav-fab:active { transform: scale(0.92); }
 
 @media (min-width: 640px) {
   .bottom-nav {
-    max-width: 416px;
+    max-width: 428px;
   }
 }
 
@@ -763,9 +768,9 @@ input, select, textarea {
   justify-content: center;
   gap: 0;
   flex: 1 1 0;
-  min-width: 36px;
-  max-width: 54px;
-  height: 48px;
+  min-width: 38px;
+  max-width: 58px;
+  height: 53px;
   margin: 0;
   padding: 0;
   color: #64748B;
@@ -780,13 +785,13 @@ input, select, textarea {
   overflow: hidden;
 }
 
-[data-theme="dark"] .bottom-nav-item {
+[data-theme=dark] .bottom-nav-item {
   color: #94A3B8;
 }
 
 .bottom-nav-ico {
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -796,8 +801,8 @@ input, select, textarea {
 }
 
 .bottom-nav-item svg {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   stroke: currentColor;
   display: block;
   flex-shrink: 0;
@@ -809,34 +814,35 @@ input, select, textarea {
   opacity: 0;
   overflow: hidden;
   white-space: nowrap;
-  font-size: 11.5px;
-  font-weight: 700;
+  font-size: 12.5px;
+  font-weight: 750;
   letter-spacing: -0.15px;
-  line-height: 1.1;
+  line-height: 1.15;
   transform: scale(0.94);
   transition: max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   margin: 0;
 }
 
-/* Active = white pill chip with label (compact & content-sized) */
+/* Active = white pill chip with label (compact & proportionate) */
 .bottom-nav-item.active {
   flex: 0 0 auto;
-  max-width: 118px;
+  max-width: 126px;
   min-width: 0;
+  height: 53px;
   color: #0F172A;
   background: #fff;
   font-weight: 800;
   box-shadow:
-    0 6px 16px rgba(15, 23, 42, 0.10),
+    0 8px 18px rgba(15, 23, 42, 0.10),
     0 1px 3px rgba(15, 23, 42, 0.06);
-  gap: 5px;
-  padding: 0 10px 0 8px;
+  gap: 6px;
+  padding: 0 12px 0 10px;
 }
 
-[data-theme="dark"] .bottom-nav-item.active {
+[data-theme=dark] .bottom-nav-item.active {
   color: #F8FAFC;
-  background: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.13);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.26);
 }
 
 .bottom-nav-item.active .bottom-nav-ico {
@@ -844,12 +850,12 @@ input, select, textarea {
   background: transparent;
 }
 
-[data-theme="dark"] .bottom-nav-item.active .bottom-nav-ico {
+[data-theme=dark] .bottom-nav-item.active .bottom-nav-ico {
   color: #F8FAFC;
 }
 
 .bottom-nav-item.active .bottom-nav-label {
-  max-width: 84px;
+  max-width: 90px;
   opacity: 1;
   transform: scale(1);
   margin: 0;
@@ -860,7 +866,7 @@ input, select, textarea {
   background: rgba(15, 23, 42, 0.04);
 }
 
-[data-theme="dark"] .bottom-nav-item:not(.active):hover {
+[data-theme=dark] .bottom-nav-item:not(.active):hover {
   color: #F8FAFC;
   background: rgba(255, 255, 255, 0.06);
 }
@@ -868,47 +874,61 @@ input, select, textarea {
 .bottom-nav-item:active { transform: scale(.94); }
 
 body.rtl-mode .bottom-nav-item.active {
-  padding: 0 8px 0 10px;
+  padding: 0 10px 0 12px;
 }
 
 @media (max-width: 380px) {
   .bottom-nav {
     width: calc(100% - 12px);
-    gap: 6px;
+    gap: 7px;
+    bottom: max(10px, env(safe-area-inset-bottom));
   }
   .bottom-nav-pill {
-    height: 56px;
-    padding: 4px;
+    height: 60px;
+    padding: 5px;
     gap: 2px;
   }
   .bottom-nav-fab {
-    width: 48px;
-    height: 48px;
-    flex: 0 0 48px;
+    width: 52px;
+    height: 52px;
+    flex: 0 0 52px;
+  }
+  .bottom-nav-fab svg {
+    width: 22px;
+    height: 22px;
   }
   .bottom-nav-item {
-    min-width: 30px;
-    height: 44px;
+    min-width: 34px;
+    height: 50px;
+  }
+  .bottom-nav-ico {
+    width: 24px;
+    height: 24px;
+  }
+  .bottom-nav-item svg {
+    width: 21px;
+    height: 21px;
   }
   .bottom-nav-item.active {
-    padding: 0 8px 0 7px;
-    gap: 4px;
-    max-width: 110px;
+    padding: 0 10px 0 8px;
+    gap: 5px;
+    max-width: 118px;
+    height: 50px;
   }
   body.rtl-mode .bottom-nav-item.active {
-    padding: 0 7px 0 8px;
+    padding: 0 8px 0 10px;
   }
   .bottom-nav-label {
-    font-size: 11px;
+    font-size: 12px;
   }
   .bottom-nav-item.active .bottom-nav-label {
-    max-width: 78px;
+    max-width: 84px;
   }
 }
 
 /* Extra room for floating pill + FAB */
 .mobile-frame {
-  padding-bottom: max(112px, calc(92px + env(safe-area-inset-bottom))) !important;
+  padding-bottom: max(118px, calc(98px + env(safe-area-inset-bottom))) !important;
 }
 
 /* ================= HERO TOTAL BALANCE CARD ================= */
@@ -17132,5 +17152,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31ab9567ef82362',t:'MTc4NzgzMDAxNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31bbbd58fd9a895',t:'MTc4Nzg0MDYwMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a323cc45cd40d93d',t:'MTc4NzkyNTE2MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3b73dd5bcb999fb',t:'MTc4OTQ3MTIyMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3b7aa985d9df3c2',t:'MTc4OTQ3NTY3NA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31ab9567ef82362',t:'MTc4NzgzMDAxNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31bbbd58fd9a895',t:'MTc4Nzg0MDYwMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a323cc45cd40d93d',t:'MTc4NzkyNTE2MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3b73dd5bcb999fb',t:'MTc4OTQ3MTIyMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3b7b9b30cb6d64d',t:'MTc4OTQ3NjI5Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
