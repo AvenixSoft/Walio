@@ -222,7 +222,8 @@ body.immersive-blue .ios-status-bleed,
 .mobile-frame.home-immersive .ios-status-bleed,
 .mobile-frame.wallets-immersive .ios-status-bleed,
 .mobile-frame.profile-immersive .ios-status-bleed,
-.mobile-frame.tools-immersive .ios-status-bleed {
+.mobile-frame.tools-immersive .ios-status-bleed,
+.mobile-frame.currency-immersive .ios-status-bleed {
   background: #2563EB !important;
 }
 
@@ -230,7 +231,8 @@ body.immersive-blue .ios-status-bleed,
 [data-theme="dark"] .mobile-frame.home-immersive .ios-status-bleed,
 [data-theme="dark"] .mobile-frame.profile-immersive .ios-status-bleed,
 [data-theme="dark"] .mobile-frame.wallets-immersive .ios-status-bleed,
-[data-theme="dark"] .mobile-frame.tools-immersive .ios-status-bleed {
+[data-theme="dark"] .mobile-frame.tools-immersive .ios-status-bleed,
+[data-theme="dark"] .mobile-frame.currency-immersive .ios-status-bleed {
   background: #1E3A8A !important;
 }
 
@@ -319,7 +321,8 @@ input, select, textarea {
 .mobile-frame.home-immersive .app-header,
 .mobile-frame.wallets-immersive .app-header,
 .mobile-frame.profile-immersive .app-header,
-.mobile-frame.tools-immersive .app-header {
+.mobile-frame.tools-immersive .app-header,
+.mobile-frame.currency-immersive .app-header {
   background: #2563EB !important;
   background-color: #2563EB !important;
   background-image: none !important;
@@ -340,7 +343,9 @@ input, select, textarea {
 .mobile-frame.profile-immersive .app-header::before,
 .mobile-frame.profile-immersive .app-header::after,
 .mobile-frame.tools-immersive .app-header::before,
-.mobile-frame.tools-immersive .app-header::after {
+.mobile-frame.tools-immersive .app-header::after,
+.mobile-frame.currency-immersive .app-header::before,
+.mobile-frame.currency-immersive .app-header::after {
   content: none !important;
   display: none !important;
   border: 0 !important;
@@ -351,7 +356,8 @@ input, select, textarea {
 [data-theme="dark"] .mobile-frame.home-immersive .app-header,
 [data-theme="dark"] .mobile-frame.wallets-immersive .app-header,
 [data-theme="dark"] .mobile-frame.profile-immersive .app-header,
-[data-theme="dark"] .mobile-frame.tools-immersive .app-header {
+[data-theme="dark"] .mobile-frame.tools-immersive .app-header,
+[data-theme="dark"] .mobile-frame.currency-immersive .app-header {
   background: #1E3A8A !important;
   background-color: #1E3A8A !important;
   background-image: none !important;
@@ -361,7 +367,8 @@ input, select, textarea {
 .mobile-frame.home-immersive.home-scrolled .app-header,
 .mobile-frame.wallets-immersive.home-scrolled .app-header,
 .mobile-frame.profile-immersive.home-scrolled .app-header,
-.mobile-frame.tools-immersive.home-scrolled .app-header {
+.mobile-frame.tools-immersive.home-scrolled .app-header,
+.mobile-frame.currency-immersive.home-scrolled .app-header {
   background: #2563EB !important;
   background-color: #2563EB !important;
   background-image: none !important;
@@ -374,7 +381,8 @@ input, select, textarea {
 [data-theme="dark"] .mobile-frame.home-immersive.home-scrolled .app-header,
 [data-theme="dark"] .mobile-frame.wallets-immersive.home-scrolled .app-header,
 [data-theme="dark"] .mobile-frame.profile-immersive.home-scrolled .app-header,
-[data-theme="dark"] .mobile-frame.tools-immersive.home-scrolled .app-header {
+[data-theme="dark"] .mobile-frame.tools-immersive.home-scrolled .app-header,
+[data-theme="dark"] .mobile-frame.currency-immersive.home-scrolled .app-header {
   background: #1E3A8A !important;
   background-color: #1E3A8A !important;
   background-image: none !important;
@@ -534,7 +542,8 @@ input, select, textarea {
 
 .mobile-frame.wallets-immersive .header-greeting-text,
 .mobile-frame.profile-immersive .header-greeting-text,
-.mobile-frame.tools-immersive .header-greeting-text {
+.mobile-frame.tools-immersive .header-greeting-text,
+.mobile-frame.currency-immersive .header-greeting-text {
   color: rgba(255, 255, 255, 0.78);
   text-transform: none;
   letter-spacing: 0;
@@ -544,7 +553,8 @@ input, select, textarea {
 
 .mobile-frame.wallets-immersive .header-user-name,
 .mobile-frame.profile-immersive .header-user-name,
-.mobile-frame.tools-immersive .header-user-name {
+.mobile-frame.tools-immersive .header-user-name,
+.mobile-frame.currency-immersive .header-user-name {
   color: #fff;
   font-size: clamp(17px, 4.8vw, 20px);
   font-weight: 800;
@@ -552,7 +562,8 @@ input, select, textarea {
 
 .mobile-frame.wallets-immersive .header-icon-btn,
 .mobile-frame.profile-immersive .header-icon-btn,
-.mobile-frame.tools-immersive .header-icon-btn {
+.mobile-frame.tools-immersive .header-icon-btn,
+.mobile-frame.currency-immersive .header-icon-btn {
   color: #fff;
   background: rgba(255, 255, 255, 0.18);
   border-color: rgba(255, 255, 255, 0.28);
@@ -565,20 +576,23 @@ input, select, textarea {
 
 .mobile-frame.wallets-immersive .header-icon-btn:hover,
 .mobile-frame.profile-immersive .header-icon-btn:hover,
-.mobile-frame.tools-immersive .header-icon-btn:hover {
+.mobile-frame.tools-immersive .header-icon-btn:hover,
+.mobile-frame.currency-immersive .header-icon-btn:hover {
   color: #fff;
   background: rgba(255, 255, 255, 0.26);
 }
 
 .mobile-frame.wallets-immersive .header-user-avatar,
 .mobile-frame.profile-immersive .header-user-avatar,
-.mobile-frame.tools-immersive .header-user-avatar {
+.mobile-frame.tools-immersive .header-user-avatar,
+.mobile-frame.currency-immersive .header-user-avatar {
   box-shadow: 0 4px 16px rgba(15, 40, 120, 0.25), 0 0 0 3px rgba(255,255,255,0.28);
 }
 
 .mobile-frame.wallets-immersive .header-bell-dot,
 .mobile-frame.profile-immersive .header-bell-dot,
-.mobile-frame.tools-immersive .header-bell-dot {
+.mobile-frame.tools-immersive .header-bell-dot,
+.mobile-frame.currency-immersive .header-bell-dot {
   border-color: rgba(37, 99, 235, 0.55);
 }
 
@@ -586,7 +600,8 @@ input, select, textarea {
 
 .mobile-frame.wallets-immersive,
 .mobile-frame.profile-immersive,
-.mobile-frame.tools-immersive {
+.mobile-frame.tools-immersive,
+.mobile-frame.currency-immersive {
   background: linear-gradient(
     180deg,
     var(--immersive-top) 0px,
@@ -598,7 +613,8 @@ input, select, textarea {
 
 [data-theme="dark"] .mobile-frame.wallets-immersive,
 [data-theme="dark"] .mobile-frame.profile-immersive,
-[data-theme="dark"] .mobile-frame.tools-immersive {
+[data-theme="dark"] .mobile-frame.tools-immersive,
+[data-theme="dark"] .mobile-frame.currency-immersive {
   background: linear-gradient(
     180deg,
     var(--immersive-top-dark) 0px,
@@ -621,7 +637,8 @@ input, select, textarea {
 .mobile-frame.home-immersive .main-content,
 .mobile-frame.wallets-immersive .main-content,
 .mobile-frame.profile-immersive .main-content,
-.mobile-frame.tools-immersive .main-content {
+.mobile-frame.tools-immersive .main-content,
+.mobile-frame.currency-immersive .main-content {
   padding-top: 0;
   margin-top: 0;
   background: transparent;
@@ -630,7 +647,8 @@ input, select, textarea {
 .mobile-frame.home-immersive #tab-home.tab-view.active,
 .mobile-frame.wallets-immersive #tab-wallets.tab-view.active,
 .mobile-frame.profile-immersive #tab-profile.tab-view.active,
-.mobile-frame.tools-immersive #tab-tools.tab-view.active {
+.mobile-frame.tools-immersive #tab-tools.tab-view.active,
+.mobile-frame.currency-immersive #tab-currency.tab-view.active {
   margin-top: 0;
   background: transparent;
 }
@@ -639,7 +657,8 @@ input, select, textarea {
 .mobile-frame.home-immersive #tab-home.tab-view,
 .mobile-frame.wallets-immersive #tab-wallets.tab-view,
 .mobile-frame.profile-immersive #tab-profile.tab-view,
-.mobile-frame.tools-immersive #tab-tools.tab-view {
+.mobile-frame.tools-immersive #tab-tools.tab-view,
+.mobile-frame.currency-immersive #tab-currency.tab-view {
   transform: none;
 }
 
@@ -2637,124 +2656,146 @@ body.rtl-mode .ios-switch input:checked + .switch-slider:before {
   text-align: center;
 }
 
-/* ================= CURRENCY PAGE — 2026 REDESIGN ================= */
-.currency-page-redesign {
-  --currency-grid: rgba(100, 116, 139, 0.16);
-  --currency-hero-text: #F8FAFC;
-  --currency-hero-muted: rgba(226, 232, 240, 0.70);
-  --currency-hero-line: rgba(255, 255, 255, 0.13);
+/* ================= CURRENCY PAGE — 2026 IMMERSIVE REDESIGN (matches Home / Wallets / Tools / Profile) ================= */
+.currency-page-2026 {
   width: 100%;
-}
-
-.currency-page-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 14px;
-  margin-bottom: 16px;
-}
-
-.currency-page-title-wrap {
-  min-width: 0;
-}
-
-.currency-page-header .page-title {
-  font-size: clamp(22px, 6vw, 27px);
-  letter-spacing: -0.7px;
-}
-
-.currency-page-header .page-subtitle {
-  max-width: 310px;
-  line-height: 1.65;
-}
-
-/* Premium market hero */
-.currency-market-hero {
+  padding-bottom: 12px;
   position: relative;
   isolation: isolate;
-  overflow: hidden;
-  min-height: 294px;
-  margin-bottom: 16px;
-  padding: 17px;
-  border-radius: 26px;
-  color: var(--currency-hero-text);
-  background:
-    radial-gradient(circle at 86% 10%, rgba(56, 189, 248, 0.30), transparent 34%),
-    radial-gradient(circle at 8% 86%, rgba(99, 102, 241, 0.30), transparent 38%),
-    linear-gradient(145deg, #0F172A 0%, #172554 48%, #1E1B4B 100%);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 20px 44px rgba(30, 41, 89, 0.28), inset 0 1px 0 rgba(255,255,255,0.15);
 }
 
-.currency-market-hero::before {
+/* Blue stage — identical DNA to Home, Wallets, Tools and Profile */
+.currency-page-2026::before {
   content: '';
   position: absolute;
-  z-index: -1;
+  left: 50%;
+  top: calc(-1 * (env(safe-area-inset-top, 0px) + 160px));
+  transform: translateX(-50%);
+  width: 100vw;
+  max-width: 440px;
+  height: calc(490px + env(safe-area-inset-top, 0px));
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    var(--immersive-top) 0%,
+    var(--immersive-top) 72%,
+    var(--bg-main) 100%
+  );
+  border-radius: 0;
+  box-shadow: none;
+}
+
+[data-theme="dark"] .currency-page-2026::before {
+  background: linear-gradient(
+    180deg,
+    var(--immersive-top-dark) 0%,
+    var(--immersive-top-dark) 72%,
+    var(--bg-main) 100%
+  );
+}
+
+.currency-page-2026 > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Currency Hero Glass Card (Identical construction to .wallets-hero / .tools-hero / .profile-hero) ---- */
+.currency-hero {
+  position: relative;
+  isolation: isolate;
+  margin: 4px 2px 8px;
+  padding: 16px 16px 20px;
+  overflow: hidden;
+  color: #fff;
+  background:
+    linear-gradient(160deg,
+      rgba(255,255,255,0.20) 0%,
+      rgba(255,255,255,0.08) 42%,
+      rgba(255,255,255,0.04) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 28px;
+  box-shadow:
+    0 20px 44px rgba(15, 40, 120, 0.22),
+    0 1px 0 rgba(255,255,255,0.28) inset,
+    0 -1px 0 rgba(15, 40, 120, 0.08) inset;
+  backdrop-filter: blur(22px) saturate(165%);
+  -webkit-backdrop-filter: blur(22px) saturate(165%);
+}
+
+.currency-hero::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: -70px;
+  right: -50px;
   width: 180px;
   height: 180px;
-  top: 40px;
-  right: -92px;
-  border: 1px solid rgba(255,255,255,0.09);
   border-radius: 50%;
-  box-shadow: 0 0 0 28px rgba(255,255,255,0.025), 0 0 0 58px rgba(255,255,255,0.018);
+  border: 1.5px solid rgba(255,255,255,0.18);
+  box-shadow:
+    0 0 0 24px rgba(255,255,255,0.035),
+    0 0 0 50px rgba(255,255,255,0.02);
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.16), transparent 55%);
+  pointer-events: none;
 }
 
-body.rtl-mode .currency-market-hero::before {
+body.rtl-mode .currency-hero::before {
   right: auto;
-  left: -92px;
+  left: -50px;
 }
 
-.currency-market-hero::after {
+.currency-hero::after {
   content: '';
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   inset: 0;
-  opacity: 0.24;
-  background-image: radial-gradient(rgba(255,255,255,0.34) 0.7px, transparent 0.7px);
-  background-size: 17px 17px;
-  mask-image: linear-gradient(to bottom, black, transparent 72%);
-  -webkit-mask-image: linear-gradient(to bottom, black, transparent 72%);
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 100%, rgba(255,255,255,0.12), transparent 55%),
+    radial-gradient(rgba(255,255,255,0.4) 0.55px, transparent 0.55px);
+  background-size: auto, 15px 15px;
+  opacity: 0.75;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
 }
 
-.market-hero-top,
-.market-hero-identity,
-.market-hero-value-row,
-.market-chart-footer {
+.currency-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.currency-hero-label-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
+  padding: 0 8px;
 }
 
-.market-hero-top {
-  position: relative;
-  z-index: 2;
-  margin-bottom: 16px;
+.currency-hero-label {
+  color: rgba(255,255,255,0.78);
+  font-size: 13px;
+  font-weight: 650;
 }
 
-.market-status-chip {
+.currency-hero-status-pill {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  min-width: 0;
-  padding: 7px 10px;
-  color: rgba(255,255,255,0.86);
-  background: rgba(255,255,255,0.09);
-  border: 1px solid rgba(255,255,255,0.12);
+  gap: 6px;
+  min-height: 27px;
+  padding: 0 11px;
+  color: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.16);
   border-radius: 999px;
-  font-size: 10.5px;
-  font-weight: 650;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.market-status-chip > span:last-child {
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 11px;
+  font-weight: 750;
   white-space: nowrap;
 }
 
-.market-live-dot {
+.currency-hero-live-dot {
   width: 7px;
   height: 7px;
   flex: 0 0 auto;
@@ -2764,7 +2805,7 @@ body.rtl-mode .currency-market-hero::before {
   animation: currency-live-pulse 2s infinite;
 }
 
-.market-live-dot.cached {
+.currency-hero-live-dot.cached {
   background: #FBBF24;
   animation: none;
 }
@@ -2775,161 +2816,310 @@ body.rtl-mode .currency-market-hero::before {
   100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
 }
 
-.currency-refresh-icon {
-  width: 36px;
-  height: 36px;
-  flex: 0 0 auto;
+/* Identity row */
+.currency-hero-identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 14px 8px 6px;
+}
+
+.currency-hero-tile {
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
   display: grid;
   place-items: center;
-  color: #fff;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.16);
-  border-radius: 12px;
+  font-size: 30px;
+  line-height: 1;
+  background: linear-gradient(160deg, rgba(255,255,255,0.34), rgba(255,255,255,0.10));
+  border: 1.5px solid rgba(255,255,255,0.55);
+  border-radius: 19px;
+  box-shadow:
+    0 12px 28px rgba(15,40,120,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.5);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
-.currency-refresh-icon:hover {
-  background: rgba(255,255,255,0.19);
+.currency-hero-idcopy {
+  min-width: 0;
+  flex: 1;
 }
 
-.currency-refresh-icon.is-loading svg {
-  animation: currency-spin 0.8s linear infinite;
-}
-
-@keyframes currency-spin { to { transform: rotate(360deg); } }
-
-.market-hero-identity {
-  justify-content: flex-start;
-  margin-bottom: 7px;
-}
-
-.market-hero-flag {
-  width: 43px;
-  height: 43px;
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  font-size: 25px;
-  line-height: 1;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.12);
-}
-
-.market-hero-code-line {
+.currency-hero-code-row {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.market-hero-code {
+.currency-hero-code {
   color: #fff;
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: 0.6px;
+  font-size: clamp(20px, 5.5vw, 24px);
+  font-weight: 850;
+  letter-spacing: -0.3px;
   direction: ltr;
   unicode-bidi: isolate;
 }
 
-.market-hero-name {
-  display: block;
-  max-width: 215px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: var(--currency-hero-muted);
-  font-size: 11px;
-}
-
-.market-featured-label {
-  padding: 3px 7px;
-  border-radius: 999px;
-  color: #BAE6FD;
-  background: rgba(56,189,248,0.13);
-  border: 1px solid rgba(125,211,252,0.16);
-  font-size: 9px;
-  font-weight: 700;
-}
-
-.market-hero-value-row {
-  align-items: flex-end;
-  margin-bottom: 2px;
-}
-
-.market-hero-price {
-  color: #fff;
-  font-size: clamp(29px, 8.5vw, 36px);
-  font-weight: 800;
-  line-height: 1.18;
-  letter-spacing: -1px;
-  direction: rtl;
-  unicode-bidi: isolate;
-}
-
-.market-change-pill {
+.currency-hero-badge {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 3px;
-  min-height: 26px;
-  padding: 4px 9px;
+  padding: 2px 8px;
+  color: #BAE6FD;
+  background: rgba(56,189,248,0.18);
+  border: 1px solid rgba(125,211,252,0.24);
   border-radius: 999px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 750;
-  direction: ltr;
-  unicode-bidi: isolate;
 }
 
-.market-change-pill.up {
-  color: #6EE7B7;
-  background: rgba(16,185,129,0.14);
-  border: 1px solid rgba(52,211,153,0.17);
-}
-
-.market-change-pill.down {
-  color: #FCA5A5;
-  background: rgba(239,68,68,0.14);
-  border: 1px solid rgba(248,113,113,0.18);
-}
-
-.market-hero-chart-button {
-  width: 100%;
+.currency-hero-sub {
   display: block;
-  text-align: inherit;
-  border-radius: 17px;
-  margin-top: 2px;
+  margin-top: 3px;
+  color: rgba(226,232,240,0.74);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.market-hero-chart-button:focus-visible {
-  outline: 2px solid #7DD3FC;
-  outline-offset: 3px;
+/* Price & trend */
+.currency-hero-values {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 10px 8px 12px;
 }
 
-.market-hero-sparkline {
-  width: 100%;
-  height: 92px;
-  display: block;
-  overflow: visible;
+.currency-hero-price {
+  font-size: clamp(24px, 6.8vw, 32px);
+  font-weight: 900;
+  letter-spacing: -0.8px;
+  color: #fff;
+  text-shadow: 0 6px 22px rgba(15,40,120,0.3);
 }
 
-.market-chart-footer {
-  margin-top: -1px;
-  padding-top: 10px;
-  border-top: 1px solid var(--currency-hero-line);
-  color: var(--currency-hero-muted);
-  font-size: 10.5px;
-}
-
-.market-chart-cta {
+.currency-hero-change-pill {
   display: inline-flex;
   align-items: center;
   gap: 5px;
+  min-height: 29px;
+  padding: 0 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  direction: ltr;
+}
+
+.currency-hero-change-pill.up {
+  color: #D1FAE5;
+  background: rgba(16, 185, 129, 0.32);
+  border: 1px solid rgba(52, 211, 153, 0.4);
+}
+
+.currency-hero-change-pill.down {
+  color: #FFE4E6;
+  background: rgba(239, 68, 68, 0.32);
+  border: 1px solid rgba(248, 113, 113, 0.4);
+}
+
+/* Sparkline Card inside hero */
+.currency-hero-chart-card {
+  width: 100%;
+  display: block;
+  margin: 6px 0 14px;
+  padding: 12px 14px 10px;
+  color: inherit;
+  background: rgba(6, 20, 56, 0.44);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 20px;
+  text-align: start;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 10px 26px rgba(4, 14, 45, 0.28);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: var(--transition-spring);
+}
+
+.currency-hero-chart-card:hover {
+  background: rgba(6, 20, 56, 0.54);
+  border-color: rgba(255, 255, 255, 0.38);
+  transform: translateY(-1px);
+}
+
+.currency-hero-chart-card:active {
+  transform: scale(0.985);
+}
+
+[data-theme="dark"] .currency-hero-chart-card {
+  background: rgba(3, 8, 22, 0.55);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 10px 26px rgba(0, 0, 0, 0.4);
+}
+
+.currency-hero-chart-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.currency-hero-chart-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px;
+  color: #E0E7FF;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.2px;
+}
+
+.currency-hero-chart-bounds {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(226, 232, 240, 0.85);
+  font-size: 10.5px;
+  font-weight: 600;
+  direction: ltr;
+}
+
+body.rtl-mode .currency-hero-chart-bounds {
+  direction: rtl;
+}
+
+.currency-hero-chart-bounds strong {
   color: #fff;
+  font-weight: 750;
+}
+
+.currency-hero-sparkline {
+  display: block;
+  width: 100%;
+  height: 84px;
+  overflow: visible;
+  filter: drop-shadow(0 2px 8px var(--chart-glow, rgba(0, 245, 155, 0.45)));
+}
+
+.currency-hero-chart-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 4px 2px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(226, 232, 240, 0.82);
+  font-size: 11px;
   font-weight: 650;
 }
 
-body.rtl-mode .market-chart-cta svg,
+.currency-hero-chart-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #93C5FD;
+  font-weight: 750;
+}
+
+body.rtl-mode .currency-hero-chart-link svg {
+  transform: scaleX(-1);
+}
+
+/* Hero actions — mirrors .wallets-hero-actions / .tools-hero-actions / .profile-hero-actions */
+.currency-hero-actions {
+  display: flex;
+  gap: 10px;
+  padding: 0 4px;
+}
+
+.currency-hero-btn {
+  flex: 1;
+  min-width: 0;
+  min-height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 12px;
+  color: #0F172A;
+  background: linear-gradient(180deg, #fff, #F8FAFF);
+  border: 0;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: 0 12px 26px rgba(15,40,120,0.2);
+  transition: var(--transition-spring);
+}
+
+.currency-hero-btn:hover {
+  transform: translateY(-2px);
+}
+
+.currency-hero-btn:active {
+  transform: scale(.96);
+}
+
+.currency-hero-btn svg {
+  flex: 0 0 auto;
+}
+
+.currency-hero-btn.dark {
+  flex: 0 0 50px;
+  width: 50px;
+  padding: 0;
+  color: #fff;
+  background: linear-gradient(145deg, #1E293B 0%, #0B1220 55%, #020617 100%);
+  border-radius: 16px;
+  box-shadow:
+    0 12px 24px rgba(2,6,23,0.35),
+    0 1px 0 rgba(255,255,255,0.18) inset;
+}
+
+.currency-hero-btn.dark.is-loading svg {
+  animation: currency-spin .8s linear infinite;
+}
+
+@keyframes currency-spin { to { transform: rotate(360deg); } }
+
+/* ---- Sheet: identical to .wallets-sheet / .tools-sheet / .profile-sheet ---- */
+.currency-sheet {
+  margin-top: 10px;
+  padding: 22px 14px 16px;
+  background: var(--bg-main);
+  border-radius: 28px 28px 0 0;
+  box-shadow: 0 -16px 40px rgba(15,40,120,0.12);
+  position: relative;
+}
+
+[data-theme="dark"] .currency-sheet {
+  box-shadow: 0 -16px 40px rgba(0,0,0,0.4);
+}
+
+.quick-conv-close-btn {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  background: var(--chip-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  transition: var(--transition-spring);
+}
+.quick-conv-close-btn:hover {
+  color: var(--text-primary);
+  background: var(--chip-bg-strong);
+}
+
 body.rtl-mode .market-rate-chevron svg {
   transform: scaleX(-1);
 }
@@ -3662,6 +3852,8 @@ body.currency-board-mode .main-content {
 }
 
 body.currency-board-mode .main-content > .tab-view:not(#tab-currency),
+body.currency-board-mode #tab-currency > .currency-page-2026 > .currency-hero,
+body.currency-board-mode #tab-currency > .currency-page-2026 > .currency-sheet,
 body.currency-board-mode #tab-currency > .currency-page-redesign > .currency-page-header,
 body.currency-board-mode #tab-currency > .currency-page-redesign > .currency-market-hero,
 body.currency-board-mode #tab-currency > .currency-page-redesign > .currency-quick-converter,
@@ -3677,6 +3869,7 @@ body.currency-board-mode #tab-currency {
   transform: none;
 }
 
+body.currency-board-mode .currency-page-2026,
 body.currency-board-mode .currency-page-redesign,
 body.currency-board-mode .currency-fullscreen-board {
   width: 100%;
@@ -10416,6 +10609,9 @@ const translations = {
     currencies_tracked: "currencies",
     no_currency_result: "No currency matches your search.",
     view_full_chart: "View full chart",
+    last_30_days: "Past 30 Days",
+    chart_low: "30D Low",
+    chart_high: "30D High",
     updated_at: "Updated",
     rate_source_live: "Live market",
     rate_source_cached: "Saved rate",
@@ -10819,6 +11015,9 @@ const translations = {
     currencies_tracked: "ارز",
     no_currency_result: "ارزی با این مشخصات پیدا نشد.",
     view_full_chart: "مشاهده نمودار کامل",
+    last_30_days: "۳۰ روز اخیر",
+    chart_low: "کف ۳۰ روزه",
+    chart_high: "سقف ۳۰ روزه",
     updated_at: "آخرین بروزرسانی",
     rate_source_live: "بازار زنده",
     rate_source_cached: "آخرین نرخ ذخیره‌شده",
@@ -11160,6 +11359,9 @@ class I18nManager {
     });
 
     if (reloadUI) {
+      if (window.currency) {
+        window.currency.chartDataCache = {};
+      }
       this.translateDOM();
       window.dispatchEvent(new CustomEvent('walio_lang_changed', { detail: { lang } }));
     }
@@ -12646,7 +12848,8 @@ class CurrencyManager {
   }
 
   getChartData(currencyCode, range) {
-    const cacheKey = `${currencyCode}_${range}`;
+    const lang = window.i18n ? window.i18n.currentLang : 'fa';
+    const cacheKey = `${currencyCode}_${range}_${lang}`;
     if (this.chartDataCache[cacheKey]) {
       return this.chartDataCache[cacheKey];
     }
@@ -14611,7 +14814,7 @@ class WalioApp {
       const frame = document.querySelector('.mobile-frame');
       if (!frame) return;
       const scrolled = (window.scrollY || document.documentElement.scrollTop || 0) > 28;
-      const immersive = frame.classList.contains('home-immersive') || frame.classList.contains('wallets-immersive') || frame.classList.contains('profile-immersive') || frame.classList.contains('tools-immersive');
+      const immersive = frame.classList.contains('home-immersive') || frame.classList.contains('wallets-immersive') || frame.classList.contains('profile-immersive') || frame.classList.contains('tools-immersive') || frame.classList.contains('currency-immersive');
       frame.classList.toggle('home-scrolled', immersive && scrolled);
     };
     window.addEventListener('scroll', onHomeScroll, { passive: true });
@@ -14700,12 +14903,13 @@ class WalioApp {
     }
 
     const frame = document.querySelector('.mobile-frame');
-    const immersive = (tabId === 'home' || tabId === 'wallets' || tabId === 'profile' || tabId === 'tools');
+    const immersive = (tabId === 'home' || tabId === 'wallets' || tabId === 'profile' || tabId === 'tools' || tabId === 'currency');
     if (frame) {
       frame.classList.toggle('home-immersive', tabId === 'home');
       frame.classList.toggle('wallets-immersive', tabId === 'wallets');
       frame.classList.toggle('profile-immersive', tabId === 'profile');
       frame.classList.toggle('tools-immersive', tabId === 'tools');
+      frame.classList.toggle('currency-immersive', tabId === 'currency');
       frame.classList.toggle('immersive-blue', immersive);
     }
     document.documentElement.classList.toggle('immersive-blue', immersive);
@@ -15090,7 +15294,8 @@ class WalioApp {
 
     const codes = ['USD', 'EUR', 'GOLD18', 'SEKEE'];
     const isLive = window.currency.isLive;
-    const updatedText = window.currency.lastUpdated || (window.i18n && window.i18n.currentLang === 'fa' ? 'امروز' : 'Today');
+    const isFa = window.i18n && window.i18n.currentLang === 'fa';
+    const updatedText = (window.currency.lastUpdatedAt ? new Date(window.currency.lastUpdatedAt).toLocaleTimeString(isFa ? 'fa-IR' : 'en-US', { hour: '2-digit', minute: '2-digit' }) : '') || (isFa ? 'امروز' : 'Today');
     const t = (key) => window.i18n ? window.i18n.t(key) : key;
 
     const miniSpark = (code, isUp) => {
@@ -15285,14 +15490,23 @@ class WalioApp {
       : 'USD';
     const focusRate = rates[focusCode] || rates.USD;
     const focusIsUp = focusRate.change >= 0;
-    const updatedText = window.currency.lastUpdated || (isFa ? 'امروز' : 'Today');
+
+    const formatUpdatedTime = (timestampMs) => {
+      if (timestampMs) {
+        try {
+          return new Date(timestampMs).toLocaleTimeString(isFa ? 'fa-IR' : 'en-US', { hour: '2-digit', minute: '2-digit' });
+        } catch (e) {}
+      }
+      return isFa ? 'امروز' : 'Today';
+    };
+    const updatedText = formatUpdatedTime(window.currency.lastUpdatedAt);
 
     const heroSparkline = (code) => {
       const data = window.currency.getChartData(code, '1M');
       const width = 330;
       const height = 86;
-      const padX = 3;
-      const padY = 8;
+      const padX = 4;
+      const padY = 9;
       const values = data.map(point => point.price);
       const min = Math.min(...values);
       const max = Math.max(...values);
@@ -15303,21 +15517,33 @@ class WalioApp {
       }));
       const line = points.map((point, index) => `${index ? 'L' : 'M'} ${point.x.toFixed(2)} ${point.y.toFixed(2)}`).join(' ');
       const area = `${line} L ${points[points.length - 1].x.toFixed(2)} ${height} L ${points[0].x.toFixed(2)} ${height} Z`;
-      const color = focusIsUp ? '#34D399' : '#FB7185';
-      return `
-        <svg class="market-hero-sparkline" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" aria-hidden="true">
+      const color = focusIsUp ? '#00F59B' : '#FF4757';
+      const glowColor = focusIsUp ? 'rgba(0, 245, 155, 0.45)' : 'rgba(255, 71, 87, 0.45)';
+      const lastPoint = points[points.length - 1];
+
+      return {
+        min,
+        max,
+        svg: `
+        <svg class="currency-hero-sparkline" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" style="--chart-glow: ${glowColor};" aria-hidden="true">
           <defs>
-            <linearGradient id="hero-market-gradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="${color}" stop-opacity=".34"/>
-              <stop offset="100%" stop-color="${color}" stop-opacity="0"/>
+            <linearGradient id="hero-market-grad-${code}" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="${color}" stop-opacity="0.45"/>
+              <stop offset="55%" stop-color="${color}" stop-opacity="0.14"/>
+              <stop offset="100%" stop-color="${color}" stop-opacity="0.0"/>
             </linearGradient>
           </defs>
-          <line x1="0" y1="${height * .48}" x2="${width}" y2="${height * .48}" stroke="rgba(255,255,255,.10)" stroke-dasharray="3 6"/>
-          <path d="${area}" fill="url(#hero-market-gradient)"/>
-          <path d="${line}" fill="none" stroke="${color}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
-          <circle cx="${points[points.length - 1].x}" cy="${points[points.length - 1].y}" r="3.5" fill="${color}" stroke="#fff" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
-        </svg>`;
+          <line x1="0" y1="${height * 0.28}" x2="${width}" y2="${height * 0.28}" stroke="rgba(255,255,255,0.18)" stroke-dasharray="3 5"/>
+          <line x1="0" y1="${height * 0.68}" x2="${width}" y2="${height * 0.68}" stroke="rgba(255,255,255,0.18)" stroke-dasharray="3 5"/>
+          <path d="${area}" fill="url(#hero-market-grad-${code})"/>
+          <path d="${line}" fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+          <circle cx="${lastPoint.x}" cy="${lastPoint.y}" r="8" fill="${color}" fill-opacity="0.30"/>
+          <circle cx="${lastPoint.x}" cy="${lastPoint.y}" r="4" fill="${color}" stroke="#ffffff" stroke-width="2" vector-effect="non-scaling-stroke"/>
+        </svg>`
+      };
     };
+
+    const heroChart = heroSparkline(focusCode);
 
     const miniSparkline = (code, isUp) => {
       const data = window.currency.getChartData(code, '1W');
@@ -15434,7 +15660,7 @@ class WalioApp {
     };
 
     container.innerHTML = `
-      <div class="currency-page-redesign">
+      <div class="currency-page-2026">
         <div class="currency-inline-toast" id="currency-inline-toast" role="status" aria-live="polite"></div>
 
         <section class="currency-fullscreen-board" id="currency-fullscreen-board" aria-labelledby="currency-board-title">
@@ -15482,116 +15708,128 @@ class WalioApp {
           </div>
         </section>
 
-        <div class="currency-page-header">
-          <div class="currency-page-title-wrap">
-            <h2 class="page-title" data-i18n="currency_title">${t('currency_title')}</h2>
-            <p class="page-subtitle" data-i18n="currency_subtitle">${t('currency_subtitle')}</p>
-          </div>
-          <button class="open-currency-board-btn" id="open-currency-board" type="button" aria-label="${t('currency_board_mode')}" title="${t('currency_board_mode')}">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
-            <span>${t('currency_board_mode')}</span>
-          </button>
-        </div>
-
-        <section class="currency-market-hero" aria-labelledby="market-overview-label">
-          <div class="market-hero-top">
-            <div class="market-status-chip">
-              <span class="market-live-dot ${isLive ? '' : 'cached'}"></span>
-              <span>${t(isLive ? 'rates_live_status' : 'rates_cached_status')}${isLive ? ' · ' + (window.currency.sourceLabel || '') : ''} · ${updatedText}</span>
-            </div>
-            <button class="currency-refresh-icon" id="btn-refresh-rates" type="button" aria-label="${t('refresh_rates')}" title="${t('refresh_rates')}">
-              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-            </button>
-          </div>
-
-          <div class="market-hero-identity">
-            <span class="market-hero-flag">${focusRate.flag}</span>
-            <div>
-              <div class="market-hero-code-line">
-                <span class="market-hero-code">${focusCode}</span>
-                <span class="market-featured-label" id="market-overview-label">${t('market_featured')}</span>
-              </div>
-              <span class="market-hero-name">${t('curr_' + focusCode)} · ${t('market_open')}</span>
-            </div>
-          </div>
-
-          <div class="market-hero-value-row">
-            <div class="market-hero-price">${window.i18n.formatCurrency(focusRate.rate, 'IRT')}</div>
-            <span class="market-change-pill ${focusIsUp ? 'up' : 'down'}">
-              ${focusIsUp ?
-                '<svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10l5-5 5 5"/></svg>' :
-                '<svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l5 5 5-5"/></svg>'}
-              ${focusIsUp ? '+' : ''}${focusRate.change}%
+        <!-- 1. HERO CARD (Matching .tools-hero / .wallets-hero / .profile-hero) -->
+        <section class="currency-hero" aria-label="${t('currency_title')}">
+          <div class="currency-hero-label-row">
+            <span class="currency-hero-label" data-i18n="currency_title">${t('currency_title')}</span>
+            <span class="currency-hero-status-pill">
+              <span class="currency-hero-live-dot ${isLive ? '' : 'cached'}"></span>
+              <span>${t(isLive ? 'rates_live_status' : 'rates_cached_status')} · ${updatedText}</span>
             </span>
           </div>
 
-          <button class="market-hero-chart-button" id="currency-featured-chart" type="button" aria-label="${t('view_full_chart')}">
-            ${heroSparkline(focusCode)}
-            <span class="market-chart-footer">
-              <span>${t('price_chart')} · ${t('time_1m')}</span>
-              <span class="market-chart-cta">
+          <div class="currency-hero-identity">
+            <span class="currency-hero-tile" aria-hidden="true">${focusRate.flag}</span>
+            <div class="currency-hero-idcopy">
+              <div class="currency-hero-code-row">
+                <strong class="currency-hero-code">${focusCode}</strong>
+                <span class="currency-hero-badge">${t('market_featured')}</span>
+              </div>
+              <span class="currency-hero-sub">${t('curr_' + focusCode)} · ${t('market_open')}</span>
+            </div>
+          </div>
+
+          <div class="currency-hero-values">
+            <div class="currency-hero-price">${window.i18n.formatCurrency(focusRate.rate, 'IRT')}</div>
+            <span class="currency-hero-change-pill ${focusIsUp ? 'up' : 'down'}">
+              ${focusIsUp ? '↗ +' : '↘ '}${focusRate.change}%
+            </span>
+          </div>
+
+          <button class="currency-hero-chart-card" id="currency-featured-chart" type="button" aria-label="${t('view_full_chart')}">
+            <div class="currency-hero-chart-head">
+              <span class="currency-hero-chart-pill">${t('last_30_days')}</span>
+              <span class="currency-hero-chart-bounds">
+                <span>${t('chart_low')}: <strong>${window.i18n.formatCurrency(heroChart.min, 'IRT')}</strong></span>
+                <span>·</span>
+                <span>${t('chart_high')}: <strong>${window.i18n.formatCurrency(heroChart.max, 'IRT')}</strong></span>
+              </span>
+            </div>
+            ${heroChart.svg}
+            <div class="currency-hero-chart-foot">
+              <span>${t('price_chart')} · ${focusCode}</span>
+              <span class="currency-hero-chart-link">
                 ${t('view_full_chart')}
                 <svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4l6 6-6 6"/></svg>
               </span>
-            </span>
+            </div>
           </button>
+
+          <div class="currency-hero-actions">
+            <button class="currency-hero-btn" id="btn-jump-metals" type="button">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/></svg>
+              <span data-i18n="gold_coin_title">${t('gold_coin_title')}</span>
+            </button>
+            <button class="currency-hero-btn" id="open-currency-board" type="button">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
+              <span data-i18n="currency_board_mode">${t('currency_board_mode')}</span>
+            </button>
+            <button class="currency-hero-btn dark" id="btn-refresh-rates" type="button" aria-label="${t('refresh_rates')}" title="${t('refresh_rates')}">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            </button>
+          </div>
         </section>
 
-        ${this.renderMetalsSection()}
+        <!-- 2. LOWER CONTENT SHEET (Matching .tools-sheet / .wallets-sheet / .profile-sheet) -->
+        <div class="currency-sheet">
+          <!-- Gold & Coins Section -->
+          ${this.renderMetalsSection()}
 
-        <section class="currency-market-list-card" aria-labelledby="market-list-title">
-          <div class="market-list-heading">
-            <div>
-              <h3 class="market-list-title" id="market-list-title" data-i18n="all_market_rates">${t('all_market_rates')}</h3>
-              <p class="market-list-subtitle" data-i18n="market_rates_subtitle">${t('market_rates_subtitle')}</p>
+          <!-- World Currencies List Section -->
+          <section class="currency-market-list-card" aria-labelledby="market-list-title">
+            <div class="market-list-heading">
+              <div>
+                <h3 class="market-list-title" id="market-list-title" data-i18n="all_market_rates">${t('all_market_rates')}</h3>
+                <p class="market-list-subtitle" data-i18n="market_rates_subtitle">${t('market_rates_subtitle')}</p>
+              </div>
+              <span class="market-count-badge" id="market-visible-count">${codes.length}</span>
             </div>
-            <span class="market-count-badge" id="market-visible-count">${codes.length}</span>
-          </div>
 
-          <div class="market-controls">
-            <div class="currency-search-field">
-              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-              <input class="currency-search-input" id="currency-market-search" type="search" placeholder="${t('currency_search')}" autocomplete="off" />
+            <div class="market-controls">
+              <div class="currency-search-field">
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                <input class="currency-search-input" id="currency-market-search" type="search" placeholder="${t('currency_search')}" autocomplete="off" />
+              </div>
+              <div class="currency-filter-tabs" role="group" aria-label="${t('all_market_rates')}">
+                <button class="currency-filter-tab active" type="button" data-filter="all">${t('filter_all')}</button>
+                <button class="currency-filter-tab" type="button" data-filter="up">${t('filter_gainers')}</button>
+                <button class="currency-filter-tab" type="button" data-filter="down">${t('filter_losers')}</button>
+              </div>
             </div>
-            <div class="currency-filter-tabs" role="group" aria-label="${t('all_market_rates')}">
-              <button class="currency-filter-tab active" type="button" data-filter="all">${t('filter_all')}</button>
-              <button class="currency-filter-tab" type="button" data-filter="up">${t('filter_gainers')}</button>
-              <button class="currency-filter-tab" type="button" data-filter="down">${t('filter_losers')}</button>
-            </div>
-          </div>
 
-          <div class="market-rate-list" id="market-rate-list">
-            ${codes.map(code => {
-              const rate = rates[code];
-              const isUp = rate.change >= 0;
-              const searchText = `${code} ${rate.name || ''} ${t('curr_' + code)}`.toLocaleLowerCase();
-              return `
-                <button class="market-rate-row" type="button" data-code="${code}" data-trend="${isUp ? 'up' : 'down'}" data-search="${searchText}" aria-label="${t('curr_' + code)}">
-                  <span class="market-rate-main">
-                    <span class="market-rate-flag">${rate.flag}</span>
-                    <span class="market-rate-meta">
-                      <span class="market-rate-code-line">
-                        <span class="market-rate-code">${code}</span>
-                        <span class="market-trend-dot ${isUp ? 'up' : 'down'}"></span>
+            <div class="market-rate-list" id="market-rate-list">
+              ${codes.map(code => {
+                const rate = rates[code];
+                const isUp = rate.change >= 0;
+                const searchText = `${code} ${rate.name || ''} ${t('curr_' + code)}`.toLocaleLowerCase();
+                return `
+                  <button class="market-rate-row" type="button" data-code="${code}" data-trend="${isUp ? 'up' : 'down'}" data-search="${searchText}" aria-label="${t('curr_' + code)}">
+                    <span class="market-rate-main">
+                      <span class="market-rate-flag">${rate.flag}</span>
+                      <span class="market-rate-meta">
+                        <span class="market-rate-code-line">
+                          <span class="market-rate-code">${code}</span>
+                          <span class="market-trend-dot ${isUp ? 'up' : 'down'}"></span>
+                        </span>
+                        <span class="market-rate-name">${t('curr_' + code)}</span>
                       </span>
-                      <span class="market-rate-name">${t('curr_' + code)}</span>
                     </span>
-                  </span>
-                  ${miniSparkline(code, isUp)}
-                  <span class="market-rate-values">
-                    <span class="market-rate-price">${window.i18n.formatCurrency(rate.rate, 'IRT')}</span>
-                    <span class="market-rate-change ${isUp ? 'up' : 'down'}">
-                      ${isUp ? '↗' : '↘'} ${isUp ? '+' : ''}${rate.change}%
+                    ${miniSparkline(code, isUp)}
+                    <span class="market-rate-values">
+                      <span class="market-rate-price">${window.i18n.formatCurrency(rate.rate, 'IRT')}</span>
+                      <span class="market-rate-change ${isUp ? 'up' : 'down'}">
+                        ${isUp ? '↗' : '↘'} ${isUp ? '+' : ''}${rate.change}%
+                      </span>
                     </span>
-                  </span>
-                  <span class="market-rate-chevron">
-                    <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4l6 6-6 6"/></svg>
-                  </span>
-                </button>`;
-            }).join('')}
-          </div>
-          <div class="currency-list-empty" id="currency-list-empty">${t('no_currency_result')}</div>
-        </section>
+                    <span class="market-rate-chevron">
+                      <svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4l6 6-6 6"/></svg>
+                    </span>
+                  </button>`;
+              }).join('')}
+            </div>
+            <div class="currency-list-empty" id="currency-list-empty">${t('no_currency_result')}</div>
+          </section>
+        </div>
       </div>`;
 
     if (window.i18n) window.i18n.translateDOM();
@@ -15632,6 +15870,16 @@ class WalioApp {
 
     const featuredChart = container.querySelector('#currency-featured-chart');
     if (featuredChart) featuredChart.addEventListener('click', () => this.openCurrencyChart(focusCode));
+
+    const jumpMetalsBtn = container.querySelector('#btn-jump-metals');
+    if (jumpMetalsBtn) {
+      jumpMetalsBtn.addEventListener('click', () => {
+        const metalsSection = container.querySelector('#metals-section');
+        if (metalsSection) {
+          metalsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    }
 
     container.querySelectorAll('.market-rate-row').forEach(row => {
       row.addEventListener('click', () => {
@@ -15728,7 +15976,24 @@ class WalioApp {
     const cur = window.currency;
     const isFa = window.i18n && window.i18n.currentLang === 'fa';
     const isLive = cur.metalsLive;
-    const updated = cur.metalsUpdated || (isFa ? 'امروز' : 'Today');
+
+    const formatUpdatedTime = (timestampMs) => {
+      if (timestampMs) {
+        try {
+          return new Date(timestampMs).toLocaleTimeString(isFa ? 'fa-IR' : 'en-US', { hour: '2-digit', minute: '2-digit' });
+        } catch (e) {}
+      }
+      return isFa ? 'امروز' : 'Today';
+    };
+    const updated = formatUpdatedTime(cur.metalsUpdatedAt);
+
+    const formatAssetTime = (timeStr) => {
+      if (!timeStr) return '';
+      if (!isFa) {
+        return timeStr.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+      }
+      return timeStr.replace(/[0-9]/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    };
 
     const palette = {
       GOLD18: ['#F59E0B', 'rgba(245,158,11,.16)'],
@@ -15764,7 +16029,7 @@ class WalioApp {
           <span class="metal-price">${price}</span>
           <span class="metal-foot">
             <span class="metal-change ${isUp ? '' : 'down'}">${isUp ? '↗ +' : '↘ '}${asset.change || 0}%</span>
-            ${asset.time ? `<span class="metal-time">${asset.time}</span>` : ''}
+            ${asset.time ? `<span class="metal-time">${formatAssetTime(asset.time)}</span>` : ''}
           </span>
         </button>`;
     };
@@ -16821,5 +17086,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31ab9567ef82362',t:'MTc4NzgzMDAxNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31bbbd58fd9a895',t:'MTc4Nzg0MDYwMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a323cc45cd40d93d',t:'MTc4NzkyNTE2MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31ab9567ef82362',t:'MTc4NzgzMDAxNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31bbbd58fd9a895',t:'MTc4Nzg0MDYwMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a323cc45cd40d93d',t:'MTc4NzkyNTE2MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3b73dd5bcb999fb',t:'MTc4OTQ3MTIyMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
