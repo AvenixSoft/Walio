@@ -10301,84 +10301,30 @@ body.toman-unit-hidden .market-rate-values,
   }
 }
 
-/* ================= APP SPLASH SCREEN (native-style boot loader) =================
- * Shown for ~1.2s on every app start / resume, but NEVER while the first-launch
- * welcome screen is still pending.
- *
- * Design DNA is identical to the rest of Walio:
- *  • the same immersive-blue stage as the Home header / hero (#2563EB, dark #1E3A8A)
- *    so the splash melts into the first screen with no colour jump;
- *  • the ambient halo + dot mesh + grain used by #app-lock-screen and the hero;
- *  • the aurora blobs and conic ring of the first-launch welcome screen;
- *  • a frosted app-icon tile carrying the brand mark, wordmark + tagline;
- *  • a hairline gradient progress bar driven by JS (boot stages).
+/* ================= APP BOOT LOADER (Single Circular Spinner) =================
+ * Minimal single circular loader on startup / resume.
  */
 #walio-boot-loader {
-  /* ---- stage tokens (day) ---- */
-  --boot-stage: #2563EB;
-  --boot-ink: #FFFFFF;
-  --boot-ink-soft: rgba(226, 232, 240, .82);
-  --boot-ink-mute: rgba(219, 234, 254, .68);
-  --boot-halo: rgba(147, 197, 253, .38);
-  --boot-dots: rgba(255, 255, 255, .30);
-  --boot-vignette: rgba(9, 22, 74, .40);
-  --boot-track: rgba(255, 255, 255, .26);
-  --boot-fill: linear-gradient(90deg, #A5B4FC 0%, #FFFFFF 52%, #6EE7B7 100%);
-  --boot-glow: rgba(165, 180, 252, .55);
-  --boot-ring: conic-gradient(from 90deg,
-      rgba(255, 255, 255, .85) 0deg,
-      rgba(165, 180, 252, .10) 110deg,
-      rgba(110, 231, 183, .60) 230deg,
-      rgba(255, 255, 255, .85) 360deg);
-  --boot-tile-border: rgba(255, 255, 255, .55);
-  --boot-tile-shadow: 0 24px 54px rgba(10, 30, 100, .42);
-  --boot-word-shadow: rgba(8, 24, 84, .35);
-
   position: fixed;
   inset: 0;
   z-index: 130000;
   display: none;
-  overflow: hidden;
-  isolation: isolate;
-  font-family: var(--font-main);
-  color: var(--boot-ink);
-  background: var(--boot-stage);
-  background-color: var(--boot-stage);
-  --boot-progress: 0;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-main);
+  background-color: var(--bg-main);
+  opacity: 1;
+  transition: opacity 0.24s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.24s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Night stage: same blue family as the immersive header in dark mode */
 [data-theme="dark"] #walio-boot-loader {
-  --boot-stage: #1E3A8A;
-  --boot-ink-soft: rgba(219, 234, 254, .74);
-  --boot-ink-mute: rgba(191, 219, 254, .62);
-  --boot-halo: rgba(96, 165, 250, .30);
-  --boot-dots: rgba(191, 219, 254, .24);
-  --boot-vignette: rgba(3, 8, 32, .55);
-  --boot-track: rgba(255, 255, 255, .22);
-  --boot-fill: linear-gradient(90deg, #818CF8 0%, #E0E7FF 50%, #34D399 100%);
-  --boot-glow: rgba(129, 140, 248, .55);
-  --boot-ring: conic-gradient(from 90deg,
-      rgba(224, 231, 255, .80) 0deg,
-      rgba(129, 140, 248, .08) 110deg,
-      rgba(52, 211, 153, .55) 230deg,
-      rgba(224, 231, 255, .80) 360deg);
-  --boot-tile-border: rgba(255, 255, 255, .42);
-  --boot-tile-shadow: 0 26px 58px rgba(3, 10, 40, .62);
-  --boot-word-shadow: rgba(3, 10, 40, .45);
-  background: var(--boot-stage);
-  background-color: var(--boot-stage);
-}
-
-/* Persian: the same font the app switches to in rtl-mode, applied pre-first-paint */
-html[dir="rtl"] #walio-boot-loader {
-  font-family: 'Vazirmatn', 'Shabnam', 'Tahoma', 'IRANSans', var(--font-main);
+  background: var(--bg-main, #0A0A0E);
+  background-color: var(--bg-main, #0A0A0E);
 }
 
 html.walio-booting #walio-boot-loader,
 #walio-boot-loader.is-visible {
-  display: block;
-  animation: walioBootScreenIn .3s ease both;
+  display: flex;
 }
 
 html.walio-booting body {
@@ -10386,355 +10332,29 @@ html.walio-booting body {
 }
 
 #walio-boot-loader.is-hiding {
-  animation: walioBootScreenOut .44s cubic-bezier(.4, 0, .2, 1) forwards;
-  pointer-events: none;
-}
-
-#walio-boot-loader.is-hiding .boot-stage {
-  animation: walioBootStageOut .44s cubic-bezier(.4, 0, .2, 1) forwards;
-}
-
-@keyframes walioBootScreenIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes walioBootScreenOut {
-  from { opacity: 1; }
-  to   { opacity: 0; visibility: hidden; }
-}
-
-@keyframes walioBootStageOut {
-  from { transform: scale(1);    opacity: 1; filter: blur(0); }
-  to   { transform: scale(1.06); opacity: 0; filter: blur(3px); }
-}
-
-/* ---------- Ambient scene (halo / aurora / dot mesh / vignette / grain) ---------- */
-.boot-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.boot-halo {
-  position: absolute;
-  top: -160px;
-  right: -110px;
-  width: 400px;
-  height: 400px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, var(--boot-halo), rgba(255, 255, 255, .05) 55%, transparent 72%);
-  filter: blur(6px);
-  animation: walioBootHalo 9s ease-in-out infinite;
-}
-
-html[dir="rtl"] .boot-halo { right: auto; left: -110px; }
-
-@keyframes walioBootHalo {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  50%      { transform: translate3d(-18px, 14px, 0) scale(1.08); }
-}
-
-.boot-aurora {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(64px);
-  opacity: .5;
-  will-change: transform;
-}
-
-.boot-aurora--a {
-  width: 320px;
-  height: 320px;
-  top: -80px;
-  left: -90px;
-  background: radial-gradient(circle, rgba(79, 70, 229, .55), transparent 65%);
-  animation: walioBootAurora 12s ease-in-out infinite;
-}
-
-.boot-aurora--b {
-  width: 280px;
-  height: 280px;
-  bottom: -70px;
-  right: -80px;
-  background: radial-gradient(circle, rgba(16, 185, 129, .42), transparent 65%);
-  animation: walioBootAurora 14s ease-in-out infinite reverse;
-}
-
-.boot-aurora--c {
-  width: 220px;
-  height: 220px;
-  top: 54%;
-  left: 58%;
-  background: radial-gradient(circle, rgba(59, 130, 246, .45), transparent 65%);
-  animation: walioBootAurora 10s ease-in-out infinite;
-}
-
-@keyframes walioBootAurora {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  50%      { transform: translate3d(-24px, 20px, 0) scale(1.16); }
-}
-
-.boot-mesh {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 90% 42% at 50% 112%, rgba(255, 255, 255, .12), transparent 60%),
-    radial-gradient(var(--boot-dots) .6px, transparent .6px);
-  background-size: auto, 17px 17px;
-  opacity: .55;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 74%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 74%, transparent 100%);
-}
-
-.boot-vignette {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(115% 95% at 50% 42%, transparent 52%, var(--boot-vignette) 100%);
-}
-
-.boot-grain {
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: .05;
-  mix-blend-mode: overlay;
-}
-
-/* ---------- Centered stage ---------- */
-.boot-stage {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  padding:
-    calc(env(safe-area-inset-top, 0px) + 24px)
-    28px
-    calc(env(safe-area-inset-bottom, 0px) + 30px);
-  text-align: center;
-}
-
-/* ---- App-icon tile with the brand mark ---- */
-.boot-logo {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 104px;
-  height: 104px;
-  animation: walioBootLogoIn .85s cubic-bezier(.16, 1, .3, 1) both;
-}
-
-@keyframes walioBootLogoIn {
-  from { opacity: 0; transform: scale(.82) translateY(10px); }
-  to   { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-.boot-logo-glow {
-  position: absolute;
-  inset: -20px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--boot-glow), transparent 62%);
-  filter: blur(14px);
-  animation: walioBootGlow 2.8s ease-in-out infinite;
-}
-
-@keyframes walioBootGlow {
-  0%, 100% { opacity: .55; transform: scale(1); }
-  50%      { opacity: 1;   transform: scale(1.08); }
-}
-
-/* Conic sweep ring — same trick as the welcome screen's --w-ring */
-.boot-logo-ring {
-  position: absolute;
-  inset: -12px;
-  border-radius: 50%;
-  background: var(--boot-ring);
-  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2.2px));
-  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2.2px));
-  opacity: .8;
-  animation: walioBootRing 3.2s linear infinite;
-}
-
-@keyframes walioBootRing { to { transform: rotate(360deg); } }
-
-.boot-logo-tile {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 84px;
-  height: 84px;
-  overflow: hidden;
-  border-radius: 23px;
-  border: 1.5px solid var(--boot-tile-border);
-  background: linear-gradient(150deg, #6366F1 0%, #4F46E5 26%, #2563EB 58%, #0EA5E9 82%, #10B981 100%);
-  box-shadow:
-    var(--boot-tile-shadow),
-    inset 0 1.5px 0 rgba(255, 255, 255, .42),
-    inset 0 -14px 26px rgba(6, 20, 60, .26);
-}
-
-/* Top gloss + travelling shine across the icon */
-.boot-logo-tile::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, .34), rgba(255, 255, 255, 0) 46%);
-  pointer-events: none;
-}
-
-.boot-logo-shine {
-  position: absolute;
-  top: -40%;
-  left: -80%;
-  width: 46%;
-  height: 180%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .5), transparent);
-  transform: rotate(18deg);
-  animation: walioBootShine 2.8s ease-in-out infinite;
-}
-
-html[dir="rtl"] .boot-logo-shine { left: auto; right: -80%; transform: rotate(-18deg); }
-
-@keyframes walioBootShine {
-  0%       { transform: rotate(18deg) translateX(0);     opacity: 0; }
-  18%      { opacity: .9; }
-  55%, 100%{ transform: rotate(18deg) translateX(320%);  opacity: 0; }
-}
-
-.boot-logo-mark {
-  position: relative;
-  z-index: 1;
-  width: 52px;
-  height: 52px;
-  filter: drop-shadow(0 3px 8px rgba(8, 20, 70, .35));
-}
-
-/* Optional real logo image (6.png): fades over the SVG mark only if it loads */
-.boot-logo-img {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: inherit;
   opacity: 0;
-  transition: opacity .25s ease;
+  visibility: hidden;
+  pointer-events: none;
 }
 
-.boot-logo-img.is-loaded { opacity: 1; }
-
-/* ---- Wordmark + tagline ---- */
-.boot-word {
-  margin-top: 22px;
-  font-size: clamp(28px, 8vw, 32px);
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: .04em;
-  margin-inline-end: -.04em;
-  background: linear-gradient(180deg, #FFFFFF 8%, #DBEAFE 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 8px 22px var(--boot-word-shadow));
-  animation: walioBootWordIn .75s cubic-bezier(.16, 1, .3, 1) .06s both;
+.walio-boot-spinner {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid var(--border-glass, rgba(0, 0, 0, 0.08));
+  border-top-color: var(--accent-primary, #4F46E5);
+  animation: walioBootSpin 0.75s linear infinite;
 }
 
-html[dir="rtl"] .boot-word {
-  letter-spacing: 0;
-  margin-inline-end: 0;
+[data-theme="dark"] .walio-boot-spinner {
+  border-color: rgba(255, 255, 255, 0.12);
+  border-top-color: #3B82F6;
 }
 
-@keyframes walioBootWordIn {
-  from { opacity: 0; transform: translateY(12px); letter-spacing: .18em; }
-  to   { opacity: 1; transform: translateY(0);    letter-spacing: .04em; }
+@keyframes walioBootSpin {
+  to { transform: rotate(360deg); }
 }
 
-.boot-tagline {
-  margin-top: 10px;
-  font-size: 12.5px;
-  font-weight: 500;
-  line-height: 1.5;
-  color: var(--boot-ink-soft);
-  animation: walioBootFadeUp .6s ease .2s both;
-}
-
-/* ---- Hairline progress bar + boot status line ---- */
-.boot-progress {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 11px;
-  width: 100%;
-  max-width: 196px;
-  margin-top: 44px;
-  animation: walioBootFadeUp .6s ease .34s both;
-}
-
-.boot-progress-track {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 4px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: var(--boot-track);
-  box-shadow: inset 0 1px 1px rgba(8, 24, 84, .18);
-}
-
-.boot-progress-fill {
-  position: absolute;
-  inset-block: 0;
-  inset-inline-start: 0;
-  width: calc(var(--boot-progress) * 1%);
-  border-radius: inherit;
-  background: var(--boot-fill);
-  box-shadow: 0 0 12px rgba(165, 180, 252, .6);
-  transition: width .12s linear;
-}
-
-.boot-progress-fill::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .8), transparent);
-  transform: translateX(-100%);
-  animation: walioBootShimmer 1.15s ease-in-out infinite;
-}
-
-@keyframes walioBootShimmer {
-  to { transform: translateX(100%); }
-}
-
-.boot-status {
-  font-size: 11.5px;
-  font-weight: 600;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--boot-ink-mute);
-  transition: opacity .22s ease;
-}
-
-html[dir="rtl"] .boot-status {
-  font-size: 12.5px;
-  letter-spacing: 0;
-  text-transform: none;
-}
-
-.boot-status.is-swapping { opacity: 0; }
-
-@keyframes walioBootFadeUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ---------- Desktop: sit inside the same 440px phone frame as the welcome screen ---------- */
 @media (min-width: 640px) {
   #walio-boot-loader {
     left: 0;
@@ -10745,25 +10365,11 @@ html[dir="rtl"] .boot-status {
     min-height: 620px;
     margin: 0 auto;
     border-radius: 46px;
-    box-shadow: 0 0 0 1px var(--border-glass), 0 0 60px rgba(0, 0, 0, .45);
   }
 }
 
-/* ---------- Reduced motion: static splash, no looping animation ---------- */
 @media (prefers-reduced-motion: reduce) {
-  #walio-boot-loader,
-  #walio-boot-loader .boot-bg *,
-  #walio-boot-loader .boot-stage,
-  #walio-boot-loader .boot-stage * {
-    animation: none !important;
-    transition: none !important;
-  }
-  .boot-logo,
-  .boot-word,
-  .boot-tagline,
-  .boot-progress { opacity: 1 !important; transform: none !important; }
-  .boot-logo-shine { display: none; }
-  .boot-progress-fill::after { display: none; }
+  .walio-boot-spinner { animation-duration: 1.5s; }
 }
 
 /* Auto (day/night) theme row: the manual dark switch is managed automatically */
@@ -10822,66 +10428,8 @@ function walioWelcomePending() {
 </head>
 <body class="immersive-blue">
   <div id="walio-boot-loader" role="status" aria-live="polite" aria-label="Loading Walio">
-    <div class="boot-bg" aria-hidden="true">
-      <div class="boot-halo"></div>
-      <div class="boot-aurora boot-aurora--a"></div>
-      <div class="boot-aurora boot-aurora--b"></div>
-      <div class="boot-aurora boot-aurora--c"></div>
-      <div class="boot-mesh"></div>
-      <div class="boot-vignette"></div>
-      <div class="boot-grain"></div>
-    </div>
-    <div class="boot-stage">
-      <div class="boot-logo">
-        <div class="boot-logo-glow" aria-hidden="true"></div>
-        <div class="boot-logo-ring" aria-hidden="true"></div>
-        <div class="boot-logo-tile">
-          <div class="boot-logo-shine" aria-hidden="true"></div>
-          <svg class="boot-logo-mark" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-            <defs>
-              <linearGradient id="walioBootMarkGrad" x1="10" y1="10" x2="54" y2="54" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#FFFFFF"/>
-                <stop offset="60%" stop-color="#E0E7FF"/>
-                <stop offset="100%" stop-color="#93C5FD"/>
-              </linearGradient>
-              <linearGradient id="walioBootMarkAccent" x1="16" y1="20" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#34D399"/>
-                <stop offset="50%" stop-color="#60A5FA"/>
-                <stop offset="100%" stop-color="#A78BFA"/>
-              </linearGradient>
-            </defs>
-            <path d="M14 18C14 14.6863 16.6863 12 20 12H44C47.3137 12 50 14.6863 50 18V24H14V18Z" fill="url(#walioBootMarkGrad)" fill-opacity="0.25"/>
-            <path d="M12 22C12 18.6863 14.6863 16 18 16H46C49.3137 16 52 18.6863 52 22V44C52 48.4183 48.4183 52 44 52H20C15.5817 52 12 48.4183 12 44V22Z" fill="url(#walioBootMarkGrad)" stroke="rgba(255,255,255,0.75)" stroke-width="1.6"/>
-            <path d="M20 28L26 44L32 32L38 44L44 28" stroke="url(#walioBootMarkAccent)" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="32" cy="23" r="2.6" fill="#FFFFFF"/>
-          </svg>
-          <img class="boot-logo-img" src="6.png" alt="Walio" onload="this.classList.add('is-loaded')" onerror="this.remove()">
-        </div>
-      </div>
-      <div class="boot-word" id="boot-wordmark">Walio</div>
-      <div class="boot-tagline" id="boot-tagline" data-i18n="boot_tagline">Smart Personal Finance</div>
-      <div class="boot-progress">
-        <div class="boot-progress-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-          <div class="boot-progress-fill" id="boot-progress-fill"></div>
-        </div>
-        <div class="boot-status" id="boot-status-text" data-i18n="boot_status_init">INITIALIZING</div>
-      </div>
-    </div>
+    <div class="walio-boot-spinner" aria-hidden="true"></div>
   </div>
-  <script>
-  (function() {
-    var l = document.documentElement.getAttribute('lang') || 'en';
-    var isFa = l === 'fa';
-    var tag = document.getElementById('boot-tagline');
-    var stat = document.getElementById('boot-status-text');
-    var word = document.getElementById('boot-wordmark');
-    if (isFa) {
-      if (tag) tag.textContent = 'مدیریت هوشمند دارایی و مالی شخصی';
-      if (stat) stat.textContent = 'در حال آماده‌سازی...';
-      if (word) word.textContent = 'والیـو';
-    }
-  })();
-  </script>
 
   <div class="walio-welcome" id="walio-welcome-intro" aria-hidden="true" role="dialog" aria-label="Welcome to Walio">
     <div class="walio-w-bg" aria-hidden="true">
@@ -11451,10 +10999,7 @@ const translations = {
   en: {
     // App & Navigation
     app_name: "Walio",
-    boot_tagline: "Smart Personal Finance",
-    boot_status_init: "INITIALIZING",
-    boot_status_sync: "SYNCING DATA",
-    boot_status_ready: "READY",
+    loading_text: "Loading...",
 
     // First-launch welcome screen
     walio_w_get_started: "Get Started",
@@ -11861,10 +11406,7 @@ const translations = {
   fa: {
     // App & Navigation
     app_name: "والیـو",
-    boot_tagline: "مدیریت هوشمند دارایی و مالی شخصی",
-    boot_status_init: "در حال آماده‌سازی...",
-    boot_status_sync: "بروزرسانی داده‌ها...",
-    boot_status_ready: "آماده ورود",
+    loading_text: "در حال بارگذاری...",
 
     // First-launch welcome screen
     walio_w_get_started: "شروع کنید",
@@ -15611,8 +15153,8 @@ class WalioApp {
     // On the very first launch, play the branded intro before onboarding.
     this.runFirstLaunchExperience();
 
-    // Native branded splash screen on start (skipped on the welcome screen).
-    this.runBootLoader(1200);
+    // Single circular loading on start (skipped on the welcome screen).
+    this.runBootLoader(700);
     this.setupResumeLoader();
 
     if (window.currency) {
@@ -15701,12 +15243,10 @@ class WalioApp {
 
   /* ---------------- boot loader ---------------- */
   /**
-   * Native app splash screen on start and resume.
-   * Advances the progress bar through realistic boot stages and plays
-   * a scale-and-melt transition into the home screen.
+   * Minimal single circular loader on start and resume.
    * Skipped entirely while the first-launch welcome screen is pending.
    */
-  runBootLoader(duration = 1200) {
+  runBootLoader(duration = 700) {
     const loader = document.getElementById('walio-boot-loader');
     const html = document.documentElement;
 
@@ -15722,64 +15262,12 @@ class WalioApp {
       return;
     }
 
-    // Clear any pending animation timers
-    if (this._bootLoaderTimers) {
-      this._bootLoaderTimers.forEach(id => clearTimeout(id));
-    }
-    this._bootLoaderTimers = [];
-
-    // Localize texts on the fly
-    const wordmark = loader.querySelector('#boot-wordmark');
-    const tagline = loader.querySelector('#boot-tagline');
-    const statusEl = loader.querySelector('#boot-status-text');
-    const fillEl = loader.querySelector('#boot-progress-fill');
-    const t = (k, fb) => (window.i18n ? window.i18n.t(k) : fb);
-
-    if (wordmark) wordmark.textContent = t('app_name', 'Walio');
-    if (tagline) tagline.textContent = t('boot_tagline', 'Smart Personal Finance');
-
-    const setProgress = (pct) => {
-      loader.style.setProperty('--boot-progress', pct);
-      if (fillEl) fillEl.style.width = pct + '%';
-    };
-
-    const setStatus = (txt) => {
-      if (!statusEl) return;
-      statusEl.classList.add('is-swapping');
-      setTimeout(() => {
-        statusEl.textContent = txt;
-        statusEl.classList.remove('is-swapping');
-      }, 120);
-    };
-
-    // Initial state
-    setProgress(14);
-    if (statusEl) statusEl.textContent = t('boot_status_init', 'INITIALIZING');
-
     loader.classList.remove('is-hiding');
     loader.classList.add('is-visible');
     html.classList.add('walio-booting');
 
-    // Smooth choreographed stage transitions
-    const step1 = setTimeout(() => {
-      setProgress(52);
-      setStatus(t('boot_status_sync', 'SYNCING DATA'));
-    }, Math.round(duration * 0.28));
-
-    const step2 = setTimeout(() => {
-      setProgress(86);
-    }, Math.round(duration * 0.65));
-
-    const step3 = setTimeout(() => {
-      setProgress(100);
-      setStatus(t('boot_status_ready', 'READY'));
-    }, Math.round(duration * 0.88));
-
-    const stepFinal = setTimeout(() => {
-      this.hideBootLoader();
-    }, duration);
-
-    this._bootLoaderTimers.push(step1, step2, step3, stepFinal);
+    if (this._bootLoaderTimer) clearTimeout(this._bootLoaderTimer);
+    this._bootLoaderTimer = window.setTimeout(() => this.hideBootLoader(), duration);
   }
 
   hideBootLoader() {
@@ -15789,8 +15277,7 @@ class WalioApp {
     loader.classList.add('is-hiding');
     window.setTimeout(() => {
       loader.classList.remove('is-visible', 'is-hiding');
-      loader.style.removeProperty('--boot-progress');
-    }, 440);
+    }, 240);
   }
 
   /**
@@ -15809,7 +15296,7 @@ class WalioApp {
         // Auto theme may need to change if a lot of time passed.
         this.applyTheme();
         this.updateHeaderThemeIcon();
-        this.runBootLoader(1200);
+        this.runBootLoader(700);
       }
     });
 
@@ -15818,7 +15305,7 @@ class WalioApp {
       if (e.persisted) {
         this.applyTheme();
         this.updateHeaderThemeIcon();
-        this.runBootLoader(1200);
+        this.runBootLoader(700);
       }
     });
   }
@@ -18126,5 +17613,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31ab9567ef82362',t:'MTc4NzgzMDAxNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31bbbd58fd9a895',t:'MTc4Nzg0MDYwMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a323cc45cd40d93d',t:'MTc4NzkyNTE2MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3b73dd5bcb999fb',t:'MTc4OTQ3MTIyMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3b7b9b30cb6d64d',t:'MTc4OTQ3NjI5Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a401f4f74f95be4c',t:'MTc5MDI1NDY2Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a402483fdb63500d',t:'MTc5MDI1ODA3OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31ab9567ef82362',t:'MTc4NzgzMDAxNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31bbbd58fd9a895',t:'MTc4Nzg0MDYwMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a323cc45cd40d93d',t:'MTc4NzkyNTE2MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3b73dd5bcb999fb',t:'MTc4OTQ3MTIyMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3b7b9b30cb6d64d',t:'MTc4OTQ3NjI5Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a401f4f74f95be4c',t:'MTc5MDI1NDY2Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4026fc889e62419',t:'MTc5MDI1OTY5OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
