@@ -102,27 +102,39 @@ html[lang="fa"] body {
   -webkit-tap-highlight-color: transparent;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  /* nothing on the page is selectable, like a native app */
+  -webkit-user-select: none;
+  user-select: none;
 }
 *::-webkit-scrollbar { width: 0; height: 0; display: none; background: transparent; }
 
-html, body {
+html {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body {
+  /* locked viewport: no scrolling, no rubber-band (native-app behavior) */
+  position: fixed;
+  inset: 0;
   width: 100%;
-  min-height: 100%;
-  min-height: 100dvh;
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
   font-family: var(--font-main);
   background: var(--bg-main);
   color: var(--text-primary);
   font-size: clamp(14px, 3.5vw, 15px);
   line-height: 1.5;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  user-select: none;
 }
 
 /* ================= SCREEN FRAME ================= */
 .screen {
   position: relative;
-  min-height: 100dvh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -132,8 +144,7 @@ html, body {
   body { display: grid; place-items: center; padding: 24px 0; background: var(--bg-sub); }
   .screen {
     width: 440px;
-    min-height: 620px;
-    height: calc(100dvh - 24px);
+    height: calc(100dvh - 48px);
     border-radius: 46px;
     box-shadow: 0 0 0 1px var(--border-glass), 0 30px 70px rgba(0, 0, 0, 0.35);
   }
@@ -257,11 +268,19 @@ html[dir="rtl"] .hero-glow--b { right: auto; left: -10px; }
   border-radius: 100px;
   background: rgba(255, 255, 255, 0.14);
   border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
   font-size: 12px;
   font-weight: 650;
   letter-spacing: 0.2px;
-  color: rgba(255, 255, 255, 0.94);
+  color: rgba(255, 255, 255, 0.96);
   text-shadow: 0 1px 8px rgba(15, 40, 120, 0.25);
+}
+/* English reads sharper as a small-caps label */
+html[lang="en"] .hero-status {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 .hero-status .dot {
   width: 7px;
@@ -278,22 +297,37 @@ html[dir="rtl"] .hero-glow--b { right: auto; left: -10px; }
 
 .brand {
   display: block;
-  margin-top: 14px;
+  margin-top: 16px;
   font-family: 'Inter', var(--font-main);
-  font-size: 36px;
+  font-size: clamp(40px, 11vw, 46px);
   font-weight: 800;
-  letter-spacing: -1.2px;
-  line-height: 1.1;
-  color: #fff;
-  text-shadow: 0 1px 8px rgba(15, 40, 120, 0.25);
+  letter-spacing: -1.8px;
+  line-height: 1.05;
+  background: linear-gradient(100deg,
+    #FFFFFF 0%, #FFFFFF 38%,
+    #BFDBFE 50%,
+    #FFFFFF 62%, #DCE8FF 100%);
+  background-size: 230% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 2px 12px rgba(15, 40, 120, 0.30));
+  animation: brandShine 7s ease-in-out infinite;
+}
+@keyframes brandShine {
+  0%, 72% { background-position: 130% 0; }
+  88%, 100% { background-position: -30% 0; }
 }
 .hero-tagline {
-  margin-top: 8px;
-  max-width: 300px;
-  font-size: 12.5px;
+  margin-top: 10px;
+  max-width: 310px;
+  font-size: 13px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.88);
 }
+html[lang="en"] .hero-tagline { letter-spacing: 0.1px; }
 
 /* ---- hero topbar: language pills + theme (white-on-blue controls) ---- */
 .hero-topbar {
@@ -357,11 +391,24 @@ html[dir="rtl"] .hero-glow--b { right: auto; left: -10px; }
 /* ================= BODY ================= */
 .body {
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 26px clamp(18px, 5vw, 26px) calc(20px + env(safe-area-inset-bottom, 0px));
+}
+
+/* short viewports: the page never scrolls, so compress instead */
+@media (max-height: 660px) {
+  .hero { padding-bottom: 12px; }
+  .hero-glass { margin-top: 4px; padding: 14px 18px 18px; }
+  .brand { font-size: 32px; margin-top: 10px; }
+  .hero-tagline { margin-top: 6px; }
+  .body { padding-top: 16px; padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+  .timer { margin: 12px 0 2px; }
+  .card-note { margin: 10px 0 14px; }
+  .screen-footer { padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
 }
 
 /* ---- glass card (.hero-balance-card pattern) ---- */
