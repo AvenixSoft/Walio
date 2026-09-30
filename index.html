@@ -18132,25 +18132,6 @@ class WalioApp {
             </button>
           </section>
 
-          <section class="home-section" aria-labelledby="home-wallets-title">
-            <div class="home-section-heading">
-              <div>
-                <span class="home-section-kicker" data-i18n="my_wallets">${t('my_wallets')}</span>
-                <h2 class="home-section-title" id="home-wallets-title" data-i18n="my_wallets">${t('my_wallets')}</h2>
-              </div>
-              <div class="home-section-heading-actions">
-                <button class="home-section-icon-btn" id="home-add-wallet-btn" type="button" aria-label="${t('new_wallet')}">
-                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-                </button>
-                <button class="home-section-link" id="home-link-wallets" type="button">
-                  <span data-i18n="see_all">${t('see_all')}</span>
-                  <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4l6 6-6 6"/></svg>
-                </button>
-              </div>
-            </div>
-            <div class="wallets-carousel" id="home-wallets-carousel"></div>
-          </section>
-
           <section class="home-section" aria-labelledby="home-transactions-title">
             <div class="home-section-heading">
               <div>
@@ -18180,28 +18161,12 @@ class WalioApp {
               <div class="transactions-list" id="home-tx-list"></div>
             </div>
           </section>
-
-          <section class="home-section" aria-labelledby="home-market-title">
-            <div class="home-section-heading">
-              <div>
-                <span class="home-section-kicker" data-i18n="market_short_note">${t('market_short_note')}</span>
-                <h2 class="home-section-title" id="home-market-title" data-i18n="home_market_snapshot">${t('home_market_snapshot')}</h2>
-              </div>
-              <button class="home-section-link" id="home-link-currency" type="button">
-                <span data-i18n="see_all">${t('see_all')}</span>
-                <svg viewBox="0 0 20 20" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4l6 6-6 6"/></svg>
-              </button>
-            </div>
-            <div class="home-market-sheet" id="home-currency-preview"></div>
-          </section>
         </div>
       </div>`;
 
 
     if (window.i18n) window.i18n.translateDOM();
-    if (window.walletManager) window.walletManager.renderHomeCarousel('home-wallets-carousel');
     this.renderTransactionList('home-tx-list', this.activeTxFilter, this.searchQuery);
-    this.renderHomeCurrencyPreview('home-currency-preview');
     if (window.walioCryptoUI) window.walioCryptoUI.mountHome();
 
     const privacyButton = container.querySelector('#btn-toggle-privacy');
@@ -18228,21 +18193,6 @@ class WalioApp {
         this.switchTab('tools');
       });
     }
-
-    const newWalletButton = container.querySelector('#home-add-wallet-btn');
-    if (newWalletButton) {
-      newWalletButton.addEventListener('click', () => {
-        this.switchTab('wallets');
-        window.setTimeout(() => {
-          if (window.walletManager) window.walletManager.openEditWalletModal(null);
-        }, 100);
-      });
-    }
-
-    const walletsLink = container.querySelector('#home-link-wallets');
-    if (walletsLink) walletsLink.addEventListener('click', () => this.switchTab('wallets'));
-    const currencyLink = container.querySelector('#home-link-currency');
-    if (currencyLink) currencyLink.addEventListener('click', () => this.switchTab('currency'));
 
     const insightCta = container.querySelector('#home-insight-cta');
     if (insightCta) {
