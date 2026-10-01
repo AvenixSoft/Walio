@@ -10692,6 +10692,652 @@ function walioWelcomePending() {
   }
 })();
 </script>
+<style id="walio-beta-notice-style">
+/* ==================== WALIO BETA NOTICE — v4 ====================
+ * Header/hero uses the app's own header blue (#2563EB light / #1E3A8A dark),
+ * surfaces + list rows come from the app's card DNA, and the box has a
+ * built-in English ⇄ فارسی switch (English is the default).
+ */
+.wbn-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 6000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: calc(env(safe-area-inset-top, 0px) + 12px) 12px calc(env(safe-area-inset-bottom, 0px) + 16px);
+  background: radial-gradient(130% 90% at 50% -10%, rgba(8, 10, 22, 0.36), rgba(8, 10, 22, 0.62) 72%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  backdrop-filter: blur(14px) saturate(150%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.wbn-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ---------- card = app glass card (--card-bg) ---------- */
+.wbn-card {
+  position: relative;
+  width: 100%;
+  max-width: 396px;
+  max-height: calc(100dvh - env(safe-area-inset-top, 0px) - 40px);
+  display: flex;
+  flex-direction: column;
+  border-radius: 28px;
+  overflow: hidden;
+  background: var(--card-bg, rgba(255, 255, 255, 0.82));
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid var(--border-glass, rgba(0, 0, 0, 0.08));
+  box-shadow: 0 26px 60px rgba(2, 6, 23, 0.42),
+              0 8px 22px rgba(2, 6, 23, 0.22),
+              var(--shadow-glass, inset 0 1px 1px rgba(255, 255, 255, 0.8));
+  transform: translateY(-30px) scale(0.93);
+  opacity: 0;
+  transition: transform 0.55s cubic-bezier(0.16, 1.06, 0.3, 1), opacity 0.3s ease;
+  will-change: transform, opacity;
+}
+
+.wbn-overlay.is-open .wbn-card {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* Persian mode: RTL flow + the app's Persian font */
+.wbn-card[dir="rtl"] {
+  font-family: 'Vazirmatn', 'Shabnam', Tahoma, 'IRANSans', sans-serif;
+}
+
+/* ---------- top row: drag handle + language switch ---------- */
+.wbn-top {
+  flex: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 8px 12px 2px;
+  min-height: 34px;
+}
+
+/* generous hit area so it is easy to grab with a thumb */
+.wbn-grab {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  touch-action: none;
+  cursor: grab;
+}
+
+.wbn-grab::after {
+  content: '';
+  position: absolute;
+  top: 9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 42px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--chip-bg-strong, rgba(15, 23, 42, 0.1));
+}
+
+.wbn-grab:active {
+  cursor: grabbing;
+}
+
+/* ---------- language pill (same DNA as the app's .lang-btn) ---------- */
+.wbn-langpill {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  gap: 3px;
+  padding: 3px;
+  border-radius: 999px;
+  background: var(--chip-bg, rgba(15, 23, 42, 0.06));
+  border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.05));
+}
+
+.wbn-langbtn {
+  min-width: 62px;
+  height: 27px;
+  padding: 0 11px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-secondary, #475569);
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.1px;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.wbn-langbtn.is-on {
+  background: #2563EB;                 /* app header blue */
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.32);
+}
+
+[data-theme="dark"] .wbn-langbtn.is-on {
+  background: #3B82F6;
+  box-shadow: 0 6px 14px rgba(59, 130, 246, 0.38);
+}
+
+.wbn-langbtn:active {
+  transform: scale(0.96);
+}
+
+.wbn-langbtn:focus-visible {
+  outline: 2px solid #2563EB;
+  outline-offset: 2px;
+}
+
+/* ---------- body ---------- */
+.wbn-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: 8px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: start;
+}
+
+/* never squeeze the content — the body scrolls instead */
+.wbn-body > * {
+  flex: 0 0 auto;
+}
+
+/* ---------- hero — the app's header blue ---------- */
+.wbn-hero {
+  --wbn-hero-a: #2563EB;   /* --immersive-top (app header, light) */
+  --wbn-hero-b: #1D4ED8;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 15px 14px;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 94% 8%, rgba(186, 230, 253, 0.26), transparent 34%),
+    radial-gradient(circle at 6% 110%, rgba(129, 140, 248, 0.22), transparent 40%),
+    linear-gradient(135deg, var(--wbn-hero-a) 0%, var(--wbn-hero-a) 42%, var(--wbn-hero-b) 100%);
+  box-shadow: 0 16px 32px rgba(30, 64, 175, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .wbn-hero {
+  --wbn-hero-a: #1E3A8A;   /* --immersive-top-dark (app header, dark) */
+  --wbn-hero-b: #2563EB;
+  box-shadow: 0 16px 32px rgba(2, 6, 23, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.wbn-hero::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  width: 148px;
+  height: 148px;
+  left: -54px;
+  top: -70px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  box-shadow: 0 0 0 22px rgba(255, 255, 255, 0.04), 0 0 0 44px rgba(255, 255, 255, 0.02);
+}
+
+.wbn-hero-ico {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.wbn-hero-ico svg {
+  width: 26px;
+  height: 26px;
+  display: block;
+}
+
+.wbn-hero-copy {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.wbn-hero-copy strong {
+  font-size: 16.5px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  line-height: 1.5;
+  color: #fff;
+}
+
+.wbn-hero-copy span {
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+/* ---------- install callout (app badge colours) ---------- */
+.wbn-inst {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px;
+  border-radius: 20px;
+  border: 1px solid rgba(245, 158, 11, 0.32);
+  background: rgba(245, 158, 11, 0.13);
+}
+
+[data-theme="dark"] .wbn-inst {
+  border-color: rgba(245, 158, 11, 0.38);
+  background: rgba(245, 158, 11, 0.16);
+}
+
+.wbn-ico {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  border-radius: 13px;
+  box-shadow: var(--ico-shadow, 0 8px 16px rgba(15, 23, 42, 0.22)),
+              inset 0 1px 0 rgba(255, 255, 255, 0.4),
+              inset 0 -1.5px 0 rgba(0, 0, 0, 0.1);
+}
+
+.wbn-ico svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.wbn-g-indigo { background: linear-gradient(150deg, #818CF8 0%, #4F46E5 55%, #4338CA 100%); --ico-shadow: 0 8px 16px rgba(79, 70, 229, 0.32); }
+.wbn-g-blue   { background: linear-gradient(150deg, #60A5FA 0%, #2563EB 55%, #1D4ED8 100%); --ico-shadow: 0 8px 16px rgba(37, 99, 235, 0.32); }
+.wbn-g-green  { background: linear-gradient(150deg, #34D399 0%, #059669 55%, #047857 100%); --ico-shadow: 0 8px 16px rgba(5, 150, 105, 0.32); }
+.wbn-g-amber  { background: linear-gradient(150deg, #FBBF24 0%, #F59E0B 52%, #EA580C 100%); --ico-shadow: 0 8px 16px rgba(234, 88, 12, 0.32); }
+.wbn-g-purple { background: linear-gradient(150deg, #C084FC 0%, #7C3AED 55%, #6D28D9 100%); --ico-shadow: 0 8px 16px rgba(124, 58, 237, 0.32); }
+
+.wbn-inst-body {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wbn-inst-title {
+  font-size: 13.6px;
+  font-weight: 800;
+  line-height: 1.5;
+  letter-spacing: -0.2px;
+  color: #B45309;
+}
+
+[data-theme="dark"] .wbn-inst-title {
+  color: #FCD34D;
+}
+
+.wbn-steps {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.wbn-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 100%;
+  padding: 6px 11px;
+  border-radius: 999px;
+  direction: ltr;
+  text-align: left;
+  font-size: 10.8px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-primary, #0F172A);
+  background: rgba(245, 158, 11, 0.16);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+}
+
+[data-theme="dark"] .wbn-step {
+  background: rgba(245, 158, 11, 0.19);
+  border-color: rgba(245, 158, 11, 0.34);
+}
+
+.wbn-step b {
+  font-size: 9.6px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  opacity: 0.62;
+}
+
+/* ---------- section head (app tools-group head + count chip) ---------- */
+.wbn-sec {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 4px 0;
+}
+
+.wbn-sec-t {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.35px;
+  color: var(--text-primary, #0F172A);
+}
+
+.wbn-count {
+  margin-inline-start: auto;
+  min-width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+  color: #2563EB;
+  background: rgba(37, 99, 235, 0.10);
+}
+
+[data-theme="dark"] .wbn-count {
+  color: #A5B4FC;
+  background: rgba(129, 140, 248, 0.16);
+}
+
+/* ---------- feature list (app tools-group-list rows) ---------- */
+.wbn-feats {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 22px;
+  background: #fff;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme="dark"] .wbn-feats {
+  background: var(--card-bg, rgba(26, 26, 36, 0.65));
+  border-color: var(--border-glass, rgba(255, 255, 255, 0.12));
+  box-shadow: none;
+}
+
+.wbn-feat {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-bottom: 1px solid rgba(241, 245, 249, 1);
+  transition: background 0.2s ease;
+}
+
+[data-theme="dark"] .wbn-feat {
+  border-bottom-color: var(--border-subtle, rgba(255, 255, 255, 0.08));
+}
+
+.wbn-feat:last-child {
+  border-bottom: 0;
+}
+
+@media (hover: hover) {
+  .wbn-feat:hover {
+    background: rgba(241, 245, 249, 0.6);
+  }
+  [data-theme="dark"] .wbn-feat:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+.wbn-feat-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.wbn-feat-copy b {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  line-height: 1.5;
+  color: var(--text-primary, #0F172A);
+}
+
+/* ---------- footer + OK button ---------- */
+.wbn-foot {
+  flex: none;
+  padding: 12px 14px calc(14px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.06));
+}
+
+.wbn-ok {
+  --wbn-cta-a: #2563EB;               /* app header blue (light) */
+  --wbn-cta-b: #1D4ED8;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 15.5px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  background:
+    radial-gradient(circle at 94% 8%, rgba(186, 230, 253, 0.26), transparent 34%),
+    radial-gradient(circle at 6% 110%, rgba(129, 140, 248, 0.22), transparent 40%),
+    linear-gradient(135deg, var(--wbn-cta-a) 0%, var(--wbn-cta-a) 42%, var(--wbn-cta-b) 100%);
+  box-shadow: 0 16px 32px rgba(30, 64, 175, 0.28),
+              inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+[data-theme="dark"] .wbn-ok {
+  --wbn-cta-a: #1E3A8A;               /* app header blue (dark) */
+  --wbn-cta-b: #2563EB;
+  box-shadow: 0 16px 32px rgba(2, 6, 23, 0.42),
+              inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.wbn-ok::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  width: 76px;
+  height: 76px;
+  left: -34px;
+  top: -40px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  box-shadow: 0 0 0 14px rgba(255, 255, 255, 0.03), 0 0 0 28px rgba(255, 255, 255, 0.014);
+  pointer-events: none;
+}
+
+/* sheen sweep, same DNA as the app's primary CTA */
+.wbn-ok::after {
+  content: '';
+  position: absolute;
+  top: -30%;
+  bottom: -30%;
+  width: 40%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+  transform: translateX(-260%) skewX(-20deg);
+  animation: wbnOkSheen 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes wbnOkSheen {
+  0%, 64% { transform: translateX(-260%) skewX(-20deg); }
+  88%, 100% { transform: translateX(340%) skewX(-20deg); }
+}
+
+.wbn-ok-ico {
+  position: relative;
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.wbn-ok-ico svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+
+.wbn-ok-label {
+  position: relative;
+  z-index: 1;
+}
+
+.wbn-ok:active {
+  transform: scale(0.985);
+}
+
+@media (hover: hover) {
+  .wbn-ok:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 20px 40px rgba(30, 64, 175, 0.34),
+                inset 0 1px 0 rgba(255, 255, 255, 0.26);
+  }
+}
+
+.wbn-ok:focus-visible {
+  outline: 2px solid #2563EB;
+  outline-offset: 3px;
+}
+
+/* the card focuses OK on open for accessibility — ring only for real Tab use */
+.wbn-ok[data-autofocus="1"]:focus-visible {
+  outline: none;
+}
+
+/* ---------- responsive / a11y ---------- */
+@media (max-width: 370px) {
+  .wbn-card { border-radius: 24px; }
+  .wbn-body { padding: 7px 11px 12px; gap: 10px; }
+  .wbn-foot { padding-left: 11px; padding-right: 11px; }
+  .wbn-hero { padding: 13px 12px; gap: 11px; border-radius: 20px; }
+  .wbn-hero-ico { width: 44px; height: 44px; border-radius: 14px; }
+  .wbn-hero-copy strong { font-size: 15.5px; }
+  .wbn-feat { grid-template-columns: 40px minmax(0, 1fr); gap: 11px; padding: 10px 12px; }
+  .wbn-ico { width: 40px; height: 40px; border-radius: 12px; }
+  .wbn-ico svg { width: 21px; height: 21px; }
+  .wbn-sec-t { font-size: 15.5px; }
+  .wbn-ok { height: 52px; }
+  .wbn-langbtn { min-width: 56px; padding: 0 9px; }
+}
+
+/* ---------- short screens: keep everything visible without scrolling ---------- */
+@media (max-height: 730px) {
+  .wbn-body { padding: 6px 12px 10px; gap: 9px; }
+  .wbn-hero { padding: 12px 13px; gap: 11px; border-radius: 20px; }
+  .wbn-hero-ico { width: 42px; height: 42px; border-radius: 14px; }
+  .wbn-hero-ico svg { width: 23px; height: 23px; }
+  .wbn-hero-copy strong { font-size: 15.5px; }
+  .wbn-hero-copy span { font-size: 11.8px; }
+  .wbn-inst { padding: 11px 12px; gap: 10px; }
+  .wbn-inst-body { gap: 6px; }
+  .wbn-inst-title { font-size: 13px; }
+  .wbn-sec-t { font-size: 15.5px; }
+  .wbn-count { height: 27px; font-size: 11.5px; padding: 0 10px; }
+  .wbn-feat { grid-template-columns: 38px minmax(0, 1fr); gap: 11px; padding: 9px 12px; }
+  .wbn-ico { width: 38px; height: 38px; border-radius: 12px; }
+  .wbn-ico svg { width: 20px; height: 20px; }
+  .wbn-feat-copy b { font-size: 13.4px; }
+  .wbn-foot { padding: 10px 12px calc(11px + env(safe-area-inset-bottom, 0px)); }
+  .wbn-ok { height: 50px; font-size: 15px; }
+}
+
+@media (max-height: 660px) {
+  .wbn-body { padding: 5px 11px 9px; gap: 6px; }
+  .wbn-hero { padding: 10px 12px; gap: 10px; }
+  .wbn-hero-ico { width: 38px; height: 38px; border-radius: 12px; }
+  .wbn-hero-ico svg { width: 21px; height: 21px; }
+  .wbn-hero-copy { gap: 1px; }
+  .wbn-hero-copy strong { font-size: 14.8px; }
+  .wbn-hero-copy span { font-size: 11.2px; }
+  .wbn-inst { padding: 9px 11px; gap: 9px; border-radius: 17px; }
+  .wbn-inst-body { gap: 5px; }
+  .wbn-inst-title { font-size: 12.4px; }
+  .wbn-step { padding: 5px 10px; font-size: 10.2px; }
+  .wbn-steps { gap: 5px; }
+  .wbn-sec-t { font-size: 14.4px; }
+  .wbn-count { height: 25px; font-size: 11px; }
+  .wbn-feat { grid-template-columns: 34px minmax(0, 1fr); gap: 10px; padding: 6px 11px; }
+  .wbn-ico { width: 34px; height: 34px; border-radius: 11px; }
+  .wbn-ico svg { width: 18px; height: 18px; }
+  .wbn-feat-copy b { font-size: 12.8px; }
+  .wbn-foot { padding: 8px 11px calc(9px + env(safe-area-inset-bottom, 0px)); }
+  .wbn-ok { height: 46px; font-size: 14.5px; }
+  .wbn-ok-ico { width: 23px; height: 23px; }
+  .wbn-ok-ico svg { width: 13px; height: 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wbn-overlay,
+  .wbn-card,
+  .wbn-ok,
+  .wbn-ok::after { transition: none !important; animation: none !important; }
+}
+  
+  </style>
 </head>
 <body class="immersive-blue">
   <div id="walio-boot-loader" role="status" aria-live="polite" aria-label="Loading Walio">
@@ -20019,5 +20665,456 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31ab9567ef82362',t:'MTc4NzgzMDAxNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31bbbd58fd9a895',t:'MTc4Nzg0MDYwMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a323cc45cd40d93d',t:'MTc4NzkyNTE2MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3b73dd5bcb999fb',t:'MTc4OTQ3MTIyMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3b7b9b30cb6d64d',t:'MTc4OTQ3NjI5Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a401f4f74f95be4c',t:'MTc5MDI1NDY2Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4026fc889e62419',t:'MTc5MDI1OTY5OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4360de6fc9dea3a',t:'MTc5MDgwMDk0OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-</html>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31ab9567ef82362',t:'MTc4NzgzMDAxNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a31bbbd58fd9a895',t:'MTc4Nzg0MDYwMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a323cc45cd40d93d',t:'MTc4NzkyNTE2MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3b73dd5bcb999fb',t:'MTc4OTQ3MTIyMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3b7b9b30cb6d64d',t:'MTc4OTQ3NjI5Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a401f4f74f95be4c',t:'MTc5MDI1NDY2Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4026fc889e62419',t:'MTc5MDI1OTY5OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4360de6fc9dea3a',t:'MTc5MDgwMDk0OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+  <!-- ==================== WALIO BETA NOTICE (app-styled, EN/FA) ==================== -->
+  <div class="wbn-overlay" id="wbn-overlay" role="dialog" aria-modal="true"
+       aria-labelledby="wbn-title" aria-hidden="true">
+    <div class="wbn-card" id="wbn-card" dir="ltr" lang="en">
+
+      <div class="wbn-top">
+        <button class="wbn-grab" id="wbn-grab" type="button" tabindex="-1"
+                aria-label="Dismiss" title="Dismiss"></button>
+        <div class="wbn-langpill" role="group" aria-label="Language / زبان">
+          <button class="wbn-langbtn" id="wbn-lang-en" type="button" data-wbn-lang="en">English</button>
+          <button class="wbn-langbtn" id="wbn-lang-fa" type="button" data-wbn-lang="fa">فارسی</button>
+        </div>
+      </div>
+
+      <div class="wbn-body" id="wbn-body">
+
+        <!-- hero — the app's header blue -->
+        <div class="wbn-hero">
+          <span class="wbn-hero-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path fill="#fff" fill-opacity=".95" d="M9.4 3.1h5.2v3.3l4.9 9.3a3.6 3.6 0 0 1-3.2 5.3H7.7a3.6 3.6 0 0 1-3.2-5.3l4.9-9.3z"/>
+              <path fill="#0B1020" fill-opacity=".18" d="M6.6 13.9h10.8l.9 4.1a2 2 0 0 1-2 2.4H7.7a2 2 0 0 1-2-2.4z"/>
+              <circle cx="10.3" cy="17.9" r="1" fill="#fff" fill-opacity=".95"/>
+              <circle cx="13.7" cy="19.1" r=".72" fill="#fff" fill-opacity=".95"/>
+              <path fill="#fff" fill-opacity=".95" d="M8.2 2.1h7.6a1.18 1.18 0 0 1 0 2.36H8.2a1.18 1.18 0 0 1 0-2.36z"/>
+            </svg>
+          </span>
+          <div class="wbn-hero-copy">
+            <strong id="wbn-title" data-wbn="title">This is a beta version</strong>
+            <span data-wbn="subtitle">You can use it — but your data may be reset.</span>
+          </div>
+        </div>
+
+        <!-- required: add to home screen -->
+        <div class="wbn-inst" role="note">
+          <span class="wbn-ico wbn-g-amber" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <rect x="5.6" y="5.4" width="12.8" height="12.8" rx="4" fill="none" stroke="#fff" stroke-opacity=".95" stroke-width="1.9"/>
+              <path d="M12 8.9v5.6M9.2 11.7h5.6" fill="none" stroke="#fff" stroke-opacity=".95" stroke-width="1.9" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <div class="wbn-inst-body">
+            <strong class="wbn-inst-title" data-wbn="installTitle">Add to Home Screen is required</strong>
+            <span class="wbn-steps">
+              <span class="wbn-step"><b>iOS</b> Share → Add to Home Screen</span>
+              <span class="wbn-step"><b>Android</b> ⋮ → Install app</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- what's new -->
+        <div class="wbn-sec">
+          <span class="wbn-sec-t" data-wbn="section">What's new</span>
+          <span class="wbn-count" data-wbn="count">5 items</span>
+        </div>
+
+        <div class="wbn-feats">
+
+          <div class="wbn-feat">
+            <span class="wbn-ico wbn-g-indigo" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="2.9" y="6.2" width="18.2" height="13.4" rx="4.6" fill="#fff" fill-opacity=".95"/>
+                <rect x="14.4" y="10.6" width="7.3" height="4.9" rx="2.45" fill="#0B1020" fill-opacity=".3"/>
+                <circle cx="17.6" cy="13.05" r="1.3" fill="#fff"/>
+                <path d="M5.4 6.05V5.4c0-1.35 1.1-2.45 2.45-2.45h8.3c1.35 0 2.45 1.1 2.45 2.45v.65" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.7" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="wbn-feat-copy">
+              <b data-wbn="f1">Create a crypto wallet</b>
+            </span>
+          </div>
+
+          <div class="wbn-feat">
+            <span class="wbn-ico wbn-g-blue" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="8.5" fill="none" stroke="#fff" stroke-opacity=".95" stroke-width="1.8"/>
+                <ellipse cx="12" cy="12" rx="4" ry="8.5" fill="none" stroke="#fff" stroke-opacity=".52" stroke-width="1.5"/>
+                <path d="M3.8 12h16.4" fill="none" stroke="#fff" stroke-opacity=".52" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="wbn-feat-copy">
+              <b data-wbn="f2">Multi-chain support</b>
+            </span>
+          </div>
+
+          <div class="wbn-feat">
+            <span class="wbn-ico wbn-g-green" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M3.6 16.4l5-5.2 3.5 3 7-7.6" fill="none" stroke="#fff" stroke-opacity=".95" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M14.6 6.6h4.9v5" fill="none" stroke="#fff" stroke-opacity=".95" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="wbn-feat-copy">
+              <b data-wbn="f3">Live market prices</b>
+            </span>
+          </div>
+
+          <div class="wbn-feat">
+            <span class="wbn-ico wbn-g-amber" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="5.9" y="3.1" width="12.2" height="17.8" rx="3.8" fill="#fff" fill-opacity=".95"/>
+                <rect x="8.4" y="6" width="7.2" height="2.9" rx="1.45" fill="#0B1020" fill-opacity=".28"/>
+                <circle cx="9.2" cy="12.7" r="1.15" fill="#0B1020" fill-opacity=".26"/>
+                <circle cx="12" cy="12.7" r="1.15" fill="#0B1020" fill-opacity=".26"/>
+                <circle cx="14.8" cy="12.7" r="1.15" fill="#0B1020" fill-opacity=".26"/>
+                <circle cx="9.2" cy="16.7" r="1.15" fill="#0B1020" fill-opacity=".26"/>
+                <circle cx="12" cy="16.7" r="1.15" fill="#0B1020" fill-opacity=".26"/>
+                <circle cx="14.8" cy="16.7" r="1.15" fill="#0B1020" fill-opacity=".26"/>
+              </svg>
+            </span>
+            <span class="wbn-feat-copy">
+              <b data-wbn="f4">Finance toolbox</b>
+            </span>
+          </div>
+
+          <div class="wbn-feat">
+            <span class="wbn-ico wbn-g-purple" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path fill="#fff" fill-opacity=".95" d="M12 2.9l7.3 2.7v5.6c0 4.7-3 8.7-7.3 10.4-4.3-1.7-7.3-5.7-7.3-10.4V5.6z"/>
+                <path d="M9.1 12.1l1.9 1.9 4-4.2" fill="none" stroke="#0B1020" stroke-opacity=".34" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="wbn-feat-copy">
+              <b data-wbn="f5">App lock &amp; encryption</b>
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <footer class="wbn-foot">
+        <button class="wbn-ok" id="wbn-ok" type="button">
+          <span class="wbn-ok-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4.5 12.6l4.7 4.7L19.5 6.9"/>
+            </svg>
+          </span>
+          <span class="wbn-ok-label" data-wbn="ok">OK</span>
+        </button>
+      </footer>
+
+    </div>
+  </div>
+
+  <script>
+  /* ==================== WALIO BETA NOTICE — controller ==================== */
+  (function () {
+    'use strict';
+
+    var LANG_KEY = 'walio_beta_notice_lang';
+
+    /* ---- behaviour ----
+       SHOW_EVERY_LAUNCH : the notice appears on every app launch / reload.
+       RESUME_AFTER_MS   : show it again when the user comes back to the app
+                           after being away at least this long (0 = never).
+                           Set it to 0 (or SHOW_EVERY_LAUNCH = false) to make
+                           the notice appear only once, like before.           */
+    var SHOW_EVERY_LAUNCH = true;
+    var RESUME_AFTER_MS = 15000;
+    var RESUME_GRACE_MS = 900;   // let the app's own boot loader pass first
+
+    var overlay = document.getElementById('wbn-overlay');
+    if (!overlay) return;
+
+    var card = document.getElementById('wbn-card');
+    var okBtn = document.getElementById('wbn-ok');
+    var grab = document.getElementById('wbn-grab');
+    var isOpen = false;
+    var prevOverflow = null;
+
+    /* ---------------- copy (English is the default) ---------------- */
+    var WBN_TEXT = {
+      en: {
+        title: 'This is a beta version',
+        subtitle: 'You can use it — but your data may be reset.',
+        installTitle: 'Add to Home Screen is required',
+        section: "What's new",
+        count: '5 items',
+        f1: 'Create a crypto wallet',
+        f2: 'Multi-chain support',
+        f3: 'Live market prices',
+        f4: 'Finance toolbox',
+        f5: 'App lock & encryption',
+        ok: 'OK'
+      },
+      fa: {
+        title: 'این نسخهٔ آزمایشی است',
+        subtitle: 'میشه استفاده کرد، ولی ممکنه اطلاعات ریست بشه',
+        installTitle: 'افزودن به صفحهٔ اصلی ضروریه',
+        section: 'ویژگی‌های جدید',
+        count: '۵ مورد',
+        f1: 'ساخت والت دیجیتال',
+        f2: 'پشتیبانی از چند شبکه',
+        f3: 'قیمت زندهٔ ارز و طلا',
+        f4: 'ابزارهای مالی کامل',
+        f5: 'قفل امنیتی و رمزنگاری',
+        ok: 'باشه · OK'
+      }
+    };
+
+    var lang = 'en';
+    try {
+      var savedLang = localStorage.getItem(LANG_KEY);
+      if (savedLang === 'fa' || savedLang === 'en') lang = savedLang;
+    } catch (e) { /* private mode → keep the English default */ }
+
+    function applyLang(next, persist) {
+      lang = next === 'fa' ? 'fa' : 'en';
+      var dict = WBN_TEXT[lang];
+
+      if (card) {
+        card.setAttribute('dir', lang === 'fa' ? 'rtl' : 'ltr');
+        card.setAttribute('lang', lang);
+      }
+
+      var nodes = overlay.querySelectorAll('[data-wbn]');
+      for (var i = 0; i < nodes.length; i++) {
+        var key = nodes[i].getAttribute('data-wbn');
+        if (key && dict[key] != null) nodes[i].textContent = dict[key];
+      }
+
+      var btns = overlay.querySelectorAll('[data-wbn-lang]');
+      for (var b = 0; b < btns.length; b++) {
+        var on = btns[b].getAttribute('data-wbn-lang') === lang;
+        btns[b].classList.toggle('is-on', on);
+        btns[b].setAttribute('aria-pressed', on ? 'true' : 'false');
+      }
+
+      if (persist) {
+        try { localStorage.setItem(LANG_KEY, lang); } catch (e) { /* ignore */ }
+      }
+    }
+
+    overlay.addEventListener('click', function (e) {
+      var target = e.target && e.target.closest ? e.target.closest('[data-wbn-lang]') : null;
+      if (!target) return;
+      var next = target.getAttribute('data-wbn-lang');
+      if (next && next !== lang) applyLang(next, true);
+    });
+
+    function resetCardTransform() {
+      if (!card) return;
+      card.style.transition = '';
+      card.style.transform = '';
+      card.style.opacity = '';
+    }
+
+    /* True while another layer of the app owns the screen. */
+    function isBusy() {
+      if (document.body.classList.contains('app-locked')) return true;
+      if (document.body.classList.contains('walio-intro-open')) return true;
+
+      var lock = document.getElementById('app-lock-screen');
+      if (lock && (lock.classList.contains('visible') || lock.style.display === 'flex')) return true;
+
+      var loader = document.getElementById('walio-boot-loader');
+      if (loader && loader.classList.contains('is-visible')) return true;
+
+      return !!document.querySelector(
+        '.modal-overlay.open, .tool-overlay.open, .cw-overlay.open, .currency-chart-sheet.open'
+      );
+    }
+
+    function open(force) {
+      if (isOpen) return;
+      if (!force && isBusy()) return;
+      isOpen = true;
+      prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      overlay.setAttribute('aria-hidden', 'false');
+      overlay.classList.add('is-open');
+      window.setTimeout(function () {
+        if (!okBtn) return;
+        okBtn.setAttribute('data-autofocus', '1');
+        try { okBtn.focus({ preventScroll: true }); } catch (e) { try { okBtn.focus(); } catch (e2) {} }
+      }, 260);
+    }
+
+    function close() {
+      if (!isOpen) return;
+      isOpen = false;
+      resetCardTransform();
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = prevOverflow || '';
+      if (okBtn) { try { okBtn.blur(); } catch (e) {} }
+    }
+
+    if (okBtn) okBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function (e) {
+      if ((e.key === 'Escape' || e.key === 'Esc') && isOpen) close();
+      if (e.key === 'Tab' && okBtn) okBtn.removeAttribute('data-autofocus');
+    });
+
+    /* ---- drag the top handle down to dismiss (native sheet feel) ---- */
+    if (grab && card) {
+      var startY = 0, dy = 0, dragging = false;
+
+      var onDown = function (e) {
+        if (!isOpen) return;
+        dragging = true;
+        startY = e.clientY;
+        dy = 0;
+        card.style.transition = 'none';
+        try { grab.setPointerCapture(e.pointerId); } catch (err) {}
+      };
+
+      var onMove = function (e) {
+        if (!dragging) return;
+        dy = Math.max(0, e.clientY - startY);
+        card.style.transform = 'translateY(' + dy.toFixed(1) + 'px) scale(' + (1 - Math.min(dy, 260) / 2600).toFixed(3) + ')';
+        card.style.opacity = String(Math.max(0.35, 1 - dy / 520));
+        if (e.cancelable) e.preventDefault();
+      };
+
+      var onUp = function () {
+        if (!dragging) return;
+        dragging = false;
+        if (dy > 86) {
+          card.style.transition = 'transform .28s cubic-bezier(.4,0,1,1), opacity .24s ease';
+          card.style.transform = 'translateY(-30px) scale(.93)';
+          card.style.opacity = '0';
+          window.setTimeout(close, 90);
+        } else {
+          resetCardTransform();
+        }
+      };
+
+      grab.addEventListener('pointerdown', onDown);
+      grab.addEventListener('pointermove', onMove);
+      grab.addEventListener('pointerup', onUp);
+      grab.addEventListener('pointercancel', onUp);
+    }
+
+    /* Never pop the notice over the lock screen, the welcome flow, a sheet or
+       the boot loader — wait until the user is actually looking at the app. */
+    function scheduleShow(delay) {
+      window.setTimeout(function attempt() {
+        if (isOpen) return;
+        if (isBusy() || document.visibilityState === 'hidden') {
+          window.setTimeout(attempt, 900);
+          return;
+        }
+        open(false);
+      }, delay);
+    }
+
+    /* Coming back to the app (tab / PWA resume) is a new "visit". */
+    if (RESUME_AFTER_MS > 0) {
+      var hiddenAt = 0;
+      var awayTimer = null;
+
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'hidden') {
+          hiddenAt = Date.now();
+          if (awayTimer) { window.clearTimeout(awayTimer); awayTimer = null; }
+          return;
+        }
+        if (!hiddenAt) return;
+        var away = Date.now() - hiddenAt;
+        hiddenAt = 0;
+        if (away < RESUME_AFTER_MS) return;
+        if (isOpen) return;
+        if (awayTimer) window.clearTimeout(awayTimer);
+        awayTimer = window.setTimeout(function () {
+          awayTimer = null;
+          scheduleShow(RESUME_GRACE_MS);
+        }, 120);
+      });
+
+      window.addEventListener('pageshow', function (e) {
+        if (e.persisted && !isOpen) scheduleShow(RESUME_GRACE_MS);
+      });
+    }
+
+    /* First-time users see it right after they finish the welcome flow;
+       returning users see it once the app has booted. It is remembered in
+       localStorage so it does not pop on every launch. */
+    function boot() {
+      if (!SHOW_EVERY_LAUNCH && hasSeenThisSession()) return;
+      var tries = 0;
+
+      (function waitForApp() {
+        var app = window.walioApp;
+
+        if (app) {
+          var welcomePending = false;
+          try { welcomePending = typeof app.isWelcomePending === 'function' && app.isWelcomePending(); } catch (e) {}
+
+          if (welcomePending && typeof app.finishWelcome === 'function' && !app.__wbnHooked) {
+            app.__wbnHooked = true;
+            var originalFinish = app.finishWelcome;
+            app.finishWelcome = function () {
+              var result = originalFinish.apply(this, arguments);
+              scheduleShow(1250);
+              return result;
+            };
+          } else if (!welcomePending) {
+            scheduleShow(1500);   // after the boot loader has settled
+          }
+          return;
+        }
+
+        if (tries++ < 80) window.setTimeout(waitForApp, 100);
+        else scheduleShow(1200);
+      })();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () { window.setTimeout(boot, 0); });
+    } else {
+      window.setTimeout(boot, 0);
+    }
+
+    applyLang(lang, false);
+
+    /* Only used when SHOW_EVERY_LAUNCH is switched off. */
+    var SESSION_KEY = 'walio_beta_notice_seen_session';
+    function hasSeenThisSession() {
+      try {
+        if (sessionStorage.getItem(SESSION_KEY) === '1') return true;
+        sessionStorage.setItem(SESSION_KEY, '1');
+        return false;
+      } catch (e) { return false; }
+    }
+
+    /* Manual control (useful for testing):
+       walioBetaNotice.show()             → open it now
+       walioBetaNotice.hide()             → close
+       walioBetaNotice.setLang('fa'|'en') → switch the box language
+       walioBetaNotice.config({ showEveryLaunch: false, resumeAfterMs: 0 }) */
+    window.walioBetaNotice = {
+      show: function () { resetCardTransform(); open(true); },
+      hide: close,
+      setLang: function (next) { applyLang(next, true); },
+      getLang: function () { return lang; },
+      config: function (opts) {
+        if (!opts) return { showEveryLaunch: SHOW_EVERY_LAUNCH, resumeAfterMs: RESUME_AFTER_MS };
+        if (typeof opts.showEveryLaunch === 'boolean') SHOW_EVERY_LAUNCH = opts.showEveryLaunch;
+        if (typeof opts.resumeAfterMs === 'number') RESUME_AFTER_MS = opts.resumeAfterMs;
+        return { showEveryLaunch: SHOW_EVERY_LAUNCH, resumeAfterMs: RESUME_AFTER_MS };
+      },
+      reset: function () {
+        try { sessionStorage.removeItem(SESSION_KEY); } catch (e) {}
+      }
+    };
+  })();
+  </script></</body>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","spa":2}' crossorigin="anonymous"></script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a43ee0b55b53c9a5',t:'MTc5MDg5MzQ2OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></html>
